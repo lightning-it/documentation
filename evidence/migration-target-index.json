@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "evidence_classification": "PUBLIC",
+  "target_repository": "lightning-it/documentation",
+  "content_commit": "7727957e35b720ad22f81df9986b350e07c9e691",
+  "migration_method": "INDEPENDENT_REAUTHORING_AND_SANITIZATION",
+  "human_semantic_review": "PENDING",
+  "human_security_review": "PENDING",
+  "human_licensing_review": "PENDING",
+  "approval_record_digest": null,
+  "entries": [
+    {
+      "target_path": "docs/compliance/bsi-mapping.md",
+      "sha256": "sha256:dcf075ffe02ad8e1f2776d74d79d69185404e35378f25cc0f1f0f7deb3d4384a",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/contributing/index.md",
+      "sha256": "sha256:e08b54d2af15443fc083ec9b49210da8584a58623c504234ccc9d8f107286384",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/blueprints/aap-ansible-vault.md",
+      "sha256": "sha256:299a8c9e12e26e9fb27f671daa9a28a9d574f9658ed8a382dfd46bc1950f4f2d",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/blueprints/aap-disconnected-runtime.md",
+      "sha256": "sha256:239ac26760a84acd3e831182c68f17a77406ababe7d877727532862a8171a891",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/blueprints/aap-hashicorp-vault.md",
+      "sha256": "sha256:c3c43d65bf17bcfe66cfa3b60ff2e1b0478ba7c6747f24ab261cc0f8839d0e84",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/blueprints/aap-rhel10-host-preparation.md",
+      "sha256": "sha256:87ff4f51d392fe92e0a41187cab7561a811e98839497d2f202929bb18aa47ec0",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/blueprints/ubuntu-container-aio.md",
+      "sha256": "sha256:be3168107ec14dcda740afd71d4d4beffb2b414290916ae6a60c08fa39fc185c",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/blueprints/vsphere-template-lifecycle.md",
+      "sha256": "sha256:a665745089d2759fbed0db31756eea3f99a10a248bfdefdb88174a2f436bd7b1",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/building-blocks/coredns.md",
+      "sha256": "sha256:300698b9e2ff928df503093e76a4fd73e85b2f3e3ccc83448b0db4eddd5668f5",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/building-blocks/dhcp.md",
+      "sha256": "sha256:729035466b88499bae268c5aa9d35df9b22f165d63f9a57f04fc37d3df7423c1",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/building-blocks/forgejo.md",
+      "sha256": "sha256:9dcadead0384caebd57fc1f5b9f3c70fd8a758839ca73b68c4f3fb6f29dd45fb",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/building-blocks/keycloak.md",
+      "sha256": "sha256:e9d5e0dc33e31ba9b41b426345af9e7a7d51f234a78e9ea73f35a49a0c4fb974",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/building-blocks/nexus.md",
+      "sha256": "sha256:1e6f2c4d8dc5aac33f561fad1324859f89445140fcd1978168f94a4c44ac4ab3",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/modulix/installation/disconnected-runtime.md",
+      "sha256": "sha256:87b7b55427dbb98eb7bf3027eb3d1dfcd67d89b7f8ff8ece677edb7e2fef0917",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/wunderbox/architecture/incus-runtime.md",
+      "sha256": "sha256:04449d1ec7a171fce3bcdfd77640a6f388a6dcff8e0eeee9bdc4b405ecbde434",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/wunderbox/architecture/service-stack.md",
+      "sha256": "sha256:ebc965463bdfe8c9e6d26734c28ffdb1b33eba4525a8495ea7a6406cd587a036",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/wunderbox/installation/incus-host.md",
+      "sha256": "sha256:64f3adedc120c2b855e9aa38fe8d04f568ae2b16250c5db5e6962d2bea79dea9",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/wunderbox/installation/openshift-agent-on-incus.md",
+      "sha256": "sha256:94ae4260366d89594d90992ceb05c0c15210af34030bedae5d35e16dcc832fe0",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/wunderbox/operations/incus-image-deployment.md",
+      "sha256": "sha256:fdb35a7e0926edf6d7a31408926d4ed748289a8795e3cc71bc8fbd2089783f9b",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    },
+    {
+      "target_path": "docs/wunderbox/operations/incus-rhel-images.md",
+      "sha256": "sha256:afa2a6e3dcf96190babebbd634cf9866d05c8fb674ef58fcb060d856005df1b5",
+      "document_status": "review-candidate",
+      "approval_status": "pending"
+    }
+  ]
+}
