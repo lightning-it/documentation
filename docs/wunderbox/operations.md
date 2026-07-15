@@ -69,5 +69,10 @@ data according to policy, remove monitoring and backup jobs, release capacity,
 and verify that automation no longer targets the retired unit. Preserve only
 the evidence required by retention rules.
 
+The [Incus image deployment](./operations/incus-image-deployment.md) and
+[RHEL image](./operations/incus-rhel-images.md) pages apply this lifecycle to
+review candidates. Both require license, provenance, lab, and subject-matter
+review before approval.
+
 See [Troubleshooting](./troubleshooting.md) and the cross-product
 [backup and recovery guidance](../security/backup-and-recovery.md).

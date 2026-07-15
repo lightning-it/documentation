@@ -28,7 +28,9 @@ customers, findings, or retention targets.
 No legacy file was copied directly into this public corpus. Public concepts
 were independently rewritten and sanitized; excluded source material remains
 outside the public repository. Exact classifications and findings are retained
-only in restricted migration evidence.
+only in restricted migration evidence. The candidate pages and their automated
+target checks do not constitute human semantic, security, technical, or
+licensing approval.
 
 ## Transformation approach
 
@@ -48,7 +50,8 @@ corpus under their approved classification and retention controls.
 
 Source deletion is a separate gated action. This summary does not claim that a
 private source was deleted, that private retention is complete, or that
-production acceptance has occurred.
+production acceptance has occurred. It also does not claim that a draft target
+has passed the human comparison needed for migration acceptance.
 
 See the [publication boundary](../security/publication-boundary.md) for the
 classification method.

@@ -68,5 +68,9 @@ failure domains, recovery objectives, verification, and owners. Keep detailed
 topology, endpoints, inventories, and protected evidence in the authorized
 environment documentation.
 
+Two review-candidate models apply these boundaries without claiming a deployed
+topology: the [Incus runtime architecture](./architecture/incus-runtime.md) and
+the [service-stack responsibility model](./architecture/service-stack.md).
+
 See the [portfolio architecture](../architecture/index.md) for cross-product
 principles.

@@ -65,6 +65,22 @@ applicable: semantic structure, logical headings, meaningful link text, table
 headers, useful alt text, keyboard operation, visible focus, contrast, and no
 meaning conveyed by color alone.
 
+## Document control and quality
+
+Treat metadata, classification, review, publication, maintenance, and
+retirement as one lifecycle. A new or materially changed page remains
+`review-candidate` and `pending` until authorized reviewers approve the exact
+documentation-tree digest. A date, successful build, automated review, or pull
+request author cannot supply that approval.
+
+Keep one canonical owner for each subject, record redirects only for verified
+published paths, and re-run review after a substantive content, ownership,
+classification, or assurance change. CI must fail on invalid metadata, broken
+internal links or images, duplicate identifiers, unsafe examples, secret
+indicators, unsupported licenses, inaccessible rendered HTML, missing search
+content, and a non-reproducible release build. These checks support human
+review; they do not assert implementation, certification, or acceptance.
+
 ## Never publish
 
 Do not publish secrets, customer or environment data, real infrastructure

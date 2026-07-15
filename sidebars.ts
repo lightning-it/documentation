@@ -24,9 +24,37 @@ const sidebars: SidebarsConfig = {
             "modulix/modulix-concepts",
             "modulix/modulix-collections",
             "modulix/modulix-roles",
-            "modulix/modulix-building-blocks",
-            "modulix/modulix-blueprints",
-            "modulix/modulix-installation",
+            {
+              type: "category",
+              label: "Building blocks",
+              link: { type: "doc", id: "modulix/modulix-building-blocks" },
+              items: [
+                "modulix/building-blocks/modulix-building-block-coredns",
+                "modulix/building-blocks/modulix-building-block-dhcp",
+                "modulix/building-blocks/modulix-building-block-forgejo",
+                "modulix/building-blocks/modulix-building-block-keycloak",
+                "modulix/building-blocks/modulix-building-block-nexus",
+              ],
+            },
+            {
+              type: "category",
+              label: "Blueprints",
+              link: { type: "doc", id: "modulix/modulix-blueprints" },
+              items: [
+                "modulix/blueprints/modulix-blueprint-vsphere-template-lifecycle",
+                "modulix/blueprints/modulix-blueprint-aap-disconnected-runtime",
+                "modulix/blueprints/modulix-blueprint-aap-rhel10-host-preparation",
+                "modulix/blueprints/modulix-blueprint-aap-ansible-vault",
+                "modulix/blueprints/modulix-blueprint-aap-hashicorp-vault",
+                "modulix/blueprints/modulix-blueprint-ubuntu-container-aio",
+              ],
+            },
+            {
+              type: "category",
+              label: "Installation",
+              link: { type: "doc", id: "modulix/modulix-installation" },
+              items: ["modulix/installation/modulix-disconnected-runtime"],
+            },
             "modulix/modulix-usage",
             "modulix/modulix-development",
             "modulix/modulix-testing",
@@ -67,8 +95,39 @@ const sidebars: SidebarsConfig = {
           items: [
             "wunderbox/wunderbox-overview",
             "wunderbox/wunderbox-concepts",
-            "wunderbox/wunderbox-architecture",
-            "wunderbox/wunderbox-operations",
+            {
+              type: "category",
+              label: "Architecture",
+              link: { type: "doc", id: "wunderbox/wunderbox-architecture" },
+              items: [
+                "wunderbox/architecture/wunderbox-incus-runtime",
+                "wunderbox/architecture/wunderbox-service-stack",
+              ],
+            },
+            {
+              type: "category",
+              label: "Installation",
+              link: {
+                type: "generated-index",
+                slug: "/wunderbox/installation/",
+                title: "Wunderbox installation",
+                description:
+                  "Review bounded host and lab installation contracts before selecting an environment-specific implementation.",
+              },
+              items: [
+                "wunderbox/installation/wunderbox-incus-host",
+                "wunderbox/installation/wunderbox-openshift-agent-incus",
+              ],
+            },
+            {
+              type: "category",
+              label: "Operations",
+              link: { type: "doc", id: "wunderbox/wunderbox-operations" },
+              items: [
+                "wunderbox/operations/wunderbox-incus-image-deployment",
+                "wunderbox/operations/wunderbox-incus-rhel-images",
+              ],
+            },
             "wunderbox/wunderbox-security",
             "wunderbox/wunderbox-troubleshooting",
           ],

@@ -94,4 +94,6 @@ directory. Do not proceed by weakening certificate checks or substituting a
 private mirror whose provenance has not been approved.
 
 Before any target execution, complete the [usage preflight](./usage.md) and the
-selected release's own compatibility instructions.
+selected release's own compatibility instructions. For a boundary-first model
+that does not assume direct internet access, review the
+[disconnected runtime contract](./installation/disconnected-runtime.md).

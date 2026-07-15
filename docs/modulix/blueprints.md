@@ -65,6 +65,18 @@ A content version update, input-contract change, target expansion, new
 privilege, or altered verification method is a blueprint change. Re-run the
 appropriate review even when the human-readable objective remains the same.
 
+## Blueprint examples
+
+- [vSphere template lifecycle](./blueprints/vsphere-template-lifecycle.md)
+- [Disconnected automation runtime](./blueprints/aap-disconnected-runtime.md)
+- [RHEL 10 host preparation](./blueprints/aap-rhel10-host-preparation.md)
+- [Ansible Vault input boundary](./blueprints/aap-ansible-vault.md)
+- [HashiCorp Vault runtime boundary](./blueprints/aap-hashicorp-vault.md)
+- [Ubuntu container all-in-one evaluation](./blueprints/ubuntu-container-aio.md)
+
+Each example remains a review candidate and states its validation limits. It
+must not be treated as an approved environment procedure.
+
 For a single-block evaluation, continue with
 [Installation](./installation.md). For maintenance decisions, see
 [Lifecycle](./lifecycle.md).

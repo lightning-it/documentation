@@ -67,6 +67,22 @@ result, certification statement, or evidence of control implementation.
 | Releases and lifecycle             | Support version traceability and change review      | Does not prove a version is deployed or approved                      |
 | Document metadata                  | Identify owner roles, status, version, and review   | Does not substitute for named organizational assignments or approvals |
 
+## Documentation control approach
+
+Public pages identify a stable document ID, version, lifecycle status,
+classification, accountable role, approver role, audience, review date, and
+cadence. New or changed pages remain review candidates until an independently
+authorized reviewer approves the exact content digest. Source history and
+automated checks provide traceability but are not evidence that a control is
+implemented in an environment.
+
+Named assignments, protection needs, applicability decisions, control state,
+deviations, risks, evidence, retention decisions, and review records belong in
+the authorized protected system. Public documentation can describe the method
+and product boundary only. This separation supports document control without
+turning the public site into an information security management system or an
+audit record.
+
 ## IT-Grundschutz module selection
 
 The Compendium changes over time, and module applicability depends on the

@@ -62,5 +62,15 @@ the runtime; and a successful run should not silently become acceptance.
 This statement is deliberately not an executable rollout procedure. It records
 the boundary an environment-specific, authorized plan must fill in privately.
 
+## Public contract examples
+
+Use the service-specific contracts for [CoreDNS](./building-blocks/coredns.md),
+[DHCP](./building-blocks/dhcp.md),
+[Forgejo](./building-blocks/forgejo.md),
+[Keycloak](./building-blocks/keycloak.md), and
+[Nexus Repository](./building-blocks/nexus.md). They define review and
+assurance boundaries; they do not replace a versioned component runbook or an
+approved environment plan.
+
 Use [Blueprints](./blueprints.md) to describe multi-block composition and
 [Security](./security.md) to review trust boundaries.
