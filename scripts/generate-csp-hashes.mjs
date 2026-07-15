@@ -2,22 +2,10 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { inlineScriptBodies } from "./lib/html.mjs";
 import { repositoryRoot, walkFiles, writeEvidence } from "./lib/validation.mjs";
 
 const marker = "__LIGHTNING_IT_SCRIPT_HASHES__";
-
-function inlineScripts(html) {
-  const scripts = [];
-  for (const match of html.matchAll(
-    /<script\b([^>]*)>([\s\S]*?)<\/script>/gi,
-  )) {
-    if (/\bsrc\s*=/i.test(match[1]) || match[2].length === 0) {
-      continue;
-    }
-    scripts.push(match[2]);
-  }
-  return scripts;
-}
 
 function cspHash(script) {
   return `'sha256-${createHash("sha256").update(script, "utf8").digest("base64")}'`;
@@ -34,7 +22,7 @@ async function main() {
 
   for (const htmlFile of htmlFiles) {
     const html = await readFile(htmlFile, "utf8");
-    for (const script of inlineScripts(html)) {
+    for (const script of inlineScriptBodies(html)) {
       inlineScriptInstances += 1;
       uniqueHashes.add(cspHash(script));
     }

@@ -2,6 +2,8 @@ import { createHash } from "node:crypto";
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { htmlFragmentText } from "./html.mjs";
+
 export const repositoryRoot = process.cwd();
 export const generatedEvidenceDirectory = path.join(
   repositoryRoot,
@@ -61,9 +63,8 @@ export function failIfErrors(label, errors) {
 }
 
 export function normalizedHeadingId(heading) {
-  return heading
+  return htmlFragmentText(heading)
     .replace(/\{#[^}]+\}\s*$/, "")
-    .replace(/<[^>]+>/g, "")
     .replace(/[`*_~]/g, "")
     .trim()
     .toLocaleLowerCase("en-US")
@@ -73,6 +74,64 @@ export function normalizedHeadingId(heading) {
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+export function sameOriginPathname(reference, pageUrl, expectedOrigin) {
+  try {
+    const url = new URL(reference, pageUrl);
+    return url.origin === expectedOrigin ? url.pathname : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+export function isMixedContentReference(reference, pageUrl) {
+  try {
+    return new URL(reference, pageUrl).protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+export function generatedPageUrl(relativePath, expectedOrigin) {
+  const buildPrefix = "build/";
+  const buildRelativePath = relativePath.startsWith(buildPrefix)
+    ? relativePath.slice(buildPrefix.length)
+    : relativePath;
+  const indexName = "index.html";
+  const publicPath =
+    path.posix.basename(buildRelativePath) === indexName
+      ? `/${buildRelativePath.slice(0, -indexName.length)}`
+      : `/${buildRelativePath}`;
+  return new URL(publicPath, `${expectedOrigin}/`);
+}
+
+export function canonicalMatchesGeneratedRoute(canonicalUrl, pageUrl) {
+  try {
+    const canonical = new URL(canonicalUrl);
+    const generated = new URL(pageUrl);
+    return (
+      canonical.origin === generated.origin &&
+      canonical.pathname === generated.pathname
+    );
+  } catch {
+    return false;
+  }
+}
+
+export function isSafeErrorPageReference(reference) {
+  if (typeof reference !== "string" || reference.length === 0) {
+    return false;
+  }
+  if (reference.startsWith("#") || reference.startsWith("/")) {
+    return true;
+  }
+  try {
+    new URL(reference);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export function stripMarkdownCode(markdown) {

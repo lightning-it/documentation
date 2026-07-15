@@ -36,4 +36,82 @@ describe("HighlightedExcerpt", () => {
 
     expect(screen.getByText(/Invalid � � �/)).toBeInTheDocument();
   });
+
+  it("treats malformed tags as escaped text", () => {
+    const { container } = render(
+      <p>
+        <HighlightedExcerpt
+          excerpt={'Before <img title="unterminated> after'}
+        />
+      </p>,
+    );
+
+    expect(container).toHaveTextContent(
+      'Before <img title="unterminated> after',
+    );
+    expect(container.querySelector("img")).not.toBeInTheDocument();
+  });
+
+  it("does not create elements from script tags with a spaced end tag", () => {
+    const { container } = render(
+      <p>
+        <HighlightedExcerpt
+          excerpt={
+            'Before <script data-value=">">window.pwned = true</ script> after'
+          }
+        />
+      </p>,
+    );
+
+    expect(container).toHaveTextContent("Before window.pwned = true after");
+    expect(container.querySelector("script")).not.toBeInTheDocument();
+  });
+
+  it("renders encoded markup as text instead of interpreting it", () => {
+    const { container } = render(
+      <p>
+        <HighlightedExcerpt
+          excerpt={
+            "Encoded &lt;img src=x onerror=alert(1)&gt; &lt;mark&gt;literal&lt;/mark&gt;"
+          }
+        />
+      </p>,
+    );
+
+    expect(container).toHaveTextContent(
+      "Encoded <img src=x onerror=alert(1)> <mark>literal</mark>",
+    );
+    expect(container.querySelector("img")).not.toBeInTheDocument();
+    expect(container.querySelector("mark")).not.toBeInTheDocument();
+  });
+
+  it("discards attributes from Pagefind highlight elements", () => {
+    const { container } = render(
+      <p>
+        <HighlightedExcerpt
+          excerpt={'<mark class="bad" onclick="alert(1)">safe</mark>'}
+        />
+      </p>,
+    );
+
+    const highlight = screen.getByText("safe");
+    expect(highlight.tagName).toBe("MARK");
+    expect(highlight).not.toHaveAttribute("class");
+    expect(highlight).not.toHaveAttribute("onclick");
+    expect(container.querySelectorAll("mark")).toHaveLength(1);
+  });
+
+  it("coalesces nested marks and highlights an unclosed final mark", () => {
+    const { container } = render(
+      <p>
+        <HighlightedExcerpt excerpt="A <mark>nested <mark>deep</mark> tail</mark> and <mark>open" />
+      </p>,
+    );
+
+    const highlights = container.querySelectorAll("mark");
+    expect(highlights).toHaveLength(2);
+    expect(highlights[0]).toHaveTextContent("nested deep tail");
+    expect(highlights[1]).toHaveTextContent("open");
+    expect(container).toHaveTextContent("A nested deep tail and open");
+  });
 });

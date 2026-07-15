@@ -8,9 +8,21 @@ import {
   validateDeploymentMarker,
 } from "./lib/deployment.mjs";
 import {
+  htmlAttribute,
+  htmlElements,
+  htmlText,
+  inlineScriptBodies,
+  parseHtmlDocument,
+} from "./lib/html.mjs";
+import {
+  canonicalMatchesGeneratedRoute,
   failIfErrors,
+  generatedPageUrl,
+  isMixedContentReference,
+  isSafeErrorPageReference,
   repositoryPath,
   repositoryRoot,
+  sameOriginPathname,
   sha256,
   walkFiles,
   writeEvidence,
@@ -18,35 +30,11 @@ import {
 
 const expectedOrigin = "https://docs.l-it.io";
 
-function attributes(tag) {
-  const result = new Map();
-  for (const match of tag.matchAll(
-    /([:\w-]+)\s*=\s*(?:"([^"]*)"|'([^']*)')/g,
-  )) {
-    result.set(match[1].toLocaleLowerCase("en-US"), match[2] ?? match[3]);
-  }
-  return result;
-}
-
-function tags(html, name) {
-  return [...html.matchAll(new RegExp(`<${name}\\b[^>]*>`, "gi"))].map(
-    (match) => match[0],
-  );
-}
-
 function inlineScriptHashes(html) {
-  const hashes = [];
-  for (const match of html.matchAll(
-    /<script\b([^>]*)>([\s\S]*?)<\/script>/gi,
-  )) {
-    if (/\bsrc\s*=/i.test(match[1]) || match[2].length === 0) {
-      continue;
-    }
-    hashes.push(
-      `'sha256-${createHash("sha256").update(match[2], "utf8").digest("base64")}'`,
-    );
-  }
-  return hashes;
+  return inlineScriptBodies(html).map(
+    (body) =>
+      `'sha256-${createHash("sha256").update(body, "utf8").digest("base64")}'`,
+  );
 }
 
 function headerBlock(headers, pattern) {
@@ -66,14 +54,6 @@ function headerBlock(headers, pattern) {
     }
   }
   return values;
-}
-
-function localPathFromReference(reference) {
-  const clean = reference.split(/[?#]/, 1)[0];
-  if (!clean.startsWith("/")) {
-    return undefined;
-  }
-  return clean;
 }
 
 async function exists(filePath) {
@@ -104,39 +84,52 @@ async function main() {
   for (const htmlFile of htmlFiles) {
     const relativePath = repositoryPath(htmlFile);
     const html = await readFile(htmlFile, "utf8");
+    const document = parseHtmlDocument(html);
+    const elements = htmlElements(document);
+    const elementsNamed = (name) =>
+      elements.filter((element) => element.tagName === name);
+    const pageUrl = generatedPageUrl(relativePath, expectedOrigin);
     const is404 =
       relativePath === "build/404.html" ||
       relativePath === "build/404/index.html";
-    const htmlTag = tags(html, "html")[0];
-    if (!htmlTag || attributes(htmlTag).get("lang") !== "en") {
+    const htmlTag = elementsNamed("html")[0];
+    if (!htmlTag || htmlAttribute(htmlTag, "lang") !== "en") {
       errors.push(`${relativePath}: missing English document language`);
     }
-    if (!/<title\b[^>]*>[^<]+<\/title>/i.test(html)) {
+    if (
+      !elementsNamed("title").some((title) => htmlText(title).trim().length > 0)
+    ) {
       errors.push(`${relativePath}: missing non-empty title`);
     }
     if (
-      !tags(html, "meta").some(
-        (tag) => attributes(tag).get("name") === "viewport",
+      !elementsNamed("meta").some(
+        (element) => htmlAttribute(element, "name") === "viewport",
       )
     ) {
       errors.push(`${relativePath}: missing viewport metadata`);
     }
     if (
-      !tags(html, "meta").some(
-        (tag) =>
-          attributes(tag).get("name") === "description" &&
-          (attributes(tag).get("content")?.length ?? 0) >= 20,
+      !elementsNamed("meta").some(
+        (element) =>
+          htmlAttribute(element, "name") === "description" &&
+          (htmlAttribute(element, "content")?.length ?? 0) >= 20,
       )
     ) {
       errors.push(`${relativePath}: missing useful meta description`);
     }
 
-    const canonicalTags = tags(html, "link").filter(
-      (tag) => attributes(tag).get("rel") === "canonical",
+    const canonicalTags = elementsNamed("link").filter(
+      (element) => htmlAttribute(element, "rel") === "canonical",
     );
-    const robots = tags(html, "meta").find(
-      (tag) => attributes(tag).get("name") === "robots",
+    if (elementsNamed("base").length > 0) {
+      errors.push(
+        `${relativePath}: base elements are forbidden because references resolve from the generated route`,
+      );
+    }
+    const robots = elementsNamed("meta").find(
+      (element) => htmlAttribute(element, "name") === "robots",
     );
+    const mainElements = elementsNamed("main");
     if (is404) {
       if (canonicalTags.length !== 0) {
         errors.push(
@@ -145,15 +138,23 @@ async function main() {
       }
       if (
         !/(?:^|,)\s*noindex\b/i.test(
-          attributes(robots ?? "").get("content") ?? "",
+          htmlAttribute(robots ?? {}, "content") ?? "",
         )
       ) {
         errors.push(`${relativePath}: error pages must declare robots noindex`);
       }
-      if (!/Page not found/i.test(html)) {
+      if (
+        !elementsNamed("title").some((element) =>
+          /Page not found/i.test(htmlText(element)),
+        )
+      ) {
         errors.push(`${relativePath}: custom not-found content is missing`);
       }
-      if (!/<main\b[^>]*\bdata-pagefind-ignore=["']all["']/i.test(html)) {
+      if (
+        !mainElements.some(
+          (element) => htmlAttribute(element, "data-pagefind-ignore") === "all",
+        )
+      ) {
         errors.push(
           `${relativePath}: error content must be excluded from Pagefind`,
         );
@@ -161,16 +162,25 @@ async function main() {
     } else if (canonicalTags.length !== 1) {
       errors.push(`${relativePath}: expected exactly one canonical URL`);
     } else {
-      if (!/<main\b[^>]*\bdata-pagefind-body(?:=["'][^"']*["'])?/i.test(html)) {
+      if (
+        !mainElements.some(
+          (element) =>
+            htmlAttribute(element, "data-pagefind-body") !== undefined,
+        )
+      ) {
         errors.push(
           `${relativePath}: canonical page does not identify its Pagefind content body`,
         );
       }
-      const canonical = attributes(canonicalTags[0]).get("href");
+      const canonical = htmlAttribute(canonicalTags[0], "href");
       try {
         const canonicalUrl = new URL(canonical);
         if (canonicalUrl.origin !== expectedOrigin) {
           errors.push(`${relativePath}: canonical URL uses the wrong origin`);
+        } else if (!canonicalMatchesGeneratedRoute(canonicalUrl, pageUrl)) {
+          errors.push(
+            `${relativePath}: canonical URL path does not match the generated route`,
+          );
         }
         if (
           canonicalUrl.search ||
@@ -190,14 +200,39 @@ async function main() {
       } catch {
         errors.push(`${relativePath}: canonical URL is invalid`);
       }
-      if (/\bnoindex\b/i.test(attributes(robots ?? "").get("content") ?? "")) {
+      if (/\bnoindex\b/i.test(htmlAttribute(robots ?? {}, "content") ?? "")) {
         errors.push(`${relativePath}: public documentation must be indexable`);
       }
     }
 
-    if (/\b(?:src|href)=["']http:\/\//i.test(html)) {
+    if (
+      elements.some((element) =>
+        ["src", "href"].some((attribute) => {
+          const reference = htmlAttribute(element, attribute);
+          if (!reference) {
+            return false;
+          }
+          return isMixedContentReference(reference, pageUrl);
+        }),
+      )
+    ) {
       errors.push(
         `${relativePath}: generated HTML contains mixed-content references`,
+      );
+    }
+    if (
+      is404 &&
+      elements.some((element) =>
+        ["src", "href"].some((attribute) => {
+          const reference = htmlAttribute(element, attribute);
+          return (
+            reference !== undefined && !isSafeErrorPageReference(reference)
+          );
+        }),
+      )
+    ) {
+      errors.push(
+        `${relativePath}: error pages must use root-relative or absolute resource references`,
       );
     }
     for (const hash of inlineScriptHashes(html)) {
@@ -205,21 +240,15 @@ async function main() {
       allInlineHashes.add(hash);
     }
 
-    for (const tag of [
-      ...tags(html, "a"),
-      ...tags(html, "link"),
-      ...tags(html, "script"),
-      ...tags(html, "img"),
-    ]) {
-      const tagAttributes = attributes(tag);
-      const reference = tagAttributes.get("href") ?? tagAttributes.get("src");
+    for (const element of elements.filter((candidate) =>
+      ["a", "link", "script", "img"].includes(candidate.tagName),
+    )) {
+      const reference =
+        htmlAttribute(element, "href") ?? htmlAttribute(element, "src");
       if (!reference || reference.startsWith("#")) {
         continue;
       }
-      let localPath = localPathFromReference(reference);
-      if (!localPath && reference.startsWith(expectedOrigin)) {
-        localPath = new URL(reference).pathname;
-      }
+      const localPath = sameOriginPathname(reference, pageUrl, expectedOrigin);
       if (!localPath) {
         continue;
       }
