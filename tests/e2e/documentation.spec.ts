@@ -39,6 +39,38 @@ test("02 — search for ModuLix with safe same-origin results", async ({
   await expect(page).toHaveURL(/\/modulix\//);
 });
 
+test("search covers every required product, task, and migrated public role term", async ({
+  page,
+}) => {
+  const requiredQueries = [
+    { query: "Wunderbox", expectedPath: "/wunderbox/" },
+    { query: "Atlas", expectedPath: "/atlas/" },
+    { query: "installation", expectedPath: "/modulix/installation/" },
+    { query: "architecture", expectedPath: "/architecture/" },
+    { query: "BSI", expectedPath: "/compliance/bsi-mapping/" },
+    { query: "backup", expectedPath: "/security/backup-and-recovery/" },
+    { query: "troubleshooting", expectedPath: "/atlas/troubleshooting/" },
+    { query: "lit.rhel.baseline", expectedPath: "/modulix/roles/" },
+  ];
+
+  await page.goto("/");
+  await page.getByRole("button", { name: /Search products/i }).click();
+  const dialog = page.getByRole("dialog", {
+    name: "Search public documentation",
+  });
+  const searchbox = dialog.getByRole("searchbox", { name: "Search terms" });
+
+  for (const { query, expectedPath } of requiredQueries) {
+    await test.step(query, async () => {
+      await searchbox.fill(query);
+      await expect(
+        dialog.locator(`a[href^="${expectedPath}"]`).first(),
+        `search result for ${query}`,
+      ).toBeVisible();
+    });
+  }
+});
+
 test("03 — open ModuLix documentation", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: /Open ModuLix docs/i }).click();

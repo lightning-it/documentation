@@ -65,11 +65,14 @@ export default function GlobalSearch(): ReactNode {
   const inputRef = useRef<HTMLInputElement>(null);
   const resultLinksRef = useRef<Array<HTMLAnchorElement | null>>([]);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const requestedOpenRef = useRef(false);
   const requestSequence = useRef(0);
   const inputId = useId();
   const resultsId = useId();
 
   const openSearch = useCallback((initialQuery = "") => {
+    requestedOpenRef.current = true;
+
     if (dialogRef.current?.open) {
       if (initialQuery && initialQuery !== inputRef.current?.value) {
         requestSequence.current += 1;
@@ -92,12 +95,17 @@ export default function GlobalSearch(): ReactNode {
   }, []);
 
   const closeSearch = useCallback(() => {
+    requestedOpenRef.current = false;
     requestSequence.current += 1;
     setIsOpen(false);
     setIsLoading(false);
   }, []);
 
   const handleDialogClose = useCallback(() => {
+    if (requestedOpenRef.current) {
+      return;
+    }
+
     requestSequence.current += 1;
     setIsOpen(false);
     setIsLoading(false);

@@ -128,6 +128,26 @@ describe("GlobalSearch", () => {
     expect(document.querySelector("dialog")).not.toHaveAttribute("open");
   });
 
+  it("ignores a queued close event after the dialog has been reopened", async () => {
+    render(<GlobalSearch />);
+    const trigger = screen.getByRole("button", {
+      name: "Search documentation",
+    });
+    trigger.focus();
+
+    fireEvent.keyDown(window, { key: "k", ctrlKey: true });
+    fireEvent.click(screen.getByRole("button", { name: "Close search" }));
+    fireEvent.keyDown(window, { key: "k", ctrlKey: true });
+
+    const dialog = screen.getByRole("dialog", {
+      name: "Search public documentation",
+    });
+    fireEvent(dialog, new Event("close"));
+
+    await waitFor(() => expect(dialog).toHaveAttribute("open"));
+    expect(screen.getByRole("searchbox")).toHaveFocus();
+  });
+
   it("invalidates an in-flight result immediately when the query changes", async () => {
     vi.useFakeTimers();
     const staleRequest =
