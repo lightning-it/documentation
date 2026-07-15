@@ -1,0 +1,86 @@
+# yamllint disable rule:truthy
+---
+name: Scheduled Validation
+
+on:
+  schedule:
+    - cron: "41 5 * * 1"
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Public site URL to validate
+        required: true
+        default: https://docs.l-it.io
+
+permissions:
+  contents: read
+
+jobs:
+  external-and-production:
+    name: External links and production
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      BASE_URL: ${{ inputs.base_url || 'https://docs.l-it.io' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Activate the pinned npm release
+        run: npm install --global --no-audit --no-fund npm@11.18.0 && test "$(npm --version)" = "11.18.0"
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Check the full executable dependency graph
+        run: npm run audit
+
+      - name: Check the production dependency subset
+        run: npm run audit:production
+
+      - name: Build the current static site
+        run: npm run build
+
+      - name: Validate the generated static site
+        run: npm run test:site
+
+      - name: Check external links
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run test:external-links
+
+      - name: Check review metadata freshness
+        run: npm run test:review-dates
+
+      - name: Confirm production documentation approval
+        run: npm run test:approval
+
+      - name: Install Chromium
+        run: npx --no-install playwright install --with-deps chromium
+
+      - name: Validate public DNS, TLS, headers, and journeys
+        run: npm run test:production
+
+      - name: Enforce production Lighthouse budgets
+        env:
+          LIGHTHOUSE_BASE_URL: ${{ env.BASE_URL }}
+        run: npm run test:lighthouse
+
+      - name: Upload scheduled evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: scheduled-validation-${{ github.run_id }}
+          path: |
+            evidence/generated/
+            playwright-report/
+            test-results/
+          if-no-files-found: warn
+          retention-days: 30
