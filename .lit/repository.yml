@@ -1,0 +1,35 @@
+---
+schema_version: 1
+managed_by: lightning-it/documentation
+repository: documentation
+visibility: public
+license_spdx: Apache-2.0
+repository_type: documentation_application
+release_type: static_site
+artifact_type: documentation
+test_profiles:
+  - format
+  - lint
+  - content
+  - unit
+  - build
+  - browser
+  - accessibility
+  - lighthouse
+os_matrix:
+  - ubuntu-latest
+product_matrix:
+  - modulix
+  - io
+  - wunderbox
+  - atlas
+publishing_targets:
+  - cloudflare-pages
+release_evidence: true
+openssf_best_practices:
+  required: true
+  project_id: null
+  target_level: passing
+  exception: null
+workflows:
+  ci: documentation-ci.yml

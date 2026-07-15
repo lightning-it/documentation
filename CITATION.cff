@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: >-
+  If you reference this documentation, cite the repository and immutable
+  release or commit you used.
+title: Lightning IT Documentation
+type: software
+authors:
+  - name: Lightning IT
+repository-code: https://github.com/lightning-it/documentation
+url: https://docs.l-it.io
+license: Apache-2.0
+version: 0.1.0
