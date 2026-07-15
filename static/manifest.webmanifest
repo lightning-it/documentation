@@ -1,0 +1,30 @@
+{
+  "name": "Lightning IT Documentation",
+  "short_name": "Lightning IT Docs",
+  "description": "Public technical documentation for the Lightning IT product portfolio.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#11151a",
+  "theme_color": "#11151a",
+  "icons": [
+    {
+      "src": "/img/brand/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/img/brand/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/brand/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

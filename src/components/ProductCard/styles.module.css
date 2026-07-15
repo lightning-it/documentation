@@ -1,0 +1,131 @@
+.card {
+  --product-accent: var(--ifm-color-primary);
+  --product-tint: var(--lit-surface-accent);
+  background: linear-gradient(
+    150deg,
+    var(--product-tint),
+    var(--lit-surface) 48%
+  );
+  border: 1px solid var(--lit-border);
+  border-top: 4px solid var(--product-accent);
+  border-radius: var(--lit-radius-lg);
+  box-shadow: var(--lit-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 1.4rem;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.card:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--product-accent) 54%,
+    var(--lit-border)
+  );
+  box-shadow: var(--lit-shadow-md);
+  transform: translateY(-2px);
+}
+
+.modulix {
+  --product-accent: var(--lit-modulix);
+  --product-tint: var(--lit-modulix-tint);
+}
+
+.io {
+  --product-accent: var(--lit-io);
+  --product-tint: var(--lit-io-tint);
+}
+
+.wunderbox {
+  --product-accent: var(--lit-wunderbox);
+  --product-tint: var(--lit-wunderbox-tint);
+}
+
+.atlas {
+  --product-accent: var(--lit-atlas);
+  --product-tint: var(--lit-atlas-tint);
+}
+
+.topline {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+}
+
+.icon {
+  align-items: center;
+  background: var(--product-accent);
+  border-radius: 0.75rem;
+  color: white;
+  display: inline-flex;
+  height: 2.7rem;
+  justify-content: center;
+  width: 2.7rem;
+}
+
+.icon svg {
+  height: 1.55rem;
+  width: 1.55rem;
+}
+
+.action {
+  border: 1px solid color-mix(in srgb, var(--product-accent) 32%, transparent);
+  border-radius: 999px;
+  color: var(--lit-text-muted);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  padding: 0.28rem 0.62rem;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: 1.45rem;
+  margin-bottom: 0.15rem;
+}
+
+.position {
+  color: var(--product-accent);
+  font-size: 0.85rem;
+  font-weight: 750;
+  letter-spacing: 0.035em;
+  margin-bottom: 0.9rem;
+  text-transform: uppercase;
+}
+
+.description {
+  color: var(--lit-text-muted);
+  flex: 1;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  margin-bottom: 1.1rem;
+}
+
+.link {
+  align-items: center;
+  color: var(--product-accent);
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.45rem;
+  width: fit-content;
+}
+
+.link:hover {
+  color: var(--product-accent);
+  text-decoration-thickness: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}

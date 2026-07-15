@@ -1,0 +1,18 @@
+changelog:
+  exclude:
+    labels:
+      - dependencies
+  categories:
+    - title: Documentation
+      labels:
+        - content
+    - title: Accessibility
+      labels:
+        - accessibility
+    - title: Security and compliance
+      labels:
+        - security
+        - compliance
+    - title: Other changes
+      labels:
+        - "*"

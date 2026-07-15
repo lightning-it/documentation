@@ -1,0 +1,108 @@
+# yamllint disable rule:truthy
+---
+name: Documentation CI
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: documentation-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  required:
+    name: documentation / required
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Activate the pinned npm release
+        run: npm install --global --no-audit --no-fund npm@11.18.0 && test "$(npm --version)" = "11.18.0"
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint source and documentation
+        run: npm run lint
+
+      - name: Check TypeScript
+        run: npm run typecheck
+
+      - name: Validate content, links, images, metadata, and secrets
+        run: npm run test:content
+
+      - name: Validate documentation review dates
+        run: npm run test:review-dates
+
+      - name: Confirm production documentation approval
+        if: >-
+          (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+          (github.event_name == 'pull_request' && github.base_ref == 'main') ||
+          (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+        run: npm run test:approval
+
+      - name: Review installed dependency licenses
+        run: npm run test:licenses
+
+      - name: Audit the full executable dependency graph
+        run: npm run audit
+
+      - name: Audit the production dependency subset
+        run: npm run audit:production
+
+      - name: Test custom components
+        run: npm run test:unit
+
+      - name: Build site and Pagefind index
+        run: npm run build
+
+      - name: Validate generated site
+        run: npm run test:site
+
+      - name: Install Chromium
+        run: npx --no-install playwright install --with-deps chromium
+
+      - name: Run browser and accessibility tests
+        run: npm run test:e2e
+
+      - name: Enforce Lighthouse budgets
+        run: npm run test:lighthouse
+
+      - name: Repeat the build with outbound access disabled
+        run: npm run build:offline
+
+      - name: Revalidate the offline build artifact
+        run: npm run test:site
+
+      - name: Upload production build and test evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: documentation-validation-${{ github.sha }}
+          path: |
+            build/
+            playwright-report/
+            test-results/
+            evidence/generated/
+          if-no-files-found: warn
+          retention-days: 30

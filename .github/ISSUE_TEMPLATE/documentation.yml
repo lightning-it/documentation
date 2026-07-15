@@ -1,0 +1,39 @@
+name: Documentation issue
+description: Report missing, unclear, or incorrect public documentation.
+title: "docs: "
+labels:
+  - content
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Do not include credentials, customer data, private infrastructure, or
+        security vulnerabilities. Use private vulnerability reporting for
+        security-sensitive information.
+  - type: input
+    id: page
+    attributes:
+      label: Page URL
+      placeholder: https://docs.l-it.io/modulix/overview
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is missing, incorrect, or unclear?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected documentation
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Public-content confirmation
+      options:
+        - label: This report contains no private, customer, credential, or vulnerability information.
+          required: true

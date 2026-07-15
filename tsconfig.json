@@ -1,0 +1,20 @@
+{
+  "extends": "@docusaurus/tsconfig",
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx",
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom"]
+  },
+  "include": [
+    "docusaurus.config.ts",
+    "playwright.config.ts",
+    "sidebars.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "tests/e2e/**/*.ts",
+    "vitest.config.ts"
+  ],
+  "exclude": ["build", ".docusaurus", "node_modules"]
+}

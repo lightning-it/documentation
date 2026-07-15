@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "role_authorizations": [
+    {
+      "approver_role": "Lightning IT Product Owners",
+      "github_reviewers": []
+    },
+    {
+      "approver_role": "Lightning IT Security and Compliance Maintainers",
+      "github_reviewers": []
+    }
+  ],
+  "status": "PENDING_ORGANIZATION_AUTHORITY"
+}

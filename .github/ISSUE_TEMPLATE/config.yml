@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Private security report
+    url: https://github.com/lightning-it/documentation/security/advisories/new
+    about: Report vulnerabilities or unsafe publication privately.
+  - name: Lightning IT website
+    url: https://l-it.io
+    about: Product and company information.
