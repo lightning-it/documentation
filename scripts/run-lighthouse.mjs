@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import path from "node:path";
@@ -249,7 +250,17 @@ async function stopServer(server) {
 
 async function main() {
   const baseUrl = process.env.LIGHTHOUSE_BASE_URL ?? localBaseUrl;
+  const origin = new URL(baseUrl).origin;
   const external = Boolean(process.env.LIGHTHOUSE_BASE_URL);
+  const sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], {
+    cwd: repositoryRoot,
+    encoding: "utf8",
+  })
+    .trim()
+    .toLowerCase();
+  if (!/^[0-9a-f]{40,64}$/.test(sourceCommit)) {
+    throw new Error("Checked-out source is not a full Git commit ID.");
+  }
   let server;
   let chrome;
   const errors = [];
@@ -326,7 +337,10 @@ async function main() {
   }
 
   await writeEvidence("lighthouse-validation.json", {
+    schemaVersion: 1,
     status: errors.length === 0 ? "passed" : "failed",
+    origin,
+    sourceCommit,
     profile: "mobile",
     serverProfile: external
       ? "external-production"

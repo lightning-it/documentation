@@ -5,10 +5,12 @@ import {
   deploymentMarkerPath,
   validateDeploymentMarker,
 } from "./lib/deployment.mjs";
+import { exactCacheControlOneOf } from "./lib/cache-control.mjs";
 import { failIfErrors, writeEvidence } from "./lib/validation.mjs";
 
 const expectedOrigin = "https://docs.l-it.io";
 const pagesOrigin = "https://lightning-it-documentation.pages.dev";
+let productionEvidenceWritten = false;
 
 function inspectTls(hostname) {
   return new Promise((resolve, reject) => {
@@ -38,6 +40,7 @@ function inspectTls(hostname) {
 
 async function fetchWithoutBody(url, options = {}) {
   const response = await fetch(url, {
+    headers: options.headers,
     redirect: options.redirect ?? "manual",
     signal: AbortSignal.timeout(15_000),
   });
@@ -56,6 +59,15 @@ async function main() {
     );
   }
   const errors = [];
+  const expectedHeaders = new Map([
+    ["content-security-policy", /default-src 'self'/i],
+    ["permissions-policy", /camera=\(\)/i],
+    ["referrer-policy", /^strict-origin-when-cross-origin$/i],
+    ["strict-transport-security", /max-age=/i],
+    ["x-content-type-options", /^nosniff$/i],
+    ["x-frame-options", /^DENY$/i],
+  ]);
+  const compressedRequest = { "accept-encoding": "br, gzip" };
 
   const [ipv4, ipv6, tls] = await Promise.all([
     resolve4(baseUrl.hostname).catch(() => []),
@@ -71,8 +83,13 @@ async function main() {
   const certificateDaysRemaining = Math.floor(
     (new Date(tls.validTo).valueOf() - Date.now()) / 86_400_000,
   );
-  if (certificateDaysRemaining < 14) {
-    errors.push("production TLS certificate expires in fewer than 14 days");
+  if (
+    !Number.isInteger(certificateDaysRemaining) ||
+    certificateDaysRemaining < 14
+  ) {
+    errors.push(
+      "production TLS certificate expiry is invalid or fewer than 14 days away",
+    );
   }
 
   const { response: insecureHome } = await fetchWithoutBody(
@@ -94,47 +111,16 @@ async function main() {
     errors.push("production pages.dev host is not available with noindex");
   }
 
-  let branchPreview = { status: "not-provided" };
-  if (process.env.PREVIEW_URL) {
-    const previewUrl = new URL(process.env.PREVIEW_URL);
-    const validPreviewHost =
-      previewUrl.protocol === "https:" &&
-      previewUrl.hostname.endsWith(".lightning-it-documentation.pages.dev") &&
-      previewUrl.origin !== pagesOrigin;
-    if (!validPreviewHost || previewUrl.pathname !== "/") {
-      errors.push("PREVIEW_URL is not a recognized branch-preview origin");
-      branchPreview = { status: "invalid" };
-    } else {
-      const { response } = await fetchWithoutBody(previewUrl);
-      const noindex = /\bnoindex\b/i.test(
-        response.headers.get("x-robots-tag") ?? "",
-      );
-      branchPreview = {
-        status: response.status === 200 && noindex ? "passed" : "failed",
-        hostname: previewUrl.hostname,
-        responseStatus: response.status,
-        noindex,
-      };
-      if (branchPreview.status !== "passed") {
-        errors.push("branch-preview host is not available with noindex");
-      }
-    }
-  }
-
   const { response: home, body: homeHtml } = await fetchWithoutBody(baseUrl, {
     body: true,
+    headers: compressedRequest,
   });
   if (home.status !== 200 || home.url !== `${expectedOrigin}/`) {
     errors.push("canonical HTTPS home endpoint does not return 200 directly");
   }
-  const expectedHeaders = new Map([
-    ["content-security-policy", /default-src 'self'/i],
-    ["permissions-policy", /camera=\(\)/i],
-    ["referrer-policy", /^strict-origin-when-cross-origin$/i],
-    ["strict-transport-security", /max-age=/i],
-    ["x-content-type-options", /^nosniff$/i],
-    ["x-frame-options", /^DENY$/i],
-  ]);
+  if (!/^text\/html\b/i.test(home.headers.get("content-type") ?? "")) {
+    errors.push("production home endpoint is not served as HTML");
+  }
   for (const [header, pattern] of expectedHeaders) {
     if (!pattern.test(home.headers.get(header) ?? "")) {
       errors.push(`production response is missing a safe ${header} header`);
@@ -143,6 +129,19 @@ async function main() {
   if (/\bnoindex\b/i.test(home.headers.get("x-robots-tag") ?? "")) {
     errors.push(
       "production canonical host is incorrectly excluded from indexing",
+    );
+  }
+  if (
+    !exactCacheControlOneOf(home.headers.get("cache-control") ?? "", [
+      ["public", "max-age=0", "must-revalidate"],
+      ["public", "max-age=0", "must-revalidate", "no-transform"],
+    ])
+  ) {
+    errors.push("production HTML cache policy does not require revalidation");
+  }
+  if (!/^(?:br|gzip)$/i.test(home.headers.get("content-encoding") ?? "")) {
+    errors.push(
+      "production HTML is not served with Brotli or gzip compression",
     );
   }
   const csp = home.headers.get("content-security-policy") ?? "";
@@ -167,8 +166,15 @@ async function main() {
       body: true,
     },
   );
-  if (markerResponse.status !== 200) {
-    errors.push("production deployment commit marker is unavailable");
+  if (
+    markerResponse.status !== 200 ||
+    !/^application\/json\b/i.test(
+      markerResponse.headers.get("content-type") ?? "",
+    )
+  ) {
+    errors.push(
+      "production deployment commit marker is unavailable or not JSON",
+    );
   } else {
     try {
       deployedCommit = validateDeploymentMarker(JSON.parse(markerBody));
@@ -178,39 +184,81 @@ async function main() {
       );
     }
   }
-  const expectedCommit = process.env.EXPECTED_COMMIT?.trim().toLowerCase();
-  if (expectedCommit && !/^[0-9a-f]{40,64}$/.test(expectedCommit)) {
-    errors.push("EXPECTED_COMMIT is not a full hexadecimal commit ID");
-  } else if (expectedCommit && deployedCommit !== expectedCommit) {
+  const expectedCommit = (process.env.EXPECTED_COMMIT ?? "")
+    .trim()
+    .toLowerCase();
+  if (!/^[0-9a-f]{40,64}$/.test(expectedCommit)) {
+    errors.push("EXPECTED_COMMIT must be a full hexadecimal commit ID");
+  } else if (deployedCommit !== expectedCommit) {
     errors.push("production deployment commit does not match EXPECTED_COMMIT");
   }
 
-  const assetPath = homeHtml.match(/(?:src|href)="(\/assets\/[^"?#]+)"/)?.[1];
-  if (!assetPath) {
-    errors.push("production home page exposes no hashed static asset");
-  } else {
+  const assetPaths = [".js", ".css"].map((extension) =>
+    [...homeHtml.matchAll(/(?:src|href)="(\/assets\/[^"?#]+)"/g)]
+      .map((match) => match[1])
+      .find((assetPath) => assetPath.endsWith(extension)),
+  );
+  if (assetPaths.some((assetPath) => !assetPath)) {
+    errors.push(
+      "production home page exposes no hashed JavaScript and CSS assets",
+    );
+  }
+  for (const assetPath of assetPaths.filter(Boolean)) {
     const { response } = await fetchWithoutBody(
       `${expectedOrigin}${assetPath}`,
+      {
+        headers: compressedRequest,
+      },
     );
+    const cacheControl = response.headers.get("cache-control") ?? "";
+    const contentEncoding = response.headers.get("content-encoding") ?? "";
+    const contentType = response.headers.get("content-type") ?? "";
+    const extension = assetPath.endsWith(".js") ? "js" : "css";
     if (
-      !/max-age=31536000.*immutable/i.test(
-        response.headers.get("cache-control") ?? "",
-      )
+      response.status !== 200 ||
+      !new RegExp(`\\.[a-f0-9]{8,}\\.${extension}$`, "i").test(assetPath) ||
+      (extension === "js"
+        ? !/javascript/i.test(contentType)
+        : !/^text\/css\b/i.test(contentType))
     ) {
       errors.push(
-        "production hashed asset cache policy is not immutable for one year",
+        `production asset ${assetPath} lacks a 200 response, fingerprint, or expected media type`,
       );
+    }
+    if (
+      !exactCacheControlOneOf(cacheControl, [
+        ["public", "max-age=31536000", "immutable"],
+        ["public", "max-age=31536000", "immutable", "no-transform"],
+      ])
+    ) {
+      errors.push(
+        `production hashed asset ${assetPath} is not immutable for one year`,
+      );
+    }
+    if (!/^(?:br|gzip)$/i.test(contentEncoding)) {
+      errors.push(`production hashed asset ${assetPath} is not compressed`);
     }
   }
   const { response: pagefind } = await fetchWithoutBody(
     `${expectedOrigin}/pagefind/pagefind.js`,
+    { headers: compressedRequest },
   );
   if (
-    !/max-age=3600.*must-revalidate/i.test(
-      pagefind.headers.get("cache-control") ?? "",
-    )
+    pagefind.status !== 200 ||
+    !/javascript/i.test(pagefind.headers.get("content-type") ?? "")
+  ) {
+    errors.push("production Pagefind JavaScript is unavailable or mistyped");
+  }
+  if (
+    !exactCacheControlOneOf(pagefind.headers.get("cache-control") ?? "", [
+      ["public", "max-age=3600", "must-revalidate"],
+      ["public", "max-age=3600", "must-revalidate", "no-transform"],
+    ])
   ) {
     errors.push("production Pagefind cache policy is not bounded");
+  }
+  if (!/^(?:br|gzip)$/i.test(pagefind.headers.get("content-encoding") ?? "")) {
+    errors.push("production Pagefind JavaScript is not compressed");
   }
 
   const { response: missing, body: missingHtml } = await fetchWithoutBody(
@@ -219,9 +267,12 @@ async function main() {
   );
   if (
     missing.status !== 404 ||
+    !/^text\/html\b/i.test(missing.headers.get("content-type") ?? "") ||
     !/<meta[^>]+name="robots"[^>]+noindex/i.test(missingHtml)
   ) {
-    errors.push("production custom 404 does not return 404 with noindex");
+    errors.push(
+      "production custom 404 does not return HTML with 404 and noindex",
+    );
   }
   if (/<link[^>]+rel="canonical"/i.test(missingHtml)) {
     errors.push("production custom 404 incorrectly emits a canonical URL");
@@ -240,8 +291,11 @@ async function main() {
 
   for (const path of ["/robots.txt", "/THIRD_PARTY_NOTICES.txt"]) {
     const { response } = await fetchWithoutBody(`${expectedOrigin}${path}`);
-    if (response.status !== 200) {
-      errors.push(`production artifact ${path} is unavailable`);
+    if (
+      response.status !== 200 ||
+      !/^text\/plain\b/i.test(response.headers.get("content-type") ?? "")
+    ) {
+      errors.push(`production artifact ${path} is unavailable or not text`);
     }
   }
 
@@ -249,14 +303,49 @@ async function main() {
     `${expectedOrigin}/sitemap.xml`,
     { body: true },
   );
-  if (sitemapResponse.status !== 200) {
-    errors.push("production artifact /sitemap.xml is unavailable");
+  if (
+    sitemapResponse.status !== 200 ||
+    !/^(?:application|text)\/xml\b/i.test(
+      sitemapResponse.headers.get("content-type") ?? "",
+    )
+  ) {
+    errors.push("production artifact /sitemap.xml is unavailable or not XML");
   }
-  const sitemapLocations = [
-    ...sitemap.matchAll(/<loc>(https:\/\/docs\.l-it\.io\/[^<]*)<\/loc>/g),
-  ]
-    .map((match) => match[1])
-    .filter(Boolean);
+  const rawSitemapLocations = [...sitemap.matchAll(/<loc>([^<]*)<\/loc>/g)].map(
+    (match) => match[1]?.trim(),
+  );
+  const sitemapLocationTagCount = (sitemap.match(/<loc(?:\s|>)/g) ?? []).length;
+  if (
+    rawSitemapLocations.length !== sitemapLocationTagCount ||
+    rawSitemapLocations.some((location) => !location)
+  ) {
+    errors.push("production sitemap contains a malformed location element");
+  }
+  const sitemapLocations = [];
+  const seenSitemapLocations = new Set();
+  for (const location of rawSitemapLocations.filter(Boolean)) {
+    try {
+      const url = new URL(location);
+      if (
+        url.origin !== expectedOrigin ||
+        !url.pathname.endsWith("/") ||
+        url.search ||
+        url.hash ||
+        url.href !== location
+      ) {
+        errors.push("production sitemap contains a non-canonical URL");
+        continue;
+      }
+      if (seenSitemapLocations.has(url.href)) {
+        errors.push("production sitemap contains a duplicate URL");
+        continue;
+      }
+      seenSitemapLocations.add(url.href);
+      sitemapLocations.push(url.href);
+    } catch {
+      errors.push("production sitemap contains an invalid URL");
+    }
+  }
   if (sitemapLocations.length < 40) {
     errors.push("production sitemap does not contain the complete route set");
   }
@@ -268,24 +357,18 @@ async function main() {
         const location = routeQueue.shift();
         try {
           const url = new URL(location);
-          if (
-            url.origin !== expectedOrigin ||
-            !url.pathname.endsWith("/") ||
-            url.search ||
-            url.hash
-          ) {
-            errors.push("production sitemap contains a non-canonical URL");
-            continue;
-          }
           const { response, body } = await fetchWithoutBody(url, {
             body: true,
           });
           if (
             response.status !== 200 ||
+            !/^text\/html\b/i.test(
+              response.headers.get("content-type") ?? "",
+            ) ||
             !body.includes(`<link rel="canonical" href="${url.href}"`)
           ) {
             errors.push(
-              `production route ${url.pathname} does not return its exact canonical page`,
+              `production route ${url.pathname} does not return its exact canonical HTML page`,
             );
           } else {
             canonicalRoutesPassed += 1;
@@ -298,6 +381,7 @@ async function main() {
   );
 
   await writeEvidence("production-validation.json", {
+    schemaVersion: 1,
     status: errors.length === 0 ? "passed" : "failed",
     origin: expectedOrigin,
     dnsAnswerFamilies: {
@@ -315,7 +399,6 @@ async function main() {
       status: pagesHome.status,
       noindex: pagesNoindex,
     },
-    branchPreview,
     homeStatus: home.status,
     missingStatus: missing.status,
     deployedCommit,
@@ -323,6 +406,7 @@ async function main() {
     sitemapRoutes: sitemapLocations.length,
     canonicalRoutesPassed,
   });
+  productionEvidenceWritten = true;
   failIfErrors(
     "Production DNS, TLS, header, cache, and route validation",
     errors,
@@ -332,7 +416,19 @@ async function main() {
   );
 }
 
-main().catch((error) => {
+main().catch(async (error) => {
+  if (!productionEvidenceWritten) {
+    await writeEvidence("production-validation.json", {
+      schemaVersion: 1,
+      status: "failed",
+      origin: expectedOrigin,
+      expectedCommit: process.env.EXPECTED_COMMIT?.trim().toLowerCase(),
+      failure: {
+        name: error.name,
+        message: String(error.message).replace(/\?[^\s]*/g, "?[redacted]"),
+      },
+    });
+  }
   console.error(error.message);
   process.exitCode = 1;
 });

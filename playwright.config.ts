@@ -1,7 +1,45 @@
+import { execFileSync } from "node:child_process";
+
 import { defineConfig, devices } from "@playwright/test";
 
-const productionBaseUrl = process.env.BASE_URL;
+const externalBaseUrl = process.env.BASE_URL;
+const externalTestMode = process.env.EXTERNAL_TEST_MODE ?? "production";
 const localBaseUrl = "http://127.0.0.1:3000";
+const externalModes = new Set(["preview", "production"]);
+if (externalBaseUrl && !externalModes.has(externalTestMode)) {
+  throw new Error("EXTERNAL_TEST_MODE must be preview or production.");
+}
+
+const expectedCommit = externalBaseUrl
+  ? (externalTestMode === "preview"
+      ? process.env.EXPECTED_PREVIEW_COMMIT
+      : process.env.EXPECTED_COMMIT
+    )
+      ?.trim()
+      .toLowerCase()
+  : undefined;
+if (externalBaseUrl && !/^[0-9a-f]{40,64}$/.test(expectedCommit ?? "")) {
+  throw new Error(
+    externalTestMode === "preview"
+      ? "EXPECTED_PREVIEW_COMMIT must be a full hexadecimal commit ID."
+      : "EXPECTED_COMMIT must be a full hexadecimal commit ID.",
+  );
+}
+const sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], {
+  encoding: "utf8",
+})
+  .trim()
+  .toLowerCase();
+if (!/^[0-9a-f]{40,64}$/.test(sourceCommit)) {
+  throw new Error("Playwright source commit must be a full commit ID.");
+}
+if (externalBaseUrl && sourceCommit !== expectedCommit) {
+  throw new Error(
+    "Playwright checked-out source commit does not match the expected deployment commit.",
+  );
+}
+const testMode = externalBaseUrl ? externalTestMode : "local";
+const testOrigin = new URL(externalBaseUrl ?? localBaseUrl).origin;
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -9,6 +47,13 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
+  metadata: {
+    schemaVersion: 1,
+    mode: testMode,
+    origin: testOrigin,
+    expectedCommit: expectedCommit ?? null,
+    sourceCommit,
+  },
   reporter: [
     ["list"],
     ["html", { outputFolder: "playwright-report", open: "never" }],
@@ -17,7 +62,7 @@ export default defineConfig({
   timeout: 30_000,
   expect: { timeout: 8_000 },
   use: {
-    baseURL: productionBaseUrl ?? localBaseUrl,
+    baseURL: externalBaseUrl ?? localBaseUrl,
     actionTimeout: 10_000,
     navigationTimeout: 20_000,
     trace: "retain-on-failure",
@@ -25,7 +70,7 @@ export default defineConfig({
     video: "retain-on-failure",
     permissions: ["clipboard-read", "clipboard-write"],
   },
-  webServer: productionBaseUrl
+  webServer: externalBaseUrl
     ? undefined
     : {
         command: "npm run serve -- --port 3000",
@@ -33,24 +78,24 @@ export default defineConfig({
         reuseExistingServer: !process.env.CI,
         timeout: 120_000,
       },
-  projects: productionBaseUrl
+  projects: externalBaseUrl
     ? [
         {
-          name: "production",
-          testMatch: /production\.spec\.ts/,
+          name: externalTestMode,
+          testMatch: new RegExp(`${externalTestMode}\\.spec\\.ts$`),
           use: { ...devices["Desktop Chrome"] },
         },
       ]
     : [
         {
           name: "chromium",
-          testIgnore: /production\.spec\.ts/,
+          testIgnore: /(?:preview|production)\.spec\.ts/,
           grepInvert: /@mobile/,
           use: { ...devices["Desktop Chrome"] },
         },
         {
           name: "mobile-chromium",
-          testIgnore: /production\.spec\.ts/,
+          testIgnore: /(?:preview|production)\.spec\.ts/,
           grep: /@mobile/,
           use: { ...devices["Pixel 7"] },
         },

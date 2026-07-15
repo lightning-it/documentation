@@ -30,6 +30,10 @@ preview must not receive production credentials.
    changing the reviewed documents. Each reviewer must be explicitly mapped to
    the document's declared approver role in the protected authority policy.
    Regenerate and repeat review after any documentation change.
+   The `develop` branch preview must serve its exact deployment marker, remain
+   excluded from indexing, expose the search assets, and pass header, cache,
+   compression, accessibility, and browser checks. A missing preview is a
+   failed promotion gate, not an optional evidence item.
 4. Merge without bypassing a failed gate.
 5. Build the immutable static artifact, software bill of materials, and
    provenance where supported.

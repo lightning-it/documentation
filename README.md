@@ -109,18 +109,22 @@ than silently produce incomplete documentation.
 
 The initial site was developed after a conservative inventory of an approved
 private operations-documentation source. Nothing was copied wholesale. Public
-pages were re-authored from reviewed generic concepts and public component
-documentation; private and customer-specific operating procedures remain in
-their approved private repository. The public migration summary intentionally
-does not expose the private repository name, source paths, or findings.
+candidate pages were independently re-authored from generic topic intent and
+public component documentation; they remain pending human semantic, security,
+technical, and licensing review. Private and customer-specific operating
+procedures remain in their approved private repository. The public migration
+summary intentionally does not expose the private repository name, source
+paths, or findings.
 
 ## Deployment and rollback
 
 Cloudflare Pages builds `main` with `npm run build` and publishes `build/`.
-Pull-request branches receive previews without production credentials. To roll
-back, select the last accepted immutable Cloudflare deployment or revert the
-offending `main` commit through a reviewed pull request, then rerun production
-acceptance. See [ARCHITECTURE.md](./ARCHITECTURE.md) and
+Pull-request branches receive previews without production credentials. The
+protected `develop`-to-`main` promotion must validate the exact develop preview
+commit before merge; a missing or stale preview blocks production promotion.
+To roll back, select the last accepted immutable Cloudflare deployment or
+revert the offending `main` commit through a reviewed pull request, then rerun
+production acceptance. See [ARCHITECTURE.md](./ARCHITECTURE.md) and
 [RELEASE.md](./RELEASE.md).
 
 ## Security and support

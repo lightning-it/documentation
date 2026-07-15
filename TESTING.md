@@ -13,6 +13,8 @@
 | accessibility | Representative WCAG-oriented automation               | `npm run test:a11y`       |
 | performance   | Lighthouse thresholds                                 | `npm run test:lighthouse` |
 | approval      | Exact content-tree human-review evidence              | `npm run test:approval`   |
+| preview       | Exact-commit protected develop preview                | `npm run test:preview`    |
+| production    | Commit-bound public deployment acceptance             | `npm run test:production` |
 | complete      | Required local/CI aggregate                           | `npm run validate`        |
 
 CI uses a clean `npm ci` installation and the committed lockfile. A build must
@@ -26,6 +28,13 @@ the tracked approval record, add role-matched decisions by reviewers present in
 the protected authority policy, and mark every approval record approved. The
 authority policy intentionally fails closed until organization owners populate
 it.
+
+A `develop`-to-`main` pull request must pass the `preview / required` job. It
+waits for the fixed develop alias to serve the exact reviewed head commit, then
+checks noindex, canonical metadata, security headers, exact non-conflicting
+cache policy, compression, Pagefind, the custom 404, accessibility, and the
+browser journey. Its JSON and HTML evidence are uploaded under the immutable
+head commit. A later develop commit cannot satisfy an earlier promotion.
 
 ## Required browser journeys
 
@@ -49,3 +58,6 @@ journey. Network-dependent failures are triaged rather than silently ignored.
 On every `main` push, production acceptance first waits a bounded time for
 `/deployment-commit.json` to match the promoted commit, then records DNS, TLS,
 header, caching, search, link, accessibility, smoke, and Lighthouse evidence.
+The final evidence generator verifies that every input record refers to the
+same expected commit and canonical production origin; a passing status alone
+is insufficient.

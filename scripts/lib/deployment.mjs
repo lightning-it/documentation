@@ -20,6 +20,12 @@ export function resolveBuildCommit(environment = process.env) {
       "CF_PAGES_COMMIT_SHA",
     );
   }
+  if (environment.DOCUMENTATION_BUILD_COMMIT) {
+    return validatedCommit(
+      environment.DOCUMENTATION_BUILD_COMMIT,
+      "DOCUMENTATION_BUILD_COMMIT",
+    );
+  }
   if (environment.GITHUB_SHA) {
     return validatedCommit(environment.GITHUB_SHA, "GITHUB_SHA");
   }

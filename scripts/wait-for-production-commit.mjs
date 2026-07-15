@@ -60,6 +60,7 @@ async function main() {
         observedCommit = validateDeploymentMarker(await response.json());
         if (observedCommit === expectedCommit) {
           await writeEvidence("deployment-commit-validation.json", {
+            schemaVersion: 1,
             status: "passed",
             origin: expectedOrigin,
             markerPath: deploymentMarkerPath,
@@ -87,6 +88,7 @@ async function main() {
   }
 
   await writeEvidence("deployment-commit-validation.json", {
+    schemaVersion: 1,
     status: "failed",
     origin: expectedOrigin,
     markerPath: deploymentMarkerPath,

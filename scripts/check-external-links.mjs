@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -9,6 +10,7 @@ import {
 } from "./lib/validation.mjs";
 
 const timeoutMilliseconds = 15_000;
+const productionOrigin = "https://docs.l-it.io";
 
 function normalizedExternalUrls(content) {
   const urls = new Set();
@@ -109,6 +111,15 @@ async function checkUrl(url) {
 }
 
 async function main() {
+  const sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], {
+    cwd: repositoryRoot,
+    encoding: "utf8",
+  })
+    .trim()
+    .toLowerCase();
+  if (!/^[0-9a-f]{40,64}$/.test(sourceCommit)) {
+    throw new Error("Checked-out source is not a full Git commit ID.");
+  }
   const sourceFiles = [
     ...(await walkFiles(path.join(repositoryRoot, "docs"), (filePath) =>
       /\.mdx?$/.test(filePath),
@@ -157,7 +168,10 @@ async function main() {
       return `${parsed.hostname}${parsed.pathname}: ${status ?? error}`;
     });
   await writeEvidence("external-link-validation.json", {
+    schemaVersion: 1,
     status: errors.length === 0 ? "passed" : "failed",
+    origin: productionOrigin,
+    sourceCommit,
     checkedLinks: results.length,
     passingLinks: results.filter(({ ok }) => ok).length,
     failingLinks: errors.length,

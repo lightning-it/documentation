@@ -14,6 +14,7 @@ import {
   inlineScriptBodies,
   parseHtmlDocument,
 } from "./lib/html.mjs";
+import { exactCacheControl } from "./lib/cache-control.mjs";
 import {
   canonicalMatchesGeneratedRoute,
   failIfErrors,
@@ -37,11 +38,17 @@ function inlineScriptHashes(html) {
   );
 }
 
-function headerBlock(headers, pattern) {
+function headerBlock(headers, pattern, errors) {
   const lines = headers.split(/\r?\n/);
-  const start = lines.findIndex((line) => line.trim() === pattern);
+  const matchingBlocks = lines
+    .map((line, index) => (line.trim() === pattern ? index : -1))
+    .filter((index) => index !== -1);
+  const start = matchingBlocks[0] ?? -1;
   if (start === -1) {
     return new Map();
+  }
+  if (matchingBlocks.length > 1) {
+    errors.push(`${pattern}: duplicate header rule blocks are forbidden`);
   }
   const values = new Map();
   for (let index = start + 1; index < lines.length; index += 1) {
@@ -50,7 +57,14 @@ function headerBlock(headers, pattern) {
     }
     const match = lines[index].match(/^\s+([^:]+):\s*(.+)$/);
     if (match) {
-      values.set(match[1].toLocaleLowerCase("en-US"), match[2]);
+      const name = match[1].toLocaleLowerCase("en-US");
+      if (values.has(name)) {
+        errors.push(
+          `${pattern}: duplicate ${match[1]} header is forbidden because Cloudflare combines its values`,
+        );
+      } else {
+        values.set(name, match[2]);
+      }
     }
   }
   return values;
@@ -326,9 +340,8 @@ async function main() {
       `build/_headers: ${headerRules} rules exceed Cloudflare Pages limit`,
     );
   }
-  const globalHeaders = headerBlock(headersSource, "/*");
+  const globalHeaders = headerBlock(headersSource, "/*", errors);
   const requiredHeaders = new Map([
-    ["cache-control", /max-age=0.*must-revalidate/i],
     ["content-security-policy", /default-src 'self'/i],
     ["cross-origin-opener-policy", /^same-origin$/i],
     ["cross-origin-resource-policy", /^same-origin$/i],
@@ -342,6 +355,11 @@ async function main() {
     if (!expected.test(globalHeaders.get(header) ?? "")) {
       errors.push(`build/_headers: ${header} is missing or unsafe`);
     }
+  }
+  if (globalHeaders.has("cache-control")) {
+    errors.push(
+      "build/_headers: the catch-all must not override or combine with path-specific cache policy",
+    );
   }
   const csp = globalHeaders.get("content-security-policy") ?? "";
   const scriptSource = csp.match(/(?:^|;)\s*script-src\s+([^;]+)/i)?.[1] ?? "";
@@ -384,29 +402,45 @@ async function main() {
     }
   }
 
-  const assetHeaders = headerBlock(headersSource, "/assets/*");
+  const assetHeaders = headerBlock(headersSource, "/assets/*", errors);
   if (
-    !/max-age=31536000.*immutable/i.test(
-      assetHeaders.get("cache-control") ?? "",
-    )
+    !exactCacheControl(assetHeaders.get("cache-control") ?? "", [
+      "public",
+      "max-age=31536000",
+      "immutable",
+    ])
   ) {
     errors.push(
       "build/_headers: hashed assets require a one-year immutable cache policy",
     );
   }
-  const searchHeaders = headerBlock(headersSource, "/pagefind/*");
+  const searchHeaders = headerBlock(headersSource, "/pagefind/*", errors);
   if (
-    !/max-age=3600.*must-revalidate/i.test(
-      searchHeaders.get("cache-control") ?? "",
-    )
+    !exactCacheControl(searchHeaders.get("cache-control") ?? "", [
+      "public",
+      "max-age=3600",
+      "must-revalidate",
+    ])
   ) {
     errors.push("build/_headers: Pagefind assets require bounded revalidation");
+  }
+  const imageHeaders = headerBlock(headersSource, "/img/*", errors);
+  if (
+    !exactCacheControl(imageHeaders.get("cache-control") ?? "", [
+      "public",
+      "max-age=604800",
+      "stale-while-revalidate=86400",
+    ])
+  ) {
+    errors.push(
+      "build/_headers: image assets require bounded stale revalidation",
+    );
   }
   for (const previewRule of [
     "https://:project.pages.dev/*",
     "https://:version.:project.pages.dev/*",
   ]) {
-    const previewHeaders = headerBlock(headersSource, previewRule);
+    const previewHeaders = headerBlock(headersSource, previewRule, errors);
     if (!/^noindex$/i.test(previewHeaders.get("x-robots-tag") ?? "")) {
       errors.push(
         `build/_headers: ${previewRule} must be excluded from indexing`,
