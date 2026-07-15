@@ -1,0 +1,51 @@
+.main {
+  align-items: center;
+  background:
+    radial-gradient(
+      circle at 50% 0,
+      var(--lit-surface-accent),
+      transparent 42%
+    ),
+    var(--lit-surface-subtle);
+  display: flex;
+  min-height: calc(100vh - var(--ifm-navbar-height));
+  padding: 3rem 1rem;
+}
+
+.panel {
+  margin: 0 auto;
+  max-width: 42rem;
+  text-align: center;
+  width: 100%;
+}
+
+.code {
+  color: var(--ifm-color-primary);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  margin-bottom: 0.8rem;
+}
+
+.panel h1 {
+  font-size: clamp(2rem, 7vw, 3.6rem);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.description {
+  color: var(--lit-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 0 auto 2rem;
+  max-width: 37rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}

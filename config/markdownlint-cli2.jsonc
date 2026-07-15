@@ -1,0 +1,22 @@
+{
+  "config": {
+    "default": true,
+    "MD013": false,
+    "MD024": { "siblings_only": true },
+    "MD025": false,
+    "MD033": {
+      "allowed_elements": [
+        "details",
+        "summary",
+        "kbd",
+        "mark",
+        "TabItem",
+        "Tabs",
+      ],
+    },
+    "MD041": false,
+    "MD046": { "style": "fenced" },
+    "MD060": false,
+  },
+  "ignores": ["build/**", "evidence/generated/**", "node_modules/**"],
+}
