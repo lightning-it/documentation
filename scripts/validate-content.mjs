@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { access, readFile, readdir } from "node:fs/promises";
 import { isIP } from "node:net";
+import { TextDecoder } from "node:util";
 import path from "node:path";
 
 import Ajv2020 from "ajv/dist/2020.js";
@@ -132,7 +133,7 @@ function normalizeAnchor(value) {
   }
 }
 
-function secretFindings(filePath, content) {
+function secretFindings(filePath, content, { scanContactData = true } = {}) {
   const findings = [];
   const patterns = [
     [
@@ -195,22 +196,25 @@ function secretFindings(filePath, content) {
     }
   }
 
-  for (const match of content.matchAll(
-    /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g,
-  )) {
-    if (!match[0].toLocaleLowerCase("en-US").endsWith("@example.com")) {
+  if (scanContactData) {
+    for (const match of content.matchAll(
+      /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g,
+    )) {
+      if (match[0].toLocaleLowerCase("en-US").endsWith("@example.com")) {
+        continue;
+      }
       findings.push(
         `${repositoryPath(filePath)}:${lineNumberAt(content, match.index ?? 0)}: non-example email address`,
       );
     }
-  }
 
-  for (const match of content.matchAll(
-    /(?:\+\d[\d ().-]{7,}\d|\b\d{3}[- ]\d{3}[- ]\d{4}\b)/g,
-  )) {
-    findings.push(
-      `${repositoryPath(filePath)}:${lineNumberAt(content, match.index ?? 0)}: possible telephone number`,
-    );
+    for (const match of content.matchAll(
+      /(?:\+\d[\d ().-]{7,}\d|\b\d{3}[- ]\d{3}[- ]\d{4}\b)/g,
+    )) {
+      findings.push(
+        `${repositoryPath(filePath)}:${lineNumberAt(content, match.index ?? 0)}: possible telephone number`,
+      );
+    }
   }
 
   const assignmentPattern =
@@ -251,6 +255,45 @@ function secretFindings(filePath, content) {
   }
 
   return findings;
+}
+
+function gitObjectRecord(line) {
+  const separator = line.indexOf(" ");
+  const objectId = separator === -1 ? line : line.slice(0, separator);
+  const objectPath = separator === -1 ? null : line.slice(separator + 1);
+
+  if (!/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/.test(objectId)) {
+    throw new Error("Git returned an invalid object identifier");
+  }
+
+  return { objectId, objectPath: objectPath || null };
+}
+
+function decodeHistoryTextBlob(buffer) {
+  if (buffer.includes(0)) {
+    return null;
+  }
+
+  try {
+    const content = new TextDecoder("utf-8", { fatal: true }).decode(buffer);
+    for (const character of content) {
+      const codePoint = character.codePointAt(0);
+      if (
+        codePoint !== undefined &&
+        codePoint < 32 &&
+        ![9, 10, 12, 13].includes(codePoint)
+      ) {
+        return null;
+      }
+    }
+    return content;
+  } catch {
+    return null;
+  }
+}
+
+function isGeneratedNpmLockfile(objectPath) {
+  return objectPath === "package-lock.json";
 }
 
 async function walkPublicTree(directory) {
@@ -647,6 +690,7 @@ async function main() {
   }
 
   let historyBlobsScanned = 0;
+  let historyBinaryBlobsSkipped = 0;
   let historySensitiveBlobs = 0;
   try {
     const objects = execFileSync("git", ["rev-list", "--objects", "--all"], {
@@ -654,8 +698,13 @@ async function main() {
       encoding: "utf8",
       maxBuffer: 10 * 1024 * 1024,
     });
+    const visitedObjectIds = new Set();
     for (const line of objects.split("\n").filter(Boolean)) {
-      const [objectId] = line.split(" ", 1);
+      const { objectId, objectPath } = gitObjectRecord(line);
+      if (visitedObjectIds.has(objectId)) {
+        continue;
+      }
+      visitedObjectIds.add(objectId);
       const type = execFileSync("git", ["cat-file", "-t", objectId], {
         cwd: repositoryRoot,
         encoding: "utf8",
@@ -663,24 +712,34 @@ async function main() {
       if (type !== "blob") {
         continue;
       }
+      if (objectPath === null) {
+        throw new Error("Git returned a blob without its repository path");
+      }
       const size = Number(
         execFileSync("git", ["cat-file", "-s", objectId], {
           cwd: repositoryRoot,
           encoding: "utf8",
         }).trim(),
       );
-      if (!Number.isFinite(size) || size > 5 * 1024 * 1024) {
-        continue;
+      if (!Number.isSafeInteger(size) || size < 0 || size > 5 * 1024 * 1024) {
+        throw new Error("Git returned a blob outside the safe scan limit");
       }
       const blob = execFileSync("git", ["cat-file", "-p", objectId], {
         cwd: repositoryRoot,
-        encoding: "utf8",
         maxBuffer: 6 * 1024 * 1024,
       });
+      const content = decodeHistoryTextBlob(blob);
+      if (content === null) {
+        historyBinaryBlobsSkipped += 1;
+        continue;
+      }
       historyBlobsScanned += 1;
       if (
-        secretFindings(path.join(repositoryRoot, "history-blob"), blob).length >
-        0
+        secretFindings(path.join(repositoryRoot, "history-blob"), content, {
+          // npm copies public registry deprecation notices into this generated
+          // file. Credential and private-network checks remain enabled.
+          scanContactData: !isGeneratedNpmLockfile(objectPath),
+        }).length > 0
       ) {
         historySensitiveBlobs += 1;
       }
@@ -746,6 +805,7 @@ async function main() {
     scannedTextFiles: uniqueScanFiles.length,
     reviewedAssets: actualAssets.length,
     historyBlobsScanned,
+    historyBinaryBlobsSkipped,
     status: errors.length === 0 ? "passed" : "failed",
     sourceDigest: sha256(
       [...documentByPath.values()].map(({ source }) => source).join("\n"),
