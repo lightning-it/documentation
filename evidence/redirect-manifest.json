@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-07-14",
+  "redirects": [],
+  "status": "NO_CONFIRMED_PUBLIC_LEGACY_ENDPOINTS",
+  "reason": "No previously published public documentation URL was verified. Repository-local private paths are not exposed as redirects."
+}
