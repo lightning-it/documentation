@@ -105,7 +105,7 @@
     "pagefind": "1.5.2",
     "parse5": "8.0.1",
     "prettier": "3.9.5",
-    "typescript": "7.0.2",
+    "typescript": "5.9.3",
     "typescript-eslint": "8.64.0",
     "vitest": "4.1.10",
     "yaml": "2.9.0"
