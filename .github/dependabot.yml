@@ -18,6 +18,26 @@ updates:
           - "@playwright/*"
           - "@testing-library/*"
           - "vitest"
+    ignore:
+      # eslint-plugin-jsx-a11y 6.10.2 supports ESLint only through v9.
+      - dependency-name: eslint
+        versions:
+          - ">=10.0.0"
+      - dependency-name: "@eslint/js"
+        versions:
+          - ">=10.0.0"
+      # Runtime and CI are pinned to Node 24.
+      - dependency-name: "@types/node"
+        versions:
+          - ">=25.0.0"
+      # @docusaurus/theme-mermaid 3.10.2 requires layout-elk ^0.1.9.
+      - dependency-name: "@mermaid-js/layout-elk"
+        versions:
+          - ">=0.2.0"
+      # typescript-eslint 8.64.0 supports TypeScript versions below 6.1.
+      - dependency-name: typescript
+        versions:
+          - ">=6.1.0"
     labels:
       - dependencies
   - package-ecosystem: github-actions
