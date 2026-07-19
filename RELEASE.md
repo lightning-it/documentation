@@ -1,62 +1,44 @@
-# Release and deployment model
+# Release Model
 
-## Branches
+This repository follows the Lightning IT shared release and quality model.
 
-- `develop`: protected default integration branch.
-- `main`: protected stable branch and Cloudflare production source.
-- topic branches: short-lived pull-request branches.
+## Repository Classification
 
-All changes use pull requests, required checks, review, stale-approval
-dismissal, last-push approval, and resolved conversations. Force pushes and
-branch deletion are disabled for protected branches.
+- Repository: `documentation`
+- Type: `generic_managed`
+- Release type: `none`
+- Artifact type: `none`
+- Visibility: `public`
+- Release evidence: `disabled`
+- Heavy Incus release validation: `not required`
 
-## Pull-request validation
+## Branch Flow
 
-The required aggregate gate installs from the lockfile, checks formatting,
-lint, TypeScript, Markdown, terminology, metadata, links, images, duplicate
-identifiers, secrets, licenses, dependencies, unit tests, Docusaurus build,
-Pagefind index, generated HTML, accessibility, and browser smoke tests. A
-preview must not receive production credentials.
+- `develop` is the integration branch for normal work, Renovate updates, and shared-assets-lit synchronization.
+- `main` is the protected release branch.
+- This repository does not publish release artifacts; `main` still represents the protected stable branch.
+- A `develop` to `main` promotion PR is created automatically when releasable changes exist.
+- The `develop` to `main` PR is a manual gate and must never be auto-merged.
+- After `main` changes, a `main` to `develop` backmerge PR is created or updated automatically.
+- Integration and backmerge PRs may auto-merge only after required checks pass, all review conversations are resolved, and there are no conflicts.
 
-## Production promotion
+## Mandatory Quality Gates
 
-1. Open a `develop` to `main` pull request.
-2. Repeat the complete required validation.
-3. Review content, migration, security, and preview evidence. Finalize the
-   content and proposed `maintained`/`approved` metadata, then generate the
-   deterministic documentation-tree approval request with
-   `npm run approval:request`. An independent authorized CODEOWNER records the
-   matching per-role decisions in `evidence/document-approval.json` without
-   changing the reviewed documents. Each reviewer must be explicitly mapped to
-   the document's declared approver role in the protected authority policy.
-   Regenerate and repeat review after any documentation change.
-   The `develop` branch preview must serve its exact deployment marker, remain
-   excluded from indexing, expose the search assets, and pass header, cache,
-   compression, accessibility, and browser checks. A missing preview is a
-   failed promotion gate, not an optional evidence item.
-4. Merge without bypassing a failed gate.
-5. Build the immutable static artifact, software bill of materials, and
-   provenance where supported.
-6. Deploy `main` to Cloudflare Pages.
-7. Wait until the public deployment marker serves the promoted commit, then
-   validate DNS, TLS, canonical host, headers, navigation, search, links,
-   accessibility smoke checks, and representative performance from the public
-   endpoint.
-8. Record production commit, deployment identifier, test results, and rollback
-   version in private release evidence when environment detail is sensitive.
+- Required profiles: `repository-structure`.
+- OS matrix: `ubuntu-latest`.
+- Product/runtime matrix: `generic`.
+- Fork pull requests run validation without publishing credentials.
+- Publishing secrets are available only to trusted `main` release workflows.
+- GitHub token permissions must stay least-privilege for each workflow.
 
-## Rollback
+## Managed Repository Release
 
-Cloudflare's previous accepted immutable deployment is the fastest content
-rollback. If the source must also be corrected, revert the production commit in
-a reviewed pull request and promote the fix normally. Do not change DNS for a
-routine rollback. Confirm the restored version at `https://docs.l-it.io` and
-record the acceptance evidence.
+- CI validates repository structure and file formats appropriate to the repository contents.
+- Generated documentation is maintained by shared-assets-lit.
+- Artifact/version behavior is documented in repository-specific files when artifacts are published.
 
-## Release evidence
+## Release Evidence
 
-Public evidence is sanitized and reproducible. It may include commit IDs,
-dependency/SBOM metadata, test summaries, and public URLs. Tokens, account and
-zone identifiers, internal logs, private source paths, security findings,
-customer facts, and protected audit evidence remain in approved private
-systems.
+Release evidence is disabled because this repository does not publish release artifacts. Evidence records the repository name, repository type, version, tag, commit SHA, workflow run, tested matrix combinations, passed/failed/skipped jobs, built artifacts, published artifacts, changelog link, security scan result, and SBOM/provenance/signature links when available.
+
+Evidence files must not contain tokens, credentials, private inventory values, or secret material.
