@@ -1,63 +1,46 @@
 # Testing
 
-## Test profiles
+This repository uses the Lightning IT shared test model.
 
-| Profile       | Purpose                                               | Typical command           |
-| ------------- | ----------------------------------------------------- | ------------------------- |
-| format        | Deterministic source formatting                       | `npm run format:check`    |
-| lint          | TypeScript source, Markdown, and terminology          | `npm run lint`            |
-| content       | Metadata, links, images, IDs, and safety checks       | `npm run test:content`    |
-| unit          | Custom component behavior                             | `npm run test:unit`       |
-| build         | Docusaurus, public commit marker, and Pagefind output | `npm run build`           |
-| browser       | Navigation, search, themes, mobile, 404, and console  | `npm run test:e2e`        |
-| accessibility | Representative WCAG-oriented automation               | `npm run test:a11y`       |
-| performance   | Lighthouse thresholds                                 | `npm run test:lighthouse` |
-| approval      | Exact content-tree human-review evidence              | `npm run test:approval`   |
-| preview       | Exact-commit protected develop preview                | `npm run test:preview`    |
-| production    | Commit-bound public deployment acceptance             | `npm run test:production` |
-| complete      | Required local/CI aggregate                           | `npm run validate`        |
+## Test Profiles
 
-CI uses a clean `npm ci` installation and the committed lockfile. A build must
-also succeed without network access after the package cache is populated where
-the runner permits that test.
+- `repository-structure`
 
-Production promotion additionally requires `npm run test:approval`. Generate a
-non-circular candidate evidence record with `npm run approval:request`; only an
-authorized CODEOWNER may copy the reviewed digest and exact document ID set to
-the tracked approval record, add role-matched decisions by reviewers present in
-the protected authority policy, and mark every approval record approved. The
-authority policy intentionally fails closed until organization owners populate
-it.
+## Supported Matrix
 
-A `develop`-to-`main` pull request must pass the `preview / required` job. It
-waits for the fixed develop alias to serve the exact reviewed head commit, then
-checks noindex, canonical metadata, security headers, exact non-conflicting
-cache policy, compression, Pagefind, the custom 404, accessibility, and the
-browser journey. Its JSON and HTML evidence are uploaded under the immutable
-head commit. A later develop commit cannot satisfy an earlier promotion.
+Operating systems and runners:
 
-## Required browser journeys
+- `ubuntu-latest`
 
-The end-to-end suite covers the landing page, Pagefind search, all four product
-entries, architecture, security, compliance, theme switching, mobile
-navigation, TYPO3 and public GitHub outbound links, the custom 404 page, browser
-console errors, and failed first-party requests.
+Products and runtimes:
 
-## Performance budgets
+- `generic`
 
-Representative Lighthouse runs enforce justified minimum scores of 90 for
-performance and 95 for accessibility, best practices, and search-engine
-optimization. A threshold is a floor, not a target; material regressions must
-be fixed even if the score still passes.
+## When Tests Run
 
-## Scheduled checks
+- Normal pull requests run pre-commit, linting, syntax checks, and light tests relevant to changed files.
+- Renovate and shared-assets-lit synchronization pull requests target `develop` and may auto-merge only after required checks pass.
+- `develop` to `main` promotion pull requests run the strongest validation profile for this repository.
+- Trusted `main` release workflows build and publish artifacts only after validation succeeds.
 
-Scheduled validation checks external links, dependency/vulnerability health,
-stale review metadata, public domain/TLS availability, and the production smoke
-journey. Network-dependent failures are triaged rather than silently ignored.
-On every `main` push, production acceptance first waits a bounded time for
-`/deployment-commit.json` to match the promoted commit, then records DNS, TLS,
-header, caching, search, link, accessibility, smoke, and Lighthouse evidence.
-The final evidence generator verifies that every input record refers to the
-same expected commit and canonical production origin; a passing status alone
-is insufficient.
+## Local Commands
+
+Run pre-commit locally:
+
+```bash
+pre-commit run --all-files
+```
+
+Run repository-specific light checks from the checked-out repository:
+
+```bash
+bash scripts/wunder-devtools-ee.sh true
+```
+
+Heavy Incus tests require an Ubuntu host or runner with Incus available, suitable images, and repository-specific scenario configuration. Heavy tests must use sanitized inputs and must not rely on private inventory values.
+
+## Interpreting GitHub Actions
+
+The GitHub Actions matrix is the primary dashboard. Job names should expose the repository class, OS/runtime, and profile, for example `ansible / rhel9 / molecule-heavy-incus` or `container / ubuntu / build-smoke`.
+
+Release evidence is generated during trusted release workflows and attached to or linked from GitHub Releases where the repository publishes release artifacts.

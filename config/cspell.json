@@ -30,6 +30,7 @@
     "OpenShift",
     "Pagefind",
     "Playwright",
+    "SARIF",
     "SBOM",
     "Sicherheit",
     "TYPO3",
@@ -37,6 +38,7 @@
     "WCAG",
     "Wunder",
     "ansible",
+    "backmerge",
     "cyclonedx",
     "devtools",
     "frontmatter",
@@ -45,6 +47,7 @@
     "lifecycle",
     "modulix",
     "noindex",
+    "openssf",
     "provenance",
     "runbook",
     "runbooks",
@@ -52,6 +55,7 @@
     "toolbox",
     "traceability",
     "vSphere",
+    "wunder",
     "wunderbox"
   ]
 }
