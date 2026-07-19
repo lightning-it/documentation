@@ -34,7 +34,7 @@ updates:
       - dependency-name: "@mermaid-js/layout-elk"
         versions:
           - ">=0.2.0"
-      # typescript-eslint 8.64.0 supports TypeScript versions below 6.1.
+      # typescript-eslint 8.64.0 does not support TypeScript 6.1 or above.
       - dependency-name: typescript
         versions:
           - ">=6.1.0"
