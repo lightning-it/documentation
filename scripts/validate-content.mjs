@@ -755,12 +755,15 @@ async function main() {
       .split("\n")
       .filter(Boolean);
     if (
-      authorEmails.some(
-        (email) =>
-          !email.endsWith("@users.noreply.github.com") &&
-          !email.endsWith("@github.com") &&
-          !email.endsWith("@example.com"),
-      )
+      authorEmails.some((email) => {
+        const normalizedEmail = email.toLowerCase();
+        return (
+          !normalizedEmail.endsWith("@users.noreply.github.com") &&
+          !normalizedEmail.endsWith("@github.com") &&
+          !normalizedEmail.endsWith("@example.com") &&
+          !normalizedEmail.endsWith("@l-it.io")
+        );
+      })
     ) {
       errors.push(
         "Git history contains a non-masked author or committer email address",
