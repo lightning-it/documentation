@@ -200,7 +200,11 @@ function secretFindings(filePath, content, { scanContactData = true } = {}) {
     for (const match of content.matchAll(
       /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g,
     )) {
-      if (match[0].toLocaleLowerCase("en-US").endsWith("@example.com")) {
+      const email = match[0].toLocaleLowerCase("en-US");
+      if (
+        email.endsWith("@example.com") ||
+        email.endsWith("@users.noreply.github.com")
+      ) {
         continue;
       }
       findings.push(
