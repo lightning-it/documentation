@@ -5,8 +5,8 @@ description: Find the public GitHub repositories and Lightning IT product-contex
 slug: /reference/public-sources/
 sidebar_position: 3
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

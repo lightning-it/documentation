@@ -5,8 +5,8 @@ description: Operate an infrastructure platform through readiness, controlled ch
 slug: /wunderbox/operations/
 sidebar_position: 4
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

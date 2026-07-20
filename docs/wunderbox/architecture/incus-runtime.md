@@ -5,8 +5,8 @@ description: Evaluate Incus as a possible Wunderbox runtime without implying a t
 slug: /wunderbox/architecture/incus-runtime/
 sidebar_position: 1
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

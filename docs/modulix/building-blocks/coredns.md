@@ -4,8 +4,8 @@ title: CoreDNS building-block contract
 description: Define the public configuration, validation, and recovery contract for a CoreDNS service building block.
 slug: /modulix/building-blocks/coredns/
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

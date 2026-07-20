@@ -5,8 +5,8 @@ description: Review a cross-product integration without assuming a mandatory por
 slug: /architecture/integration-decisions/
 sidebar_position: 2
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

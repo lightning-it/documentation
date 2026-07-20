@@ -5,8 +5,8 @@ description: Assess a RHEL 10 host only after pinning an AAP release, deployment
 slug: /modulix/blueprints/aap-rhel10-host-preparation/
 sidebar_position: 3
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

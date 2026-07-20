@@ -4,8 +4,8 @@ title: DHCP building-block contract
 description: Define the public scope, input, validation, and recovery contract for an automated DHCP service.
 slug: /modulix/building-blocks/dhcp/
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

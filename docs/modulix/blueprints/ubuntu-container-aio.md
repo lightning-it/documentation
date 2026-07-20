@@ -5,8 +5,8 @@ description: Define the evidence required before an all-in-one Ubuntu container 
 slug: /modulix/blueprints/ubuntu-container-aio/
 sidebar_position: 6
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

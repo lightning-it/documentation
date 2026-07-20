@@ -5,8 +5,8 @@ description: Isolate infrastructure platform failures without exposing topology 
 slug: /wunderbox/troubleshooting/
 sidebar_position: 6
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

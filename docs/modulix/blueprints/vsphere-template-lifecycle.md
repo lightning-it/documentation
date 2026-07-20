@@ -5,8 +5,8 @@ description: Evaluate a template lifecycle without implying a tested vSphere rel
 slug: /modulix/blueprints/vsphere-template-lifecycle/
 sidebar_position: 1
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

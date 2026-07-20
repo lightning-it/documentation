@@ -5,8 +5,8 @@ description: Design a controller workflow that decrypts approved Ansible Vault d
 slug: /modulix/blueprints/aap-ansible-vault/
 sidebar_position: 4
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
