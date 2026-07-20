@@ -2,6 +2,7 @@
 
 <!-- BEGIN LIT_QUALITY_BADGES -->
 
+[![CI](https://github.com/lightning-it/documentation/actions/workflows/repository-quality.yml/badge.svg?branch=develop)](https://github.com/lightning-it/documentation/actions/workflows/repository-quality.yml)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/lightning-it/documentation/badge)](https://scorecard.dev/viewer/?uri=github.com/lightning-it/documentation)
 [![CodeQL](https://github.com/lightning-it/documentation/actions/workflows/codeql.yml/badge.svg?branch=develop)](https://github.com/lightning-it/documentation/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
