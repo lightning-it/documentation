@@ -9,6 +9,15 @@ import {
   parseHtmlDocument,
 } from "./html.mjs";
 
+import {
+  canonicalMatchesGeneratedRoute,
+  generatedPageUrl,
+  isMixedContentReference,
+  isSafeErrorPageReference,
+  normalizedHeadingId,
+  sameOriginPathname,
+} from "./validation.mjs";
+
 test("canonical URL matching is independent of HTML attribute order", () => {
   const canonicalUrl = "https://docs.l-it.io/guide/";
 
@@ -42,14 +51,6 @@ test("canonical URL matching is independent of HTML attribute order", () => {
     false,
   );
 });
-import {
-  canonicalMatchesGeneratedRoute,
-  generatedPageUrl,
-  isMixedContentReference,
-  isSafeErrorPageReference,
-  normalizedHeadingId,
-  sameOriginPathname,
-} from "./validation.mjs";
 
 test("HTML parsing handles quoted tag delimiters and exact script attributes", () => {
   const source =
