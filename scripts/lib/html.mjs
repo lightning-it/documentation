@@ -45,6 +45,18 @@ export function htmlFragmentText(source) {
   return htmlText(parseFragment(source, { scriptingEnabled: false }));
 }
 
+export function hasExactCanonicalUrl(source, expectedUrl) {
+  const canonicalLinks = htmlElements(parseHtmlDocument(source)).filter(
+    (element) =>
+      element.tagName === "link" &&
+      htmlAttribute(element, "rel") === "canonical",
+  );
+  return (
+    canonicalLinks.length === 1 &&
+    htmlAttribute(canonicalLinks[0], "href") === expectedUrl
+  );
+}
+
 export function inlineScriptBodies(source) {
   const bodies = [];
   const document = parse(source, {

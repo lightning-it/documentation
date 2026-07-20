@@ -6,6 +6,7 @@ import {
   validateDeploymentMarker,
 } from "./lib/deployment.mjs";
 import { exactCacheControlOneOf } from "./lib/cache-control.mjs";
+import { hasExactCanonicalUrl } from "./lib/html.mjs";
 import { failIfErrors, writeEvidence } from "./lib/validation.mjs";
 
 const expectedOrigin = "https://docs.l-it.io";
@@ -155,7 +156,7 @@ async function main() {
       "production script-src lacks exact hashes or permits unsafe execution",
     );
   }
-  if (!homeHtml.includes(`<link rel="canonical" href="${expectedOrigin}/"`)) {
+  if (!hasExactCanonicalUrl(homeHtml, `${expectedOrigin}/`)) {
     errors.push("production home page has no exact canonical URL");
   }
 
@@ -365,7 +366,7 @@ async function main() {
             !/^text\/html\b/i.test(
               response.headers.get("content-type") ?? "",
             ) ||
-            !body.includes(`<link rel="canonical" href="${url.href}"`)
+            !hasExactCanonicalUrl(body, url.href)
           ) {
             errors.push(
               `production route ${url.pathname} does not return its exact canonical HTML page`,

@@ -3,6 +3,7 @@ import {
   validateDeploymentMarker,
 } from "./lib/deployment.mjs";
 import { exactCacheControlOneOf } from "./lib/cache-control.mjs";
+import { hasExactCanonicalUrl } from "./lib/html.mjs";
 import { failIfErrors, writeEvidence } from "./lib/validation.mjs";
 
 const expectedOrigin = "https://develop.lightning-it-documentation.pages.dev";
@@ -180,7 +181,7 @@ async function main() {
     errors.push("preview HTML is not compressed");
   }
   if (
-    !homeHtml.includes('<link rel="canonical" href="https://docs.l-it.io/"') ||
+    !hasExactCanonicalUrl(homeHtml, "https://docs.l-it.io/") ||
     !homeHtml.includes("Search public documentation")
   ) {
     errors.push("preview home lacks canonical or search markup");
