@@ -46,7 +46,8 @@ export function htmlFragmentText(source) {
 }
 
 export function hasExactCanonicalUrl(source, expectedUrl) {
-  const canonicalLinks = htmlElements(parseHtmlDocument(source)).filter(
+  const document = parse(source, { scriptingEnabled: false });
+  const canonicalLinks = htmlElements(document).filter(
     (element) =>
       element.tagName === "link" &&
       htmlAttribute(element, "rel") === "canonical",
