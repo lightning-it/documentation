@@ -309,7 +309,7 @@
   align-items: center;
   background: var(--lit-surface-subtle);
   border-top: 1px solid var(--lit-border);
-  color: var(--lit-text-subtle);
+  color: var(--lit-text-muted);
   display: flex;
   font-size: 0.7rem;
   gap: 1rem;
