@@ -4,8 +4,8 @@ title: Disconnected ModuLix runtime base contract
 description: Define the ModuLix content and execution-runtime boundary without conflating it with an automation-platform installation.
 slug: /modulix/installation/disconnected-runtime/
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

@@ -4,8 +4,8 @@ title: Nexus Repository interface candidate
 description: Review the published Nexus role interface without treating its template coverage as a supported deployment.
 slug: /modulix/building-blocks/nexus/
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

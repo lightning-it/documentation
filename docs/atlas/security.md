@@ -5,8 +5,8 @@ description: Protect telemetry sources, context, queries, exports, and observabi
 slug: /atlas/security/
 sidebar_position: 5
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

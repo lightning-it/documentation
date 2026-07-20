@@ -5,8 +5,8 @@ description: Understand how public documentation supports mapping without making
 slug: /compliance/
 sidebar_position: 1
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

@@ -5,8 +5,8 @@ description: Diagnose missing, delayed, duplicated, or misleading observations a
 slug: /atlas/troubleshooting/
 sidebar_position: 6
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

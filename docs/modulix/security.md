@@ -5,8 +5,8 @@ description: Review trust boundaries, privileges, secrets, and evidence for Modu
 slug: /modulix/security/
 sidebar_position: 11
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

@@ -5,8 +5,8 @@ description: Diagnose cross-product problems through boundaries, controlled hypo
 slug: /support/troubleshooting/
 sidebar_position: 2
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

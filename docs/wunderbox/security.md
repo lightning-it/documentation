@@ -5,8 +5,8 @@ description: Review infrastructure platform trust zones, management access, isol
 slug: /wunderbox/security/
 sidebar_position: 5
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

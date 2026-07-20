@@ -115,8 +115,8 @@ test("08 — open security documentation", async ({ page }) => {
   await expectPage(page, "/security/", /Security overview/i);
   const metadata = page.getByRole("region", { name: "Document metadata" });
   await expect(metadata).toBeVisible();
-  await expect(metadata).toContainText("Review candidate");
-  await expect(metadata).toContainText("Pending");
+  await expect(metadata).toContainText("Maintained");
+  await expect(metadata).toContainText("Approved");
   await expect(metadata).toContainText(
     "Lightning IT Documentation Maintainers",
   );
