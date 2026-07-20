@@ -3,6 +3,20 @@
 This file is authoritative for human and AI-assisted changes to the public
 Lightning IT documentation platform.
 
+## Codex execution policy
+
+Before accepting or executing a GitHub issue, read and follow
+[CODEX_EXECUTION_GUIDE.md](./CODEX_EXECUTION_GUIDE.md). It defines the durable
+issue workflow, dependency gates, model and reasoning selection, cost controls,
+validation, pull-request handoff, and human approval boundaries for Codex work.
+
+Treat the assigned issue body as the execution contract. Do not ask the user to
+repeat scope or acceptance criteria already recorded there. Stop and record the
+blocker when a dependency, publication decision, credential, external authority,
+or maintainer approval is missing. Model capability never overrides the
+publication boundary, phase constraints, required review, or human decision
+authority in this file.
+
 ## Scope and product model
 
 This public repository owns conceptual, cross-product, and public technical
