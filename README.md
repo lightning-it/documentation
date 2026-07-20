@@ -30,10 +30,10 @@ Publishing targets: `none`.
 
 ## Supported and Tested Platforms
 
-| Platform / Product | Status | Validation |
-|---|---:|---|
-| ubuntu-latest | Supported | Repository quality |
-| generic | Tested where applicable | Repository quality |
+| Platform / Product |                  Status | Validation         |
+| ------------------ | ----------------------: | ------------------ |
+| ubuntu-latest      |               Supported | Repository quality |
+| generic            | Tested where applicable | Repository quality |
 
 <!-- END LIT_SHARED_RELEASE_MODEL -->
 
