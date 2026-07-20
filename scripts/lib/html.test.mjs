@@ -4,9 +4,11 @@ import { test } from "node:test";
 import {
   htmlAttribute,
   htmlElements,
+  hasExactCanonicalUrl,
   inlineScriptBodies,
   parseHtmlDocument,
 } from "./html.mjs";
+
 import {
   canonicalMatchesGeneratedRoute,
   generatedPageUrl,
@@ -15,6 +17,40 @@ import {
   normalizedHeadingId,
   sameOriginPathname,
 } from "./validation.mjs";
+
+test("canonical URL matching is independent of HTML attribute order", () => {
+  const canonicalUrl = "https://docs.l-it.io/guide/";
+
+  assert.equal(
+    hasExactCanonicalUrl(
+      `<link data-rh="true" href="${canonicalUrl}" rel="canonical">`,
+      canonicalUrl,
+    ),
+    true,
+  );
+  assert.equal(
+    hasExactCanonicalUrl(
+      `<link rel="canonical" href="${canonicalUrl}">`,
+      canonicalUrl,
+    ),
+    true,
+  );
+  assert.equal(
+    hasExactCanonicalUrl(
+      `<link rel="canonical" href="${canonicalUrl}">` +
+        `<link rel="canonical" href="${canonicalUrl}">`,
+      canonicalUrl,
+    ),
+    false,
+  );
+  assert.equal(
+    hasExactCanonicalUrl(
+      '<link rel="canonical" href="https://docs.l-it.io/other/">',
+      canonicalUrl,
+    ),
+    false,
+  );
+});
 
 test("HTML parsing handles quoted tag delimiters and exact script attributes", () => {
   const source =
