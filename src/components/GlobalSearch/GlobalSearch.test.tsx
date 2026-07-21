@@ -8,7 +8,7 @@ import {
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import GlobalSearch, { SearchTrigger } from "./index";
+import GlobalSearch, { SearchTrigger, openSearchEvent } from "./index";
 import { searchDocumentation } from "./searchClient";
 
 vi.mock("./searchClient", () => ({
@@ -48,17 +48,36 @@ describe("GlobalSearch", () => {
     ).toHaveAttribute("aria-label", "Find documentation");
   });
 
-  it("opens with the keyboard shortcut and moves focus to the search input", () => {
+  it("opens with the keyboard shortcut and moves focus to the search input", async () => {
     render(<GlobalSearch />);
 
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
 
-    expect(
-      screen.getByRole("dialog", { name: "Search public documentation" }),
-    ).toHaveAttribute("open");
-    expect(
-      screen.getByRole("searchbox", { name: "Search terms" }),
-    ).toHaveFocus();
+    await screen.findByRole("dialog", {
+      name: "Search public documentation",
+    });
+    await waitFor(() =>
+      expect(
+        screen.getByRole("dialog", { name: "Search public documentation" }),
+      ).toHaveAttribute("open"),
+    );
+    await waitFor(() =>
+      expect(
+        screen.getByRole("searchbox", { name: "Search terms" }),
+      ).toHaveFocus(),
+    );
+  });
+
+  it("opens with an empty query when the custom event detail is undefined", async () => {
+    render(<GlobalSearch />);
+
+    fireEvent(window, new CustomEvent(openSearchEvent, { detail: undefined }));
+
+    const searchbox = await screen.findByRole("searchbox", {
+      name: "Search terms",
+    });
+    expect(searchbox).toHaveValue("");
+    await waitFor(() => expect(searchbox).toHaveFocus());
   });
 
   it("returns keyboard-focusable Pagefind results with safe highlighting", async () => {
@@ -68,7 +87,7 @@ describe("GlobalSearch", () => {
     await user.click(
       screen.getByRole("button", { name: "Search documentation" }),
     );
-    await user.type(screen.getByRole("searchbox"), "ModuLix");
+    await user.type(await screen.findByRole("searchbox"), "ModuLix");
 
     await waitFor(() =>
       expect(searchDocumentationMock).toHaveBeenCalledWith("ModuLix"),
@@ -103,7 +122,7 @@ describe("GlobalSearch", () => {
     await user.click(
       screen.getByRole("button", { name: "Search documentation" }),
     );
-    await user.type(screen.getByRole("searchbox"), "platform");
+    await user.type(await screen.findByRole("searchbox"), "platform");
     const atlasResult = await screen.findByRole("link", { name: /Atlas/ });
 
     fireEvent.keyDown(screen.getByRole("searchbox"), { key: "ArrowUp" });
@@ -120,7 +139,7 @@ describe("GlobalSearch", () => {
 
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
-    expect(screen.getByRole("searchbox")).toHaveFocus();
+    expect(await screen.findByRole("searchbox")).toHaveFocus();
 
     fireEvent.click(screen.getByRole("button", { name: "Close search" }));
 
@@ -136,7 +155,9 @@ describe("GlobalSearch", () => {
     trigger.focus();
 
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
-    fireEvent.click(screen.getByRole("button", { name: "Close search" }));
+    fireEvent.click(
+      await screen.findByRole("button", { name: "Close search" }),
+    );
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
 
     const dialog = screen.getByRole("dialog", {
@@ -149,7 +170,6 @@ describe("GlobalSearch", () => {
   });
 
   it("invalidates an in-flight result immediately when the query changes", async () => {
-    vi.useFakeTimers();
     const staleRequest =
       deferred<Awaited<ReturnType<typeof searchDocumentation>>>();
     const currentRequest =
@@ -162,7 +182,8 @@ describe("GlobalSearch", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Search documentation" }),
     );
-    const input = screen.getByRole("searchbox");
+    const input = await screen.findByRole("searchbox");
+    vi.useFakeTimers();
     fireEvent.change(input, { target: { value: "first" } });
     await act(() => vi.advanceTimersByTimeAsync(150));
     expect(searchDocumentationMock).toHaveBeenCalledWith("first");
@@ -191,7 +212,6 @@ describe("GlobalSearch", () => {
   });
 
   it("invalidates an in-flight result immediately when the query is cleared", async () => {
-    vi.useFakeTimers();
     const request = deferred<Awaited<ReturnType<typeof searchDocumentation>>>();
     searchDocumentationMock.mockReturnValue(request.promise);
     render(<GlobalSearch />);
@@ -199,7 +219,8 @@ describe("GlobalSearch", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Search documentation" }),
     );
-    const input = screen.getByRole("searchbox");
+    const input = await screen.findByRole("searchbox");
+    vi.useFakeTimers();
     fireEvent.change(input, { target: { value: "temporary" } });
     await act(() => vi.advanceTimersByTimeAsync(150));
 
@@ -223,7 +244,7 @@ describe("GlobalSearch", () => {
     await user.click(
       screen.getByRole("button", { name: "Search documentation" }),
     );
-    await user.type(screen.getByRole("searchbox"), "not-a-real-topic");
+    await user.type(await screen.findByRole("searchbox"), "not-a-real-topic");
 
     expect(
       await screen.findByText("No results for “not-a-real-topic”"),

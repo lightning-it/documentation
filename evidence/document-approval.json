@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "content_tree_sha256": "b4369e92a3294491651b73590533e9de2024810042176c1d0e45e97f985316d9",
+  "content_tree_sha256": "3f23e245839a5eed35cc384ea32ff7432a07d0d7d93097480ad6861fb5dbfd1b",
   "document_ids": [
     "atlas-architecture",
     "atlas-concepts",
@@ -13,6 +13,7 @@
     "compliance-overview",
     "contributing-documentation",
     "getting-started",
+    "github-automation-trust",
     "glossary",
     "integration-decisions",
     "io-architecture",
@@ -79,6 +80,7 @@
         "atlas-troubleshooting",
         "contributing-documentation",
         "getting-started",
+        "github-automation-trust",
         "glossary",
         "integration-decisions",
         "io-architecture",
@@ -129,7 +131,7 @@
       ],
       "decision": "approved",
       "reviewer": "@litroc",
-      "review_date": "2026-07-20"
+      "review_date": "2026-07-21"
     },
     {
       "approver_role": "Lightning IT Security and Compliance Maintainers",

@@ -3,9 +3,11 @@ import {
   validateDeploymentMarker,
 } from "./lib/deployment.mjs";
 import { writeEvidence } from "./lib/validation.mjs";
-import { productionUserAgent } from "./lib/production-acceptance.mjs";
-
-const expectedOrigin = "https://docs.l-it.io";
+import {
+  productionMarkerOrigin,
+  productionOrigin,
+  productionUserAgent,
+} from "./lib/production-acceptance.mjs";
 
 function boundedInteger(name, fallback, minimum, maximum) {
   const raw = process.env[name];
@@ -25,10 +27,7 @@ async function main() {
   if (!/^[0-9a-f]{40,64}$/.test(expectedCommit)) {
     throw new Error("EXPECTED_COMMIT must be a full hexadecimal commit ID.");
   }
-  const baseUrl = new URL(process.env.BASE_URL ?? expectedOrigin);
-  if (baseUrl.origin !== expectedOrigin || baseUrl.pathname !== "/") {
-    throw new Error(`Production polling is restricted to ${expectedOrigin}/.`);
-  }
+  const baseUrl = new URL(productionMarkerOrigin);
 
   const maximumAttempts = boundedInteger(
     "PRODUCTION_POLL_MAX_ATTEMPTS",
@@ -73,7 +72,8 @@ async function main() {
           await writeEvidence("deployment-commit-validation.json", {
             schemaVersion: 1,
             status: "passed",
-            origin: expectedOrigin,
+            origin: productionOrigin,
+            markerOrigin: productionMarkerOrigin,
             markerPath: deploymentMarkerPath,
             expectedCommit,
             observedCommit,
@@ -116,7 +116,8 @@ async function main() {
   await writeEvidence("deployment-commit-validation.json", {
     schemaVersion: 1,
     status: "failed",
-    origin: expectedOrigin,
+    origin: productionOrigin,
+    markerOrigin: productionMarkerOrigin,
     markerPath: deploymentMarkerPath,
     expectedCommit,
     observedCommit,

@@ -14,8 +14,10 @@ import {
   repositoryRoot,
   writeEvidence,
 } from "./lib/validation.mjs";
+import { resolveLighthouseRunConfig } from "./lib/lighthouse-config.mjs";
 
-const localBaseUrl = "http://127.0.0.1:3100";
+const { externalBaseUrl, localBaseUrl, localPort } =
+  resolveLighthouseRunConfig();
 const buildDirectory = path.join(repositoryRoot, "build");
 const routes = ["/", "/modulix/overview/", "/security/"];
 const thresholds = {
@@ -199,7 +201,7 @@ async function startLocalServer() {
   await new Promise((resolve, reject) => {
     const handleError = (error) => reject(error);
     server.once("error", handleError);
-    server.listen(3100, "127.0.0.1", () => {
+    server.listen(localPort, "127.0.0.1", () => {
       server.off("error", handleError);
       resolve();
     });
@@ -249,9 +251,9 @@ async function stopServer(server) {
 }
 
 async function main() {
-  const baseUrl = process.env.LIGHTHOUSE_BASE_URL ?? localBaseUrl;
+  const baseUrl = externalBaseUrl ?? localBaseUrl;
   const origin = new URL(baseUrl).origin;
-  const external = Boolean(process.env.LIGHTHOUSE_BASE_URL);
+  const external = Boolean(externalBaseUrl);
   const sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], {
     cwd: repositoryRoot,
     encoding: "utf8",

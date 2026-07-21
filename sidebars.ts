@@ -157,7 +157,10 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Architecture",
       link: { type: "doc", id: "architecture/portfolio-architecture" },
-      items: ["architecture/integration-decisions"],
+      items: [
+        "architecture/integration-decisions",
+        "architecture/github-automation-trust",
+      ],
     },
     {
       type: "category",
