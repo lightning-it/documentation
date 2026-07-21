@@ -9,8 +9,8 @@ document:
   approval_status: pending
   version: "1.0"
   classification: PUBLIC
-  owner: Lightning IT Platform Engineering
-  approver: Lightning IT Security and Compliance Maintainers
+  owner: Lightning IT Documentation Maintainers
+  approver: Lightning IT Product Owners
   audience:
     - platform engineers
     - security engineers
@@ -185,11 +185,12 @@ the central source or synchronization scope changes.
 
 ## Verification and review
 
-Implementation tests cover identity boundaries, exact metadata, provenance
-cardinality, stale-head races, auto-merge revocation, stable branch reuse,
-superseded candidate validation, and branch deletion. Rollout verification also
-includes a second synchronization run: after all valid pull requests merge, the
-same source revision must produce no further drift.
+The implementation must include automated tests for identity boundaries, exact
+metadata, provenance cardinality, stale-head races, auto-merge revocation,
+stable branch reuse, superseded candidate validation, and branch deletion.
+Rollout verification must also include a second synchronization run: after all
+valid pull requests merge, the same source revision must produce no further
+drift.
 
 Operational logs and detailed audit evidence retain their private
 classification. Public documentation records the control design, not evidence
