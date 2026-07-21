@@ -182,7 +182,7 @@ async function main() {
   }
   if (
     !hasExactCanonicalUrl(homeHtml, "https://docs.l-it.io/") ||
-    !homeHtml.includes("Search public documentation")
+    !homeHtml.includes("Search documentation")
   ) {
     errors.push("preview home lacks canonical or search markup");
   }
