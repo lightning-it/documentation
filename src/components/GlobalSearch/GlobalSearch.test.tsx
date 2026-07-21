@@ -53,10 +53,14 @@ describe("GlobalSearch", () => {
 
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
 
-    const dialog = await screen.findByRole("dialog", {
+    await screen.findByRole("dialog", {
       name: "Search public documentation",
     });
-    await waitFor(() => expect(dialog).toHaveAttribute("open"));
+    await waitFor(() =>
+      expect(
+        screen.getByRole("dialog", { name: "Search public documentation" }),
+      ).toHaveAttribute("open"),
+    );
     await waitFor(() =>
       expect(
         screen.getByRole("searchbox", { name: "Search terms" }),
