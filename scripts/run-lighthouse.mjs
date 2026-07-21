@@ -15,7 +15,8 @@ import {
   writeEvidence,
 } from "./lib/validation.mjs";
 
-const localPort = Number.parseInt(process.env.LIGHTHOUSE_PORT ?? "3100", 10);
+const localPortRaw = process.env.LIGHTHOUSE_PORT;
+const localPort = localPortRaw == null ? 3100 : Number(localPortRaw);
 if (!Number.isInteger(localPort) || localPort < 1 || localPort > 65_535) {
   throw new Error("LIGHTHOUSE_PORT must be an integer from 1 to 65535.");
 }
