@@ -19,11 +19,11 @@ jobs:
     name: production / acceptance
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50
     env:
       BASE_URL: https://docs.l-it.io
       EXPECTED_COMMIT: ${{ github.sha }}
-      # Cloudflare Pages can need slightly more than ten minutes after a main merge.
+      # Cloudflare Pages can need more than ten minutes after a main merge.
       PRODUCTION_POLL_MAX_ATTEMPTS: 90
 
     steps:
