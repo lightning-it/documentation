@@ -7,6 +7,7 @@ import {
 } from "./lib/deployment.mjs";
 import { exactCacheControlOneOf } from "./lib/cache-control.mjs";
 import { hasExactCanonicalUrl } from "./lib/html.mjs";
+import { productionUserAgent } from "./lib/production-acceptance.mjs";
 import { failIfErrors, writeEvidence } from "./lib/validation.mjs";
 
 const expectedOrigin = "https://docs.l-it.io";
@@ -40,8 +41,10 @@ function inspectTls(hostname) {
 }
 
 async function fetchWithoutBody(url, options = {}) {
+  const headers = new Headers(options.headers);
+  headers.set("user-agent", productionUserAgent);
   const response = await fetch(url, {
-    headers: options.headers,
+    headers,
     redirect: options.redirect ?? "manual",
     signal: AbortSignal.timeout(15_000),
   });

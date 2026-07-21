@@ -1,5 +1,7 @@
 export const productionOrigin = "https://docs.l-it.io";
 export const productionMarkerPath = "/deployment-commit.json";
+export const productionUserAgent =
+  "Lightning-IT-Documentation-Production-Acceptance/1.0";
 export const representativeLighthouseRoutes = [
   "/",
   "/modulix/overview/",

@@ -8,6 +8,7 @@ import {
 } from "./lib/deployment.mjs";
 import {
   productionOrigin,
+  productionUserAgent,
   safeAcceptanceFailure,
   validateExpectedProductionCommit,
   validateProductionAcceptanceArtifacts,
@@ -35,15 +36,21 @@ async function fetchFreshDeploymentMarker(expectedCommit) {
     headers: {
       "cache-control": "no-cache, no-store",
       pragma: "no-cache",
+      "user-agent": productionUserAgent,
     },
-    redirect: "error",
+    // Keep redirects observable in the final acceptance evidence rather than
+    // following them or turning them into an opaque fetch error.
+    redirect: "manual",
     signal: AbortSignal.timeout(10_000),
   });
   const contentType = response.headers.get("content-type") ?? "";
+  const cloudflareRay = response.headers.get("cf-ray") ?? undefined;
   if (response.status !== 200 || !/^application\/json\b/i.test(contentType)) {
     await response.body?.cancel();
     throw new Error(
-      "fresh production deployment marker is unavailable or not JSON",
+      `fresh production deployment marker is unavailable or not JSON (HTTP ${response.status}${
+        cloudflareRay ? `, Cloudflare Ray ${cloudflareRay}` : ""
+      })`,
     );
   }
   const markerText = await response.text();
