@@ -99,3 +99,5 @@ architecture concerns. Define them before rollout rather than adding them after
 a failure.
 
 See [Integration decisions](./integration-decisions.md) for a review template.
+See [GitHub automation trust architecture](./github-automation-trust.md) for the
+workload-identity and fail-closed synchronization design.
