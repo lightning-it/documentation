@@ -56,9 +56,11 @@ async function main() {
         cache: "no-store",
         headers: {
           accept: "application/json",
-          "cache-control": "no-cache",
+          "cache-control": "no-cache, no-store",
+          pragma: "no-cache",
           "user-agent": productionUserAgent,
         },
+        redirect: "error",
         signal: AbortSignal.timeout(5_000),
       });
       lastStatus = response.status;
