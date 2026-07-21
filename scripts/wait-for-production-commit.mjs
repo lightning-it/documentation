@@ -48,6 +48,7 @@ async function main() {
   let lastCloudflareRay;
 
   for (let attempt = 1; attempt <= maximumAttempts; attempt += 1) {
+    let receivedResponse = false;
     try {
       const markerUrl = new URL(deploymentMarkerPath, baseUrl);
       markerUrl.searchParams.set("expected", expectedCommit);
@@ -63,6 +64,7 @@ async function main() {
         redirect: "manual",
         signal: AbortSignal.timeout(5_000),
       });
+      receivedResponse = true;
       lastStatus = response.status;
       lastCloudflareRay = response.headers.get("cf-ray") ?? undefined;
       if (response.ok) {
@@ -96,9 +98,12 @@ async function main() {
       lastError = undefined;
     } catch (error) {
       // A transport failure has no HTTP response of its own. Do not retain
-      // diagnostics from a prior polling attempt in the final evidence.
-      lastStatus = undefined;
-      lastCloudflareRay = undefined;
+      // diagnostics from a prior polling attempt; preserve diagnostics when
+      // parsing or validation failed after an HTTP response was received.
+      if (!receivedResponse) {
+        lastStatus = undefined;
+        lastCloudflareRay = undefined;
+      }
       lastError =
         error.name === "TimeoutError" ? "request timeout" : error.message;
     }
