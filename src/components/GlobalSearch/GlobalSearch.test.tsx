@@ -63,10 +63,10 @@ describe("GlobalSearch", () => {
     ).toHaveFocus();
   });
 
-  it("opens with an empty query when the custom event detail is missing", async () => {
+  it("opens with an empty query when the custom event detail is undefined", async () => {
     render(<GlobalSearch />);
 
-    fireEvent(window, new CustomEvent(openSearchEvent));
+    fireEvent(window, new CustomEvent(openSearchEvent, { detail: undefined }));
 
     const searchbox = await screen.findByRole("searchbox", {
       name: "Search terms",
