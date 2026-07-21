@@ -15,11 +15,17 @@ import {
   writeEvidence,
 } from "./lib/validation.mjs";
 
+const externalBaseUrl = process.env.LIGHTHOUSE_BASE_URL;
 const localPortRaw = process.env.LIGHTHOUSE_PORT;
-const localPort = localPortRaw == null ? 3100 : Number(localPortRaw);
-if (!Number.isInteger(localPort) || localPort < 1 || localPort > 65_535) {
-  throw new Error("LIGHTHOUSE_PORT must be an integer from 1 to 65535.");
+let localPort = 3100;
+
+if (!externalBaseUrl && localPortRaw != null) {
+  localPort = Number(localPortRaw);
+  if (!Number.isInteger(localPort) || localPort < 1 || localPort > 65_535) {
+    throw new Error("LIGHTHOUSE_PORT must be an integer from 1 to 65535.");
+  }
 }
+
 const localBaseUrl = `http://127.0.0.1:${localPort}`;
 const buildDirectory = path.join(repositoryRoot, "build");
 const routes = ["/", "/modulix/overview/", "/security/"];
