@@ -65,25 +65,9 @@ export default function GlobalSearch(): ReactNode {
         activate();
       }
     };
-    const getSearchQuery = (event: Event) => {
-      if (!(event instanceof CustomEvent)) {
-        return "";
-      }
-      const { detail } = event;
-      if (
-        detail === undefined ||
-        detail === null ||
-        typeof detail !== "object" ||
-        !("query" in detail) ||
-        typeof detail.query !== "string"
-      ) {
-        return "";
-      }
-
-      return detail.query;
-    };
     const handleOpenSearch = (event: Event) => {
-      activate(getSearchQuery(event));
+      const { detail } = event as CustomEvent<SearchEventDetail | undefined>;
+      activate(detail?.query ?? "");
     };
 
     window.addEventListener("keydown", handleKeyboardShortcut);
