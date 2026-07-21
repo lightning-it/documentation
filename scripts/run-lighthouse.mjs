@@ -15,11 +15,10 @@ import {
   writeEvidence,
 } from "./lib/validation.mjs";
 
-const externalBaseUrl = process.env.LIGHTHOUSE_BASE_URL;
 const localPortRaw = process.env.LIGHTHOUSE_PORT;
 let localPort = 3100;
 
-if (!externalBaseUrl && localPortRaw != null) {
+if (!process.env.LIGHTHOUSE_BASE_URL && localPortRaw != null) {
   localPort = Number(localPortRaw);
   if (!Number.isInteger(localPort) || localPort < 1 || localPort > 65_535) {
     throw new Error("LIGHTHOUSE_PORT must be an integer from 1 to 65535.");
