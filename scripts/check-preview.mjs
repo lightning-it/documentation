@@ -182,7 +182,7 @@ async function main() {
   }
   if (
     !hasExactCanonicalUrl(homeHtml, "https://docs.l-it.io/") ||
-    !homeHtml.includes("Search documentation")
+    !homeHtml.includes('aria-keyshortcuts="Control+K Meta+K"')
   ) {
     errors.push("preview home lacks canonical or search markup");
   }
