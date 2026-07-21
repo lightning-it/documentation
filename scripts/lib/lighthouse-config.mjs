@@ -6,7 +6,9 @@ export function resolveLighthouseRunConfig(env = process.env) {
   if (!externalBaseUrl && localPortRaw) {
     localPort = Number(localPortRaw);
     if (!Number.isInteger(localPort) || localPort < 1 || localPort > 65_535) {
-      throw new Error("LIGHTHOUSE_PORT must be an integer from 1 to 65535.");
+      throw new Error(
+        `LIGHTHOUSE_PORT must be an integer from 1 to 65535, got: ${localPortRaw}`,
+      );
     }
   }
 
