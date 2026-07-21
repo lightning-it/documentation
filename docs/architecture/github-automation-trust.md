@@ -5,8 +5,8 @@ description: Understand the workload identities and fail-closed controls used fo
 slug: /architecture/github-automation-trust/
 sidebar_position: 3
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
