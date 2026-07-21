@@ -155,7 +155,9 @@ describe("GlobalSearch", () => {
     trigger.focus();
 
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
-    fireEvent.click(await screen.findByRole("button", { name: "Close search" }));
+    fireEvent.click(
+      await screen.findByRole("button", { name: "Close search" }),
+    );
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
 
     const dialog = screen.getByRole("dialog", {
