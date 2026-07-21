@@ -95,6 +95,10 @@ async function main() {
       }
       lastError = undefined;
     } catch (error) {
+      // A transport failure has no HTTP response of its own. Do not retain
+      // diagnostics from a prior polling attempt in the final evidence.
+      lastStatus = undefined;
+      lastCloudflareRay = undefined;
       lastError =
         error.name === "TimeoutError" ? "request timeout" : error.message;
     }
