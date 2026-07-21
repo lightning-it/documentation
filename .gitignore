@@ -40,6 +40,12 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+build/
+.docusaurus/
+evidence/generated/
+playwright-report/
+test-results/
+blob-report/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-07-14",
+  "assets": [
+    {
+      "path": "static/img/brand/documentation-mark.svg",
+      "sha256": "2d2ec248c0bb25e0ae9a97d6ad97e88ec787b333db17ad9cccbe32c36f541e39",
+      "origin": "Repository-native neutral documentation and code glyph",
+      "transformation": "Authored as maintainable SVG",
+      "license": "Apache-2.0",
+      "metadata_review": "No embedded metadata or external resources"
+    },
+    {
+      "path": "static/img/brand/favicon.svg",
+      "sha256": "0f5ee845f848e79abc721b910ef32795c5f9bee41524016db000ae5554db4528",
+      "origin": "Repository-native neutral documentation and code glyph favicon",
+      "transformation": "Authored as maintainable SVG",
+      "license": "Apache-2.0",
+      "metadata_review": "No embedded metadata or external resources"
+    },
+    {
+      "path": "static/img/brand/mask-icon.svg",
+      "sha256": "3785cc995dc2238eb2413bcee4803800bfefa7b28bd4d0a90c3cbf595be234e8",
+      "origin": "Repository-native neutral documentation and code glyph mask icon",
+      "transformation": "Authored as maintainable SVG",
+      "license": "Apache-2.0",
+      "metadata_review": "No embedded metadata or external resources"
+    },
+    {
+      "path": "static/img/brand/icon-192.png",
+      "sha256": "a98d30ad5862adb2e9c7b5f7b38b3fcd4907862d862360a9d0b0e4196117a830",
+      "origin": "Raster rendition of the repository-native neutral documentation and code glyph",
+      "transformation": "Rendered at 192 by 192 pixels",
+      "license": "Apache-2.0",
+      "metadata_review": "No EXIF, textual, time, or color-profile metadata chunks"
+    },
+    {
+      "path": "static/img/brand/icon-512.png",
+      "sha256": "58f72dc0ae70bd34e0618b8d6c0277a072e2749a1ac01d262807b0e488aecc93",
+      "origin": "Raster rendition of the repository-native neutral documentation and code glyph",
+      "transformation": "Rendered at 512 by 512 pixels",
+      "license": "Apache-2.0",
+      "metadata_review": "No EXIF, textual, time, or color-profile metadata chunks"
+    },
+    {
+      "path": "static/img/social-card.svg",
+      "sha256": "a4aa221fa05d3e97119d428a5d7f98d9db3e6e5755dfbffe3120e2c4655f3065",
+      "origin": "Repository-native Lightning IT Documentation social card",
+      "transformation": "Authored as maintainable SVG",
+      "license": "Apache-2.0",
+      "metadata_review": "No embedded metadata or external resources"
+    },
+    {
+      "path": "static/img/social-card.png",
+      "sha256": "53916a868351023f47568aa22c743c34b1f8fb2530cf879c63271be46cba258d",
+      "origin": "Raster rendition of the repository-native social card",
+      "transformation": "Rendered at 1200 by 630 pixels",
+      "license": "Apache-2.0",
+      "metadata_review": "No EXIF, textual, time, or color-profile metadata chunks"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+# yamllint disable rule:truthy
+---
+name: Production Acceptance
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-acceptance
+  cancel-in-progress: true
+
+jobs:
+  accept:
+    name: production / acceptance
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_URL: https://docs.l-it.io
+      EXPECTED_COMMIT: ${{ github.sha }}
+
+    steps:
+      - name: Checkout expected production source
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Activate the pinned npm release
+        run: npm install --global --no-audit --no-fund npm@11.18.0 && test "$(npm --version)" = "11.18.0"
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Wait for native Cloudflare Pages deployment
+        run: npm run wait:production
+
+      - name: Install Chromium
+        run: npx --no-install playwright install --with-deps chromium
+
+      - name: Validate production DNS, TLS, headers, search, accessibility, and smoke journey
+        run: npm run test:production
+
+      - name: Validate public external links
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npm run test:external-links
+
+      - name: Enforce production Lighthouse budgets
+        env:
+          LIGHTHOUSE_BASE_URL: ${{ env.BASE_URL }}
+        run: npm run test:lighthouse
+
+      - name: Record accepted production evidence
+        run: npm run evidence:production
+
+      - name: Upload production acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: production-acceptance-${{ github.sha }}
+          path: |
+            evidence/generated/
+            playwright-report/
+            test-results/
+          if-no-files-found: warn
+          retention-days: 90

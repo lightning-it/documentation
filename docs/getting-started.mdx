@@ -1,0 +1,80 @@
+---
+id: getting-started
+title: Get started
+description: Choose a documentation path by product, task, or engineering responsibility.
+slug: /getting-started/
+sidebar_position: 1
+document:
+  status: maintained
+  approval_status: approved
+  version: "1.0"
+  classification: PUBLIC
+  owner: Lightning IT Documentation Maintainers
+  approver: Lightning IT Product Owners
+  audience:
+    - technical evaluators
+    - platform engineers
+    - security engineers
+  last_reviewed: "2026-07-14"
+  review_cadence: annual
+---
+
+import TabItem from "@theme/TabItem";
+import Tabs from "@theme/Tabs";
+
+# Get started
+
+This site contains public technical documentation for four peer Lightning IT
+products. Product and company marketing remains on
+[l-it.io](https://l-it.io), and the customer portal serves a different,
+non-public purpose. This site contains no customer-specific procedures,
+credentials, environment topology, or internal operating records.
+
+## Choose a product
+
+| Goal                                                    | Product                             | Start here                                 |
+| ------------------------------------------------------- | ----------------------------------- | ------------------------------------------ |
+| Build reusable automation content                       | ModuLix — Automation Content        | [ModuLix overview](./modulix/index.md)     |
+| Run automation through a controlled runtime boundary    | IO — Automation Runtime             | [IO overview](./io/index.md)               |
+| Host approved workloads on an infrastructure platform   | Wunderbox — Infrastructure Platform | [Wunderbox overview](./wunderbox/index.md) |
+| Observe services and platforms through governed signals | Atlas — Observability Platform      | [Atlas overview](./atlas/index.md)         |
+
+Build, Run, Host, and Observe describe possible functional interaction. The
+products remain peers, and a solution does not have to use all four.
+
+## Choose an audience path
+
+These paths group the first decisions for different responsibilities without
+changing the peer-product hierarchy.
+
+<Tabs groupId="getting-started-audience" queryString="audience">
+  <TabItem value="authors" label="Automation authors" default>
+    Start with the [ModuLix concepts](./modulix/concepts.md), then use its
+    development and testing guidance. Changes to public guidance follow the
+    [documentation contribution workflow](./contributing/index.md).
+  </TabItem>
+  <TabItem value="operators" label="Platform operators">
+    Select the applicable product operations and troubleshooting pages. Before
+    state is at risk, establish the cross-product [backup and recovery
+    model](./security/backup-and-recovery.md). Concrete procedures still come
+    from the selected release contract.
+  </TabItem>
+  <TabItem value="assurance" label="Architecture and assurance">
+    Review the [peer-product architecture](./architecture/index.md),
+    [integration decisions](./architecture/integration-decisions.md), and
+    [publication boundary](./security/publication-boundary.md). Use the
+    [compliance approach](./compliance/index.md) and [BSI mapping
+    method](./compliance/bsi-mapping.md) without treating them as certification
+    evidence.
+  </TabItem>
+</Tabs>
+
+## Read claims carefully
+
+Conceptual pages describe responsibilities and design constraints. They do not
+claim that a product release implements a specific feature. Code-level pages in
+public component repositories own exact variables, commands, compatibility,
+artifacts, and release evidence. A repository or configuration file proves
+source presence, not a production deployment.
+
+For terminology and verified public links, use the [Reference](./reference/index.md).

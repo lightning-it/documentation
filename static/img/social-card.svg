@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Lightning IT Documentation</title>
+  <desc id="desc">Public technical documentation for ModuLix, IO, Wunderbox, and Atlas.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0b1016"/>
+      <stop offset="1" stop-color="#21121a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="900" y1="125" x2="1090" y2="505" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f02a60"/>
+      <stop offset="1" stop-color="#8b003d"/>
+    </linearGradient>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0H0V56" fill="none" stroke="#fff" stroke-opacity=".05"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <circle cx="1035" cy="130" r="290" fill="#b0003a" opacity=".12"/>
+  <g transform="translate(870 85)">
+    <rect width="250" height="460" rx="54" fill="#11151a" stroke="#fff" stroke-opacity=".14" stroke-width="3"/>
+    <path d="M55 72h91l49 49v267H55V72Z" fill="none" stroke="url(#accent)" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M146 74v49h47" fill="none" stroke="url(#accent)" stroke-width="12" stroke-linejoin="round"/>
+    <path d="m103 192-28 34 28 34m44-68 28 34-28 34m-17-86-22 104" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="88" y="112" fill="#ff789d" font-family="Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="4">PUBLIC TECHNICAL DOCUMENTATION</text>
+  <text x="88" y="232" fill="#fff" font-family="Arial, sans-serif" font-size="72" font-weight="700">Lightning IT</text>
+  <text x="88" y="314" fill="#fff" font-family="Arial, sans-serif" font-size="72" font-weight="700">Documentation</text>
+  <text x="88" y="398" fill="#bdc5ce" font-family="Arial, sans-serif" font-size="30">Build · Run · Host · Observe</text>
+  <g font-family="Arial, sans-serif" font-size="24" font-weight="700">
+    <text x="88" y="500" fill="#ff789d">ModuLix</text>
+    <text x="238" y="500" fill="#64c9f0">IO</text>
+    <text x="302" y="500" fill="#f2bd62">Wunderbox</text>
+    <text x="480" y="500" fill="#bda2ff">Atlas</text>
+  </g>
+  <text x="88" y="566" fill="#87919c" font-family="Arial, sans-serif" font-size="22">docs.l-it.io</text>
+</svg>

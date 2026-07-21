@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "role_authorizations": [
+    {
+      "approver_role": "Lightning IT Product Owners",
+      "github_reviewers": [
+        "@lightning-it/lightning-it-product-owners",
+        "@litdeg",
+        "@litroc"
+      ]
+    },
+    {
+      "approver_role": "Lightning IT Security and Compliance Maintainers",
+      "github_reviewers": [
+        "@lightning-it/lightning-it-security-and-compliance-maintainers",
+        "@litdeg",
+        "@litroc"
+      ]
+    }
+  ],
+  "status": "AUTHORIZED"
+}
