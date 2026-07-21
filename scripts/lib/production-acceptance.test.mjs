@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 
 import {
   productionLighthouseThresholds,
+  productionMarkerOrigin,
   productionOrigin,
   representativeLighthouseRoutes,
   validateProductionAcceptanceArtifacts,
@@ -17,6 +18,7 @@ function passingArtifacts() {
       schemaVersion: 1,
       status: "passed",
       origin: productionOrigin,
+      markerOrigin: productionMarkerOrigin,
       markerPath: "/deployment-commit.json",
       expectedCommit,
       observedCommit: expectedCommit,
@@ -142,6 +144,15 @@ describe("validateProductionAcceptanceArtifacts", () => {
         /complete healthy route set/,
       );
     }
+  });
+
+  it("rejects deployment evidence from a marker host other than the native Pages origin", () => {
+    const artifacts = passingArtifacts();
+    artifacts.deployment.markerOrigin = productionOrigin;
+    assert.throws(
+      () => validateProductionAcceptanceArtifacts(artifacts),
+      /deployment evidence is not bound/,
+    );
   });
 
   it("rejects stale source evidence and unsafe production facts", () => {

@@ -1,4 +1,9 @@
 export const productionOrigin = "https://docs.l-it.io";
+// The custom domain is protected by Cloudflare's public WAF.  The Pages host
+// is the same deployment and supplies an immutable marker without weakening
+// that protection for GitHub-hosted production acceptance runners.
+export const productionMarkerOrigin =
+  "https://lightning-it-documentation.pages.dev";
 export const productionMarkerPath = "/deployment-commit.json";
 export const productionUserAgent =
   "Lightning-IT-Documentation-Production-Acceptance/1.0";
@@ -53,6 +58,7 @@ function validateDeploymentEvidence(record, expectedCommit) {
     record?.schemaVersion === 1 &&
       record.status === "passed" &&
       record.origin === productionOrigin &&
+      record.markerOrigin === productionMarkerOrigin &&
       record.markerPath === productionMarkerPath &&
       record.expectedCommit === expectedCommit &&
       record.observedCommit === expectedCommit &&
