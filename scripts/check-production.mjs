@@ -394,6 +394,7 @@ async function main() {
     status: errors.length === 0 ? "passed" : "failed",
     origin: expectedOrigin,
     markerOrigin: productionMarkerOrigin,
+    markerPath: deploymentMarkerPath,
     dnsAnswerFamilies: {
       ipv4: ipv4.length > 0,
       ipv6: ipv6.length > 0,
