@@ -3,6 +3,7 @@ import {
   validateDeploymentMarker,
 } from "./lib/deployment.mjs";
 import { writeEvidence } from "./lib/validation.mjs";
+import { productionUserAgent } from "./lib/production-acceptance.mjs";
 
 const expectedOrigin = "https://docs.l-it.io";
 
@@ -44,18 +45,28 @@ async function main() {
   let observedCommit;
   let lastStatus;
   let lastError;
+  let lastCloudflareRay;
 
   for (let attempt = 1; attempt <= maximumAttempts; attempt += 1) {
+    let receivedResponse = false;
     try {
       const markerUrl = new URL(deploymentMarkerPath, baseUrl);
       markerUrl.searchParams.set("expected", expectedCommit);
       markerUrl.searchParams.set("attempt", String(attempt));
       const response = await fetch(markerUrl, {
         cache: "no-store",
-        headers: { "Cache-Control": "no-cache" },
+        headers: {
+          accept: "application/json",
+          "cache-control": "no-cache, no-store",
+          pragma: "no-cache",
+          "user-agent": productionUserAgent,
+        },
+        redirect: "manual",
         signal: AbortSignal.timeout(5_000),
       });
+      receivedResponse = true;
       lastStatus = response.status;
+      lastCloudflareRay = response.headers.get("cf-ray") ?? undefined;
       if (response.ok) {
         observedCommit = validateDeploymentMarker(await response.json());
         if (observedCommit === expectedCommit) {
@@ -75,9 +86,24 @@ async function main() {
         }
       } else {
         await response.body?.cancel();
+        if (attempt === 1 || attempt % 10 === 0) {
+          console.warn(
+            `Production marker attempt ${attempt} returned HTTP ${lastStatus}` +
+              (lastCloudflareRay
+                ? ` (Cloudflare Ray ${lastCloudflareRay}).`
+                : "."),
+          );
+        }
       }
       lastError = undefined;
     } catch (error) {
+      // A transport failure has no HTTP response of its own. Do not retain
+      // diagnostics from a prior polling attempt; preserve diagnostics when
+      // parsing or validation failed after an HTTP response was received.
+      if (!receivedResponse) {
+        lastStatus = undefined;
+        lastCloudflareRay = undefined;
+      }
       lastError =
         error.name === "TimeoutError" ? "request timeout" : error.message;
     }
@@ -96,6 +122,7 @@ async function main() {
     observedCommit,
     attempts: maximumAttempts,
     lastStatus,
+    lastCloudflareRay,
     lastError,
   });
   throw new Error(
