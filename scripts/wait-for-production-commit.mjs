@@ -60,7 +60,7 @@ async function main() {
           pragma: "no-cache",
           "user-agent": productionUserAgent,
         },
-        redirect: "error",
+        redirect: "manual",
         signal: AbortSignal.timeout(5_000),
       });
       lastStatus = response.status;
