@@ -4,6 +4,12 @@ export function resolveLighthouseRunConfig(env = process.env) {
   let localPort = 3100;
 
   if (!externalBaseUrl && localPortRaw) {
+    if (!/^[0-9]+$/.test(localPortRaw)) {
+      throw new Error(
+        `LIGHTHOUSE_PORT must be an integer from 1 to 65535, got: ${localPortRaw}`,
+      );
+    }
+
     localPort = Number(localPortRaw);
     if (!Number.isInteger(localPort) || localPort < 1 || localPort > 65_535) {
       throw new Error(

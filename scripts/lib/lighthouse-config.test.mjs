@@ -5,21 +5,20 @@ import { resolveLighthouseRunConfig } from "./lighthouse-config.mjs";
 
 describe("resolveLighthouseRunConfig", () => {
   it("treats blank LIGHTHOUSE_PORT as unset", () => {
-    assert.deepEqual(
-      resolveLighthouseRunConfig({ LIGHTHOUSE_PORT: "   " }),
-      {
-        externalBaseUrl: undefined,
-        localBaseUrl: "http://127.0.0.1:3100",
-        localPort: 3100,
-      },
-    );
+    assert.deepEqual(resolveLighthouseRunConfig({ LIGHTHOUSE_PORT: "   " }), {
+      externalBaseUrl: undefined,
+      localBaseUrl: "http://127.0.0.1:3100",
+      localPort: 3100,
+    });
   });
 
   it("rejects malformed LIGHTHOUSE_PORT values", () => {
-    assert.throws(
-      () => resolveLighthouseRunConfig({ LIGHTHOUSE_PORT: "3100abc" }),
-      /LIGHTHOUSE_PORT must be an integer from 1 to 65535/,
-    );
+    for (const value of ["3100abc", "0x10", "3100e0", "3100.0", "+3100"]) {
+      assert.throws(
+        () => resolveLighthouseRunConfig({ LIGHTHOUSE_PORT: value }),
+        /LIGHTHOUSE_PORT must be an integer from 1 to 65535/,
+      );
+    }
   });
 
   it("skips local port parsing for external Lighthouse runs", () => {
