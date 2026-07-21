@@ -91,6 +91,8 @@ function validateProductionEvidence(record, expectedCommit) {
     record?.schemaVersion === 1 &&
       record.status === "passed" &&
       record.origin === productionOrigin &&
+      record.markerOrigin === productionMarkerOrigin &&
+      record.markerPath === productionMarkerPath &&
       record.expectedCommit === expectedCommit &&
       record.deployedCommit === expectedCommit &&
       dnsIsAvailable &&

@@ -28,6 +28,8 @@ function passingArtifacts() {
       schemaVersion: 1,
       status: "passed",
       origin: productionOrigin,
+      markerOrigin: productionMarkerOrigin,
+      markerPath: "/deployment-commit.json",
       dnsAnswerFamilies: { ipv4: true, ipv6: false },
       tls: {
         authorized: true,
@@ -152,6 +154,15 @@ describe("validateProductionAcceptanceArtifacts", () => {
     assert.throws(
       () => validateProductionAcceptanceArtifacts(artifacts),
       /deployment evidence is not bound/,
+    );
+  });
+
+  it("rejects production evidence from a marker host other than the native Pages origin", () => {
+    const artifacts = passingArtifacts();
+    artifacts.production.markerOrigin = productionOrigin;
+    assert.throws(
+      () => validateProductionAcceptanceArtifacts(artifacts),
+      /complete healthy route set/,
     );
   });
 

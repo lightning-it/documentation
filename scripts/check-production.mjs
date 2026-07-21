@@ -289,7 +289,7 @@ async function main() {
     missingCsp.match(/(?:^|;)\s*script-src\s+([^;]+)/i)?.[1] ?? "";
   if (
     !missingCsp.includes("default-src 'self'") ||
-    !missingCsp.includes("'sha256-") ||
+    !/'sha256-[A-Za-z0-9+/=]+'/.test(missingScriptSource) ||
     missingScriptSource.includes("'unsafe-inline'") ||
     missingScriptSource.includes("'unsafe-eval'")
   ) {
