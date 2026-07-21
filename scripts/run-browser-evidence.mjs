@@ -24,6 +24,11 @@ const result = spawnSync(
     cwd: repositoryRoot,
     env: {
       ...process.env,
+      BASE_URL:
+        mode === "production" && process.env.PRODUCTION_CONTENT_BASE_URL
+          ? process.env.PRODUCTION_CONTENT_BASE_URL
+          : process.env.BASE_URL,
+      CANONICAL_ORIGIN: process.env.BASE_URL,
       EXTERNAL_TEST_MODE: mode,
       PLAYWRIGHT_JSON_OUTPUT_NAME: path.join(
         generatedEvidenceDirectory,

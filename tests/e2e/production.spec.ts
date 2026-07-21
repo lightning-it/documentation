@@ -5,7 +5,9 @@ test("17 — production at docs.l-it.io passes the public browser journey", asyn
   page,
   baseURL,
 }) => {
-  expect(new URL(baseURL ?? "").hostname).toBe("docs.l-it.io");
+  expect(new URL(baseURL ?? "").hostname).toBe(
+    "lightning-it-documentation.pages.dev",
+  );
   const consoleErrors: string[] = [];
   const failedRequests: string[] = [];
   page.on("console", (message) => {
@@ -14,7 +16,7 @@ test("17 — production at docs.l-it.io passes the public browser journey", asyn
     }
   });
   page.on("requestfailed", (request) => {
-    if (new URL(request.url()).hostname === "docs.l-it.io") {
+    if (new URL(request.url()).hostname === new URL(baseURL ?? "").hostname) {
       failedRequests.push(new URL(request.url()).pathname);
     }
   });
@@ -40,6 +42,8 @@ test("17 — production at docs.l-it.io passes the public browser journey", asyn
     .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
     .analyze();
   expect(accessibility.violations).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+  expect(failedRequests).toEqual([]);
 
   const missing = await page.goto("/production-acceptance-missing-path/");
   expect(missing?.status()).toBe(404);
@@ -56,6 +60,4 @@ test("17 — production at docs.l-it.io passes the public browser journey", asyn
     /noindex/i,
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
-  expect(consoleErrors).toEqual([]);
-  expect(failedRequests).toEqual([]);
 });

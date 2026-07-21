@@ -39,7 +39,10 @@ if (externalBaseUrl && sourceCommit !== expectedCommit) {
   );
 }
 const testMode = externalBaseUrl ? externalTestMode : "local";
-const testOrigin = new URL(externalBaseUrl ?? localBaseUrl).origin;
+const targetOrigin = new URL(externalBaseUrl ?? localBaseUrl).origin;
+const testOrigin = process.env.CANONICAL_ORIGIN
+  ? new URL(process.env.CANONICAL_ORIGIN).origin
+  : targetOrigin;
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -51,6 +54,7 @@ export default defineConfig({
     schemaVersion: 1,
     mode: testMode,
     origin: testOrigin,
+    targetOrigin,
     expectedCommit: expectedCommit ?? null,
     sourceCommit,
   },

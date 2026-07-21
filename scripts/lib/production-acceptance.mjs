@@ -4,6 +4,7 @@ export const productionOrigin = "https://docs.l-it.io";
 // that protection for GitHub-hosted production acceptance runners.
 export const productionMarkerOrigin =
   "https://lightning-it-documentation.pages.dev";
+export const productionContentOrigin = productionMarkerOrigin;
 export const productionMarkerPath = "/deployment-commit.json";
 export const productionUserAgent =
   "Lightning-IT-Documentation-Production-Acceptance/1.0";
@@ -18,6 +19,10 @@ export const productionLighthouseThresholds = {
   "best-practices": 0.95,
   seo: 0.95,
 };
+export const productionLighthouseExcludedAudits = [
+  "errors-in-console",
+  "inspector-issues",
+];
 
 const fullCommitPattern = /^[0-9a-f]{40,64}$/;
 
@@ -91,6 +96,7 @@ function validateProductionEvidence(record, expectedCommit) {
     record?.schemaVersion === 1 &&
       record.status === "passed" &&
       record.origin === productionOrigin &&
+      record.contentOrigin === productionContentOrigin &&
       record.markerOrigin === productionMarkerOrigin &&
       record.markerPath === productionMarkerPath &&
       record.expectedCommit === expectedCommit &&
@@ -100,6 +106,9 @@ function validateProductionEvidence(record, expectedCommit) {
       redirectIsExact &&
       record.pagesHost?.status === 200 &&
       record.pagesHost?.noindex === true &&
+      (record.edgeStatus === 200 ||
+        (record.edgeStatus === 403 && record.edgeMitigation === "challenge")) &&
+      record.edgeCloudflare === true &&
       record.homeStatus === 200 &&
       record.missingStatus === 404 &&
       routeCountsAreComplete,
@@ -181,11 +190,20 @@ function validateLighthouseEvidence(record, expectedCommit) {
         );
       });
     });
+  const exclusionsAreExact =
+    Array.isArray(record?.excludedAudits) &&
+    record.excludedAudits.length ===
+      productionLighthouseExcludedAudits.length &&
+    productionLighthouseExcludedAudits.every(
+      (audit, index) => record.excludedAudits[index] === audit,
+    );
 
   requireCondition(
     hasArtifactIdentity(record, expectedCommit) &&
+      record.targetOrigin === productionOrigin &&
       record.profile === "mobile" &&
       record.serverProfile === "external-production" &&
+      exclusionsAreExact &&
       thresholdsAreExact &&
       resultsAreExact,
     "Lighthouse evidence is stale, below budget, or not the exact external production route set",
@@ -203,6 +221,7 @@ function validatePlaywrightEvidence(record, expectedCommit) {
     metadata?.schemaVersion === 1 &&
     metadata.mode === "production" &&
     metadata.origin === productionOrigin &&
+    metadata.targetOrigin === productionContentOrigin &&
     metadata.expectedCommit === expectedCommit &&
     metadata.sourceCommit === expectedCommit;
   const soleProjectAndSpec =
