@@ -82,7 +82,13 @@ export default function GlobalSearch(): ReactNode {
     <>
       <SearchTrigger />
       {request && (
-        <Suspense fallback={null}>
+        <Suspense
+          fallback={
+            <span className="sr-only" role="status" aria-live="polite">
+              Loading search…
+            </span>
+          }
+        >
           <GlobalSearchDialog
             activation={request.activation}
             initialQuery={request.query}
