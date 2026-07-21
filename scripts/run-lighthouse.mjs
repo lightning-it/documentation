@@ -15,7 +15,11 @@ import {
   writeEvidence,
 } from "./lib/validation.mjs";
 
-const localBaseUrl = "http://127.0.0.1:3100";
+const localPort = Number.parseInt(process.env.LIGHTHOUSE_PORT ?? "3100", 10);
+if (!Number.isInteger(localPort) || localPort < 1 || localPort > 65_535) {
+  throw new Error("LIGHTHOUSE_PORT must be an integer from 1 to 65535.");
+}
+const localBaseUrl = `http://127.0.0.1:${localPort}`;
 const buildDirectory = path.join(repositoryRoot, "build");
 const routes = ["/", "/modulix/overview/", "/security/"];
 const thresholds = {
@@ -199,7 +203,7 @@ async function startLocalServer() {
   await new Promise((resolve, reject) => {
     const handleError = (error) => reject(error);
     server.once("error", handleError);
-    server.listen(3100, "127.0.0.1", () => {
+    server.listen(localPort, "127.0.0.1", () => {
       server.off("error", handleError);
       resolve();
     });

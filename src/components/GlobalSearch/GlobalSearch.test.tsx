@@ -48,13 +48,15 @@ describe("GlobalSearch", () => {
     ).toHaveAttribute("aria-label", "Find documentation");
   });
 
-  it("opens with the keyboard shortcut and moves focus to the search input", () => {
+  it("opens with the keyboard shortcut and moves focus to the search input", async () => {
     render(<GlobalSearch />);
 
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
 
     expect(
-      screen.getByRole("dialog", { name: "Search public documentation" }),
+      await screen.findByRole("dialog", {
+        name: "Search public documentation",
+      }),
     ).toHaveAttribute("open");
     expect(
       screen.getByRole("searchbox", { name: "Search terms" }),
@@ -68,7 +70,7 @@ describe("GlobalSearch", () => {
     await user.click(
       screen.getByRole("button", { name: "Search documentation" }),
     );
-    await user.type(screen.getByRole("searchbox"), "ModuLix");
+    await user.type(await screen.findByRole("searchbox"), "ModuLix");
 
     await waitFor(() =>
       expect(searchDocumentationMock).toHaveBeenCalledWith("ModuLix"),
