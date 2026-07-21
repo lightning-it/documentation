@@ -1,0 +1,97 @@
+.trigger {
+  align-items: center;
+  background: var(--lit-surface);
+  border: 1px solid var(--lit-border-strong);
+  border-radius: 0.65rem;
+  color: var(--lit-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  gap: 0.55rem;
+  justify-content: flex-start;
+  min-height: 2.4rem;
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease;
+}
+
+.trigger:hover {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-font-color-base);
+}
+
+.compact {
+  min-width: 12.5rem;
+  padding: 0.4rem 0.5rem 0.4rem 0.72rem;
+}
+
+.prominent {
+  background: var(--lit-surface-raised);
+  border-radius: var(--lit-radius-md);
+  box-shadow: var(--lit-shadow-md);
+  font-size: 1.03rem;
+  max-width: 39rem;
+  min-height: 3.8rem;
+  padding: 0.65rem 0.7rem 0.65rem 1.1rem;
+  width: 100%;
+}
+
+.prominent .triggerLabel {
+  flex: 1;
+  text-align: left;
+}
+
+.searchIcon {
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 0.92rem;
+  position: relative;
+  width: 0.92rem;
+}
+
+.searchIcon::after {
+  background: currentColor;
+  border-radius: 1px;
+  bottom: -0.28rem;
+  content: "";
+  height: 0.42rem;
+  position: absolute;
+  right: -0.2rem;
+  transform: rotate(-45deg);
+  width: 2px;
+}
+
+.shortcut {
+  background: var(--lit-surface-subtle);
+  border: 1px solid var(--lit-border);
+  border-bottom-width: 2px;
+  border-radius: 0.35rem;
+  color: var(--lit-text-muted);
+  font-family: var(--ifm-font-family-base);
+  font-size: 0.68rem;
+  line-height: 1;
+  margin-left: auto;
+  padding: 0.35rem 0.4rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .compact {
+    min-width: 2.55rem;
+    padding: 0.55rem 0.7rem;
+  }
+
+  .compact .triggerLabel,
+  .compact .shortcut {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trigger {
+    transition: none;
+  }
+}
