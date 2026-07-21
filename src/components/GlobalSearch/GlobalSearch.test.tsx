@@ -8,7 +8,7 @@ import {
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import GlobalSearch, { SearchTrigger } from "./index";
+import GlobalSearch, { SearchTrigger, openSearchEvent } from "./index";
 import { searchDocumentation } from "./searchClient";
 
 vi.mock("./searchClient", () => ({
@@ -61,6 +61,18 @@ describe("GlobalSearch", () => {
     expect(
       screen.getByRole("searchbox", { name: "Search terms" }),
     ).toHaveFocus();
+  });
+
+  it("opens with an empty query when the custom event detail is missing", async () => {
+    render(<GlobalSearch />);
+
+    fireEvent(window, new CustomEvent(openSearchEvent));
+
+    const searchbox = await screen.findByRole("searchbox", {
+      name: "Search terms",
+    });
+    expect(searchbox).toHaveValue("");
+    expect(searchbox).toHaveFocus();
   });
 
   it("returns keyboard-focusable Pagefind results with safe highlighting", async () => {
