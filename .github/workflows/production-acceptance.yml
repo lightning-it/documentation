@@ -23,7 +23,7 @@ jobs:
     env:
       BASE_URL: https://docs.l-it.io
       EXPECTED_COMMIT: ${{ github.sha }}
-      # Cloudflare Pages can need more than ten minutes after a main merge.
+      # Cloudflare Pages can need up to fifteen minutes after a main merge.
       PRODUCTION_POLL_MAX_ATTEMPTS: 90
 
     steps:
