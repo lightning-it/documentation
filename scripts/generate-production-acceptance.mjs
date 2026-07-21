@@ -7,6 +7,7 @@ import {
   validateDeploymentMarker,
 } from "./lib/deployment.mjs";
 import {
+  productionMarkerOrigin,
   productionOrigin,
   productionUserAgent,
   safeAcceptanceFailure,
@@ -28,7 +29,7 @@ const requiredEvidence = [
 ];
 
 async function fetchFreshDeploymentMarker(expectedCommit) {
-  const markerUrl = new URL(deploymentMarkerPath, productionOrigin);
+  const markerUrl = new URL(deploymentMarkerPath, productionMarkerOrigin);
   markerUrl.searchParams.set("expected", expectedCommit);
   markerUrl.searchParams.set("acceptance", randomUUID());
   const response = await fetch(markerUrl, {
@@ -69,6 +70,7 @@ async function fetchFreshDeploymentMarker(expectedCommit) {
   }
   return {
     origin: productionOrigin,
+    markerOrigin: productionMarkerOrigin,
     markerPath: deploymentMarkerPath,
     status: response.status,
     contentType,

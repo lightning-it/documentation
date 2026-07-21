@@ -7,7 +7,10 @@ import {
 } from "./lib/deployment.mjs";
 import { exactCacheControlOneOf } from "./lib/cache-control.mjs";
 import { hasExactCanonicalUrl } from "./lib/html.mjs";
-import { productionUserAgent } from "./lib/production-acceptance.mjs";
+import {
+  productionMarkerOrigin,
+  productionUserAgent,
+} from "./lib/production-acceptance.mjs";
 import { failIfErrors, writeEvidence } from "./lib/validation.mjs";
 
 const expectedOrigin = "https://docs.l-it.io";
@@ -165,7 +168,7 @@ async function main() {
 
   let deployedCommit;
   const { response: markerResponse, body: markerBody } = await fetchWithoutBody(
-    `${expectedOrigin}${deploymentMarkerPath}`,
+    `${productionMarkerOrigin}${deploymentMarkerPath}`,
     {
       body: true,
     },
@@ -255,8 +258,8 @@ async function main() {
   }
   if (
     !exactCacheControlOneOf(pagefind.headers.get("cache-control") ?? "", [
-      ["public", "max-age=3600", "must-revalidate"],
-      ["public", "max-age=3600", "must-revalidate", "no-transform"],
+      ["public", "max-age=14400", "must-revalidate"],
+      ["public", "max-age=14400", "must-revalidate", "no-transform"],
     ])
   ) {
     errors.push("production Pagefind cache policy is not bounded");
@@ -282,11 +285,13 @@ async function main() {
     errors.push("production custom 404 incorrectly emits a canonical URL");
   }
   const missingCsp = missing.headers.get("content-security-policy") ?? "";
+  const missingScriptSource =
+    missingCsp.match(/(?:^|;)\s*script-src\s+([^;]+)/i)?.[1] ?? "";
   if (
     !missingCsp.includes("default-src 'self'") ||
-    !missingCsp.includes("'sha256-") ||
-    missingCsp.includes("'unsafe-inline'") ||
-    missingCsp.includes("'unsafe-eval'")
+    !/'sha256-[A-Za-z0-9+/=]+'/.test(missingScriptSource) ||
+    missingScriptSource.includes("'unsafe-inline'") ||
+    missingScriptSource.includes("'unsafe-eval'")
   ) {
     errors.push(
       "production arbitrary-path 404 lacks the same strict executable CSP",
@@ -388,6 +393,8 @@ async function main() {
     schemaVersion: 1,
     status: errors.length === 0 ? "passed" : "failed",
     origin: expectedOrigin,
+    markerOrigin: productionMarkerOrigin,
+    markerPath: deploymentMarkerPath,
     dnsAnswerFamilies: {
       ipv4: ipv4.length > 0,
       ipv6: ipv6.length > 0,
