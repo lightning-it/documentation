@@ -19,11 +19,13 @@ import styles from "./styles.module.css";
 interface GlobalSearchDialogProps {
   activation: number;
   initialQuery: string;
+  previousFocus: HTMLElement | null;
 }
 
 export default function GlobalSearchDialog({
   activation,
   initialQuery,
+  previousFocus,
 }: GlobalSearchDialogProps): ReactNode {
   const [isOpen, setIsOpen] = useState(true);
   const [query, setQuery] = useState(initialQuery);
@@ -54,7 +56,6 @@ export default function GlobalSearchDialog({
       return;
     }
 
-    previousFocusRef.current = document.activeElement as HTMLElement | null;
     requestSequence.current += 1;
     setQuery(initialQuery);
     setResults([]);
@@ -83,6 +84,12 @@ export default function GlobalSearchDialog({
     previousFocusRef.current = null;
     previousFocus?.focus();
   }, []);
+
+  useEffect(() => {
+    if (!dialogRef.current?.open) {
+      previousFocusRef.current = previousFocus;
+    }
+  }, [previousFocus, activation]);
 
   useEffect(
     () => openSearch(initialQuery),

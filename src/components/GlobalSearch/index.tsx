@@ -47,14 +47,18 @@ export default function GlobalSearch(): ReactNode {
   const [request, setRequest] = useState<{
     activation: number;
     query: string;
+    previousFocus: HTMLElement | null;
   }>();
 
   useEffect(() => {
-    const activate = (query = "") =>
+    const activate = (query = "") => {
+      const previousFocus = document.activeElement as HTMLElement | null;
       setRequest((current) => ({
         activation: (current?.activation ?? 0) + 1,
         query,
+        previousFocus,
       }));
+    };
     const handleKeyboardShortcut = (event: globalThis.KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
@@ -82,6 +86,7 @@ export default function GlobalSearch(): ReactNode {
           <GlobalSearchDialog
             activation={request.activation}
             initialQuery={request.query}
+            previousFocus={request.previousFocus}
           />
         </Suspense>
       )}
