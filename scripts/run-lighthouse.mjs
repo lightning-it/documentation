@@ -15,10 +15,11 @@ import {
   writeEvidence,
 } from "./lib/validation.mjs";
 
+const externalBaseUrl = process.env.LIGHTHOUSE_BASE_URL?.trim() || undefined;
 const localPortRaw = process.env.LIGHTHOUSE_PORT;
 let localPort = 3100;
 
-if (!process.env.LIGHTHOUSE_BASE_URL && localPortRaw != null) {
+if (!externalBaseUrl && localPortRaw != null) {
   localPort = Number(localPortRaw);
   if (!Number.isInteger(localPort) || localPort < 1 || localPort > 65_535) {
     throw new Error("LIGHTHOUSE_PORT must be an integer from 1 to 65535.");
@@ -259,9 +260,9 @@ async function stopServer(server) {
 }
 
 async function main() {
-  const baseUrl = process.env.LIGHTHOUSE_BASE_URL ?? localBaseUrl;
+  const baseUrl = externalBaseUrl ?? localBaseUrl;
   const origin = new URL(baseUrl).origin;
-  const external = Boolean(process.env.LIGHTHOUSE_BASE_URL);
+  const external = Boolean(externalBaseUrl);
   const sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], {
     cwd: repositoryRoot,
     encoding: "utf8",
