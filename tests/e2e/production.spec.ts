@@ -1,18 +1,21 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("17 — production at docs.l-it.io passes the public browser journey", async ({
+test("17 — immutable production content passes the public browser journey", async ({
   page,
   baseURL,
 }) => {
   expect(new URL(baseURL ?? "").hostname).toBe(
     "lightning-it-documentation.pages.dev",
   );
-  const consoleErrors: string[] = [];
+  const consoleErrors: Array<{ text: string; url: string }> = [];
   const failedRequests: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error") {
-      consoleErrors.push(message.text());
+      consoleErrors.push({
+        text: message.text(),
+        url: message.location().url,
+      });
     }
   });
   page.on("requestfailed", (request) => {
@@ -45,7 +48,8 @@ test("17 — production at docs.l-it.io passes the public browser journey", asyn
   expect(consoleErrors).toEqual([]);
   expect(failedRequests).toEqual([]);
 
-  const missing = await page.goto("/production-acceptance-missing-path/");
+  const missingPath = "/production-acceptance-missing-path/";
+  const missing = await page.goto(missingPath);
   expect(missing?.status()).toBe(404);
   await expect(page.locator("html")).toHaveAttribute(
     "data-has-hydrated",
@@ -60,4 +64,17 @@ test("17 — production at docs.l-it.io passes the public browser journey", asyn
     /noindex/i,
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+  const expectedMissingUrl = new URL(missingPath, baseURL).href;
+  expect(
+    consoleErrors.filter(
+      (message) =>
+        !(
+          message.url === expectedMissingUrl &&
+          /^Failed to load resource: the server responded with a status of 404\b/.test(
+            message.text,
+          )
+        ),
+    ),
+  ).toEqual([]);
+  expect(failedRequests).toEqual([]);
 });
