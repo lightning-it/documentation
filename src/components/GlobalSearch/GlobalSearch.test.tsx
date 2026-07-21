@@ -53,14 +53,15 @@ describe("GlobalSearch", () => {
 
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
 
-    expect(
-      await screen.findByRole("dialog", {
-        name: "Search public documentation",
-      }),
-    ).toHaveAttribute("open");
-    expect(
-      screen.getByRole("searchbox", { name: "Search terms" }),
-    ).toHaveFocus();
+    const dialog = await screen.findByRole("dialog", {
+      name: "Search public documentation",
+    });
+    await waitFor(() => expect(dialog).toHaveAttribute("open"));
+    await waitFor(() =>
+      expect(
+        screen.getByRole("searchbox", { name: "Search terms" }),
+      ).toHaveFocus(),
+    );
   });
 
   it("opens with an empty query when the custom event detail is undefined", async () => {
@@ -72,7 +73,7 @@ describe("GlobalSearch", () => {
       name: "Search terms",
     });
     expect(searchbox).toHaveValue("");
-    expect(searchbox).toHaveFocus();
+    await waitFor(() => expect(searchbox).toHaveFocus());
   });
 
   it("returns keyboard-focusable Pagefind results with safe highlighting", async () => {

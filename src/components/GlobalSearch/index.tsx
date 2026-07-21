@@ -1,6 +1,6 @@
 import { lazy, Suspense, type ReactNode, useEffect, useState } from "react";
 
-import styles from "./styles.module.css";
+import styles from "./triggerStyles.module.css";
 
 const GlobalSearchDialog = lazy(() => import("./GlobalSearchDialog"));
 
