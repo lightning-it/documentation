@@ -418,7 +418,7 @@ async function main() {
   if (
     !exactCacheControl(searchHeaders.get("cache-control") ?? "", [
       "public",
-      "max-age=3600",
+      "max-age=14400",
       "must-revalidate",
     ])
   ) {

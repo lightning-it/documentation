@@ -190,8 +190,8 @@ async function main() {
     search.status !== 200 ||
     !/javascript/i.test(search.headers.get("content-type") ?? "") ||
     !exactCacheControlOneOf(search.headers.get("cache-control") ?? "", [
-      ["public", "max-age=3600", "must-revalidate"],
-      ["public", "max-age=3600", "must-revalidate", "no-transform"],
+      ["public", "max-age=14400", "must-revalidate"],
+      ["public", "max-age=14400", "must-revalidate", "no-transform"],
     ]) ||
     !/^(?:br|gzip)$/i.test(search.headers.get("content-encoding") ?? "")
   ) {
