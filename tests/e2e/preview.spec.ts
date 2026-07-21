@@ -34,6 +34,8 @@ test("protected develop preview passes the public browser journey", async ({
     .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
     .analyze();
   expect(accessibility.violations).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+  expect(failedRequests).toEqual([]);
 
   const missing = await page.goto("/preview-browser-missing-path/");
   expect(missing?.status()).toBe(404);
@@ -42,6 +44,4 @@ test("protected develop preview passes the public browser journey", async ({
     /noindex/i,
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
-  expect(consoleErrors).toEqual([]);
-  expect(failedRequests).toEqual([]);
 });
