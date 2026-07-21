@@ -105,7 +105,7 @@ describe("GlobalSearch", () => {
     await user.click(
       screen.getByRole("button", { name: "Search documentation" }),
     );
-    await user.type(screen.getByRole("searchbox"), "platform");
+    await user.type(await screen.findByRole("searchbox"), "platform");
     const atlasResult = await screen.findByRole("link", { name: /Atlas/ });
 
     fireEvent.keyDown(screen.getByRole("searchbox"), { key: "ArrowUp" });
@@ -122,7 +122,7 @@ describe("GlobalSearch", () => {
 
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
-    expect(screen.getByRole("searchbox")).toHaveFocus();
+    expect(await screen.findByRole("searchbox")).toHaveFocus();
 
     fireEvent.click(screen.getByRole("button", { name: "Close search" }));
 
@@ -138,7 +138,7 @@ describe("GlobalSearch", () => {
     trigger.focus();
 
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
-    fireEvent.click(screen.getByRole("button", { name: "Close search" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Close search" }));
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
 
     const dialog = screen.getByRole("dialog", {
@@ -164,6 +164,7 @@ describe("GlobalSearch", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Search documentation" }),
     );
+    await act(async () => {});
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "first" } });
     await act(() => vi.advanceTimersByTimeAsync(150));
@@ -201,6 +202,7 @@ describe("GlobalSearch", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Search documentation" }),
     );
+    await act(async () => {});
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "temporary" } });
     await act(() => vi.advanceTimersByTimeAsync(150));
@@ -225,7 +227,7 @@ describe("GlobalSearch", () => {
     await user.click(
       screen.getByRole("button", { name: "Search documentation" }),
     );
-    await user.type(screen.getByRole("searchbox"), "not-a-real-topic");
+    await user.type(await screen.findByRole("searchbox"), "not-a-real-topic");
 
     expect(
       await screen.findByText("No results for “not-a-real-topic”"),
