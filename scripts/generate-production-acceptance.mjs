@@ -8,6 +8,7 @@ import {
 } from "./lib/deployment.mjs";
 import {
   productionOrigin,
+  productionUserAgent,
   safeAcceptanceFailure,
   validateExpectedProductionCommit,
   validateProductionAcceptanceArtifacts,
@@ -35,6 +36,7 @@ async function fetchFreshDeploymentMarker(expectedCommit) {
     headers: {
       "cache-control": "no-cache, no-store",
       pragma: "no-cache",
+      "user-agent": productionUserAgent,
     },
     redirect: "error",
     signal: AbortSignal.timeout(10_000),

@@ -3,6 +3,7 @@ import {
   validateDeploymentMarker,
 } from "./lib/deployment.mjs";
 import { writeEvidence } from "./lib/validation.mjs";
+import { productionUserAgent } from "./lib/production-acceptance.mjs";
 
 const expectedOrigin = "https://docs.l-it.io";
 
@@ -44,6 +45,7 @@ async function main() {
   let observedCommit;
   let lastStatus;
   let lastError;
+  let lastCloudflareRay;
 
   for (let attempt = 1; attempt <= maximumAttempts; attempt += 1) {
     try {
@@ -52,10 +54,15 @@ async function main() {
       markerUrl.searchParams.set("attempt", String(attempt));
       const response = await fetch(markerUrl, {
         cache: "no-store",
-        headers: { "Cache-Control": "no-cache" },
+        headers: {
+          accept: "application/json",
+          "cache-control": "no-cache",
+          "user-agent": productionUserAgent,
+        },
         signal: AbortSignal.timeout(5_000),
       });
       lastStatus = response.status;
+      lastCloudflareRay = response.headers.get("cf-ray") ?? undefined;
       if (response.ok) {
         observedCommit = validateDeploymentMarker(await response.json());
         if (observedCommit === expectedCommit) {
@@ -75,6 +82,14 @@ async function main() {
         }
       } else {
         await response.body?.cancel();
+        if (attempt === 1 || attempt % 10 === 0) {
+          console.warn(
+            `Production marker attempt ${attempt} returned HTTP ${lastStatus}` +
+              (lastCloudflareRay
+                ? ` (Cloudflare Ray ${lastCloudflareRay}).`
+                : "."),
+          );
+        }
       }
       lastError = undefined;
     } catch (error) {
@@ -96,6 +111,7 @@ async function main() {
     observedCommit,
     attempts: maximumAttempts,
     lastStatus,
+    lastCloudflareRay,
     lastError,
   });
   throw new Error(
