@@ -41,11 +41,10 @@ function inspectTls(hostname) {
 }
 
 async function fetchWithoutBody(url, options = {}) {
+  const headers = new Headers(options.headers);
+  headers.set("user-agent", productionUserAgent);
   const response = await fetch(url, {
-    headers: {
-      "user-agent": productionUserAgent,
-      ...options.headers,
-    },
+    headers,
     redirect: options.redirect ?? "manual",
     signal: AbortSignal.timeout(15_000),
   });
