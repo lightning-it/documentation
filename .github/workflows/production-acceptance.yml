@@ -19,14 +19,20 @@ jobs:
     name: production / acceptance
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50
     env:
       BASE_URL: https://docs.l-it.io
       EXPECTED_COMMIT: ${{ github.sha }}
+      # Poll Cloudflare Pages up to 90 times. Each request can take 5 seconds,
+      # followed by the default 10-second interval after an unsuccessful
+      # attempt.
+      PRODUCTION_POLL_MAX_ATTEMPTS: 90
 
     steps:
       - name: Checkout expected production source
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0

@@ -7,10 +7,6 @@ name: Copilot review gate
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
-  pull_request_review:
-    types: [submitted, edited, dismissed]
-  pull_request_review_comment:
-    types: [edited, deleted]
 
 permissions:
   contents: read

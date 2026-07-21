@@ -27,10 +27,12 @@ jobs:
   approve-shared-assets:
     name: Approve trusted shared-assets PR
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       checks: read
       contents: write
       pull-requests: write
+      statuses: read
 
     steps:
       - name: Verify automated sync PR identity
@@ -296,6 +298,7 @@ jobs:
         env:
           EXPECTED_SUBJECT: ${{ steps.guard.outputs.subject }}
           GH_TOKEN: ${{ github.token }}
+          POLICY_TOKEN: ${{ secrets.LITRELEASEBOT_TOKEN }}
           PR_AUTHOR: ${{ github.event.pull_request.user.login }}
           PR_BASE: ${{ github.event.pull_request.base.ref }}
           PR_HEAD: ${{ github.event.pull_request.head.ref }}
@@ -396,7 +399,137 @@ jobs:
             disable_auto_merge
             exit 1
           fi
-          gh pr checks "$PR_URL" --required --watch --fail-fast
+          required_checks_state() {
+            local branch_rules check_runs classic classic_state context evidence pending policy_login required required_check state status_pages
+            [ -n "$POLICY_TOKEN" ] || return 1
+            if ! policy_login="$(
+              GH_TOKEN="$POLICY_TOKEN" gh api user --jq .login
+            )"; then
+              return 1
+            fi
+            [ "$policy_login" = litreleasebot ] || return 1
+            if ! branch_rules="$(
+              GH_TOKEN="$POLICY_TOKEN" \
+                gh api "repos/${REPO}/rules/branches/${PR_BASE}"
+            )"; then
+              return 1
+            fi
+            if classic="$(
+              GH_TOKEN="$POLICY_TOKEN" gh api \
+                "repos/${REPO}/branches/${PR_BASE}/protection/required_status_checks" \
+                2>&1
+            )"; then
+              classic_state=0
+            else
+              classic_state="$?"
+            fi
+            if [ "$classic_state" -ne 0 ]; then
+              if grep -Fq "HTTP 404" <<<"$classic"; then
+                classic='{}'
+              else
+                return 1
+              fi
+            fi
+            required="$(
+              jq -nc \
+                --argjson branch_rules "$branch_rules" \
+                --argjson classic "$classic" '
+                ([ $branch_rules[]
+                   | select(.type == "required_status_checks")
+                   | .parameters.required_status_checks[]?
+                   | {context, app_id: (.integration_id // null)}
+                 ]
+                 + [ $classic.checks[]? | {context, app_id} ]
+                 + [ $classic.contexts[]? | {context: ., app_id: null} ])
+                | unique_by([.context, .app_id])
+              '
+            )"
+            [ "$(jq 'length' <<<"$required")" -gt 0 ] || return 1
+            if ! check_runs="$(
+              gh api --paginate --slurp \
+                "repos/${REPO}/commits/${PR_HEAD_SHA}/check-runs?filter=latest&per_page=100"
+            )"; then
+              return 1
+            fi
+            if ! status_pages="$(
+              gh api --paginate --slurp \
+                "repos/${REPO}/commits/${PR_HEAD_SHA}/statuses?per_page=100"
+            )"; then
+              return 1
+            fi
+            evidence="$(
+              jq -nc \
+                --argjson check_pages "$check_runs" \
+                --argjson status_pages "$status_pages" '
+                (([ $check_pages[] | .check_runs[] ]
+                  | sort_by(.name, .app.id, .id)
+                  | group_by([.name, .app.id])
+                  | map(last)
+                  | map({
+                    context: .name,
+                    app_id: (.app.id // null),
+                    state: (if .status == "completed" then (.conclusion // "") else "pending" end)
+                  }))
+                 + ([ $status_pages[] | .[] ]
+                  | sort_by(.context, .id)
+                  | group_by(.context)
+                  | map(last)
+                  | map({
+                    context: .context,
+                    app_id: null,
+                    state: .state
+                  })))
+              '
+            )"
+            pending=false
+            while IFS= read -r required_check; do
+              [ -n "$required_check" ] || continue
+              context="$(jq -r .context <<<"$required_check")"
+              state="$(
+                jq -r \
+                  --arg context "$context" \
+                  --argjson app_id "$(jq '.app_id' <<<"$required_check")" '
+                  [ .[] | select(.context == $context) ] as $matches
+                  | (if $app_id == null then
+                       ([ $matches[] | select(.app_id == null) ][0] // $matches[0])
+                     else
+                       [ $matches[] | select(.app_id == $app_id) ][0]
+                     end).state // "missing"
+                ' <<<"$evidence"
+              )"
+              case "$state" in
+                success) ;;
+                missing|pending|queued|in_progress) pending=true ;;
+                *) return 1 ;;
+              esac
+            done < <(jq -c '.[]' <<<"$required")
+            [ "$pending" = false ] || return 2
+          }
+
+          wait_for_required_checks() {
+            local state
+            for _ in $(seq 1 60); do
+              if ! assert_live_safe; then
+                return 1
+              fi
+              if required_checks_state; then
+                state=0
+              else
+                state="$?"
+              fi
+              case "$state" in
+                0) return 0 ;;
+                2) sleep 10 ;;
+                *) return 1 ;;
+              esac
+            done
+            return 1
+          }
+
+          if ! wait_for_required_checks; then
+            disable_auto_merge
+            exit 1
+          fi
           if ! assert_live_safe; then
             disable_auto_merge
             exit 1
