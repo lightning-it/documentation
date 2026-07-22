@@ -12,27 +12,6 @@ const gateOrder = [
   "accepted",
 ];
 
-const requiredHeadings = [
-  "Document Information",
-  "Technical Installation and Execution Plan",
-  "Execution Context",
-  "Immutable Software and Automation References",
-  "Session Variables",
-  "Input and Secret Validation",
-  "Initial Preflight",
-  "Artifact Staging",
-  "Host Preparation",
-  "Complete Preflight",
-  "TLS and Certificates",
-  "Product Installation",
-  "Technical Completion Verification",
-  "Idempotency Verification",
-  "Evidence Handling",
-  "Safe Stop, Restart and Recovery",
-  "Planned Execution",
-  "Actual Execution Record",
-];
-
 const requiredPhaseIds = [
   "initial-preflight",
   "artifact-staging",
@@ -110,17 +89,6 @@ export function validateIhr({ data, markdown, schema, path }) {
   }
 
   if (atLeast(gate, "ready-for-installation")) {
-    for (const heading of requiredHeadings) {
-      if (!markdown.includes(heading)) {
-        findings.push(
-          finding(
-            "IHR-PLAN-001",
-            `Missing technical section: ${heading}.`,
-            path,
-          ),
-        );
-      }
-    }
     for (const phaseId of requiredPhaseIds) {
       if (!markdown.includes(`\`${phaseId}\``)) {
         findings.push(

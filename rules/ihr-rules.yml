@@ -8,11 +8,11 @@ rules:
     requirement: IHR front matter conforms to the published metadata schema.
   - id: IHR-LANG-001
     severity: error
-    applies_from: requirements-shared
+    applies_from: draft
     requirement: document.language is a valid BCP-47 language tag.
   - id: IHR-LANG-002
     severity: error
-    applies_from: requirements-shared
+    applies_from: draft
     requirement: >-
       Language, source language, translation status, and technical identifier
       handling are visible.

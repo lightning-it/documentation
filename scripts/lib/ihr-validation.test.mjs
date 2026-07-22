@@ -14,6 +14,13 @@ const template = await readFile(
   path.join(root, "templates/installation-and-handover-record.md"),
   "utf8",
 );
+const catalog = parseYaml(
+  await readFile(path.join(root, "rules/ihr-rules.yml"), "utf8"),
+);
+const validatorSource = await readFile(
+  path.join(root, "scripts/lib/ihr-validation.mjs"),
+  "utf8",
+);
 function validate(source) {
   const parsed = matter(source, { engines: { yaml: parseYaml } });
   return validateIhr({
@@ -26,6 +33,20 @@ function validate(source) {
 
 test("supports en-GB readiness drafts with post-install fields pending", () => {
   assert.deepEqual(validate(template), []);
+});
+
+test("catalogued rule IDs remain implemented by the standalone validator", () => {
+  for (const rule of catalog.rules) {
+    assert.match(validatorSource, new RegExp(`\\b${rule.id}\\b`), rule.id);
+  }
+});
+
+test("supports draft as a target gate", () => {
+  const source = template.replace(
+    "target_gate: requirements-shared",
+    "target_gate: draft",
+  );
+  assert.deepEqual(validate(source), []);
 });
 
 test("supports de-DE while machine lifecycle values stay neutral", () => {
@@ -84,6 +105,23 @@ test("READY_FOR_INSTALLATION rejects missing commands and pending authorisation"
   assert.ok(ids.includes("IHR-PLAN-002"));
   assert.ok(ids.includes("IHR-PLAN-003"));
   assert.ok(ids.includes("IHR-READY-001"));
+});
+
+test("localized headings do not replace stable phase identifiers", () => {
+  const source = template
+    .replace(
+      "target_gate: requirements-shared",
+      "target_gate: ready-for-installation",
+    )
+    .replace("### Initial Preflight", "### Initiale Vorprüfung");
+  const findings = validate(source);
+  assert.equal(
+    findings.some(
+      ({ rule_id, message }) =>
+        rule_id === "IHR-PLAN-001" && message.includes("section"),
+    ),
+    false,
+  );
 });
 
 test("TECHNICALLY_COMPLETED rejects missing actual commands and recaps", () => {

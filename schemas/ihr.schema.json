@@ -48,6 +48,7 @@
         },
         "target_gate": {
           "enum": [
+            "draft",
             "requirements-shared",
             "ready-for-installation",
             "implementation-in-progress",
