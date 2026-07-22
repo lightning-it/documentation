@@ -9,7 +9,7 @@ document:
   approval_status: pending
   version: "1.0"
   classification: PUBLIC
-  owner: Lightning IT Repository Maintainers
+  owner: Lightning IT Documentation Maintainers
   approver: Lightning IT Security and Compliance Maintainers
   audience:
     - contributors
