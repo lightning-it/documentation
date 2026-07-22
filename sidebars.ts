@@ -176,6 +176,21 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Documentation governance",
+      link: {
+        type: "doc",
+        id: "documentation-governance/documentation-governance-principles",
+      },
+      items: [
+        "documentation-governance/document-types/installation-and-handover-record",
+        "documentation-governance/documentation-quality-standard",
+        "documentation-governance/ihr-rule-catalog",
+        "documentation-governance/ihr-quality-gates",
+        "documentation-governance/ihr-documentation-pipeline",
+      ],
+    },
+    {
+      type: "category",
       label: "Reference",
       link: { type: "doc", id: "reference/reference-overview" },
       items: [

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.l-it.io/schemas/ihr.schema.json",
+  "title": "LIT-DOC-IHR 1.0.0 metadata",
+  "type": "object",
+  "required": ["document"],
+  "properties": {
+    "document": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "language",
+        "status",
+        "phase",
+        "target_gate",
+        "classification",
+        "ruleset",
+        "ruleset_version"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]{2,}$" },
+        "type": { "const": "IHR" },
+        "language": {
+          "type": "string",
+          "pattern": "^[a-z]{2,3}(?:-[A-Z][a-z]{3})?(?:-[A-Z]{2}|-[0-9]{3})?(?:(?:-[A-Za-z0-9]{5,8})|(?:-[0-9][A-Za-z0-9]{3}))*$"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "requirements-shared",
+            "ready-for-installation",
+            "implementation-in-progress",
+            "technically-completed",
+            "customer-ready",
+            "handed-over",
+            "accepted"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "readiness",
+            "implementation",
+            "completion",
+            "handover",
+            "acceptance"
+          ]
+        },
+        "target_gate": {
+          "enum": [
+            "draft",
+            "requirements-shared",
+            "ready-for-installation",
+            "implementation-in-progress",
+            "technically-completed",
+            "customer-ready",
+            "handed-over",
+            "accepted"
+          ]
+        },
+        "classification": { "type": "string", "minLength": 3 },
+        "ruleset": { "const": "LIT-DOC-IHR" },
+        "ruleset_version": { "const": "1.0.0" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

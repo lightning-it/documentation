@@ -1,0 +1,11 @@
+---
+extends: existence
+message: "Keep the machine lifecycle value language-neutral: '%s'."
+level: error
+ignorecase: false
+tokens:
+  - "BEREIT_ZUR_INSTALLATION"
+  - "TECHNISCH_ABGESCHLOSSEN"
+  - "KUNDENBEREIT"
+  - "ÜBERGEBEN"
+  - "AKZEPTIERT"
