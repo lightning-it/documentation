@@ -15,17 +15,17 @@ import {
   writeEvidence,
 } from "./lib/validation.mjs";
 import { resolveLighthouseRunConfig } from "./lib/lighthouse-config.mjs";
+import {
+  productionLighthouseExcludedAudits,
+  productionLighthouseThresholds,
+  representativeLighthouseRoutes,
+} from "./lib/production-acceptance.mjs";
 
 const { externalBaseUrl, localBaseUrl, localPort } =
   resolveLighthouseRunConfig();
 const buildDirectory = path.join(repositoryRoot, "build");
-const routes = ["/", "/modulix/overview/", "/security/"];
-const thresholds = {
-  performance: 0.9,
-  accessibility: 0.95,
-  "best-practices": 0.95,
-  seo: 0.95,
-};
+const routes = representativeLighthouseRoutes;
+const thresholds = productionLighthouseThresholds;
 const diagnosticAuditIds = [
   "largest-contentful-paint-element",
   "lcp-discovery",
@@ -252,7 +252,17 @@ async function stopServer(server) {
 
 async function main() {
   const baseUrl = externalBaseUrl ?? localBaseUrl;
-  const origin = new URL(baseUrl).origin;
+  const targetOrigin = new URL(baseUrl).origin;
+  let origin = targetOrigin;
+  if (process.env.LIGHTHOUSE_CANONICAL_ORIGIN) {
+    try {
+      origin = new URL(process.env.LIGHTHOUSE_CANONICAL_ORIGIN).origin;
+    } catch {
+      throw new Error(
+        "LIGHTHOUSE_CANONICAL_ORIGIN must be a valid absolute URL.",
+      );
+    }
+  }
   const external = Boolean(externalBaseUrl);
   const sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], {
     cwd: repositoryRoot,
@@ -287,6 +297,7 @@ async function main() {
         logLevel: "error",
         output: "json",
         onlyCategories: Object.keys(thresholds),
+        skipAudits: external ? productionLighthouseExcludedAudits : undefined,
         formFactor: "mobile",
         screenEmulation: {
           mobile: true,
@@ -342,11 +353,13 @@ async function main() {
     schemaVersion: 1,
     status: errors.length === 0 ? "passed" : "failed",
     origin,
+    targetOrigin,
     sourceCommit,
     profile: "mobile",
     serverProfile: external
       ? "external-production"
       : "local-brotli-production-representative",
+    excludedAudits: external ? productionLighthouseExcludedAudits : [],
     thresholds,
     results,
   });

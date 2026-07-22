@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import {
+  productionContentOrigin,
+  productionLighthouseExcludedAudits,
   productionLighthouseThresholds,
   productionMarkerOrigin,
   productionOrigin,
@@ -28,6 +30,8 @@ function passingArtifacts() {
       schemaVersion: 1,
       status: "passed",
       origin: productionOrigin,
+      contentOrigin: productionContentOrigin,
+      securityOrigin: productionContentOrigin,
       markerOrigin: productionMarkerOrigin,
       markerPath: "/deployment-commit.json",
       dnsAnswerFamilies: { ipv4: true, ipv6: false },
@@ -39,6 +43,9 @@ function passingArtifacts() {
       httpRedirectStatus: 301,
       httpRedirectLocation: `${productionOrigin}/`,
       pagesHost: { status: 200, noindex: true },
+      edgeStatus: 403,
+      edgeCloudflare: true,
+      edgeMitigation: "challenge",
       homeStatus: 200,
       missingStatus: 404,
       expectedCommit,
@@ -66,9 +73,11 @@ function passingArtifacts() {
       schemaVersion: 1,
       status: "passed",
       origin: productionOrigin,
+      targetOrigin: productionContentOrigin,
       sourceCommit: expectedCommit,
       profile: "mobile",
       serverProfile: "external-production",
+      excludedAudits: [...productionLighthouseExcludedAudits],
       thresholds: { ...productionLighthouseThresholds },
       results: representativeLighthouseRoutes.map((route) => ({
         route,
@@ -86,6 +95,7 @@ function passingArtifacts() {
           schemaVersion: 1,
           mode: "production",
           origin: productionOrigin,
+          targetOrigin: productionContentOrigin,
           expectedCommit,
           sourceCommit: expectedCommit,
         },
@@ -127,6 +137,15 @@ describe("validateProductionAcceptanceArtifacts", () => {
   it("accepts a complete set bound to one origin and commit", () => {
     assert.equal(
       validateProductionAcceptanceArtifacts(passingArtifacts()),
+      expectedCommit,
+    );
+
+    const unchallengedArtifacts = passingArtifacts();
+    unchallengedArtifacts.production.edgeStatus = 200;
+    unchallengedArtifacts.production.securityOrigin = productionOrigin;
+    delete unchallengedArtifacts.production.edgeMitigation;
+    assert.equal(
+      validateProductionAcceptanceArtifacts(unchallengedArtifacts),
       expectedCommit,
     );
   });
