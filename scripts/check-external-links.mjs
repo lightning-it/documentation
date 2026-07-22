@@ -64,8 +64,9 @@ async function request(url, method) {
 
 async function checkUrl(url) {
   let response;
+  let parsed;
   try {
-    const parsed = new URL(url);
+    parsed = new URL(url);
     if (parsed.hostname === "github.com") {
       const [owner, repository] = parsed.pathname.split("/").filter(Boolean);
       const apiUrl = repository
@@ -104,8 +105,7 @@ async function checkUrl(url) {
     };
   }
   const verifiedChallenge = isVerifiedOwnedCloudflareChallenge(url, response);
-  const finalUrl =
-    new URL(url).hostname === "github.com" ? url : response.url || url;
+  const finalUrl = parsed.hostname === "github.com" ? url : response.url || url;
   return {
     url,
     ok: (response.status >= 200 && response.status < 400) || verifiedChallenge,
