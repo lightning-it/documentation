@@ -8,6 +8,7 @@ import {
   walkFiles,
   writeEvidence,
 } from "./lib/validation.mjs";
+import { isVerifiedOwnedCloudflareChallenge } from "./lib/external-links.mjs";
 
 const timeoutMilliseconds = 15_000;
 const productionOrigin = "https://docs.l-it.io";
@@ -102,11 +103,22 @@ async function checkUrl(url) {
       error: error.name === "TimeoutError" ? "timeout" : "network",
     };
   }
+  const verifiedChallenge = isVerifiedOwnedCloudflareChallenge(url, response);
+  const finalUrl =
+    new URL(url).hostname === "github.com" ? url : response.url || url;
   return {
     url,
-    ok: response.status >= 200 && response.status < 400,
+    ok: (response.status >= 200 && response.status < 400) || verifiedChallenge,
     status: response.status,
-    finalUrl: url,
+    finalUrl,
+    verification: verifiedChallenge ? "owned-cloudflare-challenge" : "http",
+    challengeEvidence: verifiedChallenge
+      ? {
+          mitigation: response.headers.get("cf-mitigated"),
+          server: response.headers.get("server"),
+          ray: response.headers.get("cf-ray"),
+        }
+      : undefined,
   };
 }
 
@@ -175,13 +187,25 @@ async function main() {
     checkedLinks: results.length,
     passingLinks: results.filter(({ ok }) => ok).length,
     failingLinks: errors.length,
-    results: results.map(({ url, ok, status, finalUrl, error }) => ({
-      url,
-      ok,
-      status,
-      finalUrl,
-      error,
-    })),
+    results: results.map(
+      ({
+        url,
+        ok,
+        status,
+        finalUrl,
+        error,
+        verification,
+        challengeEvidence,
+      }) => ({
+        url,
+        ok,
+        status,
+        finalUrl,
+        error,
+        verification,
+        challengeEvidence,
+      }),
+    ),
   });
   failIfErrors("External-link validation", errors);
   console.log(`Validated ${results.length} external HTTPS links.`);
