@@ -27,7 +27,7 @@ test("17 — immutable production content passes the public browser journey", as
     }
   });
 
-  const response = await page.goto("/");
+  const response = await page.goto("/", { waitUntil: "networkidle" });
   expect(response?.status()).toBe(200);
   expect(response?.headers()["content-security-policy"]).toContain(
     "default-src 'self'",
@@ -44,13 +44,16 @@ test("17 — immutable production content passes the public browser journey", as
   await expect(
     page.getByRole("dialog").getByRole("link").first(),
   ).toBeVisible();
+  await page.waitForLoadState("networkidle");
   const accessibility = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
     .analyze();
   expect(accessibility.violations).toEqual([]);
 
   for (const route of ["/modulix/overview/", "/security/"]) {
-    const representativeResponse = await page.goto(route);
+    const representativeResponse = await page.goto(route, {
+      waitUntil: "networkidle",
+    });
     expect(representativeResponse?.status()).toBe(200);
     await expect(page.locator("html")).toHaveAttribute(
       "data-has-hydrated",
@@ -61,7 +64,7 @@ test("17 — immutable production content passes the public browser journey", as
   expect(failedRequests).toEqual([]);
 
   const missingPath = "/production-acceptance-missing-path/";
-  const missing = await page.goto(missingPath);
+  const missing = await page.goto(missingPath, { waitUntil: "networkidle" });
   expect(missing?.status()).toBe(404);
   await expect(page.locator("html")).toHaveAttribute(
     "data-has-hydrated",
