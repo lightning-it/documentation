@@ -34,6 +34,11 @@ if (mode === "production") {
     );
   }
 }
+const canonicalOrigin =
+  process.env.CANONICAL_ORIGIN?.trim() ||
+  (mode === "production"
+    ? process.env.BASE_URL?.trim() || productionOrigin
+    : previewBaseUrl);
 
 const result = spawnSync(
   process.execPath,
@@ -50,11 +55,7 @@ const result = spawnSync(
       ...process.env,
       BASE_URL:
         mode === "production" ? productionContentUrl.href : previewBaseUrl,
-      CANONICAL_ORIGIN:
-        process.env.CANONICAL_ORIGIN ??
-        (mode === "production"
-          ? process.env.BASE_URL || productionOrigin
-          : process.env.BASE_URL),
+      CANONICAL_ORIGIN: canonicalOrigin,
       EXTERNAL_TEST_MODE: mode,
       PLAYWRIGHT_JSON_OUTPUT_NAME: path.join(
         generatedEvidenceDirectory,
