@@ -8,10 +8,14 @@ import {
   walkFiles,
   writeEvidence,
 } from "./lib/validation.mjs";
-import { isVerifiedOwnedCloudflareChallenge } from "./lib/external-links.mjs";
+import {
+  isRetryableExternalLinkResult,
+  isVerifiedOwnedCloudflareChallenge,
+} from "./lib/external-links.mjs";
 
 const timeoutMilliseconds = 15_000;
 const productionOrigin = "https://docs.l-it.io";
+const retryDelaysMilliseconds = [500, 1_500];
 
 function normalizedExternalUrls(content) {
   const urls = new Set();
@@ -122,6 +126,25 @@ async function checkUrl(url) {
   };
 }
 
+async function checkUrlWithRetries(url) {
+  let result;
+  for (
+    let attempt = 0;
+    attempt <= retryDelaysMilliseconds.length;
+    attempt += 1
+  ) {
+    result = await checkUrl(url);
+    if (!isRetryableExternalLinkResult(result)) {
+      return result;
+    }
+    const delay = retryDelaysMilliseconds[attempt];
+    if (delay !== undefined) {
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+  }
+  return result;
+}
+
 async function main() {
   const sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], {
     cwd: repositoryRoot,
@@ -167,7 +190,7 @@ async function main() {
     async () => {
       while (queue.length > 0) {
         const url = queue.shift();
-        results.push(await checkUrl(url));
+        results.push(await checkUrlWithRetries(url));
       }
     },
   );
