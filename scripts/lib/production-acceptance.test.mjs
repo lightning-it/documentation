@@ -31,6 +31,7 @@ function passingArtifacts() {
       status: "passed",
       origin: productionOrigin,
       contentOrigin: productionContentOrigin,
+      securityOrigin: productionContentOrigin,
       markerOrigin: productionMarkerOrigin,
       markerPath: "/deployment-commit.json",
       dnsAnswerFamilies: { ipv4: true, ipv6: false },
@@ -141,6 +142,7 @@ describe("validateProductionAcceptanceArtifacts", () => {
 
     const unchallengedArtifacts = passingArtifacts();
     unchallengedArtifacts.production.edgeStatus = 200;
+    unchallengedArtifacts.production.securityOrigin = productionOrigin;
     delete unchallengedArtifacts.production.edgeMitigation;
     assert.equal(
       validateProductionAcceptanceArtifacts(unchallengedArtifacts),

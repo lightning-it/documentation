@@ -97,6 +97,10 @@ function validateProductionEvidence(record, expectedCommit) {
       record.status === "passed" &&
       record.origin === productionOrigin &&
       record.contentOrigin === productionContentOrigin &&
+      record.securityOrigin ===
+        (record.edgeStatus === 200
+          ? productionOrigin
+          : productionContentOrigin) &&
       record.markerOrigin === productionMarkerOrigin &&
       record.markerPath === productionMarkerPath &&
       record.expectedCommit === expectedCommit &&

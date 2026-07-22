@@ -146,8 +146,11 @@ async function main() {
   if (!/^text\/html\b/i.test(home.headers.get("content-type") ?? "")) {
     errors.push("production home endpoint is not served as HTML");
   }
+  const securityResponse = edgeHome.status === 200 ? edgeHome : home;
+  const securityOrigin =
+    edgeHome.status === 200 ? expectedOrigin : productionContentOrigin;
   for (const [header, pattern] of expectedHeaders) {
-    if (!pattern.test(home.headers.get(header) ?? "")) {
+    if (!pattern.test(securityResponse.headers.get(header) ?? "")) {
       errors.push(`production response is missing a safe ${header} header`);
     }
   }
@@ -157,19 +160,26 @@ async function main() {
     );
   }
   if (
-    !exactCacheControlOneOf(home.headers.get("cache-control") ?? "", [
-      ["public", "max-age=0", "must-revalidate"],
-      ["public", "max-age=0", "must-revalidate", "no-transform"],
-    ])
+    !exactCacheControlOneOf(
+      securityResponse.headers.get("cache-control") ?? "",
+      [
+        ["public", "max-age=0", "must-revalidate"],
+        ["public", "max-age=0", "must-revalidate", "no-transform"],
+      ],
+    )
   ) {
     errors.push("production HTML cache policy does not require revalidation");
   }
-  if (!/^(?:br|gzip)$/i.test(home.headers.get("content-encoding") ?? "")) {
+  if (
+    !/^(?:br|gzip)$/i.test(
+      securityResponse.headers.get("content-encoding") ?? "",
+    )
+  ) {
     errors.push(
       "production HTML is not served with Brotli or gzip compression",
     );
   }
-  const csp = home.headers.get("content-security-policy") ?? "";
+  const csp = securityResponse.headers.get("content-security-policy") ?? "";
   const scriptSource = csp.match(/(?:^|;)\s*script-src\s+([^;]+)/i)?.[1] ?? "";
   if (
     scriptSource.includes("'unsafe-inline'") ||
@@ -415,6 +425,7 @@ async function main() {
     status: errors.length === 0 ? "passed" : "failed",
     origin: expectedOrigin,
     contentOrigin: productionContentOrigin,
+    securityOrigin,
     markerOrigin: productionMarkerOrigin,
     markerPath: deploymentMarkerPath,
     dnsAnswerFamilies: {
