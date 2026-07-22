@@ -52,9 +52,12 @@ const scanRoots = [
   "config",
   "docs",
   "evidence",
+  "rules",
+  "schemas",
   "scripts",
   "src",
   "static",
+  "templates",
   "tests",
 ];
 const rootScanFiles = [

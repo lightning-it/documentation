@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.l-it.io/schemas/ihr-finding.schema.json",
+  "type": "object",
+  "required": ["rule_id", "severity", "message", "location"],
+  "properties": {
+    "rule_id": { "type": "string", "pattern": "^IHR-[A-Z]+-[0-9]{3}$" },
+    "severity": { "enum": ["error", "warning", "info"] },
+    "message": { "type": "string", "minLength": 1 },
+    "location": {
+      "type": "object",
+      "required": ["path"],
+      "properties": {
+        "path": { "type": "string" },
+        "line": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "phase": { "type": "string" },
+    "remediation": { "type": "string" }
+  },
+  "additionalProperties": false
+}
