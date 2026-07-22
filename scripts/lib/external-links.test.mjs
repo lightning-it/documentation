@@ -25,6 +25,13 @@ describe("isVerifiedOwnedCloudflareChallenge", () => {
       ),
       true,
     );
+    assert.equal(
+      isVerifiedOwnedCloudflareChallenge(
+        "https://l-it.io",
+        response({ url: "https://www.l-it.io/" }),
+      ),
+      true,
+    );
   });
 
   it("rejects unknown paths, external hosts, and incomplete evidence", () => {
