@@ -5,6 +5,7 @@ import {
   generatedEvidenceDirectory,
   repositoryRoot,
 } from "./lib/validation.mjs";
+import { productionOrigin } from "./lib/production-acceptance.mjs";
 
 const mode = process.argv[2];
 if (!new Set(["preview", "production"]).has(mode)) {
@@ -33,7 +34,10 @@ const result = spawnSync(
         mode === "production"
           ? process.env.PRODUCTION_CONTENT_BASE_URL
           : process.env.BASE_URL,
-      CANONICAL_ORIGIN: process.env.BASE_URL,
+      CANONICAL_ORIGIN:
+        mode === "production"
+          ? process.env.BASE_URL || productionOrigin
+          : process.env.BASE_URL,
       EXTERNAL_TEST_MODE: mode,
       PLAYWRIGHT_JSON_OUTPUT_NAME: path.join(
         generatedEvidenceDirectory,

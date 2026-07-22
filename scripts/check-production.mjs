@@ -119,7 +119,9 @@ async function main() {
     errors.push("production pages.dev host is not available with noindex");
   }
 
-  const { response: edgeHome } = await fetchWithoutBody(baseUrl);
+  const { response: edgeHome } = await fetchWithoutBody(baseUrl, {
+    headers: compressedRequest,
+  });
   const edgeIsCloudflare =
     edgeHome.headers.get("server")?.toLowerCase() === "cloudflare" &&
     Boolean(edgeHome.headers.get("cf-ray"));
