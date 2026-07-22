@@ -21,6 +21,12 @@ const validatorSource = await readFile(
   path.join(root, "scripts/lib/ihr-validation.mjs"),
   "utf8",
 );
+const digestValeRule = parseYaml(
+  await readFile(
+    path.join(root, "rules/vale/LIT/NoAbbreviatedDigest.yml"),
+    "utf8",
+  ),
+);
 function validate(source) {
   const parsed = matter(source, { engines: { yaml: parseYaml } });
   return validateIhr({
@@ -39,6 +45,13 @@ test("catalogued rule IDs remain implemented by the standalone validator", () =>
   for (const rule of catalog.rules) {
     assert.match(validatorSource, new RegExp(`\\b${rule.id}\\b`), rule.id);
   }
+});
+
+test("Vale flags abbreviated digests without matching full SHA-256 digests", () => {
+  const pattern = new RegExp(digestValeRule.tokens[0], "i");
+  assert.equal(pattern.test(`sha256:${"a".repeat(63)}`), true);
+  assert.equal(pattern.test(`sha256:${"a".repeat(20)}…`), true);
+  assert.equal(pattern.test(`sha256:${"a".repeat(64)}`), false);
 });
 
 test("supports draft as a target gate", () => {

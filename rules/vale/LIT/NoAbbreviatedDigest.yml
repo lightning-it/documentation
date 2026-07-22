@@ -4,4 +4,4 @@ message: "Use a complete immutable SHA-256 digest, not '%s'."
 level: error
 ignorecase: true
 tokens:
-  - 'sha256:[0-9a-f]{8,63}(?:…|\.\.\.)?'
+  - 'sha256:[0-9a-f]{8,63}(?:\b|…|\.\.\.)'
