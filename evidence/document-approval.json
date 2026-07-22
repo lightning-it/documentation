@@ -1,6 +1,6 @@
 {
-  "schema_version": 2,
-  "content_tree_sha256": "3f23e245839a5eed35cc384ea32ff7432a07d0d7d93097480ad6861fb5dbfd1b",
+  "schema_version": 3,
+  "content_tree_sha256": "4753d4050cf0b999cd6dcee940bdff31a5e4a954f4ee4f5e0a9cae07759cfcb1",
   "document_ids": [
     "atlas-architecture",
     "atlas-concepts",
@@ -12,6 +12,7 @@
     "bsi-mapping",
     "compliance-overview",
     "contributing-documentation",
+    "contributing-github-issues",
     "getting-started",
     "github-automation-trust",
     "glossary",
@@ -131,7 +132,8 @@
       ],
       "decision": "approved",
       "reviewer": "@litroc",
-      "review_date": "2026-07-21"
+      "review_date": "2026-07-21",
+      "approval_basis": "single-maintainer-exception"
     },
     {
       "approver_role": "Lightning IT Security and Compliance Maintainers",
@@ -140,6 +142,7 @@
         "backup-and-recovery",
         "bsi-mapping",
         "compliance-overview",
+        "contributing-github-issues",
         "io-security",
         "modulix-blueprint-aap-ansible-vault",
         "modulix-blueprint-aap-hashicorp-vault",
@@ -150,7 +153,8 @@
       ],
       "decision": "approved",
       "reviewer": "@litroc",
-      "review_date": "2026-07-20"
+      "review_date": "2026-07-21",
+      "approval_basis": "single-maintainer-exception"
     }
   ]
 }

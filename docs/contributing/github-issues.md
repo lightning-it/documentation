@@ -5,8 +5,8 @@ description: Create public GitHub issues that are actionable, traceable, and saf
 slug: /contributing/github-issues/
 sidebar_position: 2
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

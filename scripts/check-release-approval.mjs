@@ -42,11 +42,11 @@ function isValidReviewDate(value) {
 function parseAuthorityPolicy(policy, errors) {
   const authorizations = new Map();
   if (
-    policy.schema_version !== 1 ||
+    policy.schema_version !== 2 ||
     !Array.isArray(policy.role_authorizations)
   ) {
     errors.push("approval-authority policy has an unsupported structure");
-    return authorizations;
+    return { authorizations, singleMaintainerReviewer: undefined };
   }
   if (policy.status !== "AUTHORIZED") {
     errors.push(
@@ -82,7 +82,42 @@ function parseAuthorityPolicy(policy, errors) {
     }
     authorizations.set(role, reviewers);
   }
-  return authorizations;
+  const singleMaintainerException = policy.single_maintainer_exception;
+  const requiredControls = uniqueStrings(
+    singleMaintainerException?.required_controls,
+  );
+  const excludedDecisions = uniqueStrings(
+    singleMaintainerException?.excluded_decisions,
+  );
+  const expectedControls = [
+    "exact-current-revision-copilot-review",
+    "all-review-findings-resolved",
+    "all-required-checks-successful",
+    "exact-documentation-tree-digest-evidence",
+  ];
+  const expectedExclusions = [
+    "legal-approval",
+    "risk-acceptance",
+    "certification-authority",
+    "protected-material-publication",
+  ];
+  let singleMaintainerReviewer;
+  if (
+    singleMaintainerException?.status !== "AUTHORIZED" ||
+    typeof singleMaintainerException?.github_reviewer !== "string" ||
+    !/^@[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/.test(
+      singleMaintainerException.github_reviewer,
+    ) ||
+    !requiredControls ||
+    expectedControls.some((control) => !requiredControls.has(control)) ||
+    !excludedDecisions ||
+    expectedExclusions.some((decision) => !excludedDecisions.has(decision))
+  ) {
+    errors.push("single-maintainer exception policy is incomplete or invalid");
+  } else {
+    singleMaintainerReviewer = singleMaintainerException.github_reviewer;
+  }
+  return { authorizations, singleMaintainerReviewer };
 }
 
 async function main() {
@@ -93,7 +128,10 @@ async function main() {
     ),
   );
   const errors = [];
-  const authorizations = parseAuthorityPolicy(policy, errors);
+  const { authorizations, singleMaintainerReviewer } = parseAuthorityPolicy(
+    policy,
+    errors,
+  );
   const documentsById = new Map(
     snapshot.documents.map((document) => [document.id, document]),
   );
@@ -119,7 +157,7 @@ async function main() {
       errors.push("a document approver role has no authorized GitHub reviewer");
     }
   }
-  if (evidence.schema_version !== 2 || !Array.isArray(evidence.approvals)) {
+  if (evidence.schema_version !== 3 || !Array.isArray(evidence.approvals)) {
     errors.push("review evidence does not use the supported approval schema");
   }
   const approvalRecords = Array.isArray(evidence.approvals)
@@ -167,6 +205,19 @@ async function main() {
     }
     if (!isValidReviewDate(approval.review_date)) {
       errors.push("an approval record has no valid, non-future review date");
+    }
+    if (
+      approval.approval_basis !== "independent-review" &&
+      approval.approval_basis !== "single-maintainer-exception"
+    ) {
+      errors.push("an approval record has no supported approval basis");
+    } else if (
+      approval.approval_basis === "single-maintainer-exception" &&
+      approval.reviewer !== singleMaintainerReviewer
+    ) {
+      errors.push(
+        "an approval record uses an unauthorized single-maintainer exception",
+      );
     }
     for (const id of approvedIds) {
       const document = documentsById.get(id);
