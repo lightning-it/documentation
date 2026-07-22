@@ -39,7 +39,17 @@ if (externalBaseUrl && sourceCommit !== expectedCommit) {
   );
 }
 const testMode = externalBaseUrl ? externalTestMode : "local";
-const testOrigin = new URL(externalBaseUrl ?? localBaseUrl).origin;
+function parseOrigin(value: string, variableName: string) {
+  try {
+    return new URL(value).origin;
+  } catch {
+    throw new Error(`${variableName} must be a valid absolute URL.`);
+  }
+}
+const targetOrigin = parseOrigin(externalBaseUrl ?? localBaseUrl, "BASE_URL");
+const testOrigin = process.env.CANONICAL_ORIGIN
+  ? parseOrigin(process.env.CANONICAL_ORIGIN, "CANONICAL_ORIGIN")
+  : targetOrigin;
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -51,6 +61,7 @@ export default defineConfig({
     schemaVersion: 1,
     mode: testMode,
     origin: testOrigin,
+    targetOrigin,
     expectedCommit: expectedCommit ?? null,
     sourceCommit,
   },

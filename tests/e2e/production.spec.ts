@@ -1,20 +1,28 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("17 — production at docs.l-it.io passes the public browser journey", async ({
+test("17 — immutable production content passes the public browser journey", async ({
   page,
   baseURL,
 }) => {
-  expect(new URL(baseURL ?? "").hostname).toBe("docs.l-it.io");
-  const consoleErrors: string[] = [];
+  if (!baseURL) {
+    throw new Error("Playwright baseURL is required for production acceptance");
+  }
+  expect(new URL(baseURL).hostname).toBe(
+    "lightning-it-documentation.pages.dev",
+  );
+  const consoleErrors: Array<{ text: string; url: string }> = [];
   const failedRequests: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error") {
-      consoleErrors.push(message.text());
+      consoleErrors.push({
+        text: message.text(),
+        url: message.location().url,
+      });
     }
   });
   page.on("requestfailed", (request) => {
-    if (new URL(request.url()).hostname === "docs.l-it.io") {
+    if (new URL(request.url()).hostname === new URL(baseURL).hostname) {
       failedRequests.push(new URL(request.url()).pathname);
     }
   });
@@ -41,7 +49,19 @@ test("17 — production at docs.l-it.io passes the public browser journey", asyn
     .analyze();
   expect(accessibility.violations).toEqual([]);
 
-  const missing = await page.goto("/production-acceptance-missing-path/");
+  for (const route of ["/modulix/overview/", "/security/"]) {
+    const representativeResponse = await page.goto(route);
+    expect(representativeResponse?.status()).toBe(200);
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-has-hydrated",
+      "true",
+    );
+  }
+  expect(consoleErrors).toEqual([]);
+  expect(failedRequests).toEqual([]);
+
+  const missingPath = "/production-acceptance-missing-path/";
+  const missing = await page.goto(missingPath);
   expect(missing?.status()).toBe(404);
   await expect(page.locator("html")).toHaveAttribute(
     "data-has-hydrated",
@@ -56,6 +76,17 @@ test("17 — production at docs.l-it.io passes the public browser journey", asyn
     /noindex/i,
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
-  expect(consoleErrors).toEqual([]);
+  const expectedMissingUrl = new URL(missingPath, baseURL).href;
+  expect(
+    consoleErrors.filter(
+      (message) =>
+        !(
+          (message.url === "" || message.url === expectedMissingUrl) &&
+          /^Failed to load resource: the server responded with a status of 404\b/.test(
+            message.text,
+          )
+        ),
+    ),
+  ).toEqual([]);
   expect(failedRequests).toEqual([]);
 });

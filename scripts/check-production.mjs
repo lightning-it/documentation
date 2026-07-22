@@ -8,13 +8,14 @@ import {
 import { exactCacheControlOneOf } from "./lib/cache-control.mjs";
 import { hasExactCanonicalUrl } from "./lib/html.mjs";
 import {
+  productionContentOrigin,
   productionMarkerOrigin,
+  productionOrigin,
   productionUserAgent,
 } from "./lib/production-acceptance.mjs";
 import { failIfErrors, writeEvidence } from "./lib/validation.mjs";
 
-const expectedOrigin = "https://docs.l-it.io";
-const pagesOrigin = "https://lightning-it-documentation.pages.dev";
+const expectedOrigin = productionOrigin;
 let productionEvidenceWritten = false;
 
 function inspectTls(hostname) {
@@ -110,7 +111,9 @@ async function main() {
     errors.push("plain HTTP does not redirect directly to canonical HTTPS");
   }
 
-  const { response: pagesHome } = await fetchWithoutBody(`${pagesOrigin}/`);
+  const { response: pagesHome } = await fetchWithoutBody(
+    `${productionContentOrigin}/`,
+  );
   const pagesNoindex = /\bnoindex\b/i.test(
     pagesHome.headers.get("x-robots-tag") ?? "",
   );
@@ -118,40 +121,69 @@ async function main() {
     errors.push("production pages.dev host is not available with noindex");
   }
 
-  const { response: home, body: homeHtml } = await fetchWithoutBody(baseUrl, {
-    body: true,
+  const { response: edgeHome } = await fetchWithoutBody(baseUrl, {
     headers: compressedRequest,
   });
-  if (home.status !== 200 || home.url !== `${expectedOrigin}/`) {
-    errors.push("canonical HTTPS home endpoint does not return 200 directly");
+  const edgeIsCloudflare =
+    edgeHome.headers.get("server")?.toLowerCase() === "cloudflare" &&
+    Boolean(edgeHome.headers.get("cf-ray"));
+  const edgeMitigation = edgeHome.headers.get("cf-mitigated");
+  const edgeStatusIsValid =
+    edgeHome.status === 200 ||
+    (edgeHome.status === 403 && edgeMitigation === "challenge");
+  if (!edgeStatusIsValid || !edgeIsCloudflare) {
+    errors.push("canonical HTTPS edge is not served directly by Cloudflare");
+  }
+
+  const { response: home, body: homeHtml } = await fetchWithoutBody(
+    `${productionContentOrigin}/`,
+    {
+      body: true,
+      headers: compressedRequest,
+    },
+  );
+  if (home.status !== 200 || home.url !== `${productionContentOrigin}/`) {
+    errors.push(
+      "immutable production content endpoint does not return 200 directly",
+    );
   }
   if (!/^text\/html\b/i.test(home.headers.get("content-type") ?? "")) {
     errors.push("production home endpoint is not served as HTML");
   }
+  const securityResponse = edgeHome.status === 200 ? edgeHome : home;
+  const securityOrigin =
+    edgeHome.status === 200 ? expectedOrigin : productionContentOrigin;
   for (const [header, pattern] of expectedHeaders) {
-    if (!pattern.test(home.headers.get(header) ?? "")) {
+    if (!pattern.test(securityResponse.headers.get(header) ?? "")) {
       errors.push(`production response is missing a safe ${header} header`);
     }
   }
-  if (/\bnoindex\b/i.test(home.headers.get("x-robots-tag") ?? "")) {
+  if (/\bnoindex\b/i.test(edgeHome.headers.get("x-robots-tag") ?? "")) {
     errors.push(
       "production canonical host is incorrectly excluded from indexing",
     );
   }
   if (
-    !exactCacheControlOneOf(home.headers.get("cache-control") ?? "", [
-      ["public", "max-age=0", "must-revalidate"],
-      ["public", "max-age=0", "must-revalidate", "no-transform"],
-    ])
+    !exactCacheControlOneOf(
+      securityResponse.headers.get("cache-control") ?? "",
+      [
+        ["public", "max-age=0", "must-revalidate"],
+        ["public", "max-age=0", "must-revalidate", "no-transform"],
+      ],
+    )
   ) {
     errors.push("production HTML cache policy does not require revalidation");
   }
-  if (!/^(?:br|gzip)$/i.test(home.headers.get("content-encoding") ?? "")) {
+  if (
+    !/^(?:br|gzip)$/i.test(
+      securityResponse.headers.get("content-encoding") ?? "",
+    )
+  ) {
     errors.push(
       "production HTML is not served with Brotli or gzip compression",
     );
   }
-  const csp = home.headers.get("content-security-policy") ?? "";
+  const csp = securityResponse.headers.get("content-security-policy") ?? "";
   const scriptSource = csp.match(/(?:^|;)\s*script-src\s+([^;]+)/i)?.[1] ?? "";
   if (
     scriptSource.includes("'unsafe-inline'") ||
@@ -212,7 +244,7 @@ async function main() {
   }
   for (const assetPath of assetPaths.filter(Boolean)) {
     const { response } = await fetchWithoutBody(
-      `${expectedOrigin}${assetPath}`,
+      `${productionContentOrigin}${assetPath}`,
       {
         headers: compressedRequest,
       },
@@ -247,7 +279,7 @@ async function main() {
     }
   }
   const { response: pagefind } = await fetchWithoutBody(
-    `${expectedOrigin}/pagefind/pagefind.js`,
+    `${productionContentOrigin}/pagefind/pagefind.js`,
     { headers: compressedRequest },
   );
   if (
@@ -269,7 +301,7 @@ async function main() {
   }
 
   const { response: missing, body: missingHtml } = await fetchWithoutBody(
-    `${expectedOrigin}/production-validation-missing-path/`,
+    `${productionContentOrigin}/production-validation-missing-path/`,
     { body: true },
   );
   if (
@@ -299,7 +331,9 @@ async function main() {
   }
 
   for (const path of ["/robots.txt", "/THIRD_PARTY_NOTICES.txt"]) {
-    const { response } = await fetchWithoutBody(`${expectedOrigin}${path}`);
+    const { response } = await fetchWithoutBody(
+      `${productionContentOrigin}${path}`,
+    );
     if (
       response.status !== 200 ||
       !/^text\/plain\b/i.test(response.headers.get("content-type") ?? "")
@@ -309,7 +343,7 @@ async function main() {
   }
 
   const { response: sitemapResponse, body: sitemap } = await fetchWithoutBody(
-    `${expectedOrigin}/sitemap.xml`,
+    `${productionContentOrigin}/sitemap.xml`,
     { body: true },
   );
   if (
@@ -366,7 +400,8 @@ async function main() {
         const location = routeQueue.shift();
         try {
           const url = new URL(location);
-          const { response, body } = await fetchWithoutBody(url, {
+          const contentUrl = new URL(url.pathname, productionContentOrigin);
+          const { response, body } = await fetchWithoutBody(contentUrl, {
             body: true,
           });
           if (
@@ -393,6 +428,8 @@ async function main() {
     schemaVersion: 1,
     status: errors.length === 0 ? "passed" : "failed",
     origin: expectedOrigin,
+    contentOrigin: productionContentOrigin,
+    securityOrigin,
     markerOrigin: productionMarkerOrigin,
     markerPath: deploymentMarkerPath,
     dnsAnswerFamilies: {
@@ -410,6 +447,9 @@ async function main() {
       status: pagesHome.status,
       noindex: pagesNoindex,
     },
+    edgeStatus: edgeHome.status,
+    edgeCloudflare: edgeIsCloudflare,
+    ...(edgeHome.status === 403 ? { edgeMitigation } : {}),
     homeStatus: home.status,
     missingStatus: missing.status,
     deployedCommit,
