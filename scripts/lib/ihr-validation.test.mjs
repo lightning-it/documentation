@@ -62,6 +62,14 @@ test("supports de-DE while machine lifecycle values stay neutral", () => {
   );
 });
 
+test("supports digit-prefixed BCP-47 variants", () => {
+  const source = template.replace("language: en-GB", "language: de-DE-1901");
+  assert.equal(
+    validate(source).some(({ rule_id }) => rule_id === "IHR-LANG-001"),
+    false,
+  );
+});
+
 test("supports en-US as a required BCP-47 variant", () => {
   const source = template.replace("language: en-GB", "language: en-US");
   assert.equal(
@@ -88,6 +96,16 @@ test("maps non-language schema failures to IHR-SCHEMA-001", () => {
 
 test("standalone validation detects representative secret values", () => {
   const source = `${template}\npassword: ${"not-a-" + "real-secret-value"}`;
+  assert.ok(
+    validate(source).some(({ rule_id }) => rule_id === "IHR-SECRET-001"),
+  );
+});
+
+test("standalone validation scans front matter for secret values", () => {
+  const source = template.replace(
+    "  classification: PUBLIC",
+    `  classification: PUBLIC\n  password: ${"not-a-" + "metadata-secret-value"}`,
+  );
   assert.ok(
     validate(source).some(({ rule_id }) => rule_id === "IHR-SECRET-001"),
   );

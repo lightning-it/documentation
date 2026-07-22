@@ -44,8 +44,8 @@ function containsSecret(value) {
   return [
     /-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----/,
     /\bgh[pousr]_[A-Za-z0-9_]{20,}\b/,
-    /\bBearer\s+[A-Za-z0-9._~+/-]{20,}={0,2}\b/i,
-    /\b(?:password|passwd|api[_-]?key|access[_-]?token|client[_-]?secret)\s*[:=]\s*["']?(?!example|placeholder|redacted|changeme|\$\{)[^\s"'`,;}{]{8,}/i,
+    /\bBearer\s+[-A-Za-z0-9._~+/]{20,}={0,2}\b/i,
+    /\b(?:password|passwd|api[_-]?key|access[_-]?token|client[_-]?secret)["']?\s*[:=]\s*["']?(?!example|placeholder|redacted|changeme|\$\{)[^\s"'`,;}{]{8,}/i,
   ].some((pattern) => pattern.test(value));
 }
 
@@ -68,7 +68,7 @@ export function validateIhr({ data, markdown, schema, path }) {
   }
 
   const gate = data.document.target_gate;
-  if (containsSecret(markdown)) {
+  if (containsSecret(`${JSON.stringify(data)}\n${markdown}`)) {
     findings.push(
       finding("IHR-SECRET-001", "Possible secret value detected.", path),
     );
