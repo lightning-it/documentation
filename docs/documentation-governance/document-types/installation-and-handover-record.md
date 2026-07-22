@@ -21,9 +21,9 @@ An IHR is one continuously maintained record covering requirements and
 readiness, a reproducible execution plan, actual commands, as-built state,
 technical verification, operational handover, and customer acceptance.
 
-Its lifecycle is `DRAFT` → `REQUIREMENTS_SHARED` →
-`READY_FOR_INSTALLATION` → `IMPLEMENTATION_IN_PROGRESS` →
-`TECHNICALLY_COMPLETED` → `CUSTOMER_READY` → `HANDED_OVER` → `ACCEPTED`.
+Its machine lifecycle is `draft` → `requirements-shared` →
+`ready-for-installation` → `implementation-in-progress` →
+`technically-completed` → `customer-ready` → `handed-over` → `accepted`.
 Readiness approval is not final acceptance.
 
 The metadata language is a BCP-47 tag. Concrete documents translate visible

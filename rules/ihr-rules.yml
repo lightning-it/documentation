@@ -2,6 +2,10 @@
 ruleset: LIT-DOC-IHR
 version: 1.0.0
 rules:
+  - id: IHR-SCHEMA-001
+    severity: error
+    applies_from: draft
+    requirement: IHR front matter conforms to the published metadata schema.
   - id: IHR-LANG-001
     severity: error
     applies_from: requirements-shared

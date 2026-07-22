@@ -17,17 +17,17 @@ document:
 
 # IHR lifecycle quality gates
 
-`READY_FOR_INSTALLATION` requires assessed platform prerequisites,
+`ready-for-installation` requires assessed platform prerequisites,
 product-specific flows, immutable inputs, complete planned commands, secret
 contracts, recovery, evidence planning, and auditable installation authority.
 Post-installation results may remain empty.
 
-`TECHNICALLY_COMPLETED` additionally requires actual commands, full automation
+`technically-completed` additionally requires actual commands, full automation
 and collection SHAs, full execution-environment digests, actual product and OS
 versions, recaps, critical verification, idempotency, and documented
 plan-to-actual deviations.
 
-`CUSTOMER_READY` requires owned open items, operational boundaries, and
-handover artifacts. `HANDED_OVER` requires completed transfers. `ACCEPTED`
+`customer-ready` requires owned open items, operational boundaries, and
+handover artifacts. `handed-over` requires completed transfers. `accepted`
 requires an acceptance decision, customer role, reference, and residual items
 for conditional acceptance. Secret findings fail every gate.

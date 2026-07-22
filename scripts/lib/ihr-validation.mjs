@@ -54,6 +54,22 @@ function atLeast(gate, threshold) {
   return gateOrder.indexOf(gate) >= gateOrder.indexOf(threshold);
 }
 
+function schemaRuleId(error) {
+  return error.instancePath === "/document/language" ||
+    error.params?.missingProperty === "language"
+    ? "IHR-LANG-001"
+    : "IHR-SCHEMA-001";
+}
+
+function containsSecret(value) {
+  return [
+    /-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----/,
+    /\bgh[pousr]_[A-Za-z0-9_]{20,}\b/,
+    /\bBearer\s+[A-Za-z0-9._~+/-]{20,}={0,2}\b/i,
+    /\b(?:password|passwd|api[_-]?key|access[_-]?token|client[_-]?secret)\s*[:=]\s*["']?(?!example|placeholder|redacted|changeme|\$\{)[^\s"'`,;}{]{8,}/i,
+  ].some((pattern) => pattern.test(value));
+}
+
 export function validateIhr({ data, markdown, schema, path }) {
   const ajv = new Ajv2020({ allErrors: true, strict: true });
   addFormats(ajv);
@@ -63,7 +79,7 @@ export function validateIhr({ data, markdown, schema, path }) {
     for (const error of validate.errors ?? []) {
       findings.push(
         finding(
-          "IHR-LANG-001",
+          schemaRuleId(error),
           `${error.instancePath || "/"} ${error.message}`,
           path,
         ),
@@ -73,6 +89,11 @@ export function validateIhr({ data, markdown, schema, path }) {
   }
 
   const gate = data.document.target_gate;
+  if (containsSecret(markdown)) {
+    findings.push(
+      finding("IHR-SECRET-001", "Possible secret value detected.", path),
+    );
+  }
   if (
     !/Document language|Dokumentensprache/.test(markdown) ||
     !/Source language|Ausgangssprache/.test(markdown) ||
@@ -110,6 +131,19 @@ export function validateIhr({ data, markdown, schema, path }) {
           ),
         );
       }
+    }
+    if (
+      !/\b[0-9a-f]{40}\b/i.test(markdown) ||
+      !/sha256:[0-9a-f]{64}\b/i.test(markdown) ||
+      !/Execution environment/i.test(markdown)
+    ) {
+      findings.push(
+        finding(
+          "IHR-PLAN-002",
+          "Planned execution lacks complete immutable automation or execution-environment references.",
+          path,
+        ),
+      );
     }
     for (const label of [
       "Working directory",
@@ -193,6 +227,20 @@ export function validateIhr({ data, markdown, schema, path }) {
         finding(
           "IHR-ACTUAL-001",
           "Actual execution commands, recap, verification, or idempotency evidence is incomplete.",
+          path,
+        ),
+      );
+    }
+    if (
+      /Actual Execution Record[\s\S]{0,3000}\|\s*Pending\s*\|\s*$/im.test(
+        markdown,
+      ) ||
+      !/Deviation|Abweichung/.test(markdown)
+    ) {
+      findings.push(
+        finding(
+          "IHR-DEVIATION-001",
+          "Plan-to-actual differences require an explicit deviation result or reference.",
           path,
         ),
       );

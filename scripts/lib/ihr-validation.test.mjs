@@ -57,14 +57,31 @@ test("rejects missing language metadata", () => {
   );
 });
 
+test("maps non-language schema failures to IHR-SCHEMA-001", () => {
+  assert.ok(
+    validate(template.replace("  type: IHR", "  type: OTHER")).some(
+      ({ rule_id }) => rule_id === "IHR-SCHEMA-001",
+    ),
+  );
+});
+
+test("standalone validation detects representative secret values", () => {
+  const source = `${template}\npassword: ${"not-a-" + "real-secret-value"}`;
+  assert.ok(
+    validate(source).some(({ rule_id }) => rule_id === "IHR-SECRET-001"),
+  );
+});
+
 test("READY_FOR_INSTALLATION rejects missing commands and pending authorisation", () => {
   const source = template
     .replace(
       "target_gate: requirements-shared",
       "target_gate: ready-for-installation",
     )
-    .replace("Check command", "Removed field");
+    .replace("Check command", "Removed field")
+    .replace("sha256:", "sha512:");
   const ids = validate(source).map(({ rule_id }) => rule_id);
+  assert.ok(ids.includes("IHR-PLAN-002"));
   assert.ok(ids.includes("IHR-PLAN-003"));
   assert.ok(ids.includes("IHR-READY-001"));
 });
@@ -76,6 +93,9 @@ test("TECHNICALLY_COMPLETED rejects missing actual commands and recaps", () => {
   );
   assert.ok(
     validate(source).some(({ rule_id }) => rule_id === "IHR-ACTUAL-001"),
+  );
+  assert.ok(
+    validate(source).some(({ rule_id }) => rule_id === "IHR-DEVIATION-001"),
   );
 });
 

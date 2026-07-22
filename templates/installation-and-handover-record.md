@@ -6,7 +6,7 @@ document:
   status: requirements-shared
   phase: readiness
   target_gate: requirements-shared
-  classification: CONFIDENTIAL
+  classification: PUBLIC
   ruleset: LIT-DOC-IHR
   ruleset_version: 1.0.0
 ---
