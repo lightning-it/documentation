@@ -62,6 +62,15 @@ test("supports draft as a target gate", () => {
   assert.deepEqual(validate(source), []);
 });
 
+test("target_gate cannot weaken validation required by document status", () => {
+  const source = template
+    .replace("status: requirements-shared", "status: accepted")
+    .replace("target_gate: requirements-shared", "target_gate: draft");
+  const ids = validate(source).map(({ rule_id }) => rule_id);
+  assert.ok(ids.includes("IHR-ACTUAL-001"));
+  assert.ok(ids.includes("IHR-ACCEPT-001"));
+});
+
 test("supports de-DE while machine lifecycle values stay neutral", () => {
   const source = template
     .replace("language: en-GB", "language: de-DE")

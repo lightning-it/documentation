@@ -67,7 +67,13 @@ export function validateIhr({ data, markdown, schema, path }) {
     return findings;
   }
 
-  const gate = data.document.target_gate;
+  const gate =
+    gateOrder[
+      Math.max(
+        gateOrder.indexOf(data.document.status),
+        gateOrder.indexOf(data.document.target_gate),
+      )
+    ];
   if (containsSecret(`${JSON.stringify(data)}\n${markdown}`)) {
     findings.push(
       finding("IHR-SECRET-001", "Possible secret value detected.", path),
@@ -228,7 +234,9 @@ export function validateIhr({ data, markdown, schema, path }) {
   }
   if (
     gate === "accepted" &&
-    /\| Pending \| Customer acceptance authority/.test(markdown)
+    /\|\s*(?:Pending|Ausstehend)\s*\|\s*(?:Customer acceptance authority|Kunden-Abnahmerolle)/i.test(
+      markdown,
+    )
   ) {
     findings.push(
       finding(
