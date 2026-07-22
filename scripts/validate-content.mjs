@@ -794,6 +794,12 @@ async function main() {
       if (action.startsWith("./")) {
         continue;
       }
+      if (
+        action.startsWith("docker://") &&
+        /@sha256:[a-f0-9]{64}$/.test(action)
+      ) {
+        continue;
+      }
       const revision = action.split("@").at(-1);
       if (!/^[a-f0-9]{40}$/.test(revision ?? "")) {
         errors.push(
