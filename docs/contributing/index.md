@@ -50,7 +50,9 @@ information.
    accessibility, and secret checks.
 9. Review the complete rendered diff in light and dark modes and at narrow and
    wide viewports.
-10. Submit a pull request; the author does not approve their own change.
+10. Submit a pull request. The author does not approve their own change unless
+    the protected single-maintainer exception applies with all compensating
+    controls satisfied.
 
 ## Writing requirements
 
@@ -69,9 +71,12 @@ meaning conveyed by color alone.
 
 Treat metadata, classification, review, publication, maintenance, and
 retirement as one lifecycle. A new or materially changed page remains
-`review-candidate` and `pending` until authorized reviewers approve the exact
-documentation-tree digest. A date, successful build, automated review, or pull
-request author cannot supply that approval.
+`review-candidate` and `pending` until an authorized reviewer approves the exact
+documentation-tree digest. When only the named human maintainer is available,
+the protected single-maintainer exception permits that maintainer to approve
+their own document only after exact-revision Copilot review, resolution of every
+finding, and successful required checks. A date, build, or automated review
+alone cannot supply approval.
 
 Keep one canonical owner for each subject, record redirects only for verified
 published paths, and re-run review after a substantive content, ownership,

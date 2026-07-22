@@ -71,10 +71,13 @@ result, certification statement, or evidence of control implementation.
 
 Public pages identify a stable document ID, version, lifecycle status,
 classification, accountable role, approver role, audience, review date, and
-cadence. New or changed pages remain review candidates until an independently
-authorized reviewer approves the exact content digest. Source history and
-automated checks provide traceability but are not evidence that a control is
-implemented in an environment.
+cadence. New or changed pages remain review candidates until a role-authorized
+reviewer approves the exact content digest. Independent human review is the
+default. The documented single-maintainer exception permits the named maintainer
+to approve their own documentation only with exact-revision Copilot review,
+resolved findings, successful required checks, and digest-bound evidence as
+compensating controls. Source history and automated checks provide traceability
+but are not evidence that a control is implemented in an environment.
 
 Named assignments, protection needs, applicability decisions, control state,
 deviations, risks, evidence, retention decisions, and review records belong in
