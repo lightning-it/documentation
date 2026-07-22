@@ -4,8 +4,8 @@ title: IHR lifecycle quality gates
 description: Phase-aware validation requirements for installation readiness, completion, handover, and acceptance.
 slug: /documentation-governance/ihr-quality-gates/
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

@@ -4,8 +4,8 @@ title: Technical documentation quality standard
 description: Content requirements for reproducible, evidence-backed, customer-facing technical delivery records.
 slug: /documentation-governance/quality-standard/
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

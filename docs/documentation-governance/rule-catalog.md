@@ -4,8 +4,8 @@ title: IHR rule catalog
 description: Stable machine-readable rule identifiers and maintenance policy for the LIT-DOC-IHR ruleset.
 slug: /documentation-governance/ihr-rules/
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

@@ -4,8 +4,8 @@ title: IHR validation pipeline
 description: Reusable validation and review workflow for schema-valid, phase-aware Installation and Handover Records.
 slug: /documentation-governance/ihr-pipeline/
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
