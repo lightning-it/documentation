@@ -14,6 +14,10 @@ const mode = process.argv[2];
 if (!new Set(["preview", "production"]).has(mode)) {
   throw new Error("Browser evidence mode must be preview or production.");
 }
+const previewBaseUrl = process.env.BASE_URL?.trim();
+if (mode === "preview" && !previewBaseUrl) {
+  throw new Error("BASE_URL is required for preview browser evidence.");
+}
 const productionContentBaseUrl = (
   process.env.PRODUCTION_CONTENT_BASE_URL ?? productionContentOrigin
 ).trim();
@@ -45,9 +49,7 @@ const result = spawnSync(
     env: {
       ...process.env,
       BASE_URL:
-        mode === "production"
-          ? productionContentUrl.href
-          : process.env.BASE_URL,
+        mode === "production" ? productionContentUrl.href : previewBaseUrl,
       CANONICAL_ORIGIN:
         process.env.CANONICAL_ORIGIN ??
         (mode === "production"

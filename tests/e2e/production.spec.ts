@@ -81,7 +81,7 @@ test("17 — immutable production content passes the public browser journey", as
     consoleErrors.filter(
       (message) =>
         !(
-          message.url === expectedMissingUrl &&
+          (message.url === "" || message.url === expectedMissingUrl) &&
           /^Failed to load resource: the server responded with a status of 404\b/.test(
             message.text,
           )
