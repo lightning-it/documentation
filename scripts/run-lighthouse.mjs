@@ -15,18 +15,17 @@ import {
   writeEvidence,
 } from "./lib/validation.mjs";
 import { resolveLighthouseRunConfig } from "./lib/lighthouse-config.mjs";
-import { productionLighthouseExcludedAudits } from "./lib/production-acceptance.mjs";
+import {
+  productionLighthouseExcludedAudits,
+  productionLighthouseThresholds,
+  representativeLighthouseRoutes,
+} from "./lib/production-acceptance.mjs";
 
 const { externalBaseUrl, localBaseUrl, localPort } =
   resolveLighthouseRunConfig();
 const buildDirectory = path.join(repositoryRoot, "build");
-const routes = ["/", "/modulix/overview/", "/security/"];
-const thresholds = {
-  performance: 0.9,
-  accessibility: 0.95,
-  "best-practices": 0.95,
-  seo: 0.95,
-};
+const routes = representativeLighthouseRoutes;
+const thresholds = productionLighthouseThresholds;
 const diagnosticAuditIds = [
   "largest-contentful-paint-element",
   "lcp-discovery",
