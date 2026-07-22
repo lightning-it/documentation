@@ -52,12 +52,16 @@ const scanRoots = [
   "config",
   "docs",
   "evidence",
+  "rules",
+  "schemas",
   "scripts",
   "src",
   "static",
+  "templates",
   "tests",
 ];
 const rootScanFiles = [
+  ".vale.ini",
   "AGENTS.md",
   "ARCHITECTURE.md",
   "CHANGELOG.md",
@@ -792,6 +796,12 @@ async function main() {
     )) {
       const action = match[1];
       if (action.startsWith("./")) {
+        continue;
+      }
+      if (
+        action.startsWith("docker://") &&
+        /@sha256:[a-f0-9]{64}$/.test(action)
+      ) {
         continue;
       }
       const revision = action.split("@").at(-1);

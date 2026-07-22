@@ -1,0 +1,81 @@
+---
+ruleset: LIT-DOC-IHR
+version: 1.0.0
+rules:
+  - id: IHR-SCHEMA-001
+    severity: error
+    applies_from: draft
+    requirement: IHR front matter conforms to the published metadata schema.
+  - id: IHR-LANG-001
+    severity: error
+    applies_from: draft
+    requirement: document.language is a valid BCP-47 language tag.
+  - id: IHR-LANG-002
+    severity: error
+    applies_from: draft
+    requirement: >-
+      Language, source language, translation status, and technical identifier
+      handling are visible.
+  - id: IHR-PLAN-001
+    severity: error
+    applies_from: ready-for-installation
+    requirement: Every mandatory technical execution phase is present.
+  - id: IHR-PLAN-002
+    severity: error
+    applies_from: ready-for-installation
+    requirement: >-
+      Planned execution records contain tested commands and immutable
+      references.
+  - id: IHR-PLAN-003
+    severity: error
+    applies_from: ready-for-installation
+    requirement: >-
+      Check, real, idempotency, verification, safe-stop, restart, recovery, and
+      evidence fields are complete.
+  - id: IHR-PLATFORM-001
+    severity: error
+    applies_from: ready-for-installation
+    requirement: >-
+      Platform baseline requirements are assessed separately from product
+      flows.
+  - id: IHR-NET-001
+    severity: error
+    applies_from: ready-for-installation
+    requirement: Product- or topology-specific network flows are documented.
+  - id: IHR-READY-001
+    severity: error
+    applies_from: ready-for-installation
+    requirement: >-
+      Blocking prerequisites and installation authorization are resolved or
+      formally waived.
+  - id: IHR-ACTUAL-001
+    severity: error
+    applies_from: technically-completed
+    requirement: >-
+      Actual commands, immutable references, recaps, verification, and
+      idempotency results are recorded.
+  - id: IHR-DEVIATION-001
+    severity: error
+    applies_from: technically-completed
+    requirement: Plan-to-actual differences reference a documented deviation.
+  - id: IHR-HANDOVER-001
+    severity: error
+    applies_from: customer-ready
+    requirement: >-
+      Open items, operational boundaries, and handover artifacts are complete.
+  - id: IHR-ACCEPT-001
+    severity: error
+    applies_from: accepted
+    requirement: >-
+      Acceptance decision, customer role, reference, and conditional residual
+      items are recorded.
+  - id: IHR-SECRET-001
+    severity: error
+    applies_from: draft
+    requirement: The document contains no secret values.
+  - id: IHR-IMMUTABLE-001
+    severity: error
+    applies_from: ready-for-installation
+    requirement: >-
+      SHA, digest, checksum, path, and command references are complete rather
+      than abbreviated.

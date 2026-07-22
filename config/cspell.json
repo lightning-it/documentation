@@ -48,6 +48,7 @@
     "modulix",
     "noindex",
     "openssf",
+    "pipefail",
     "provenance",
     "runbook",
     "runbooks",

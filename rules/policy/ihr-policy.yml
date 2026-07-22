@@ -1,0 +1,20 @@
+---
+policy: LIT-DOC-IHR
+version: 1.0.0
+public_examples:
+  customer_values: forbidden
+  secret_values: forbidden
+  allowed_domains: [example.com]
+  allowed_ipv4_ranges: [192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24]
+language:
+  metadata: required
+  format: BCP-47
+  minimum_supported: [de-DE, en-GB, en-US]
+  machine_values_localized: false
+network:
+  platform_services_are_product_flows: false
+  product_or_topology_flows_required_from: ready-for-installation
+execution:
+  planned_required_from: ready-for-installation
+  actual_required_from: technically-completed
+  abbreviated_immutable_references_allowed: false
