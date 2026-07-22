@@ -5,6 +5,15 @@ const ownedCloudflareChallengeTargets = new Set([
   "https://www.l-it.io/produkte/lcp",
 ]);
 
+export function isRetryableExternalLinkResult({ status, error }) {
+  return (
+    error === "network" ||
+    error === "timeout" ||
+    status === 429 ||
+    (typeof status === "number" && status >= 500 && status <= 599)
+  );
+}
+
 export function isVerifiedOwnedCloudflareChallenge(
   requestedUrl,
   { status, url: finalUrl, headers },

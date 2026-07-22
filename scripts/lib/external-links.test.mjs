@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { isVerifiedOwnedCloudflareChallenge } from "./external-links.mjs";
+import {
+  isRetryableExternalLinkResult,
+  isVerifiedOwnedCloudflareChallenge,
+} from "./external-links.mjs";
 
 function response(overrides = {}) {
   return {
@@ -53,5 +56,31 @@ describe("isVerifiedOwnedCloudflareChallenge", () => {
       ),
       false,
     );
+  });
+});
+
+describe("isRetryableExternalLinkResult", () => {
+  it("retries transient network and server failures", () => {
+    for (const result of [
+      { error: "network" },
+      { error: "timeout" },
+      { status: 429 },
+      { status: 500 },
+      { status: 503 },
+      { status: 599 },
+    ]) {
+      assert.equal(isRetryableExternalLinkResult(result), true);
+    }
+  });
+
+  it("does not retry permanent HTTP failures", () => {
+    for (const result of [
+      { status: 400 },
+      { status: 403 },
+      { status: 404 },
+      { status: 600 },
+    ]) {
+      assert.equal(isRetryableExternalLinkResult(result), false);
+    }
   });
 });
