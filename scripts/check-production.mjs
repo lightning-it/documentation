@@ -449,7 +449,7 @@ async function main() {
     },
     edgeStatus: edgeHome.status,
     edgeCloudflare: edgeIsCloudflare,
-    edgeMitigation,
+    ...(edgeHome.status === 403 ? { edgeMitigation } : {}),
     homeStatus: home.status,
     missingStatus: missing.status,
     deployedCommit,
