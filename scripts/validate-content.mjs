@@ -61,6 +61,7 @@ const scanRoots = [
   "tests",
 ];
 const rootScanFiles = [
+  ".vale.ini",
   "AGENTS.md",
   "ARCHITECTURE.md",
   "CHANGELOG.md",
