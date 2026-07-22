@@ -10,7 +10,7 @@ async function main() {
     documentsByApprover.set(approverRole, documentIds);
   }
   await writeEvidence("document-approval-request.json", {
-    schema_version: 2,
+    schema_version: 3,
     content_tree_sha256: snapshot.contentTreeSha256,
     document_ids: snapshot.documentIds,
     approvals: [...documentsByApprover]
@@ -21,6 +21,7 @@ async function main() {
         decision: "pending",
         reviewer: null,
         review_date: null,
+        approval_basis: null,
       })),
   });
   console.log(

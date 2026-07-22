@@ -49,14 +49,14 @@ grant authority that the maintainer has not recorded.
 - Do not infer that repository code proves deployed behavior.
 - Keep project status `Todo` while blocked, `In Progress` while work or review is
   active, and `Done` only after merge and accepted evidence satisfy the issue.
-- Use a reviewed pull request. The author or authoring agent does not approve its
-  own work. In the explicitly configured single-maintainer operating model,
-  an authorized repository maintainer may merge a pull request they authored
-  only after the current revision has a successful independent Copilot review,
-  every Copilot finding is resolved, and every required repository gate is
-  green. Executing that merge is not an approval and does not replace any
-  role-authorized content, environment, or production approval required
-  elsewhere in this repository.
+- Use a reviewed pull request. In the explicitly configured single-maintainer
+  operating model, the named, role-authorized maintainer may approve and merge
+  documentation they authored only after the exact current revision has a
+  successful independent Copilot review, every Copilot finding is resolved,
+  every required repository gate is green, and the exact documentation-tree
+  digest is recorded in the approval evidence. This exception does not grant
+  legal approval, risk acceptance, certification authority, or permission to
+  publish protected material.
 - Stop before any destructive, production, DNS, credential, private-source, or
   externally consequential action when exact authority is absent.
 
@@ -159,17 +159,19 @@ conditions are true:
 2. GitHub Copilot reviewed the exact current head revision independently;
 3. every Copilot review thread is resolved;
 4. every required repository and deployment-preview check is successful;
-5. the merge does not claim or replace a separate content, environment,
-   production, legal, compliance, or risk approval; and
-6. the merge uses the normal protected-branch path without an administrative
+5. any self-approval is limited to documentation publication, is role-authorized
+   by the protected authority policy, and covers the exact documentation digest;
+6. it does not claim or replace legal approval, risk acceptance, certification
+   authority, or authorization to publish protected material; and
+7. the merge uses the normal protected-branch path without an administrative
    bypass.
 
-The author must not approve their own pull request. A self-merge records
-execution of an already gated change, not independent approval. The environment setting
-`prevent_self_review: false` permits the same maintainer to perform an explicitly
-authorized protected-environment deployment decision where the applicable
-workflow requires it; it does not silently satisfy document approval or other
-role-authorized evidence requirements.
+The single-maintainer exception permits the named maintainer to record a
+role-authorized documentation decision for their own change when all controls
+above are satisfied. The evidence must identify the maintainer and use the
+`single-maintainer-exception` basis. The environment setting
+`prevent_self_review: false` separately permits that maintainer to perform an
+explicitly authorized protected-environment deployment decision.
 
 Revisit this exception when a second active maintainer or an independently
 authorized merge GitHub App becomes available.
@@ -334,14 +336,13 @@ a cheaper model performed a bounded supporting step.
   the pull request; share its restricted location solely through an approved
   private channel.
 
-The agent must not approve its own pull request. Because this repository uses an
-explicitly configured single-maintainer operating model, an authorized
-repository maintainer may enable auto-merge or merge a pull request they authored
-after the current revision has passed the independent Copilot review gate, all
-Copilot findings are resolved, and all required checks are green. This exception
-applies only to merge execution; it does not permit self-approval, bypass a
-protected environment, substitute for role-authorized documentation approval,
-or waive a production decision.
+Because this repository uses an explicitly configured single-maintainer
+operating model, the named, role-authorized repository maintainer may approve
+documentation and merge a pull request they authored after the current revision
+has passed the independent Copilot review gate, all Copilot findings are
+resolved, all required checks are green, and approval evidence covers the exact
+documentation digest. This exception does not bypass a protected environment or
+waive a separate production, legal, risk, certification, or disclosure decision.
 
 ### 8. Human review and completion
 
@@ -351,10 +352,11 @@ Keep the project item `In Progress` until:
   under the documented single-maintainer exception, the author may be the merge
   actor after the independent Copilot review and required gates succeed;
 - required approval evidence covers the exact accepted content or artifact;
-- for governed or maintained documents, an independent, role-authorized
-  CODEOWNER decision covers the exact deterministic documentation-tree digest
-  and document identifiers as required by `AGENTS.md`; pull-request approval,
-  technical checks, AI review, or author review alone are insufficient;
+- for governed or maintained documents, a role-authorized CODEOWNER decision
+  covers the exact deterministic documentation-tree digest and document
+  identifiers as required by `AGENTS.md`; under the single-maintainer exception,
+  author approval is valid only together with the recorded exception basis,
+  exact-revision Copilot review, resolved findings, and successful gates;
 - every issue acceptance criterion is satisfied or explicitly resolved by an
   authorized maintainer;
 - required post-merge or production verification passes;

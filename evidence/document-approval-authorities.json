@@ -1,5 +1,21 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
+  "single_maintainer_exception": {
+    "status": "AUTHORIZED",
+    "github_reviewer": "@litroc",
+    "required_controls": [
+      "exact-current-revision-copilot-review",
+      "all-review-findings-resolved",
+      "all-required-checks-successful",
+      "exact-documentation-tree-digest-evidence"
+    ],
+    "excluded_decisions": [
+      "legal-approval",
+      "risk-acceptance",
+      "certification-authority",
+      "protected-material-publication"
+    ]
+  },
   "role_authorizations": [
     {
       "approver_role": "Lightning IT Product Owners",

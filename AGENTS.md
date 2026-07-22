@@ -94,9 +94,16 @@ New or materially changed content starts as `status: review-candidate` with
 `approval_status: pending`. The `approver` field names the accountable role; it
 does not assert that approval already happened. A contributor may propose the
 pair `status: maintained` and `approval_status: approved`, but it becomes
-effective only when independent authorized review evidence covers the exact
-deterministic documentation-tree digest and document identifiers being
-released. After the content and proposed status are final, generate the
+effective only when authorized review evidence covers the exact deterministic
+documentation-tree digest and document identifiers being released. Independent
+review is the default. While the protected authority policy records that only
+one human maintainer is available, that named maintainer may approve their own
+documentation under the single-maintainer exception only after Copilot has
+reviewed the exact current pull-request revision, every finding is resolved,
+and every required check is successful. This exception is a documented
+compensating control for document publication; it never grants legal approval,
+risk acceptance, certification authority, or permission to publish protected
+material. After the content and proposed status are final, generate the
 candidate record with `npm run approval:request`; an authorized CODEOWNER then
 records a role-matched decision for every covered document in
 `evidence/document-approval.json` without changing the reviewed documents. The
@@ -104,9 +111,9 @@ reviewer must be authorized for the document's declared `approver` role by the
 protected `evidence/document-approval-authorities.json` policy. One identity may
 cover multiple roles only when the organization explicitly authorizes it for
 each role. Any subsequent documentation change invalidates the digest and
-requires a new request and review. Technical validation, an AI review, a
-generated date, or the author's own review is not a substitute for that
-approval.
+requires a new request and review. Outside the explicitly authorized
+single-maintainer exception, technical validation, an AI review, a generated
+date, or the author's own review is not a substitute for approval.
 
 Short indexes and narrow reference pages may use a smaller metadata set when
 ownership and review inherit unambiguously from their section index. Metadata
@@ -205,7 +212,8 @@ generic imagery, and browser-dependent instructions.
 5. Inspect the production build and Pagefind search index.
 6. Review the complete diff for sensitive data, misleading assurance claims,
    broken links, inaccessible interaction, and generated artifacts.
-7. Use a pull request; the author must not self-approve.
+7. Use a pull request; self-approval is allowed only under the documented
+   single-maintainer exception and its compensating controls.
 8. Delete private-source documentation only after all migration, private
    retention, preview, production, recovery-reference, and acceptance gates
    have passed.
