@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { createContentApprovalSnapshot } from "./lib/content-approval.mjs";
+import { isValidGitHubUserIdentity } from "./lib/approval.mjs";
 import {
   failIfErrors,
   repositoryRoot,
@@ -104,10 +105,7 @@ function parseAuthorityPolicy(policy, errors) {
   let singleMaintainerReviewer;
   if (
     singleMaintainerException?.status !== "AUTHORIZED" ||
-    typeof singleMaintainerException?.github_reviewer !== "string" ||
-    !/^@[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/.test(
-      singleMaintainerException.github_reviewer,
-    ) ||
+    !isValidGitHubUserIdentity(singleMaintainerException?.github_reviewer) ||
     !requiredControls ||
     expectedControls.some((control) => !requiredControls.has(control)) ||
     !excludedDecisions ||
