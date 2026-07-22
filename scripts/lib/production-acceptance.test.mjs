@@ -73,7 +73,7 @@ function passingArtifacts() {
       schemaVersion: 1,
       status: "passed",
       origin: productionOrigin,
-      targetOrigin: productionOrigin,
+      targetOrigin: productionContentOrigin,
       sourceCommit: expectedCommit,
       profile: "mobile",
       serverProfile: "external-production",

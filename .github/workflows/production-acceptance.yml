@@ -63,7 +63,8 @@ jobs:
 
       - name: Enforce production Lighthouse budgets
         env:
-          LIGHTHOUSE_BASE_URL: ${{ env.BASE_URL }}
+          LIGHTHOUSE_BASE_URL: ${{ env.PRODUCTION_CONTENT_BASE_URL }}
+          LIGHTHOUSE_CANONICAL_ORIGIN: ${{ env.BASE_URL }}
         run: npm run test:lighthouse
 
       - name: Record accepted production evidence

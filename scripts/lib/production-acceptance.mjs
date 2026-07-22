@@ -204,7 +204,7 @@ function validateLighthouseEvidence(record, expectedCommit) {
 
   requireCondition(
     hasArtifactIdentity(record, expectedCommit) &&
-      record.targetOrigin === productionOrigin &&
+      record.targetOrigin === productionContentOrigin &&
       record.profile === "mobile" &&
       record.serverProfile === "external-production" &&
       exclusionsAreExact &&

@@ -5,7 +5,10 @@ test("17 — immutable production content passes the public browser journey", as
   page,
   baseURL,
 }) => {
-  expect(new URL(baseURL ?? "").hostname).toBe(
+  if (!baseURL) {
+    throw new Error("Playwright baseURL is required for production acceptance");
+  }
+  expect(new URL(baseURL).hostname).toBe(
     "lightning-it-documentation.pages.dev",
   );
   const consoleErrors: Array<{ text: string; url: string }> = [];
@@ -19,7 +22,7 @@ test("17 — immutable production content passes the public browser journey", as
     }
   });
   page.on("requestfailed", (request) => {
-    if (new URL(request.url()).hostname === new URL(baseURL ?? "").hostname) {
+    if (new URL(request.url()).hostname === new URL(baseURL).hostname) {
       failedRequests.push(new URL(request.url()).pathname);
     }
   });
