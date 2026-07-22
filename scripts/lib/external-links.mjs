@@ -1,4 +1,4 @@
-export const ownedCloudflareChallengeTargets = new Set([
+const ownedCloudflareChallengeTargets = new Set([
   "https://l-it.io/",
   "https://l-it.io/produkte/lcp",
   "https://www.l-it.io/",
