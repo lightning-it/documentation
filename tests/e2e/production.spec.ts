@@ -48,6 +48,15 @@ test("17 — immutable production content passes the public browser journey", as
     .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
     .analyze();
   expect(accessibility.violations).toEqual([]);
+
+  for (const route of ["/modulix/overview/", "/security/"]) {
+    const representativeResponse = await page.goto(route);
+    expect(representativeResponse?.status()).toBe(200);
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-has-hydrated",
+      "true",
+    );
+  }
   expect(consoleErrors).toEqual([]);
   expect(failedRequests).toEqual([]);
 
