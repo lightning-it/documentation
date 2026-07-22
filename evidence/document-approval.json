@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "content_tree_sha256": "4753d4050cf0b999cd6dcee940bdff31a5e4a954f4ee4f5e0a9cae07759cfcb1",
+  "content_tree_sha256": "8f2737256d1a6340118bfc3494d7a603d7ba2e773b486414f4edf713896eb288",
   "document_ids": [
     "atlas-architecture",
     "atlas-concepts",
@@ -13,9 +13,15 @@
     "compliance-overview",
     "contributing-documentation",
     "contributing-github-issues",
+    "documentation-governance-principles",
+    "documentation-quality-standard",
     "getting-started",
     "github-automation-trust",
     "glossary",
+    "ihr-documentation-pipeline",
+    "ihr-quality-gates",
+    "ihr-rule-catalog",
+    "installation-and-handover-record",
     "integration-decisions",
     "io-architecture",
     "io-concepts",
@@ -80,9 +86,15 @@
         "atlas-overview",
         "atlas-troubleshooting",
         "contributing-documentation",
+        "documentation-governance-principles",
+        "documentation-quality-standard",
         "getting-started",
         "github-automation-trust",
         "glossary",
+        "ihr-documentation-pipeline",
+        "ihr-quality-gates",
+        "ihr-rule-catalog",
+        "installation-and-handover-record",
         "integration-decisions",
         "io-architecture",
         "io-concepts",
@@ -132,7 +144,7 @@
       ],
       "decision": "approved",
       "reviewer": "@litroc",
-      "review_date": "2026-07-21",
+      "review_date": "2026-07-22",
       "approval_basis": "single-maintainer-exception"
     },
     {
@@ -153,7 +165,7 @@
       ],
       "decision": "approved",
       "reviewer": "@litroc",
-      "review_date": "2026-07-21",
+      "review_date": "2026-07-22",
       "approval_basis": "single-maintainer-exception"
     }
   ]

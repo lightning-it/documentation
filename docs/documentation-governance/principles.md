@@ -4,8 +4,8 @@ title: Documentation governance principles
 description: Public principles for controlled technical delivery documentation from readiness through acceptance.
 slug: /documentation-governance/principles/
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
