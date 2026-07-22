@@ -63,10 +63,7 @@ jobs:
 
       - name: Enforce production Lighthouse budgets
         env:
-          # Audit the public canonical host. The native Pages origin is used
-          # above to bind the deployment commit, but intentionally returns
-          # X-Robots-Tag: noindex and therefore cannot provide valid SEO data.
-          LIGHTHOUSE_BASE_URL: ${{ env.BASE_URL }}
+          LIGHTHOUSE_BASE_URL: ${{ env.PRODUCTION_CONTENT_BASE_URL }}
           LIGHTHOUSE_CANONICAL_ORIGIN: ${{ env.BASE_URL }}
         run: npm run test:lighthouse
 

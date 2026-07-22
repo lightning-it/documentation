@@ -24,6 +24,9 @@ export const productionLighthouseThresholds = {
 export const productionLighthouseExcludedAudits = [
   "errors-in-console",
   "inspector-issues",
+  // The immutable Pages origin intentionally sends X-Robots-Tag: noindex.
+  // Crawlability is validated on the canonical host by production checks.
+  "is-crawlable",
 ];
 
 const fullCommitPattern = /^[0-9a-f]{40,64}$/;
