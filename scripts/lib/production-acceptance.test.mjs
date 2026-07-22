@@ -138,6 +138,14 @@ describe("validateProductionAcceptanceArtifacts", () => {
       validateProductionAcceptanceArtifacts(passingArtifacts()),
       expectedCommit,
     );
+
+    const unchallengedArtifacts = passingArtifacts();
+    unchallengedArtifacts.production.edgeStatus = 200;
+    delete unchallengedArtifacts.production.edgeMitigation;
+    assert.equal(
+      validateProductionAcceptanceArtifacts(unchallengedArtifacts),
+      expectedCommit,
+    );
   });
 
   it("rejects missing, fractional, small, or unequal canonical route counts", () => {
