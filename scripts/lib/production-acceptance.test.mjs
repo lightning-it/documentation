@@ -148,6 +148,44 @@ describe("validateProductionAcceptanceArtifacts", () => {
       validateProductionAcceptanceArtifacts(unchallengedArtifacts),
       expectedCommit,
     );
+
+    const challengedLinks = passingArtifacts();
+    challengedLinks.externalLinks.results[0] = {
+      url: "https://l-it.io/produkte/lcp",
+      ok: true,
+      status: 403,
+      finalUrl: "https://www.l-it.io/produkte/lcp",
+      verification: "owned-cloudflare-challenge",
+      challengeEvidence: {
+        mitigation: "challenge",
+        server: "cloudflare",
+        ray: "test-ray",
+      },
+    };
+    assert.equal(
+      validateProductionAcceptanceArtifacts(challengedLinks),
+      expectedCommit,
+    );
+  });
+
+  it("rejects unverified or non-owned external-link challenges", () => {
+    const artifacts = passingArtifacts();
+    artifacts.externalLinks.results[0] = {
+      url: "https://example.org/missing",
+      ok: true,
+      status: 403,
+      finalUrl: "https://example.org/missing",
+      verification: "owned-cloudflare-challenge",
+      challengeEvidence: {
+        mitigation: "challenge",
+        server: "cloudflare",
+        ray: "test-ray",
+      },
+    };
+    assert.throws(
+      () => validateProductionAcceptanceArtifacts(artifacts),
+      /external-link evidence is stale/,
+    );
   });
 
   it("rejects missing, fractional, small, or unequal canonical route counts", () => {
