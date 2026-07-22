@@ -39,9 +39,16 @@ if (externalBaseUrl && sourceCommit !== expectedCommit) {
   );
 }
 const testMode = externalBaseUrl ? externalTestMode : "local";
-const targetOrigin = new URL(externalBaseUrl ?? localBaseUrl).origin;
+function parseOrigin(value: string, variableName: string) {
+  try {
+    return new URL(value).origin;
+  } catch {
+    throw new Error(`${variableName} must be a valid absolute URL.`);
+  }
+}
+const targetOrigin = parseOrigin(externalBaseUrl ?? localBaseUrl, "BASE_URL");
 const testOrigin = process.env.CANONICAL_ORIGIN
-  ? new URL(process.env.CANONICAL_ORIGIN).origin
+  ? parseOrigin(process.env.CANONICAL_ORIGIN, "CANONICAL_ORIGIN")
   : targetOrigin;
 
 export default defineConfig({

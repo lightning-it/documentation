@@ -254,9 +254,16 @@ async function stopServer(server) {
 async function main() {
   const baseUrl = externalBaseUrl ?? localBaseUrl;
   const targetOrigin = new URL(baseUrl).origin;
-  const origin = process.env.LIGHTHOUSE_CANONICAL_ORIGIN
-    ? new URL(process.env.LIGHTHOUSE_CANONICAL_ORIGIN).origin
-    : targetOrigin;
+  let origin = targetOrigin;
+  if (process.env.LIGHTHOUSE_CANONICAL_ORIGIN) {
+    try {
+      origin = new URL(process.env.LIGHTHOUSE_CANONICAL_ORIGIN).origin;
+    } catch {
+      throw new Error(
+        "LIGHTHOUSE_CANONICAL_ORIGIN must be a valid absolute URL.",
+      );
+    }
+  }
   const external = Boolean(externalBaseUrl);
   const sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], {
     cwd: repositoryRoot,

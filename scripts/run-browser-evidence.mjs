@@ -2,11 +2,13 @@ import { spawnSync } from "node:child_process";
 import path from "node:path";
 
 import {
+  productionContentOrigin,
+  productionOrigin,
+} from "./lib/production-acceptance.mjs";
+import {
   generatedEvidenceDirectory,
   repositoryRoot,
 } from "./lib/validation.mjs";
-import { productionOrigin } from "./lib/production-acceptance.mjs";
-import { productionContentOrigin } from "./lib/production-acceptance.mjs";
 
 const mode = process.argv[2];
 if (!new Set(["preview", "production"]).has(mode)) {
