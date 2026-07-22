@@ -48,6 +48,10 @@ test("search covers every required product, task, and migrated public role term"
     { query: "installation", expectedPath: "/modulix/installation/" },
     { query: "architecture", expectedPath: "/architecture/" },
     { query: "BSI", expectedPath: "/compliance/bsi-mapping/" },
+    {
+      query: "Definition of Ready",
+      expectedPath: "/contributing/github-issues/",
+    },
     { query: "backup", expectedPath: "/security/backup-and-recovery/" },
     { query: "troubleshooting", expectedPath: "/atlas/troubleshooting/" },
     { query: "lit.rhel.baseline", expectedPath: "/modulix/roles/" },

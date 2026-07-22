@@ -191,7 +191,12 @@ const sidebars: SidebarsConfig = {
       link: { type: "doc", id: "support/support-overview" },
       items: ["support/troubleshooting-principles"],
     },
-    "contributing/contributing-documentation",
+    {
+      type: "category",
+      label: "Contributing",
+      link: { type: "doc", id: "contributing/contributing-documentation" },
+      items: ["contributing/contributing-github-issues"],
+    },
   ],
 };
 

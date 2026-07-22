@@ -8,6 +8,7 @@ const representativeRoutes = [
   "/architecture/",
   "/security/",
   "/compliance/bsi-mapping/",
+  "/contributing/github-issues/",
   "/modulix/installation/",
 ];
 
@@ -34,6 +35,17 @@ test("accessibility — @mobile mobile navigation", async ({ page }) => {
   await page.getByRole("button", { name: /Toggle navigation bar/i }).click();
   const result = await new AxeBuilder({ page })
     .include(".navbar-sidebar")
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+    .analyze();
+  expect(result.violations).toEqual([]);
+});
+
+test("accessibility — @mobile GitHub issue guidelines", async ({ page }) => {
+  await page.goto("/contributing/github-issues/");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "GitHub issue guidelines" }),
+  ).toBeVisible();
+  const result = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
     .analyze();
   expect(result.violations).toEqual([]);
