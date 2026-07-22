@@ -104,12 +104,21 @@ async function checkUrl(url) {
     };
   }
   const verifiedChallenge = isVerifiedOwnedCloudflareChallenge(url, response);
+  const finalUrl =
+    new URL(url).hostname === "github.com" ? url : response.url || url;
   return {
     url,
     ok: (response.status >= 200 && response.status < 400) || verifiedChallenge,
     status: response.status,
-    finalUrl: response.url || url,
+    finalUrl,
     verification: verifiedChallenge ? "owned-cloudflare-challenge" : "http",
+    challengeEvidence: verifiedChallenge
+      ? {
+          mitigation: response.headers.get("cf-mitigated"),
+          server: response.headers.get("server"),
+          ray: response.headers.get("cf-ray"),
+        }
+      : undefined,
   };
 }
 
@@ -179,13 +188,22 @@ async function main() {
     passingLinks: results.filter(({ ok }) => ok).length,
     failingLinks: errors.length,
     results: results.map(
-      ({ url, ok, status, finalUrl, error, verification }) => ({
+      ({
         url,
         ok,
         status,
         finalUrl,
         error,
         verification,
+        challengeEvidence,
+      }) => ({
+        url,
+        ok,
+        status,
+        finalUrl,
+        error,
+        verification,
+        challengeEvidence,
       }),
     ),
   });

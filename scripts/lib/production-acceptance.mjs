@@ -1,3 +1,5 @@
+import { isVerifiedOwnedCloudflareChallenge } from "./external-links.mjs";
+
 export const productionOrigin = "https://docs.l-it.io";
 // The custom domain is protected by Cloudflare's public WAF.  The Pages host
 // is the same deployment and supplies an immutable marker without weakening
@@ -134,11 +136,22 @@ function validateExternalLinkEvidence(record, expectedCommit) {
   const resultsArePassing =
     countsAreComplete &&
     record.results.every((result) => {
+      const verifiedChallenge =
+        result?.verification === "owned-cloudflare-challenge" &&
+        isVerifiedOwnedCloudflareChallenge(result.url, {
+          status: result.status,
+          url: result.finalUrl,
+          headers: new Headers({
+            "cf-mitigated": result.challengeEvidence?.mitigation ?? "",
+            "cf-ray": result.challengeEvidence?.ray ?? "",
+            server: result.challengeEvidence?.server ?? "",
+          }),
+        });
       if (
         result?.ok !== true ||
         !Number.isInteger(result.status) ||
         result.status < 200 ||
-        result.status >= 400
+        (result.status >= 400 && !verifiedChallenge)
       ) {
         return false;
       }
