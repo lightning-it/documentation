@@ -51,11 +51,12 @@ grant authority that the maintainer has not recorded.
   active, and `Done` only after merge and accepted evidence satisfy the issue.
 - Use a reviewed pull request. The author or authoring agent does not approve its
   own work. In the explicitly configured single-maintainer operating model,
-  `litroc` may merge its own pull request only after the current revision has a
-  successful independent Copilot review, every Copilot finding is resolved, and
-  every required repository gate is green. Executing that merge is not an
-  approval and does not replace any role-authorized content, environment, or
-  production approval required elsewhere in this repository.
+  an authorized repository maintainer may merge a pull request they authored
+  only after the current revision has a successful independent Copilot review,
+  every Copilot finding is resolved, and every required repository gate is
+  green. Executing that merge is not an approval and does not replace any
+  role-authorized content, environment, or production approval required
+  elsewhere in this repository.
 - Stop before any destructive, production, DNS, credential, private-source, or
   externally consequential action when exact authority is absent.
 
@@ -150,8 +151,9 @@ Documentation Maintainers**.
 
 Lightning IT currently operates this repository with one available human
 maintainer identity. To avoid making that operating model dependent on a second
-person who is not available, `litroc` may execute the merge of a pull request it
-authored when, and only when, all of these conditions are true:
+person who is not available, an authorized repository maintainer may execute the
+merge of a pull request they authored when, and only when, all of these
+conditions are true:
 
 1. the pull request is ready for review and targets the approved branch;
 2. GitHub Copilot reviewed the exact current head revision independently;
@@ -162,8 +164,8 @@ authored when, and only when, all of these conditions are true:
 6. the merge uses the normal protected-branch path without an administrative
    bypass.
 
-`litroc` must not approve its own pull request. A self-merge records execution
-of an already gated change, not independent approval. The environment setting
+The author must not approve their own pull request. A self-merge records
+execution of an already gated change, not independent approval. The environment setting
 `prevent_self_review: false` permits the same maintainer to perform an explicitly
 authorized protected-environment deployment decision where the applicable
 workflow requires it; it does not silently satisfy document approval or other
@@ -333,19 +335,20 @@ a cheaper model performed a bounded supporting step.
   private channel.
 
 The agent must not approve its own pull request. Because this repository uses an
-explicitly configured single-maintainer operating model, `litroc` may enable
-auto-merge or merge its own pull request after the current revision has passed
-the independent Copilot review gate, all Copilot findings are resolved, and all
-required checks are green. This exception applies only to merge execution; it
-does not permit self-approval, bypass a protected environment, substitute for
-role-authorized documentation approval, or waive a production decision.
+explicitly configured single-maintainer operating model, an authorized
+repository maintainer may enable auto-merge or merge a pull request they authored
+after the current revision has passed the independent Copilot review gate, all
+Copilot findings are resolved, and all required checks are green. This exception
+applies only to merge execution; it does not permit self-approval, bypass a
+protected environment, substitute for role-authorized documentation approval,
+or waive a production decision.
 
 ### 8. Human review and completion
 
 Keep the project item `In Progress` until:
 
 - the pull request is independently reviewed and merged by an authorized actor;
-  under the documented single-maintainer exception, `litroc` may be the merge
+  under the documented single-maintainer exception, the author may be the merge
   actor after the independent Copilot review and required gates succeed;
 - required approval evidence covers the exact accepted content or artifact;
 - for governed or maintained documents, an independent, role-authorized
