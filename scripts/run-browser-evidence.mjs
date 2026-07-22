@@ -49,9 +49,10 @@ const result = spawnSync(
           ? productionContentUrl.href
           : process.env.BASE_URL,
       CANONICAL_ORIGIN:
-        mode === "production"
+        process.env.CANONICAL_ORIGIN ??
+        (mode === "production"
           ? process.env.BASE_URL || productionOrigin
-          : process.env.BASE_URL,
+          : process.env.BASE_URL),
       EXTERNAL_TEST_MODE: mode,
       PLAYWRIGHT_JSON_OUTPUT_NAME: path.join(
         generatedEvidenceDirectory,
