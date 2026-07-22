@@ -6,15 +6,27 @@ import {
   repositoryRoot,
 } from "./lib/validation.mjs";
 import { productionOrigin } from "./lib/production-acceptance.mjs";
+import { productionContentOrigin } from "./lib/production-acceptance.mjs";
 
 const mode = process.argv[2];
 if (!new Set(["preview", "production"]).has(mode)) {
   throw new Error("Browser evidence mode must be preview or production.");
 }
-if (mode === "production" && !process.env.PRODUCTION_CONTENT_BASE_URL) {
-  throw new Error(
-    "PRODUCTION_CONTENT_BASE_URL is required for production browser evidence.",
-  );
+const productionContentBaseUrl = (
+  process.env.PRODUCTION_CONTENT_BASE_URL ?? productionContentOrigin
+).trim();
+let productionContentUrl;
+if (mode === "production") {
+  try {
+    productionContentUrl = new URL(productionContentBaseUrl);
+  } catch {
+    throw new Error("PRODUCTION_CONTENT_BASE_URL must be a valid URL.");
+  }
+  if (productionContentUrl.href !== `${productionContentOrigin}/`) {
+    throw new Error(
+      `PRODUCTION_CONTENT_BASE_URL must be exactly ${productionContentOrigin}/.`,
+    );
+  }
 }
 
 const result = spawnSync(
@@ -32,7 +44,7 @@ const result = spawnSync(
       ...process.env,
       BASE_URL:
         mode === "production"
-          ? process.env.PRODUCTION_CONTENT_BASE_URL
+          ? productionContentUrl.href
           : process.env.BASE_URL,
       CANONICAL_ORIGIN:
         mode === "production"

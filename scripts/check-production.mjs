@@ -10,12 +10,12 @@ import { hasExactCanonicalUrl } from "./lib/html.mjs";
 import {
   productionContentOrigin,
   productionMarkerOrigin,
+  productionOrigin,
   productionUserAgent,
 } from "./lib/production-acceptance.mjs";
 import { failIfErrors, writeEvidence } from "./lib/validation.mjs";
 
-const expectedOrigin = "https://docs.l-it.io";
-const pagesOrigin = "https://lightning-it-documentation.pages.dev";
+const expectedOrigin = productionOrigin;
 let productionEvidenceWritten = false;
 
 function inspectTls(hostname) {
@@ -111,7 +111,9 @@ async function main() {
     errors.push("plain HTTP does not redirect directly to canonical HTTPS");
   }
 
-  const { response: pagesHome } = await fetchWithoutBody(`${pagesOrigin}/`);
+  const { response: pagesHome } = await fetchWithoutBody(
+    `${productionContentOrigin}/`,
+  );
   const pagesNoindex = /\bnoindex\b/i.test(
     pagesHome.headers.get("x-robots-tag") ?? "",
   );
