@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "classification": "PUBLIC",
+  "evidence_classification": "PUBLIC",
   "entries": [
     {
       "public_inventory_id": "platform-governance-evidence-public-product-page",
