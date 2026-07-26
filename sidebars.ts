@@ -167,7 +167,11 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Security",
       link: { type: "doc", id: "security/security-overview" },
-      items: ["security/publication-boundary", "security/backup-and-recovery"],
+      items: [
+        "security/publication-boundary",
+        "security/public-private-security-architecture",
+        "security/backup-and-recovery",
+      ],
     },
     {
       type: "category",
