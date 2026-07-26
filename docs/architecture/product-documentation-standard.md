@@ -27,16 +27,25 @@ is implemented.
 
 ## Portfolio boundary
 
-Public product navigation contains four peer products:
+This is the proposed target architecture for issue #28. The current repository
+still documents a four-peer-product model; that current state remains effective
+until the integrated architecture package in issue #38 explicitly accepts this
+target and authorizes the later implementation work. This planning document
+does not itself change navigation, product data, or production behavior.
 
-1. ModuLix;
-2. IO;
-3. Wunderbox; and
-4. Atlas.
+Under the target architecture, public product navigation contains exactly five
+sellable products:
 
-None of these products is a child of another. Each product evolves
-independently under the common metadata, publication, review, and lifecycle
-controls in this repository.
+1. AIO;
+2. Wunderbox;
+3. Workbench;
+4. Atlas; and
+5. Platform Governance & Evidence.
+
+ModuLix is the technical engineering and automation foundation. It can have
+technical documentation, but it is not a sixth sellable product. Each product
+evolves independently under the common metadata, publication, review, and
+lifecycle controls in this repository.
 
 ## Product page contract
 
@@ -144,7 +153,7 @@ Adopt this standard in controlled implementation issues:
 
 1. inventory each existing product landing page and classify it as conforming,
    extend, reconcile, replace, or retire;
-2. reconcile portfolio names and roles with the four-peer-product taxonomy;
+2. reconcile portfolio names and roles with the five-product taxonomy;
 3. map existing sections to the required and conditional contracts without
    duplicating canonical content;
 4. normalize front matter while preserving stable identifiers and published
@@ -154,6 +163,6 @@ Adopt this standard in controlled implementation issues:
 6. obtain exact-digest approval and production evidence; and
 7. record exceptions and remaining gaps in owned issues.
 
-The adoption is complete only when ModuLix, IO, Wunderbox, and Atlas each have
-one canonical, validated product entry and are consistently presented as peer
-products.
+The adoption is complete only when AIO, Wunderbox, Workbench, Atlas, and Platform
+Governance & Evidence each have one canonical, validated product entry and
+ModuLix is consistently presented as the engineering foundation.
