@@ -81,7 +81,8 @@ scope:
 applicability: applicable
 applicability_rationale: Bounded public rationale
 implementation_status: not-assessed
-assurance_level: internal-alignment
+assurance_types:
+  - internal-alignment
 implementation_statement: No implementation claim is made.
 owner: Named accountable role
 evidence: []
