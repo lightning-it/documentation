@@ -143,7 +143,7 @@ create routes automatically.
 | Evidence       | zero or more stable evidence identifiers with relation: supports, verifies, supersedes, or limits                                |
 | Locale         | BCP 47 language tag with one canonical source-language relationship                                                              |
 | Version        | unversioned-current or an explicit supported documentation version                                                               |
-| Classification | `PUBLIC` only in this repository                                                                                                 |
+| Classification | published pages are `PUBLIC`; `PUBLIC_AFTER_SANITIZATION` source requires the independent review defined by `AGENTS.md`          |
 
 Facet values require a controlled registry, owner, documented addition rule,
 and validation. Free-form tags must not silently define products, controls, or
