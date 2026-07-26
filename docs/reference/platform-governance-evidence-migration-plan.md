@@ -68,7 +68,9 @@ product authority and reviewed for information protection.
    Platform Governance & Evidence and the target public taxonomy from #28 to
    AIO, Wunderbox, Workbench, Atlas, and Platform Governance & Evidence.
 4. Present ModuLix only as the technical engineering and automation foundation.
-5. Treat LCP, ESOF, and PGF only as historical or subject-matter source terms.
+5. Treat the opaque historical source labels LCP, ESOF, and PGF only as
+   historical or subject-matter terms, not public product names or acronyms that
+   readers need to interpret.
 6. Remove private links, paths, identifiers, infrastructure detail, customer
    context, evidence, findings, risk decisions, and unverified claims.
 7. Use no example unless it uses the synthetic values permitted by `AGENTS.md`.
