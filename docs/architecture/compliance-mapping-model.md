@@ -1,7 +1,7 @@
 ---
 id: compliance-mapping-model
 title: Compliance mapping model
-description: Define framework-neutral requirement mappings, applicability, assurance levels, evidence reuse, exceptions, and claim boundaries.
+description: Define framework-neutral requirement mappings, applicability, assurance types, evidence reuse, exceptions, and claim boundaries.
 slug: /architecture/compliance-mapping-model/
 sidebar_position: 13
 document:
@@ -21,7 +21,7 @@ document:
   review_cadence: annual
 ---
 
-<!-- cspell:words SLSA Sigstore nist ssdf toto -->
+<!-- cspell:words SLSA Sigstore nist ssdf -->
 
 # Compliance mapping model
 
@@ -38,6 +38,9 @@ The target registry supports:
   IT-Grundschutz building blocks;
 - CIS Benchmarks;
 - OpenSSF Best Practices and OpenSSF Scorecard;
+
+<!-- cspell:disable-next-line -->
+
 - `SLSA`, SPDX, CycloneDX, in-toto, and `Sigstore`;
 - NIST Secure Software Development Framework; and
 - future public frameworks admitted through the same governance contract.
