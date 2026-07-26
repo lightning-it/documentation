@@ -53,20 +53,21 @@ It is not:
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------- | ---------------------------- | --------------------------------- |
 | Principles and accountability       | Engineering Principles; Human Accountability; Known Limitations                                                | Engineering Governance Owner | `/trust/principles/`              |
 | Development lifecycle               | Software Development Lifecycle; Secure Development Lifecycle; Branching; Pull Requests; Code Review            | Engineering Process Owner    | `/trust/development/`             |
-| AI-assisted engineering             | AI-assisted Engineering Workflow; AI Review Process; human decision gates                                      | AI Governance Owner          | `/trust/ai-assisted-engineering/` |
+| AI-assisted engineering             | AI-assisted Engineering Workflow; AI Review Process; Human Decision Gates                                      | AI Governance Owner          | `/trust/ai-assisted-engineering/` |
 | Quality and testing                 | Testing Strategy; Quality Gates; Quality Metrics                                                               | Quality Owner                | `/trust/quality/`                 |
 | Release and maintenance             | Release Process; Artifact Promotion; Supported Versions; Product Lifecycle; Maintenance Policy                 | Release Owner                | `/trust/releases/`                |
 | Security and vulnerability handling | Security Policy; Vulnerability Management; Responsible Disclosure                                              | Security Owner               | `/trust/security/`                |
 | Dependency and supply chain         | Dependency Management; Renovate Policy; Supply-chain Security; SBOM Strategy                                   | Supply-chain Owner           | `/trust/supply-chain/`            |
 | Assurance frameworks and formats    | OpenSSF Adoption, Scorecard, Best Practices; `SLSA`; SPDX; CycloneDX; `Sigstore`; Provenance; Artifact Signing | Assurance Owner              | `/trust/assurance/`               |
-| Build integrity                     | Reproducible Builds and artifact identity                                                                      | Build and Release Owner      | `/trust/build-integrity/`         |
-| Compliance positioning              | claim boundary and links to canonical framework mappings                                                       | Compliance Owner             | `/trust/compliance-positioning/`  |
-| Evidence and document governance    | Evidence Retention; Document Governance; approval and publication model                                        | Evidence/Documentation Owner | `/trust/governance/`              |
+| Build integrity                     | Reproducible Builds and Artifact Identity                                                                      | Build and Release Owner      | `/trust/build-integrity/`         |
+| Compliance positioning              | Claim Boundary and Links to Canonical Framework Mappings                                                       | Compliance Owner             | `/trust/compliance-positioning/`  |
+| Evidence and document governance    | Evidence Retention; Document Governance; Approval and Publication Model                                        | Evidence/Documentation Owner | `/trust/governance/`              |
 
 Each target is one landing page with owned child pages only when the material is
-substantial. The current Security, Governance, Release, OpenSSF, and Compliance
-pages remain canonical during transition. A Trust Center implementation links
-or moves them with redirects; it does not copy normative content.
+substantial. The current Security, Governance, Release, and Compliance pages,
+together with the root `OPENSSF.md` governance record, remain canonical during
+transition. A Trust Center implementation links or moves them with redirects;
+it does not copy normative content.
 
 ## Trust topic contract
 
