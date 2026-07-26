@@ -62,9 +62,10 @@ product authority and reviewed for information protection.
 
 1. Extract only statements within the approved public scope.
 2. Re-author in concise English using the product documentation standard.
-3. Preserve the established public taxonomy of ModuLix, IO, Wunderbox, and
-   Atlas.
-4. Present all four entries as independent peer products.
+3. After #38 explicitly accepts the integrated architecture, normalize product
+   names and roles to that approved taxonomy; do not treat this migration plan
+   as taxonomy approval.
+4. Apply the ModuLix product-or-foundation role exactly as approved in #38.
 5. Treat opaque historical source labels only as internal migration metadata;
    do not publish or expand them as product names or public acronyms.
 6. Remove private links, paths, identifiers, infrastructure detail, customer
