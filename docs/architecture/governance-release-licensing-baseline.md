@@ -22,8 +22,9 @@ document:
 # Governance, release, and licensing baseline
 
 This planning record reconciles verified current state with the target decisions
-needed by Goal #15. It changes no repository configuration, license declaration,
-production setting, branch protection, or deployment.
+needed by Goal #15. Apart from adding this page to the documentation site, it
+changes no license declaration, production setting, branch protection,
+deployment configuration, or other repository policy.
 
 ## Authority order
 
