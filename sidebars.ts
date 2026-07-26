@@ -165,6 +165,7 @@ const sidebars: SidebarsConfig = {
         "architecture/governance-release-licensing-baseline",
         "architecture/target-documentation-platform",
         "architecture/information-architecture",
+        "architecture/metadata-lifecycle-model",
       ],
     },
     {
