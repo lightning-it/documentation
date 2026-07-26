@@ -166,6 +166,7 @@ const sidebars: SidebarsConfig = {
         "architecture/target-documentation-platform",
         "architecture/information-architecture",
         "architecture/metadata-lifecycle-model",
+        "architecture/localization-search-strategy",
       ],
     },
     {
