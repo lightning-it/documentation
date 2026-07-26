@@ -160,6 +160,7 @@ const sidebars: SidebarsConfig = {
       items: [
         "architecture/integration-decisions",
         "architecture/github-automation-trust",
+        "architecture/product-documentation-standard",
       ],
     },
     {
