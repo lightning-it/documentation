@@ -19,8 +19,6 @@ document:
   review_cadence: annual
 ---
 
-<!-- cspell:words ESOF -->
-
 # Platform Governance & Evidence migration plan
 
 This plan governs the future public product page. It records no private source
@@ -64,13 +62,11 @@ product authority and reviewed for information protection.
 
 1. Extract only statements within the approved public scope.
 2. Re-author in concise English using the product documentation standard.
-3. After #38 accepts the integrated target architecture, normalize the name to
-   Platform Governance & Evidence and the target public taxonomy from #28 to
-   AIO, Wunderbox, Workbench, Atlas, and Platform Governance & Evidence.
-4. Present ModuLix only as the technical engineering and automation foundation.
-5. Treat the opaque historical source labels LCP, ESOF, and PGF only as
-   historical or subject-matter terms, not public product names or acronyms that
-   readers need to interpret.
+3. Preserve the established public taxonomy of ModuLix, IO, Wunderbox, and
+   Atlas.
+4. Present all four entries as independent peer products.
+5. Treat opaque historical source labels only as internal migration metadata;
+   do not publish or expand them as product names or public acronyms.
 6. Remove private links, paths, identifiers, infrastructure detail, customer
    context, evidence, findings, risk decisions, and unverified claims.
 7. Use no example unless it uses the synthetic values permitted by `AGENTS.md`.
