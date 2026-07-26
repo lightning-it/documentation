@@ -161,6 +161,7 @@ const sidebars: SidebarsConfig = {
         "architecture/integration-decisions",
         "architecture/github-automation-trust",
         "architecture/product-documentation-standard",
+        "architecture/documentation-current-state-assessment",
       ],
     },
     {
