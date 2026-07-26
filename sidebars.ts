@@ -202,6 +202,7 @@ const sidebars: SidebarsConfig = {
         "reference/glossary",
         "reference/public-sources",
         "reference/migration-summary",
+        "reference/platform-governance-evidence-migration-plan",
       ],
     },
     "releases/releases-overview",
