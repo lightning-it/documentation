@@ -164,6 +164,7 @@ const sidebars: SidebarsConfig = {
         "architecture/documentation-current-state-assessment",
         "architecture/governance-release-licensing-baseline",
         "architecture/target-documentation-platform",
+        "architecture/information-architecture",
       ],
     },
     {
