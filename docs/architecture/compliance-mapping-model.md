@@ -40,6 +40,7 @@ The target registry supports:
 - OpenSSF Best Practices and OpenSSF Scorecard;
 
 <!-- cspell:disable-next-line -->
+
 - `SLSA`, SPDX, CycloneDX, in-toto, and `Sigstore`;
 - NIST Secure Software Development Framework; and
 - future public frameworks admitted through the same governance contract.
