@@ -42,9 +42,10 @@ original evidence.
 | Redirect              | none; no verified prior public stable route                     |
 | Source deletion       | not authorized                                                  |
 
-The associated machine-readable public inventory is
-[stored with public evidence](https://github.com/lightning-it/documentation/blob/develop/evidence/platform-governance-evidence-migration-inventory.json).
-Detailed source mapping and retention evidence remain protected.
+The associated machine-readable public inventory is stored at
+`evidence/platform-governance-evidence-migration-inventory.json` in the same
+immutable repository revision as this plan. Detailed source mapping and
+retention evidence remain protected.
 
 ## Public-safe source classification
 
@@ -63,8 +64,9 @@ product authority and reviewed for information protection.
 
 1. Extract only statements within the approved public scope.
 2. Re-author in concise English using the product documentation standard.
-3. Normalize the name to Platform Governance & Evidence and the public taxonomy
-   to AIO, Wunderbox, Workbench, Atlas, and Platform Governance & Evidence.
+3. After #38 accepts the integrated target architecture, normalize the name to
+   Platform Governance & Evidence and the target public taxonomy from #28 to
+   AIO, Wunderbox, Workbench, Atlas, and Platform Governance & Evidence.
 4. Present ModuLix only as the technical engineering and automation foundation.
 5. Treat LCP, ESOF, and PGF only as historical or subject-matter source terms.
 6. Remove private links, paths, identifiers, infrastructure detail, customer
