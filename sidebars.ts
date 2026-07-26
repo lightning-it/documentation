@@ -162,6 +162,7 @@ const sidebars: SidebarsConfig = {
         "architecture/github-automation-trust",
         "architecture/product-documentation-standard",
         "architecture/documentation-current-state-assessment",
+        "architecture/governance-release-licensing-baseline",
       ],
     },
     {
