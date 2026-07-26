@@ -169,6 +169,7 @@ const sidebars: SidebarsConfig = {
         "architecture/trust-center-model",
         "architecture/evidence-center-model",
         "architecture/compliance-mapping-model",
+        "architecture/github-lifecycle-traceability",
       ],
     },
     {
