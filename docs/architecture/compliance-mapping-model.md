@@ -39,9 +39,7 @@ The target registry supports:
 - CIS Benchmarks;
 - OpenSSF Best Practices and OpenSSF Scorecard;
 
-<!-- cspell:disable-next-line -->
-
-- `SLSA`, SPDX, CycloneDX, in-toto, and `Sigstore`;
+- `SLSA`, SPDX, CycloneDX, in-toto, and `Sigstore`; <!-- cspell:disable-line -->
 - NIST Secure Software Development Framework; and
 - future public frameworks admitted through the same governance contract.
 
