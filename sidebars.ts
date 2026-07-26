@@ -171,6 +171,7 @@ const sidebars: SidebarsConfig = {
         "architecture/compliance-mapping-model",
         "architecture/github-lifecycle-traceability",
         "architecture/cicd-cloudflare-deployment",
+        "architecture/architecture-implementation-plan",
       ],
     },
     {
