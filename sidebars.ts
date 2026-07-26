@@ -167,6 +167,7 @@ const sidebars: SidebarsConfig = {
         "architecture/information-architecture",
         "architecture/metadata-lifecycle-model",
         "architecture/trust-center-model",
+        "architecture/evidence-center-model",
       ],
     },
     {
