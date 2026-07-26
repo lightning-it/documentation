@@ -76,12 +76,10 @@ The model supports, without claiming implementation:
 | production acceptance | canonical route, TLS, headers, content identity, search, rollback readiness |
 | documentation         | document set, schema validation, translation/search freshness               |
 | compliance support    | relationship to a mapped control with stated limitations                    |
-| unavailable           | evidence expected but unavailable, expired, withheld, or not generated      |
-| not applicable        | control or evidence deliberately inapplicable with accountable rationale    |
-| failed                | performed validation whose result did not meet its acceptance rule          |
 
 Failed, unavailable, and not-applicable records remain first-class states. The
-catalog never converts absence into success.
+catalog exposes them through status-driven views and filters across every
+domain category; it never converts absence into success.
 
 ## Record schema
 
