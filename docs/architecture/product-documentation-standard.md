@@ -42,11 +42,12 @@ lifecycle controls in this repository.
 
 ## Product page contract
 
-Use [the product documentation template](../../templates/product-documentation.md)
-for a new product landing page. Markdown is the default. MDX requires a recorded
-need for interaction that semantic Markdown and existing components cannot meet,
-an accessibility test, a content-safety review, an owner, and a maintenance
-plan.
+Use
+[the product documentation template](https://github.com/lightning-it/documentation/blob/develop/templates/product-documentation.md)
+for a new product landing page. Markdown is the default. MDX requires a
+recorded need for interaction that semantic Markdown and existing components
+cannot meet, an accessibility test, a content-safety review, an owner, and a
+maintenance plan.
 
 ### Required sections
 
