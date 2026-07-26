@@ -76,12 +76,10 @@ The model supports, without claiming implementation:
 | production acceptance | canonical route, TLS, headers, content identity, search, rollback readiness |
 | documentation         | document set, schema validation, translation/search freshness               |
 | compliance support    | relationship to a mapped control with stated limitations                    |
-| unavailable           | evidence expected but unavailable, expired, withheld, or not generated      |
-| not applicable        | control or evidence deliberately inapplicable with accountable rationale    |
-| failed                | performed validation whose result did not meet its acceptance rule          |
 
 Failed, unavailable, and not-applicable records remain first-class states. The
-catalog never converts absence into success.
+catalog exposes them through status-driven views and filters across every
+domain category; it never converts absence into success.
 
 ## Record schema
 
@@ -108,6 +106,9 @@ source:
 method:
   identifier: npm-build
   version: public-tool-version
+  acceptance_rule:
+    identifier: build-must-complete
+    version: "1.0"
 observed_at: "2026-07-25T00:00:00Z"
 generated_at: "2026-07-25T00:00:00Z"
 generator:
@@ -131,7 +132,8 @@ limitations:
 owner: Named accountable role
 review:
   status: pending
-  evidence: []
+  evidence:
+    - opaque-public-safe-record-id
 retention:
   class: public-governance
   review_at: "2027-07-25"
@@ -141,6 +143,10 @@ Identifiers are globally unique, stable, lower-case, and never derived from a
 secret or private customer/system name. Record versions change when meaning or
 schema representation changes; immutable historical versions remain
 addressable.
+
+Review and relationship references are public-safe stable identifiers. A
+protected-system reference is opaque, non-secret, and never a URL, path,
+hostname, query, credential, or guessable private object identifier.
 
 ## Status model
 
