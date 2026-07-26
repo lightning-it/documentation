@@ -168,6 +168,7 @@ const sidebars: SidebarsConfig = {
         "architecture/metadata-lifecycle-model",
         "architecture/trust-center-model",
         "architecture/evidence-center-model",
+        "architecture/compliance-mapping-model",
       ],
     },
     {
