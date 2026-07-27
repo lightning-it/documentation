@@ -144,7 +144,7 @@ approval and break build-once promotion. #40 pins Wrangler and uploads the
 already validated directory:
 
 ```sh
-npx wrangler@4.114.0 pages deploy build \
+npm exec -- wrangler pages deploy build \
   --project-name lightning-it-documentation \
   --branch "<approved-branch-label>" \
   --commit-hash "<full-git-oid>" \
