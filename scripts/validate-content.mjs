@@ -22,6 +22,7 @@ import {
   walkFiles,
   writeEvidence,
 } from "./lib/validation.mjs";
+import { validateAssetProvenanceRecord } from "./lib/asset-provenance.mjs";
 
 const docsDirectory = path.join(repositoryRoot, "docs");
 const schemaPath = path.join(
@@ -656,9 +657,7 @@ async function main() {
         `${relativePath}: asset checksum differs from its provenance record`,
       );
     }
-    if (record.license !== "MIT" || !record.origin || !record.metadata_review) {
-      errors.push(`${relativePath}: asset provenance record is incomplete`);
-    }
+    errors.push(...validateAssetProvenanceRecord(relativePath, record));
     if (filePath.endsWith(".png") && pngMetadataChunks(buffer).length > 0) {
       errors.push(`${relativePath}: PNG contains unreviewed metadata chunks`);
     }
