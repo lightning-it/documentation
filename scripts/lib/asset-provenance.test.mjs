@@ -4,6 +4,7 @@ import { describe, it } from "node:test";
 import { validateAssetProvenanceRecord } from "./asset-provenance.mjs";
 
 const relativePath = "static/img/example.svg";
+const repositoryLicense = "MIT";
 
 function validRecord(overrides = {}) {
   return {
@@ -17,7 +18,22 @@ function validRecord(overrides = {}) {
 describe("validateAssetProvenanceRecord", () => {
   it("accepts a complete repository-native MIT record", () => {
     assert.deepEqual(
-      validateAssetProvenanceRecord(relativePath, validRecord()),
+      validateAssetProvenanceRecord(
+        relativePath,
+        validRecord(),
+        repositoryLicense,
+      ),
+      [],
+    );
+  });
+
+  it("uses the expected repository license supplied by managed metadata", () => {
+    assert.deepEqual(
+      validateAssetProvenanceRecord(
+        relativePath,
+        validRecord({ license: "Apache-2.0" }),
+        "Apache-2.0",
+      ),
       [],
     );
   });
@@ -30,6 +46,7 @@ describe("validateAssetProvenanceRecord", () => {
           license: "CC-BY-4.0",
           origin: "Third-party example",
         }),
+        repositoryLicense,
       ),
       [],
     );
@@ -43,6 +60,7 @@ describe("validateAssetProvenanceRecord", () => {
           license: "CC-BY-4.0",
           origin: "Raster rendition of the repository-native example",
         }),
+        repositoryLicense,
       ),
       [
         "static/img/example.svg: repository-native asset license must be MIT, found CC-BY-4.0",
@@ -52,7 +70,11 @@ describe("validateAssetProvenanceRecord", () => {
 
   it("rejects incomplete provenance records", () => {
     assert.deepEqual(
-      validateAssetProvenanceRecord(relativePath, validRecord({ license: "" })),
+      validateAssetProvenanceRecord(
+        relativePath,
+        validRecord({ license: "" }),
+        repositoryLicense,
+      ),
       ["static/img/example.svg: asset provenance record is incomplete"],
     );
   });

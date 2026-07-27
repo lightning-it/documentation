@@ -368,6 +368,9 @@ async function exists(filePath) {
 async function main() {
   const errors = [];
   const schema = JSON.parse(await readText(schemaPath));
+  const repositoryMetadata = parseYaml(
+    await readText(path.join(repositoryRoot, ".lit", "repository.yml")),
+  );
   const ajv = new Ajv2020({ allErrors: true, strict: true });
   addFormats(ajv);
   const validateMetadata = ajv.compile(schema);
@@ -657,7 +660,13 @@ async function main() {
         `${relativePath}: asset checksum differs from its provenance record`,
       );
     }
-    errors.push(...validateAssetProvenanceRecord(relativePath, record));
+    errors.push(
+      ...validateAssetProvenanceRecord(
+        relativePath,
+        record,
+        repositoryMetadata?.license_spdx,
+      ),
+    );
     if (filePath.endsWith(".png") && pngMetadataChunks(buffer).length > 0) {
       errors.push(`${relativePath}: PNG contains unreviewed metadata chunks`);
     }

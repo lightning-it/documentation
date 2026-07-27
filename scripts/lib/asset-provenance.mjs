@@ -1,6 +1,8 @@
-const REPOSITORY_LICENSE = "MIT";
-
-export function validateAssetProvenanceRecord(relativePath, record) {
+export function validateAssetProvenanceRecord(
+  relativePath,
+  record,
+  expectedRepositoryLicense,
+) {
   const errors = [];
 
   if (!record?.license || !record?.origin || !record?.metadata_review) {
@@ -10,10 +12,10 @@ export function validateAssetProvenanceRecord(relativePath, record) {
 
   if (
     /repository-native/i.test(record.origin) &&
-    record.license !== REPOSITORY_LICENSE
+    record.license !== expectedRepositoryLicense
   ) {
     errors.push(
-      `${relativePath}: repository-native asset license must be ${REPOSITORY_LICENSE}, found ${record.license}`,
+      `${relativePath}: repository-native asset license must be ${expectedRepositoryLicense ?? "(missing)"}, found ${record.license}`,
     );
   }
 
