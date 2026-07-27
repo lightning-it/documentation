@@ -173,6 +173,7 @@ const sidebars: SidebarsConfig = {
         "architecture/github-lifecycle-traceability",
         "architecture/cicd-cloudflare-deployment",
         "architecture/implementation-plan",
+        "architecture/integrated-architecture-package",
       ],
     },
     {
