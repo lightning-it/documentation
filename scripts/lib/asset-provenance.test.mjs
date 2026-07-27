@@ -68,6 +68,15 @@ describe("validateAssetProvenanceRecord", () => {
     );
   });
 
+  it("reports missing managed repository license metadata explicitly", () => {
+    assert.deepEqual(
+      validateAssetProvenanceRecord(relativePath, validRecord(), undefined),
+      [
+        "static/img/example.svg: repository-native asset license cannot be validated because .lit/repository.yml license_spdx is missing",
+      ],
+    );
+  });
+
   it("rejects incomplete provenance records", () => {
     assert.deepEqual(
       validateAssetProvenanceRecord(

@@ -10,12 +10,17 @@ export function validateAssetProvenanceRecord(
     return errors;
   }
 
-  if (
-    /repository-native/i.test(record.origin) &&
-    record.license !== expectedRepositoryLicense
-  ) {
+  if (!/repository-native/i.test(record.origin)) {
+    return errors;
+  }
+
+  if (!expectedRepositoryLicense) {
     errors.push(
-      `${relativePath}: repository-native asset license must be ${expectedRepositoryLicense ?? "(missing)"}, found ${record.license}`,
+      `${relativePath}: repository-native asset license cannot be validated because .lit/repository.yml license_spdx is missing`,
+    );
+  } else if (record.license !== expectedRepositoryLicense) {
+    errors.push(
+      `${relativePath}: repository-native asset license must be ${expectedRepositoryLicense}, found ${record.license}`,
     );
   }
 

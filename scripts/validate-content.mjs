@@ -368,9 +368,16 @@ async function exists(filePath) {
 async function main() {
   const errors = [];
   const schema = JSON.parse(await readText(schemaPath));
-  const repositoryMetadata = parseYaml(
-    await readText(path.join(repositoryRoot, ".lit", "repository.yml")),
-  );
+  let repositoryMetadata;
+  try {
+    repositoryMetadata = parseYaml(
+      await readText(path.join(repositoryRoot, ".lit", "repository.yml")),
+    );
+  } catch (error) {
+    errors.push(
+      `.lit/repository.yml: invalid YAML: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
   const ajv = new Ajv2020({ allErrors: true, strict: true });
   addFormats(ajv);
   const validateMetadata = ajv.compile(schema);
