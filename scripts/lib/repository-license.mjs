@@ -32,7 +32,10 @@ export function validateRepositoryLicense({
     return errors;
   }
 
-  if (!licenseText.startsWith(LICENSE_HEADERS[expected])) {
+  if (
+    typeof licenseText !== "string" ||
+    !licenseText.startsWith(LICENSE_HEADERS[expected])
+  ) {
     errors.push(`LICENSE does not start with ${LICENSE_HEADERS[expected]}`);
   }
   if (packageManifest?.license !== expected) {
@@ -45,13 +48,19 @@ export function validateRepositoryLicense({
       `package-lock.json root license must be ${expected}, found ${lockManifest?.packages?.[""]?.license ?? "(missing)"}`,
     );
   }
-  if (!readme.includes(README_BADGES[expected])) {
+  if (typeof readme !== "string" || !readme.includes(README_BADGES[expected])) {
     errors.push(`README.md must contain the ${expected} license badge`);
   }
-  if (!readme.includes(README_DECLARATIONS[expected])) {
+  if (
+    typeof readme !== "string" ||
+    !readme.includes(README_DECLARATIONS[expected])
+  ) {
     errors.push(`README.md must contain the ${expected} license declaration`);
   }
-  if (!contributing.includes(CONTRIBUTION_DECLARATIONS[expected])) {
+  if (
+    typeof contributing !== "string" ||
+    !contributing.includes(CONTRIBUTION_DECLARATIONS[expected])
+  ) {
     errors.push(
       `CONTRIBUTING.md must contain the ${expected} contribution declaration`,
     );

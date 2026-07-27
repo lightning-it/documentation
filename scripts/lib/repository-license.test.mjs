@@ -29,6 +29,20 @@ describe("validateRepositoryLicense", () => {
     ]);
   });
 
+  it("reports missing text inputs instead of throwing", () => {
+    const inputs = validInputs();
+    inputs.licenseText = undefined;
+    inputs.readme = undefined;
+    inputs.contributing = undefined;
+
+    assert.deepEqual(validateRepositoryLicense(inputs), [
+      "LICENSE does not start with MIT License",
+      "README.md must contain the MIT license badge",
+      "README.md must contain the MIT license declaration",
+      "CONTRIBUTING.md must contain the MIT contribution declaration",
+    ]);
+  });
+
   it("reports every inconsistent first-party declaration", () => {
     const inputs = validInputs();
     inputs.licenseText = "Apache License";
