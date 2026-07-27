@@ -295,7 +295,7 @@ sub-issues of #15 and remain blocked by #38.
 - Acceptance: all required gates pass on one immutable production candidate;
   no open blocker, unsafe claim, restricted leak, orphan, broken relationship,
   stale required translation/evidence, or unowned exception; rollback verified.
-- Validation/evidence: full `validate:release`, production suite, independent
+- Validation/evidence: full `npm run validate:release`, production suite, independent
   browser/a11y/security review, evidence catalog/digest and go/no-go record.
 
 ### Existing #115 — publish Platform Governance & Evidence
