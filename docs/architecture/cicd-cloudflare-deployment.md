@@ -94,10 +94,10 @@ promotion boundary.
 | framework          | Docusaurus 3.10.2; React 19.2.7; TypeScript 6.0.3                                    |
 | search             | Pagefind 1.5.2                                                                       |
 | deployment client  | Wrangler 4.114.0, pinned exactly as a development dependency by #40                  |
-| install            | `npm ci --ignore-scripts=false` in repository root                                   |
+| install            | `npm ci` in repository root                                                          |
 | validation         | `npm run validate:release`                                                           |
 | production build   | `npm run build`                                                                      |
-| local preview      | `npm run serve -- --host 127.0.0.1 --port 3000`                                      |
+| local preview      | `npm run serve -- --port 3000`                                                       |
 | output             | `build/`                                                                             |
 | site config        | `docusaurus.config.ts`; `url=https://docs.l-it.io`, `baseUrl=/`                      |
 | static inputs      | `static/`; docs and generated public sources validated before build                  |
@@ -348,7 +348,7 @@ planning targets, not public availability commitments.
 | Actor/system        | Location/control plane          | Command or setting                                           | Non-secret input                | Secret reference           | Expected/verification                        | Failure/rollback                    | Evidence                      |
 | ------------------- | ------------------------------- | ------------------------------------------------------------ | ------------------------------- | -------------------------- | -------------------------------------------- | ----------------------------------- | ----------------------------- |
 | builder             | clean repository root           | `node --version`; `npm --version`                            | Node 24.18.0/npm 11             | none                       | exact supported versions                     | stop                                | toolchain result              |
-| builder             | repository root                 | `npm ci --ignore-scripts=false`                              | lockfile                        | none                       | zero exit, no diff                           | discard workspace                   | install/lock digest           |
+| builder             | repository root                 | `npm ci`                                                     | lockfile                        | none                       | zero exit, no diff                           | discard workspace                   | install/lock digest           |
 | validator           | repository root                 | `npm run validate:release`                                   | source commit                   | none                       | all gates pass                               | stop                                | check/run IDs                 |
 | builder             | repository root                 | `npm run build`                                              | validated source                | none                       | complete `build/`                            | stop                                | build manifest                |
 | builder             | repository root                 | deterministic archive/digest command implemented by #40      | `build/`, commit                | none                       | archive, SHA-256, reproducible match         | stop                                | artifact/digest               |
