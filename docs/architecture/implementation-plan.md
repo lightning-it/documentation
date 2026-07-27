@@ -82,19 +82,19 @@ flowchart TD
 
 | Confirmed gap                                    | Disposition                                               |
 | ------------------------------------------------ | --------------------------------------------------------- |
-| governance/license text inconsistencies          | IMP-01 reconcile                                          |
-| incomplete metadata/lifecycle schema             | IMP-02 replace current schema compatibly                  |
-| target routes/navigation absent                  | IMP-03 reconcile and extend                               |
-| product/foundation taxonomy and page contract    | IMP-04 migrate after approved taxonomy                    |
-| Trust Center absent                              | IMP-05 extend existing canonical pages                    |
-| unified Evidence Center absent                   | IMP-06 reconcile existing evidence and extend             |
-| framework-neutral compliance model absent        | IMP-07 extend current BSI page                            |
-| bilingual governance/version-aware search absent | IMP-08 extend; English remains operational fallback       |
-| end-to-end GitHub traceability absent            | IMP-09 extend existing issue/workflow links               |
-| migration inventory not executed                 | IMP-10 execute approved classifications                   |
+| governance/license text inconsistencies          | #132 reconcile                                            |
+| incomplete metadata/lifecycle schema             | #133 replace current schema compatibly                    |
+| target routes/navigation absent                  | #134 reconcile and extend                                 |
+| product/foundation taxonomy and page contract    | #135 migrate after approved taxonomy                      |
+| Trust Center absent                              | #136 extend existing canonical pages                      |
+| unified Evidence Center absent                   | #137 reconcile existing evidence and extend               |
+| framework-neutral compliance model absent        | #138 extend current BSI page                              |
+| bilingual governance/version-aware search absent | #139 extend; English remains operational fallback         |
+| end-to-end GitHub traceability absent            | #140 extend existing issue/workflow links                 |
+| migration inventory not executed                 | #141 execute approved classifications                     |
 | immutable Pages promotion incomplete             | existing #40 implements                                   |
 | Platform Governance & Evidence page absent       | existing #115 implements after shared foundations         |
-| final cross-workstream acceptance absent         | IMP-11 validate/integrate                                 |
+| final cross-workstream acceptance absent         | #142 validate/integrate                                   |
 | current Docusaurus/build/search baseline         | retain and validate; no rewrite                           |
 | current public/private boundary                  | retain; extend validators only through listed issues      |
 | private source migration                         | external dependency; remains private and owner-controlled |
@@ -104,14 +104,15 @@ flowchart TD
 | Milestone                | Entry criteria                          | Exit criteria                                                                      | Owner                         | Main risks/review point                         |
 | ------------------------ | --------------------------------------- | ---------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------------- |
 | M0 Approval              | #23–#37 merged; package digest prepared | #38 human authorization and valid #2 evidence                                      | Architecture Approver         | inconsistent package; full review               |
-| M1 Foundations           | M0; registries/route decisions final    | IMP-01–03 merged; compatibility/migration fixtures pass                            | Repository Maintainers        | schema/route breakage; architecture review      |
-| M2 Public models         | M1                                      | IMP-04–10 merged; Trust/Evidence/Compliance/locale/traceability and migration pass | Product/Trust/Evidence Owners | unsafe claims/data; security/content review     |
+| M1 Foundations           | M0; registries/route decisions final    | #132–#134 merged; compatibility/migration fixtures pass                            | Repository Maintainers        | schema/route breakage; architecture review      |
+| M2 Public models         | M1                                      | #135–#141 merged; Trust/Evidence/Compliance/locale/traceability and migration pass | Product/Trust/Evidence Owners | unsafe claims/data; security/content review     |
 | M3 Delivery              | M1 and #35 accepted                     | #40 immutable preview/production path implemented but not yet claimed accepted     | Delivery Engineer             | credentials/DNS/drift; production change review |
-| M4 Integrated acceptance | M2 and M3; exact candidate              | IMP-11 and #40 external acceptance pass; rollback ready; evidence approved         | Production Acceptance Owner   | integration gaps; go/no-go                      |
+| M4 Integrated acceptance | M2 and M3; exact candidate              | #142 and #40 external acceptance pass; rollback ready; evidence approved           | Production Acceptance Owner   | integration gaps; go/no-go                      |
 | M5 Product delivery      | M4 shared platform accepted             | #115 approved, deployed, production-verified, Confluence/roadmap updated safely    | Product Owner                 | taxonomy/claims; product acceptance             |
 
-M2 product/content and M3 delivery can run in parallel after M1. IMP-06 precedes
-IMP-07 and IMP-09. IMP-08 and IMP-10 may run in parallel after IMP-02/03.
+M2 product/content and M3 delivery can run in parallel after M1. Issue #137
+precedes #138 and #140. Issues #139 and #141 may run in parallel after the
+foundation issues #133 and #134.
 Production acceptance and #115 are on the critical path after convergence.
 
 ## Implementation issue contract
@@ -119,10 +120,10 @@ Production acceptance and #115 are on the critical path after convergence.
 Every created issue uses parent #15, type Task, status Todo, its named milestone,
 labels `phase:implement` plus domain, accountable owner role, #38 blocker, scope,
 exclusions, dependencies, deliverables, acceptance, validation, evidence, and
-rollback/migration needs. Titles below are proposed canonical titles; actual
-issue numbers are recorded in #37 before #38 review.
+rollback/migration needs. The issue numbers below are the created Todo
+sub-issues of #15 and remain blocked by #38.
 
-### IMP-01 — reconcile repository governance and licensing implementation
+### [Issue #132](https://github.com/lightning-it/documentation/issues/132) — reconcile repository governance and licensing implementation
 
 - Milestone/type/labels: M1; Task; `phase:implement`, `governance`, `licensing`.
 - Owner/dependencies: Repository Maintainer; #24 and #38.
@@ -136,7 +137,7 @@ issue numbers are recorded in #37 before #38 review.
 - Validation/evidence: format/lint/types/content/licenses/build, dependency
   license inventory, exact diff and approval record.
 
-### IMP-02 — implement metadata v2, lifecycle registries, and approval invariant
+### [Issue #133](https://github.com/lightning-it/documentation/issues/133) — implement metadata v2, lifecycle registries, and approval invariant
 
 - Milestone/type/labels: M1; Task; `phase:implement`, `metadata`, `governance`.
 - Owner/dependencies: Documentation Maintainer; #27, #30, #38.
@@ -150,11 +151,11 @@ issue numbers are recorded in #37 before #38 review.
 - Validation/evidence: schema/unit/content tests, deterministic digest fixtures,
   migration report, approval/evidence records.
 
-### IMP-03 — implement information architecture, canonical routes, and navigation
+### [Issue #134](https://github.com/lightning-it/documentation/issues/134) — implement information architecture, canonical routes, and navigation
 
 - Milestone/type/labels: M1; Task; `phase:implement`, `navigation`,
   `accessibility`.
-- Owner/dependencies: Documentation Maintainer; #26, IMP-02, #38.
+- Owner/dependencies: Documentation Maintainer; #26, #133, #38.
 - Scope/deliverables: top-level landing/navigation structure, canonical
   ownership registry, explicit sidebars, breadcrumbs, redirects, orphan and
   duplicate checks.
@@ -166,10 +167,10 @@ issue numbers are recorded in #37 before #38 review.
 - Validation/evidence: route/link/anchor/site/browser/a11y tests, redirect and
   navigation inventories, before/after route evidence.
 
-### IMP-04 — reconcile portfolio taxonomy and adopt product documentation standard
+### [Issue #135](https://github.com/lightning-it/documentation/issues/135) — reconcile portfolio taxonomy and adopt product documentation standard
 
 - Milestone/type/labels: M2; Task; `phase:implement`, `products`, `migration`.
-- Owner/dependencies: Product Owner; #28, IMP-02/03, #36, #38 taxonomy decision.
+- Owner/dependencies: Product Owner; #28, #133/#134, #36, #38 taxonomy decision.
 - Scope/deliverables: approved product/foundation namespaces, landing pages,
   metadata/template adoption, route redirects, shared-content links.
 - Exclusions: new product capabilities or claims, marketing copy, and private
@@ -180,10 +181,10 @@ issue numbers are recorded in #37 before #38 review.
 - Validation/evidence: product matrix, route/search/a11y/responsive/link tests,
   migration decisions and exact approval.
 
-### IMP-05 — implement the public Trust Center
+### [Issue #136](https://github.com/lightning-it/documentation/issues/136) — implement the public Trust Center
 
 - Milestone/type/labels: M2; Task; `phase:implement`, `trust`, `security`.
-- Owner/dependencies: Trust Owner; #29, IMP-02/03, #32, #38.
+- Owner/dependencies: Trust Owner; #29, #133/#134, #32, #38.
 - Scope/deliverables: canonical Trust landing/topic pages, claim-type
   presentation, owner/review model, cross-links to existing policies.
 - Exclusions: restricted findings/risks/audits/incidents/operations and
@@ -194,10 +195,10 @@ issue numbers are recorded in #37 before #38 review.
 - Validation/evidence: claim/content-safety tests, owner/topic matrix,
   links/search/a11y, security and approval review.
 
-### IMP-06 — implement the Evidence Center and retention controls
+### [Issue #137](https://github.com/lightning-it/documentation/issues/137) — implement the Evidence Center and retention controls
 
 - Milestone/type/labels: M2; Task; `phase:implement`, `evidence`, `security`.
-- Owner/dependencies: Evidence Owner; #30, IMP-02/03, #32, #38.
+- Owner/dependencies: Evidence Owner; #30, #133/#134, #32, #38.
 - Scope/deliverables: schemas/registries, normalized source records,
   deterministic generator/index/manifest, status views, supersession,
   tombstones, public/protected boundary, retention enforcement.
@@ -209,10 +210,10 @@ issue numbers are recorded in #37 before #38 review.
 - Validation/evidence: schema/unit/reproducibility/content/security/a11y tests,
   inventory disposition, manifest/digests, protected-review attestation.
 
-### IMP-07 — implement framework-neutral compliance mappings
+### [Issue #138](https://github.com/lightning-it/documentation/issues/138) — implement framework-neutral compliance mappings
 
 - Milestone/type/labels: M2; Task; `phase:implement`, `compliance`, `evidence`.
-- Owner/dependencies: Compliance Owner; #31, IMP-02/06, #38.
+- Owner/dependencies: Compliance Owner; #31, #133/#137, #38.
 - Scope/deliverables: framework/requirement/mapping registries, BSI migration,
   applicability/status/assurance views, evidence joins, exception and version
   governance.
@@ -224,10 +225,10 @@ issue numbers are recorded in #37 before #38 review.
 - Validation/evidence: mapping/schema/link/digest/accessibility tests, BSI
   migration report, claim review and approval.
 
-### IMP-08 — implement German localization and version-aware search
+### [Issue #139](https://github.com/lightning-it/documentation/issues/139) — implement German localization and version-aware search
 
 - Milestone/type/labels: M2; Task; `phase:implement`, `localization`, `search`.
-- Owner/dependencies: Documentation/Locale Owner; #33, IMP-02/03, #38.
+- Owner/dependencies: Documentation/Locale Owner; #33, #133/#134, #38.
 - Scope/deliverables: locale registry/routes/switching, governed English-to-
   German workflow, freshness states, deterministic partitioned Pagefind
   manifests, status/version/product filters and ranking.
@@ -239,10 +240,10 @@ issue numbers are recorded in #37 before #38 review.
 - Validation/evidence: locale drift and route tests, search fixtures/sentinels,
   clean digest comparison, keyboard/screen-reader/performance evidence.
 
-### IMP-09 — implement public GitHub lifecycle traceability
+### [Issue #140](https://github.com/lightning-it/documentation/issues/140) — implement public GitHub lifecycle traceability
 
 - Milestone/type/labels: M2; Task; `phase:implement`, `github`, `evidence`.
-- Owner/dependencies: Repository Maintainer; #34, IMP-02/06/07, #38.
+- Owner/dependencies: Repository Maintainer; #34, #133/#137/#138, #38.
 - Scope/deliverables: public allowlist/query contracts, immutable snapshot/cache,
   typed lifecycle graph, issue/project conventions, generated reviewable index.
 - Exclusions: private-repository permission/access, public claims from mutable
@@ -253,10 +254,10 @@ issue numbers are recorded in #37 before #38 review.
 - Validation/evidence: public fixtures, pagination/rate/cache/failure tests,
   permission inspection, deterministic snapshot/output digests.
 
-### IMP-10 — execute governed content and evidence migration
+### [Issue #141](https://github.com/lightning-it/documentation/issues/141) — execute governed content and evidence migration
 
 - Milestone/type/labels: M2; Task; `phase:implement`, `migration`, `content`.
-- Owner/dependencies: Migration Owner; #36, IMP-02–09 as applicable, #38.
+- Owner/dependencies: Migration Owner; #36, #133–#140 as applicable, #38.
 - Scope/deliverables: execute retain/extend/reconcile/replace/retire decisions in
   bounded batches, preserve provenance/redirects, resolve duplicates, record
   deferred/private owners.
@@ -272,7 +273,7 @@ issue numbers are recorded in #37 before #38 review.
 
 - Milestone/type/labels: M3; existing Task #40; `phase:implement`,
   `deployment`, `cloudflare`.
-- Owner/dependencies: Delivery Engineer; #35, IMP-01–03, #38.
+- Owner/dependencies: Delivery Engineer; #35, #132–#134, #38.
 - Scope/deliverables: exactly the #35 command/configuration matrix, pinned
   Wrangler, deterministic artifact, environment separation, Direct Upload,
   drift preflight, custom domain/DNS/TLS, previews, acceptance and rollback.
@@ -282,10 +283,10 @@ issue numbers are recorded in #37 before #38 review.
   deployment identity, public DNS/TLS/site/a11y/search/security checks, retained
   rollback candidate and tested rollback.
 
-### IMP-11 — integrated platform migration and production acceptance
+### [Issue #142](https://github.com/lightning-it/documentation/issues/142) — integrated platform migration and production acceptance
 
 - Milestone/type/labels: M4; Task; `phase:implement`, `acceptance`, `evidence`.
-- Owner/dependencies: Production Acceptance Owner; IMP-04–10 and #40.
+- Owner/dependencies: Production Acceptance Owner; #135–#141 and #40.
 - Scope/deliverables: cross-workstream consistency, complete routes/search/
   metadata/claim/evidence/framework/lifecycle verification, external human and
   machine acceptance, limitation/roadmap update, rollback exercise.
@@ -316,14 +317,14 @@ issue numbers are recorded in #37 before #38 review.
 Critical path:
 
 ```text
-#38 -> IMP-01/02 -> IMP-03 -> IMP-06 -> IMP-07/09
-  -> IMP-10 + #40 -> IMP-11 -> #115
+#38 -> #132/#133 -> #134 -> #137 -> #138/#140
+  -> #141 + #40 -> #142 -> #115
 ```
 
 Safe parallel sets:
 
-- after IMP-02/03: IMP-04, IMP-05, IMP-08;
-- after IMP-06: IMP-07 and IMP-09;
+- after #133/#134: #135, #136, #139;
+- after #137: #138 and #140;
 - after M1: #40 may proceed in parallel with M2, but production acceptance waits
   for the exact integrated candidate;
 - migration batches can parallelize only when canonical ownership and route
