@@ -18,7 +18,7 @@ function validInputs() {
       assets: [
         {
           path: "static/img/example.svg",
-          origin: "Repository-native example",
+          origin: "Raster rendition of the repository-native example",
           license: "MIT",
         },
         {

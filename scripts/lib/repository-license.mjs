@@ -88,7 +88,7 @@ export function validateRepositoryLicense({
 
   const firstPartyAssets = Array.isArray(assetProvenance?.assets)
     ? assetProvenance.assets.filter((record) =>
-        record?.origin?.includes("Repository-native"),
+        /repository-native/i.test(record?.origin ?? ""),
       )
     : [];
   if (firstPartyAssets.length === 0) {

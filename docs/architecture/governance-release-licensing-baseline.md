@@ -72,8 +72,8 @@ or restricted logs.
 
 The authoritative target is MIT because the repository's `LICENSE`, GitHub
 license detection, README badge, and managed repository inventory agree. The
-contradictory package and contributor-facing values recorded during planning are a
-confirmed implementation gap.
+contradictory package and contributor-facing values recorded during planning
+represent a confirmed implementation gap.
 
 One later implementation issue must:
 
