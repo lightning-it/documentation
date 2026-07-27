@@ -305,7 +305,7 @@ sub-issues of #15 and remain blocked by #38.
   migration plan.
 - Scope/deliverables: approved page and navigation using shared models,
   production verification, public-safe evidence, roadmap and canonical
-  canonical external source update only after live acceptance.
+  external source update only after live acceptance.
 - Exclusions: unverified product capabilities, private source content, and
   external source updates before production truth.
 - Acceptance/validation/evidence: #115 criteria, product standard, exact digest,
