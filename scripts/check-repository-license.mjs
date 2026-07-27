@@ -15,8 +15,9 @@ async function readJson(relativePath) {
 }
 
 async function main() {
+  const metadata = parseYaml(await readText(".lit/repository.yml"));
   const errors = validateRepositoryLicense({
-    metadata: parseYaml(await readText(".lit/repository.yml")),
+    metadata,
     licenseText: await readText("LICENSE"),
     packageManifest: await readJson("package.json"),
     lockManifest: await readJson("package-lock.json"),
@@ -28,7 +29,9 @@ async function main() {
   });
 
   failIfErrors("First-party repository license consistency", errors);
-  console.log("Validated first-party MIT license consistency.");
+  console.log(
+    `Validated first-party ${metadata.license_spdx} license consistency.`,
+  );
 }
 
 main().catch((error) => {
