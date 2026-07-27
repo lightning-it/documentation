@@ -23,7 +23,7 @@
     "format:check": "prettier --check .",
     "test:content": "node scripts/validate-content.mjs && npm run test:migration-index",
     "test:migration-index": "node scripts/check-migration-target-index.mjs",
-    "test:licenses": "node scripts/check-licenses.mjs",
+    "test:licenses": "node scripts/check-repository-license.mjs && node scripts/check-licenses.mjs",
     "test:site": "html-validate --config config/html-validate.json \"build/**/*.html\" && node scripts/validate-site.mjs",
     "test:unit": "vitest run && npm run test:validation && npm run test:ihr",
     "test:ihr": "node scripts/validate-ihr.mjs templates/installation-and-handover-record.md",
@@ -49,7 +49,7 @@
     "validate:release": "npm run validate && npm run test:approval && npm run test:reproducible && npm run sbom && npm run sbom:production",
     "check": "npm run validate"
   },
-  "license": "Apache-2.0",
+  "license": "MIT",
   "homepage": "https://docs.l-it.io",
   "repository": {
     "type": "git",
