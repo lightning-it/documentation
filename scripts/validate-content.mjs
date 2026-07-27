@@ -22,6 +22,7 @@ import {
   walkFiles,
   writeEvidence,
 } from "./lib/validation.mjs";
+import { validateAssetProvenanceRecord } from "./lib/asset-provenance.mjs";
 
 const docsDirectory = path.join(repositoryRoot, "docs");
 const schemaPath = path.join(
@@ -367,6 +368,30 @@ async function exists(filePath) {
 async function main() {
   const errors = [];
   const schema = JSON.parse(await readText(schemaPath));
+  let repositoryMetadataSource;
+  let repositoryMetadata;
+  try {
+    repositoryMetadataSource = await readText(
+      path.join(repositoryRoot, ".lit", "repository.yml"),
+    );
+  } catch (error) {
+    errors.push(
+      `.lit/repository.yml: unable to read repository metadata${
+        error && typeof error === "object" && "code" in error
+          ? ` (${String(error.code)})`
+          : ""
+      }`,
+    );
+  }
+  if (repositoryMetadataSource !== undefined) {
+    try {
+      repositoryMetadata = parseYaml(repositoryMetadataSource);
+    } catch (error) {
+      errors.push(
+        `.lit/repository.yml: invalid YAML: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+  }
   const ajv = new Ajv2020({ allErrors: true, strict: true });
   addFormats(ajv);
   const validateMetadata = ajv.compile(schema);
@@ -656,13 +681,13 @@ async function main() {
         `${relativePath}: asset checksum differs from its provenance record`,
       );
     }
-    if (
-      record.license !== "Apache-2.0" ||
-      !record.origin ||
-      !record.metadata_review
-    ) {
-      errors.push(`${relativePath}: asset provenance record is incomplete`);
-    }
+    errors.push(
+      ...validateAssetProvenanceRecord(
+        relativePath,
+        record,
+        repositoryMetadata?.license_spdx,
+      ),
+    );
     if (filePath.endsWith(".png") && pngMetadataChunks(buffer).length > 0) {
       errors.push(`${relativePath}: PNG contains unreviewed metadata chunks`);
     }

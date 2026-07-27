@@ -173,5 +173,5 @@ support are described in [SUPPORT.md](./SUPPORT.md).
 ## License
 
 Unless a file states otherwise, repository source and documentation are
-licensed under the [Apache License 2.0](./LICENSE). Third-party material remains
+licensed under the [MIT License](./LICENSE). Third-party material remains
 under its respective license and must be attributed.

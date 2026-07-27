@@ -1,7 +1,7 @@
 # Contributing
 
 Thank you for improving Lightning IT Documentation. By contributing, you agree
-that your contribution is licensed under Apache License 2.0.
+that your contribution is licensed under the MIT License.
 
 ## Before writing
 
