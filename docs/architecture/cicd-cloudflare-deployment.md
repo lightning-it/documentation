@@ -181,7 +181,12 @@ incident record, immediate revocation, and public-safe follow-up if appropriate.
 Forks receive no environment secrets and may run public validation only.
 Same-repository previews require publication-safe content checks and `preview`
 environment admission. Production requires protected `production` environment
-approval by a role different from the author.
+approval by an authorized role, independent from the author by default. Under
+the documented single-maintainer exception, the authorized maintainer may make
+their own protected-environment deployment decision only after the exact
+revision has passed independent Copilot review, every finding and required
+check is resolved, and the exact documentation and artifact digests are bound
+to the approval evidence.
 
 ## DNS and TLS contract
 
