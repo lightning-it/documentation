@@ -51,6 +51,10 @@ the allowlist fails closed.
 
 ## Source model
 
+In this model, an architecture decision record (ADR) captures an approved
+decision, an object ID (OID) identifies a GitHub or Git object, and a software
+bill of materials (SBOM) inventories software components.
+
 | GitHub object   | Immutable identity recorded                                         | Permitted public use                                      |
 | --------------- | ------------------------------------------------------------------- | --------------------------------------------------------- |
 | repository      | node ID plus owner/name at observation                              | source/ownership context                                  |
