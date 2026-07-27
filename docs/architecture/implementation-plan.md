@@ -1,5 +1,5 @@
 ---
-id: architecture-implementation-plan
+id: implementation-plan
 title: Architecture dependency graph and implementation plan
 description: Define milestones, critical path, implementation issues, acceptance, evidence, sequencing, ownership, and the architecture gate.
 slug: /architecture/implementation-plan/
@@ -108,7 +108,7 @@ flowchart TD
 | M2 Public models         | M1                                      | #135–#141 merged; Trust/Evidence/Compliance/locale/traceability and migration pass | Product/Trust/Evidence Owners | unsafe claims/data; security/content review     |
 | M3 Delivery              | M1 and #35 accepted                     | #40 immutable preview/production path implemented but not yet claimed accepted     | Delivery Engineer             | credentials/DNS/drift; production change review |
 | M4 Integrated acceptance | M2 and M3; exact candidate              | #142 and #40 external acceptance pass; rollback ready; evidence approved           | Production Acceptance Owner   | integration gaps; go/no-go                      |
-| M5 Product delivery      | M4 shared platform accepted             | #115 approved, deployed, production-verified, Confluence/roadmap updated safely    | Product Owner                 | taxonomy/claims; product acceptance             |
+| M5 Product delivery      | M4 shared platform accepted             | #115 approved, deployed, production-verified, canonical source/roadmap updated     | Product Owner                 | taxonomy/claims; product acceptance             |
 
 M2 product/content and M3 delivery can run in parallel after M1. Issue #137
 precedes #138 and #140. Issues #139 and #141 may run in parallel after the
@@ -305,9 +305,9 @@ sub-issues of #15 and remain blocked by #38.
   migration plan.
 - Scope/deliverables: approved page and navigation using shared models,
   production verification, public-safe evidence, roadmap and canonical
-  Confluence update only after live acceptance.
+  canonical external source update only after live acceptance.
 - Exclusions: unverified product capabilities, private source content, and
-  Confluence updates before production truth.
+  external source updates before production truth.
 - Acceptance/validation/evidence: #115 criteria, product standard, exact digest,
   build/search/a11y/security/links, production content identity and screenshots/
   records safe for public use.
