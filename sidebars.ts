@@ -170,6 +170,7 @@ const sidebars: SidebarsConfig = {
         "architecture/localization-search-strategy",
         "architecture/evidence-center-model",
         "architecture/compliance-mapping-model",
+        "architecture/github-lifecycle-traceability",
       ],
     },
     {
