@@ -14,13 +14,20 @@ const CONTRIBUTION_DECLARATIONS = {
   MIT: "licensed under the MIT License.",
 };
 
+const SITE_DECLARATIONS = {
+  MIT: "Documentation source licensed under MIT.",
+};
+
 export function validateRepositoryLicense({
   metadata,
   licenseText,
   packageManifest,
   lockManifest,
+  citationMetadata,
   readme,
   contributing,
+  siteConfig,
+  assetProvenance,
 }) {
   const errors = [];
   const expected = metadata?.license_spdx;
@@ -48,6 +55,11 @@ export function validateRepositoryLicense({
       `package-lock.json root license must be ${expected}, found ${lockManifest?.packages?.[""]?.license ?? "(missing)"}`,
     );
   }
+  if (citationMetadata?.license !== expected) {
+    errors.push(
+      `CITATION.cff license must be ${expected}, found ${citationMetadata?.license ?? "(missing)"}`,
+    );
+  }
   if (typeof readme !== "string" || !readme.includes(README_BADGES[expected])) {
     errors.push(`README.md must contain the ${expected} license badge`);
   }
@@ -64,6 +76,32 @@ export function validateRepositoryLicense({
     errors.push(
       `CONTRIBUTING.md must contain the ${expected} contribution declaration`,
     );
+  }
+  if (
+    typeof siteConfig !== "string" ||
+    !siteConfig.includes(SITE_DECLARATIONS[expected])
+  ) {
+    errors.push(
+      `docusaurus.config.ts must contain the ${expected} license declaration`,
+    );
+  }
+
+  const firstPartyAssets = Array.isArray(assetProvenance?.assets)
+    ? assetProvenance.assets.filter((record) =>
+        record?.origin?.includes("Repository-native"),
+      )
+    : [];
+  if (firstPartyAssets.length === 0) {
+    errors.push(
+      "evidence/asset-provenance.json must contain repository-native assets",
+    );
+  }
+  for (const record of firstPartyAssets) {
+    if (record.license !== expected) {
+      errors.push(
+        `evidence/asset-provenance.json ${record.path ?? "(missing path)"} license must be ${expected}, found ${record.license ?? "(missing)"}`,
+      );
+    }
   }
 
   return errors;

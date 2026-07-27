@@ -9,9 +9,25 @@ function validInputs() {
     licenseText: "MIT License\n\nPermission is hereby granted",
     packageManifest: { license: "MIT" },
     lockManifest: { packages: { "": { license: "MIT" } } },
+    citationMetadata: { license: "MIT" },
     readme:
       "[![License: MIT](badge)]\nlicensed under the [MIT License](./LICENSE).",
     contributing: "Your contribution is licensed under the MIT License.",
+    siteConfig: "Documentation source licensed under MIT.",
+    assetProvenance: {
+      assets: [
+        {
+          path: "static/img/example.svg",
+          origin: "Repository-native example",
+          license: "MIT",
+        },
+        {
+          path: "static/img/vendor.svg",
+          origin: "Third-party example",
+          license: "CC-BY-4.0",
+        },
+      ],
+    },
   };
 }
 
@@ -34,12 +50,25 @@ describe("validateRepositoryLicense", () => {
     inputs.licenseText = undefined;
     inputs.readme = undefined;
     inputs.contributing = undefined;
+    inputs.siteConfig = undefined;
+    inputs.assetProvenance = undefined;
 
     assert.deepEqual(validateRepositoryLicense(inputs), [
       "LICENSE does not start with MIT License",
       "README.md must contain the MIT license badge",
       "README.md must contain the MIT license declaration",
       "CONTRIBUTING.md must contain the MIT contribution declaration",
+      "docusaurus.config.ts must contain the MIT license declaration",
+      "evidence/asset-provenance.json must contain repository-native assets",
+    ]);
+  });
+
+  it("preserves third-party licenses while rejecting first-party drift", () => {
+    const inputs = validInputs();
+    inputs.assetProvenance.assets[0].license = "Apache-2.0";
+
+    assert.deepEqual(validateRepositoryLicense(inputs), [
+      "evidence/asset-provenance.json static/img/example.svg license must be MIT, found Apache-2.0",
     ]);
   });
 

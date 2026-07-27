@@ -656,11 +656,7 @@ async function main() {
         `${relativePath}: asset checksum differs from its provenance record`,
       );
     }
-    if (
-      record.license !== "Apache-2.0" ||
-      !record.origin ||
-      !record.metadata_review
-    ) {
+    if (record.license !== "MIT" || !record.origin || !record.metadata_review) {
       errors.push(`${relativePath}: asset provenance record is incomplete`);
     }
     if (filePath.endsWith(".png") && pngMetadataChunks(buffer).length > 0) {

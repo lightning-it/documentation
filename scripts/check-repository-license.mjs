@@ -20,8 +20,11 @@ async function main() {
     licenseText: await readText("LICENSE"),
     packageManifest: await readJson("package.json"),
     lockManifest: await readJson("package-lock.json"),
+    citationMetadata: parseYaml(await readText("CITATION.cff")),
     readme: await readText("README.md"),
     contributing: await readText("CONTRIBUTING.md"),
+    siteConfig: await readText("docusaurus.config.ts"),
+    assetProvenance: await readJson("evidence/asset-provenance.json"),
   });
 
   failIfErrors("First-party repository license consistency", errors);

@@ -49,8 +49,8 @@ created.
 | Release evidence            | disabled for packaged release artifacts                                                                     | retain `release_evidence: false`; require separate documentation deployment and production-acceptance evidence                                        | Evidence Owner; #30/#35/#40                                   |
 | Document approval           | exact-digest mechanism and single-maintainer exception exist                                                | reuse #2; existing evidence never approves changed document sets                                                                                      | Authorized reviewer; #2                                       |
 | License file                | `LICENSE` and GitHub metadata identify MIT                                                                  | MIT is the target repository license unless an authorized legal owner decides otherwise                                                               | Repository Maintainer; implementation reconciliation required |
-| Package metadata            | `package.json` declares Apache-2.0                                                                          | inconsistent; change to MIT only through a reviewed implementation PR after this planning decision                                                    | Repository Maintainer                                         |
-| Contributor and README text | mixed Apache-2.0 statements with MIT badge and file                                                         | inconsistent; normalize to the accepted MIT target in the same implementation change                                                                  | Repository Maintainer                                         |
+| Package metadata            | At planning approval, `package.json` declared a license inconsistent with MIT                               | normalize to MIT through reviewed implementation issue #132                                                                                           | Repository Maintainer                                         |
+| Contributor and README text | At planning approval, contributor and README text conflicted with the MIT badge and file                    | normalize to the accepted MIT target through reviewed implementation issue #132                                                                       | Repository Maintainer                                         |
 | Third-party material        | license checker and generated notices exist                                                                 | preserve each dependency or asset license and attribution independently of repository license                                                         | Documentation Maintainer                                      |
 | Product terminology         | current files describe ModuLix, IO, Wunderbox, and Atlas; #28 proposes a target of five sellable products   | current terminology stays effective until #38 explicitly approves an integrated target; implementation then reconciles all public surfaces atomically | Product Owner; #38 and implementation issues                  |
 
@@ -72,7 +72,7 @@ or restricted logs.
 
 The authoritative target is MIT because the repository's `LICENSE`, GitHub
 license detection, README badge, and managed repository inventory agree. The
-contradictory Apache-2.0 values in package and contributor-facing text are a
+contradictory package and contributor-facing values recorded during planning are a
 confirmed implementation gap.
 
 One later implementation issue must:
