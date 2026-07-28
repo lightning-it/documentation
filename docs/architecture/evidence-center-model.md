@@ -5,8 +5,8 @@ description: Define public-safe evidence records, provenance, generation, indexi
 slug: /architecture/evidence-center-model/
 sidebar_position: 12
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

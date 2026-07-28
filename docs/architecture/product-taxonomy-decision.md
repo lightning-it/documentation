@@ -5,8 +5,8 @@ description: Define the five sellable products and the separate ModuLix foundati
 slug: /architecture/product-taxonomy-decision/
 sidebar_position: 4
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

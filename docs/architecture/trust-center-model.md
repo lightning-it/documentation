@@ -5,8 +5,8 @@ description: Define the Trust Center structure, claim types, ownership, evidence
 slug: /architecture/trust-center-model/
 sidebar_position: 10
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

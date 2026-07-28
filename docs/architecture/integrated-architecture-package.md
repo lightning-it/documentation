@@ -5,8 +5,8 @@ description: Bind the authoritative architecture artifacts, decisions, risks, de
 slug: /architecture/integrated-architecture-package/
 sidebar_position: 17
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

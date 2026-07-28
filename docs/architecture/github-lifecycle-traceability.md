@@ -5,8 +5,8 @@ description: Define public GitHub sources, immutable lifecycle links, determinis
 slug: /architecture/github-lifecycle-traceability/
 sidebar_position: 14
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
