@@ -225,7 +225,7 @@ test("13 — emit no browser console errors", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test("13 — make no failed first-party requests", async ({ page, baseURL }) => {
+test("14 — make no failed first-party requests", async ({ page, baseURL }) => {
   const failures: string[] = [];
   const origin = new URL(baseURL ?? "http://127.0.0.1:3000").origin;
   page.on("requestfailed", (request) => {
@@ -248,7 +248,7 @@ test("13 — make no failed first-party requests", async ({ page, baseURL }) => 
   expect(failures).toEqual([]);
 });
 
-test("14 — TYPO3 links return to l-it.io", async ({ page }) => {
+test("15 — TYPO3 links return to l-it.io", async ({ page }) => {
   await page.goto("/");
   const links = page.locator('a[href^="https://l-it.io"]');
   expect(await links.count()).toBeGreaterThan(0);
@@ -259,7 +259,7 @@ test("14 — TYPO3 links return to l-it.io", async ({ page }) => {
   }
 });
 
-test("15 — GitHub links target public repository URLs", async ({ page }) => {
+test("16 — GitHub links target public repository URLs", async ({ page }) => {
   await page.goto("/reference/public-sources/");
   const links = page.locator('a[href^="https://github.com/lightning-it/"]');
   expect(await links.count()).toBeGreaterThan(5);
@@ -271,7 +271,7 @@ test("15 — GitHub links target public repository URLs", async ({ page }) => {
   }
 });
 
-test("16 — unknown paths return the custom 404 page and are absent from search", async ({
+test("17 — unknown paths return the custom 404 page and are absent from search", async ({
   page,
 }) => {
   const response = await page.goto("/not-a-real-public-documentation-path/");
