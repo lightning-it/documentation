@@ -1,7 +1,11 @@
 {
   "schema_version": 3,
-  "content_tree_sha256": "372782ca58ff31fe6c32bf19e8c0f20a54f2f2a3f7e3302b3724b79682411626",
+  "content_tree_sha256": "4203f2492108ecc04538d5ee9a5ad44bfd336d964f0a6f44bb79ffeb486c6f17",
   "document_ids": [
+    "aio-acceptance-publication",
+    "aio-generation-model",
+    "aio-overview",
+    "aio-product-boundary",
     "atlas-architecture",
     "atlas-concepts",
     "atlas-operations",
@@ -102,6 +106,10 @@
     {
       "approver_role": "Lightning IT Product Owners",
       "document_ids": [
+        "aio-acceptance-publication",
+        "aio-generation-model",
+        "aio-overview",
+        "aio-product-boundary",
         "atlas-architecture",
         "atlas-concepts",
         "atlas-operations",
