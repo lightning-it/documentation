@@ -51,8 +51,12 @@ async function main() {
       engines: { yaml: yamlEngine },
     });
     const { id, slug, document } = parsed.data;
+    const canonicalRoute = typeof slug === "string" ? slug : "";
+    if (!canonicalRoute) {
+      errors.push(`${relativePath}: canonical slug must be a non-empty string`);
+    }
     const matches = areas.filter(({ path_prefix: prefix }) =>
-      prefix === "/" ? true : slug?.startsWith(prefix),
+      prefix === "/" ? true : canonicalRoute.startsWith(prefix),
     );
     const mostSpecificLength = Math.max(
       ...matches.map(({ path_prefix: prefix }) => prefix.length),
@@ -69,7 +73,7 @@ async function main() {
     if (owners.length !== 1) {
       errors.push(`${relativePath}: expected exactly one canonical area owner`);
     }
-    if (owners[0]?.owner !== document?.owner) {
+    if (owners.length === 1 && owners[0].owner !== document?.owner) {
       errors.push(
         `${relativePath}: metadata owner does not match canonical area owner`,
       );
@@ -82,7 +86,7 @@ async function main() {
 
     documents.push({
       id,
-      route: slug,
+      route: canonicalRoute,
       source: relativePath,
       owner: document?.owner,
       area: owners[0]?.kind ?? "unresolved",
