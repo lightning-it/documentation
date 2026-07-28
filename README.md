@@ -161,8 +161,13 @@ the protected `production` environment without rebuilding it. The protected
 `preview` environment uses a distinct credential to publish the exact reviewed
 `develop` candidate. A missing or stale preview blocks the protected
 `develop`-to-`main` promotion. To roll back, redeploy the last accepted
-immutable artifact and rerun production acceptance; if that artifact is no
-longer retained, use a reviewed recovery promotion. See
+immutable artifact with the protected `Production Rollback` workflow. Supply
+the source `Release Evidence` run ID and the full commit recorded in its
+manifest, select `rollback`, and approve the protected environment. The
+workflow verifies the manifest and digest, deploys without rebuilding, and
+runs production acceptance. After the exercise or incident, run the same
+workflow with the current accepted release and select `restore`. If an artifact
+is no longer retained, use a reviewed recovery promotion. See
 [ARCHITECTURE.md](./ARCHITECTURE.md) and [RELEASE.md](./RELEASE.md).
 
 ## Security and support
