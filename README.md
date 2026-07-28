@@ -155,14 +155,20 @@ paths, or findings.
 
 ## Deployment and rollback
 
-Cloudflare Pages builds `main` with `npm run build` and publishes `build/`.
-Pull-request branches receive previews without production credentials. The
-protected `develop`-to-`main` promotion must validate the exact develop preview
-commit before merge; a missing or stale preview blocks production promotion.
-To roll back, select the last accepted immutable Cloudflare deployment or
-revert the offending `main` commit through a reviewed pull request, then rerun
-production acceptance. See [ARCHITECTURE.md](./ARCHITECTURE.md) and
-[RELEASE.md](./RELEASE.md).
+GitHub Actions validates and archives `build/` once, verifies its recorded
+SHA-256 digest, and publishes that retained artifact to Cloudflare Pages through
+the protected `production` environment without rebuilding it. The protected
+`preview` environment uses a distinct credential to publish the exact reviewed
+`develop` candidate. A missing or stale preview blocks the protected
+`develop`-to-`main` promotion. To roll back, redeploy the last accepted
+immutable artifact with the protected `Production Rollback` workflow. Supply
+the source `Release Evidence` run ID and the full lowercase commit recorded in
+its manifest, select `rollback`, and approve the protected environment. The
+workflow verifies the manifest and digest, deploys without rebuilding, and
+runs production acceptance. After the exercise or incident, run the same
+workflow with the current accepted release and select `restore`. If an artifact
+is no longer retained, use a reviewed recovery promotion. See
+[ARCHITECTURE.md](./ARCHITECTURE.md) and [RELEASE.md](./RELEASE.md).
 
 ## Security and support
 

@@ -47,7 +47,7 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
-      - name: Wait for native Cloudflare Pages deployment
+      - name: Wait for immutable Cloudflare Pages deployment
         run: npm run wait:production
 
       - name: Install Chromium

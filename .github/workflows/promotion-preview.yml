@@ -19,6 +19,7 @@ jobs:
     name: preview / required
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    environment: preview
     env:
       BASE_URL: https://develop.lightning-it-documentation.pages.dev/
       PREVIEW_URL: https://develop.lightning-it-documentation.pages.dev/
@@ -37,6 +38,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -49,6 +51,23 @@ jobs:
 
       - name: Install locked dependencies
         run: npm ci
+
+      - name: Build exact reviewed preview candidate
+        run: npm run build
+
+      - name: Deploy exact candidate through the preview environment
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: npm
+          wranglerVersion: 4.114.0
+          command: >-
+            pages deploy build
+            --project-name lightning-it-documentation
+            --branch develop
+            --commit-hash "${{ github.event.pull_request.head.sha }}"
+            --commit-dirty=false
 
       - name: Install Chromium
         run: npx --no-install playwright install --with-deps chromium
