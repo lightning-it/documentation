@@ -22,9 +22,12 @@ document:
 
 # Metadata, versioning, and document lifecycle model
 
-This planning record defines the target metadata and lifecycle contract. The
-current schema remains effective until #38 approves this package and a separate
-implementation change migrates content and validators.
+This record defines the implemented metadata and lifecycle contract. Issue #133
+introduced the version-2 schema branch, controlled registry, compatibility
+reader, deterministic migration report, semantic validation, and exact-evidence
+approval calculation. Existing version-1 documents remain valid during the
+recorded compatibility window without receiving new defaults or broader
+meaning.
 
 ## Current and target model
 
@@ -240,14 +243,18 @@ role, risk, compensating validation, creation and expiry dates, and remediation
 issue. It cannot waive classification, authorization, or public/private
 boundaries. Expired exceptions fail validation.
 
-## Open implementation decisions
+## Implemented controls and bounded follow-up
 
-- registry file shapes and schema identifiers;
-- deterministic document-set digest canonicalization;
-- publication-state derivation from deployment evidence;
-- versioned and localized route resolution with #33;
-- archival output location and search exclusion; and
-- compatibility window for schema v1.
+The version-controlled registry is
+`config/document-metadata-registry.json`. The validator treats a missing
+`document.schema_version` as version `1.0` and never adds product, audience,
+approval, applicability, or publication meaning. Version `2.0` activates the
+additional required fields and registry checks. The migration report is bound
+to the exact approved document-ID inventory and is reproduced by
+`npm run test:metadata-migration`.
 
-These require #38 approval and bounded implementation work; this record changes
-neither the current schema nor existing front matter.
+Publication state remains independently derived from deployment evidence.
+Versioned and localized route resolution remains governed by #33, while
+archival output and search exclusion apply only when a document enters those
+states. Those bounded follow-ups do not weaken the implemented version-2
+metadata invariants.

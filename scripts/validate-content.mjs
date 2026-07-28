@@ -23,12 +23,21 @@ import {
   writeEvidence,
 } from "./lib/validation.mjs";
 import { validateAssetProvenanceRecord } from "./lib/asset-provenance.mjs";
+import {
+  validateDocumentMetadata,
+  validateMetadataRegistry,
+} from "./lib/document-metadata.mjs";
 
 const docsDirectory = path.join(repositoryRoot, "docs");
 const schemaPath = path.join(
   repositoryRoot,
   "config",
   "document-metadata.schema.json",
+);
+const metadataRegistryPath = path.join(
+  repositoryRoot,
+  "config",
+  "document-metadata-registry.json",
 );
 const textExtensions = new Set([
   ".cjs",
@@ -368,6 +377,8 @@ async function exists(filePath) {
 async function main() {
   const errors = [];
   const schema = JSON.parse(await readText(schemaPath));
+  const metadataRegistry = JSON.parse(await readText(metadataRegistryPath));
+  errors.push(...validateMetadataRegistry(metadataRegistry));
   let repositoryMetadataSource;
   let repositoryMetadata;
   try {
@@ -433,23 +444,6 @@ async function main() {
       }
     }
 
-    if (
-      parsed.data.document?.approval_status === "pending" &&
-      parsed.data.document?.status !== "review-candidate"
-    ) {
-      errors.push(
-        `${relativePath}: pending human approval requires review-candidate status`,
-      );
-    }
-    if (
-      parsed.data.document?.approval_status === "approved" &&
-      parsed.data.document?.status === "review-candidate"
-    ) {
-      errors.push(
-        `${relativePath}: approved content must advance beyond review-candidate status`,
-      );
-    }
-
     const { id, slug } = parsed.data;
     if (typeof id === "string") {
       if (ids.has(id)) {
@@ -505,9 +499,21 @@ async function main() {
     documentByPath.set(path.normalize(filePath), {
       relativePath,
       source,
+      metadata: parsed.data,
       headings: headingIds,
       links: markdownLinks(source),
     });
+  }
+
+  const documentIds = new Set(ids.keys());
+  for (const document of documentByPath.values()) {
+    for (const error of validateDocumentMetadata(
+      document.metadata,
+      metadataRegistry,
+      { documentIds },
+    )) {
+      errors.push(`${document.relativePath}: ${error}`);
+    }
   }
 
   for (const [filePath, document] of documentByPath) {
@@ -840,6 +846,7 @@ async function main() {
 
   const evidence = {
     schema: repositoryPath(schemaPath),
+    metadataRegistry: repositoryPath(metadataRegistryPath),
     documents: documentationFiles.length,
     uniqueDocumentIds: ids.size,
     uniqueDocumentRoutes: routes.size,
