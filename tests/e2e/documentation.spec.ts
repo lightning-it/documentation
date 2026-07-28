@@ -45,6 +45,10 @@ test("search covers every required product, task, and migrated public role term"
   const requiredQueries = [
     { query: "Wunderbox", expectedPath: "/wunderbox/" },
     { query: "Atlas", expectedPath: "/atlas/" },
+    {
+      query: "Platform Governance & Evidence",
+      expectedPath: "/platform-governance-evidence/",
+    },
     { query: "installation", expectedPath: "/modulix/installation/" },
     { query: "architecture", expectedPath: "/architecture/" },
     { query: "BSI", expectedPath: "/compliance/bsi-mapping/" },
@@ -109,6 +113,27 @@ test("06 — navigate to Atlas", async ({ page }) => {
     .first()
     .click();
   await expect(page).toHaveURL(/\/atlas\/overview\/$/);
+});
+
+test("navigate to Platform Governance & Evidence", async ({ page }) => {
+  await expectPage(
+    page,
+    "/platform-governance-evidence/",
+    /Platform Governance & Evidence documentation/i,
+  );
+  await page
+    .getByRole("link", {
+      name: /Platform Governance & Evidence overview/i,
+    })
+    .first()
+    .click();
+  await expect(page).toHaveURL(/\/platform-governance-evidence\/overview\/$/);
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: /Platform Governance & Evidence overview/i,
+    }),
+  ).toBeVisible();
 });
 
 test("07 — open architecture documentation", async ({ page }) => {

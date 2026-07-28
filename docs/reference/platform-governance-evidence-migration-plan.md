@@ -15,9 +15,11 @@ document:
     - documentation maintainers
     - product owners
     - information-protection reviewers
-  last_reviewed: "2026-07-25"
+  last_reviewed: "2026-07-28"
   review_cadence: annual
 ---
+
+<!-- cspell:words ESOF -->
 
 # Platform Governance & Evidence migration plan
 
@@ -33,7 +35,7 @@ original evidence.
 | Source class          | `PUBLIC_AFTER_SANITIZATION`                                     |
 | Target owner          | Lightning IT Documentation Maintainers                          |
 | Canonical target      | `/platform-governance-evidence/`                                |
-| Target status         | planned; implementation blocked by issue #38                    |
+| Target status         | in review through issue #115                                    |
 | Method                | independent re-authoring and sanitization                       |
 | Duplicate disposition | consolidate public product definition into the canonical target |
 | Obsolete disposition  | do not migrate obsolete taxonomy or unsupported claims          |
@@ -62,12 +64,11 @@ product authority and reviewed for information protection.
 
 1. Extract only statements within the approved public scope.
 2. Re-author in concise English using the product documentation standard.
-3. After #38 explicitly accepts the integrated architecture, normalize product
-   names and roles to that approved taxonomy; do not treat this migration plan
-   as taxonomy approval.
-4. Apply the ModuLix product-or-foundation role exactly as approved in #38.
-5. Treat opaque historical source labels only as internal migration metadata;
-   do not publish or expand them as product names or public acronyms.
+3. Apply the five-product taxonomy approved through #147.
+4. Present ModuLix only as the technical engineering and automation
+   foundation.
+5. Identify LCP, ESOF, and PGF only as historical or source terms, never as
+   additional products or separate public promises.
 6. Remove private links, paths, identifiers, infrastructure detail, customer
    context, evidence, findings, risk decisions, and unverified claims.
 7. Use no example unless it uses the synthetic values permitted by `AGENTS.md`.
@@ -87,7 +88,7 @@ the protected source.
 
 | Gate                        | Required evidence                                                            | Accountable role                   |
 | --------------------------- | ---------------------------------------------------------------------------- | ---------------------------------- |
-| Architecture                | issues #28, #32, #36, #37, and integrated #38 approval                       | Documentation Maintainer           |
+| Architecture                | issues #28, #32, #36–#38 and superseding taxonomy decision #147              | Documentation Maintainer           |
 | Semantic                    | every public statement matches approved scope and limits                     | Product Owner                      |
 | Information protection      | no protected source, data, link, asset, claim, or generated output           | Security and Compliance Maintainer |
 | Technical and accessibility | format, lint, type, content, links, build, Pagefind, WCAG, responsive checks | Documentation Maintainer           |

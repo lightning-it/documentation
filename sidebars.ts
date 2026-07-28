@@ -151,6 +151,24 @@ const sidebars: SidebarsConfig = {
             "atlas/atlas-troubleshooting",
           ],
         },
+        {
+          type: "category",
+          label: "Platform Governance & Evidence — Verify",
+          link: {
+            type: "generated-index",
+            slug: "/platform-governance-evidence/",
+            title: "Platform Governance & Evidence documentation",
+            description:
+              "Governance, compliance, and evidence concepts for bounded, traceable assessments.",
+          },
+          items: [
+            "platform-governance-evidence/platform-governance-evidence-overview",
+            "platform-governance-evidence/platform-governance-evidence-assessment-model",
+            "platform-governance-evidence/platform-governance-evidence-lifecycle",
+            "platform-governance-evidence/platform-governance-evidence-deliverables-acceptance",
+            "platform-governance-evidence/platform-governance-evidence-security-publication",
+          ],
+        },
       ],
     },
     {
