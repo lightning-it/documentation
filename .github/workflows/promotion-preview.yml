@@ -19,7 +19,9 @@ jobs:
     name: preview / required
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment: preview
+    environment:
+      name: preview
+      deployment: false
     env:
       BASE_URL: https://develop.lightning-it-documentation.pages.dev/
       PREVIEW_URL: https://develop.lightning-it-documentation.pages.dev/
