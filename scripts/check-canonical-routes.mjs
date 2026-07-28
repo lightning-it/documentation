@@ -49,14 +49,23 @@ async function main() {
   const areas = registry.areas ?? [];
   const documents = [];
   const routeSources = new Map();
+  let orphanDocuments = 0;
 
   for (const filePath of await walkFiles(docsDirectory, (candidate) =>
     /\.mdx?$/.test(candidate),
   )) {
     const relativePath = repositoryPath(filePath);
-    const parsed = matter(await readText(filePath), {
-      engines: { yaml: yamlEngine },
-    });
+    let parsed;
+    try {
+      parsed = matter(await readText(filePath), {
+        engines: { yaml: yamlEngine },
+      });
+    } catch (error) {
+      errors.push(
+        `${relativePath}: invalid YAML front matter (${error instanceof Error ? error.message : String(error)})`,
+      );
+      continue;
+    }
     const { id, slug, document } = parsed.data;
     const canonicalRoute = typeof slug === "string" ? slug : "";
     if (!canonicalRoute) {
@@ -95,6 +104,9 @@ async function main() {
       errors.push(
         `${relativePath}: sidebar ID ${qualifiedSidebarId} occurs ${sidebarOccurrences} times`,
       );
+      if (sidebarOccurrences === 0) {
+        orphanDocuments += 1;
+      }
     }
 
     documents.push({
@@ -115,8 +127,7 @@ async function main() {
     documents,
     totals: {
       canonical_documents: documents.length,
-      orphan_documents: errors.filter((error) => error.includes("sidebar ID"))
-        .length,
+      orphan_documents: orphanDocuments,
       unresolved_owners: errors.filter((error) =>
         error.includes("canonical area owner"),
       ).length,
