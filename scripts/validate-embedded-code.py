@@ -103,7 +103,7 @@ def main() -> int:
                     )
                     try:
                         result = subprocess.run(
-                            ["shellcheck", "-x", str(candidate)],
+                            ["shellcheck", str(candidate)],
                             text=True,
                             capture_output=True,
                             timeout=VALIDATOR_TIMEOUT_SECONDS,

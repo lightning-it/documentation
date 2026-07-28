@@ -115,7 +115,7 @@ test("06 — navigate to Atlas", async ({ page }) => {
   await expect(page).toHaveURL(/\/atlas\/overview\/$/);
 });
 
-test("navigate to Platform Governance & Evidence", async ({ page }) => {
+test("07 — navigate to Platform Governance & Evidence", async ({ page }) => {
   await expectPage(
     page,
     "/platform-governance-evidence/",
@@ -136,11 +136,11 @@ test("navigate to Platform Governance & Evidence", async ({ page }) => {
   ).toBeVisible();
 });
 
-test("07 — open architecture documentation", async ({ page }) => {
+test("08 — open architecture documentation", async ({ page }) => {
   await expectPage(page, "/architecture/", /Portfolio architecture/i);
 });
 
-test("08 — open security documentation", async ({ page }) => {
+test("09 — open security documentation", async ({ page }) => {
   await expectPage(page, "/security/", /Security overview/i);
   const metadata = page.getByRole("region", { name: "Document metadata" });
   await expect(metadata).toBeVisible();
@@ -152,7 +152,7 @@ test("08 — open security documentation", async ({ page }) => {
   await expect(metadata.locator("time")).toHaveCount(2);
 });
 
-test("09 — open compliance documentation", async ({ page }) => {
+test("10 — open compliance documentation", async ({ page }) => {
   await expectPage(page, "/compliance/", /Compliance documentation/i);
 });
 
@@ -180,7 +180,7 @@ test("render accessible audience tabs and approved product taxonomy", async ({
   await expect(main).toContainText("not a sixth sellable product");
 });
 
-test("10 — switch between light and dark modes", async ({ page }) => {
+test("11 — switch between light and dark modes", async ({ page }) => {
   await page.addInitScript(() => window.localStorage.setItem("theme", "light"));
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto("/");
@@ -197,7 +197,7 @@ test("10 — switch between light and dark modes", async ({ page }) => {
   await expect(root).toHaveAttribute("data-theme", "light");
 });
 
-test("11 — @mobile use navigation at a mobile viewport", async ({ page }) => {
+test("12 — @mobile use navigation at a mobile viewport", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: /Toggle navigation bar/i }).click();
   const navigation = page.locator(".navbar-sidebar");
@@ -206,7 +206,7 @@ test("11 — @mobile use navigation at a mobile viewport", async ({ page }) => {
   await expect(page).toHaveURL(/\/architecture\/$/);
 });
 
-test("12 — emit no browser console errors", async ({ page }) => {
+test("13 — emit no browser console errors", async ({ page }) => {
   const errors: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error") {
