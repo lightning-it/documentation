@@ -5,9 +5,9 @@ description: Keep AIO 2.0 strategy separate from AIO Satellite Edition commitmen
 slug: /aio/generation-model/
 sidebar_position: 3
 document:
-  status: review-candidate
-  approval_status: pending
-  version: "0.1"
+  status: maintained
+  approval_status: approved
+  version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
   approver: Lightning IT Product Owners

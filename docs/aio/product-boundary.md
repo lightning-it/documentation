@@ -5,9 +5,9 @@ description: Separate AIO runtime operation from reusable content, hosting, obse
 slug: /aio/product-boundary/
 sidebar_position: 2
 document:
-  status: review-candidate
-  approval_status: pending
-  version: "0.1"
+  status: maintained
+  approval_status: approved
+  version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
   approver: Lightning IT Product Owners

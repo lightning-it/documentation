@@ -5,9 +5,9 @@ description: Define the evidence needed to accept an AIO scope and publish bound
 slug: /aio/acceptance-and-publication/
 sidebar_position: 4
 document:
-  status: review-candidate
-  approval_status: pending
-  version: "0.1"
+  status: maintained
+  approval_status: approved
+  version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
   approver: Lightning IT Product Owners
@@ -60,6 +60,5 @@ Publication is a separate decision from delivery acceptance. An AIO page under
 [LIT-PRD-60-AIO version 14](https://lit.atlassian.net/wiki/spaces/LIT/pages/2875588609/LIT-PRD-60-AIO)
 authorizes the `https://docs.l-it.io/aio/` route family and the initial
 `https://docs.l-it.io/aio/overview/` route. This source authorization does not
-replace exact-document approval: these pages remain review candidates until
-their exact documentation-tree digest receives the repository-required
-role-authorized approval and all production controls pass.
+replace exact-tree approval evidence or any production control required before
+publication.

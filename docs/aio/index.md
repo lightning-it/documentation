@@ -5,9 +5,9 @@ description: Understand the approved public purpose, product boundary, and gener
 slug: /aio/overview/
 sidebar_position: 1
 document:
-  status: review-candidate
-  approval_status: pending
-  version: "0.1"
+  status: maintained
+  approval_status: approved
+  version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
   approver: Lightning IT Product Owners
@@ -64,10 +64,10 @@ Continue with the [product boundary](./product-boundary.md), the
 
 ## Provenance and lifecycle
 
-This review candidate was independently re-authored in English from
+This maintained document was independently re-authored in English from
 [LIT-PRD-60-AIO version 14](https://lit.atlassian.net/wiki/spaces/LIT/pages/2875588609/LIT-PRD-60-AIO).
 That canonical authority approves the generation-neutral claims and the
 `https://docs.l-it.io/aio/` route family, initially
-`https://docs.l-it.io/aio/overview/`. The document remains pending until its
-exact documentation-tree digest receives the repository-required
-role-authorized approval and all production controls pass.
+`https://docs.l-it.io/aio/overview/`. Production publication remains subject to
+the repository-required exact-tree approval evidence and all production
+controls.
