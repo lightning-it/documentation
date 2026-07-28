@@ -64,10 +64,10 @@ Continue with the [product boundary](./product-boundary.md), the
 
 ## Provenance and lifecycle
 
-This maintained document was independently re-authored in English from
-[LIT-PRD-60-AIO version 14](https://lit.atlassian.net/wiki/spaces/LIT/pages/2875588609/LIT-PRD-60-AIO).
-That canonical authority approves the generation-neutral claims and the
-`https://docs.l-it.io/aio/` route family, initially
+This maintained document was independently re-authored in English from the
+canonical product authority, **LIT-PRD-60-AIO version 14**. That authority
+approves the generation-neutral claims and the `https://docs.l-it.io/aio/`
+route family, initially
 `https://docs.l-it.io/aio/overview/`. Production publication remains subject to
 the repository-required exact-tree approval evidence and all production
 controls.

@@ -57,8 +57,8 @@ Publication is a separate decision from delivery acceptance. An AIO page under
 - the protected merge and deployment complete; and
 - the public route is verified against the accepted commit.
 
-[LIT-PRD-60-AIO version 14](https://lit.atlassian.net/wiki/spaces/LIT/pages/2875588609/LIT-PRD-60-AIO)
-authorizes the `https://docs.l-it.io/aio/` route family and the initial
+The canonical product authority, **LIT-PRD-60-AIO version 14**, authorizes the
+`https://docs.l-it.io/aio/` route family and the initial
 `https://docs.l-it.io/aio/overview/` route. This source authorization does not
 replace exact-tree approval evidence or any production control required before
 publication.
