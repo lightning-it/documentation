@@ -62,6 +62,22 @@ Continue with the [product boundary](./product-boundary.md), the
 [generation model](./generation-model.md), and
 [acceptance and publication](./acceptance-and-publication.md).
 
+## Controlled runtime model
+
+The former IO documentation described a deployment-neutral automation runtime.
+That responsibility belongs to AIO. Its reusable public guidance is now
+maintained as part of the AIO product:
+
+- [Concepts](./concepts.md) defines controlled-execution vocabulary.
+- [Architecture](./architecture.md) explains runtime responsibility boundaries.
+- [Operations](./operations.md) provides readiness and run-review guidance.
+- [Security](./security.md) covers identities, secrets, scope, and evidence.
+- [Troubleshooting](./troubleshooting.md) provides a safe diagnostic flow.
+
+These conceptual pages do not add implementation or commercial claims. The
+selected AIO generation and delivery contract remain authoritative for concrete
+interfaces, capabilities, support, and acceptance.
+
 ## Provenance and lifecycle
 
 This maintained document was independently re-authored in English from the

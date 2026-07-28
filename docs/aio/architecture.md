@@ -1,8 +1,8 @@
 ---
-id: io-architecture
-title: IO conceptual architecture
+id: aio-architecture
+title: AIO conceptual architecture
 description: Review the conceptual boundaries and information flow of an automation runtime.
-slug: /io/architecture/
+slug: /aio/architecture/
 sidebar_position: 3
 document:
   status: maintained
@@ -18,9 +18,9 @@ document:
   review_cadence: annual
 ---
 
-# IO conceptual architecture
+# AIO conceptual architecture
 
-This is a responsibility model, not an implementation diagram. A verified IO
+This is a responsibility model, not an implementation diagram. A verified AIO
 release may realize these boundaries in different components or combine them.
 
 ## Conceptual flow
@@ -50,7 +50,7 @@ release may realize these boundaries in different components or combine them.
 
 ## Portfolio interactions
 
-IO may consume automation content associated with
+AIO may consume automation content associated with
 [ModuLix](../modulix/index.md), may target infrastructure associated with
 [Wunderbox](../wunderbox/index.md), and may emit signals that can be observed
 through [Atlas](../atlas/index.md). These are functional relationships only.

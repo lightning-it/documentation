@@ -1,8 +1,8 @@
 ---
-id: io-troubleshooting
-title: Troubleshoot IO safely
+id: aio-troubleshooting
+title: Troubleshoot AIO safely
 description: Diagnose automation runtime problems with bounded, redacted evidence.
-slug: /io/troubleshooting/
+slug: /aio/troubleshooting/
 sidebar_position: 6
 document:
   status: maintained
@@ -18,7 +18,7 @@ document:
   review_cadence: annual
 ---
 
-# Troubleshoot IO safely
+# Troubleshoot AIO safely
 
 Start with the boundary that failed. Do not repeat a run until you know whether
 the previous attempt changed a target.

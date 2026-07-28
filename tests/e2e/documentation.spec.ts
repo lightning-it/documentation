@@ -88,13 +88,14 @@ test("03 — open ModuLix documentation", async ({ page }) => {
   ).toBeVisible();
 });
 
-test("04 — navigate to IO", async ({ page }) => {
-  await expectPage(page, "/io/", /IO documentation/i);
-  await page
-    .getByRole("link", { name: /IO overview/i })
-    .first()
-    .click();
-  await expect(page).toHaveURL(/\/io\/overview\/$/);
+test("04 — redirect retired IO routes directly to AIO", async ({ page }) => {
+  await page.goto("/io/");
+  await expect(page).toHaveURL(/\/aio\/$/);
+  await page.goto("/io/security/");
+  await expect(page).toHaveURL(/\/aio\/security\/$/);
+  await expect(
+    page.getByRole("heading", { level: 1, name: /AIO security/i }),
+  ).toBeVisible();
 });
 
 test("05 — navigate to Wunderbox", async ({ page }) => {

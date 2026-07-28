@@ -34,11 +34,6 @@
       "owner": "Lightning IT Documentation Maintainers"
     },
     {
-      "path_prefix": "/io/",
-      "kind": "transitional",
-      "owner": "Lightning IT Documentation Maintainers"
-    },
-    {
       "path_prefix": "/",
       "kind": "shared",
       "owner": "Lightning IT Documentation Maintainers"

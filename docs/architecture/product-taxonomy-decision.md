@@ -57,9 +57,10 @@ atomic portfolio migration:
   and
 - validate navigation, search, links, accessibility, claims, and metadata.
 
-Until #135 is merged, existing ModuLix and IO pages, product data, home-page and
-getting-started copy, navigation, and related public surfaces are transitional
-implementation state and must not be treated as the approved portfolio model.
+Issue #135 migrates the reusable runtime content into AIO, retains ModuLix as a
+foundation, and preserves the previously published IO route family with
+reviewed one-hop redirects. The resulting product matrix is the implemented
+portfolio model.
 
 Issue [#115](https://github.com/lightning-it/documentation/issues/115) owns the
 Platform Governance & Evidence product documentation. It may proceed against

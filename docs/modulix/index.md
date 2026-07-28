@@ -24,7 +24,7 @@ ModuLix is the **Automation Content** product in the Lightning IT portfolio. Its
 conceptual verb is **Build**: it organizes reusable automation content so teams
 can review, version, test, and compose infrastructure changes.
 
-ModuLix is a peer of [IO](../io/index.md),
+ModuLix is a peer of [AIO](../aio/index.md),
 [Wunderbox](../wunderbox/index.md), and [Atlas](../atlas/index.md). The products
 can interact, but none is a child of another.
 

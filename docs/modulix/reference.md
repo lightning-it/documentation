@@ -22,13 +22,13 @@ document:
 
 ## Product identity
 
-| Field                               | Value                |
-| ----------------------------------- | -------------------- |
-| Portfolio position                  | Automation Content   |
-| Conceptual verb                     | Build                |
-| Peer products                       | IO, Wunderbox, Atlas |
-| Public-safe role example            | `lit.rhel.baseline`  |
-| Public documentation classification | `PUBLIC`             |
+| Field                               | Value                 |
+| ----------------------------------- | --------------------- |
+| Portfolio position                  | Automation Content    |
+| Conceptual verb                     | Build                 |
+| Peer products                       | AIO, Wunderbox, Atlas |
+| Public-safe role example            | `lit.rhel.baseline`   |
+| Public documentation classification | `PUBLIC`              |
 
 ## Canonical public sources
 
