@@ -14,7 +14,7 @@ document:
   audience:
     - platform engineers
     - infrastructure architects
-  last_reviewed: "2026-07-14"
+  last_reviewed: "2026-07-28"
   review_cadence: annual
 ---
 
@@ -24,11 +24,14 @@ Wunderbox is the **Infrastructure Platform** product in the Lightning IT
 portfolio. Its conceptual verb is **Host**: Wunderbox is the product boundary
 for infrastructure capabilities on which approved workloads can be placed.
 
-Wunderbox is a peer of [ModuLix](../modulix/index.md),
-[IO](../io/index.md), and [Atlas](../atlas/index.md). A deployment may use
-ModuLix content or IO execution to manage a Wunderbox environment and may
-observe it through Atlas, but those interactions do not change the peer-product
-hierarchy.
+Wunderbox is one of the
+[five sellable products](../architecture/product-taxonomy-decision.md).
+[ModuLix](../modulix/index.md) is the reusable engineering and automation
+content foundation, not a sixth product. AIO may execute approved automation,
+[Atlas](../atlas/index.md) may observe a deployment, Workbench may develop and
+validate changes, and Platform Governance & Evidence may verify controls and
+evidence. These responsibility boundaries do not imply a bundle, supported
+integration, or commercial commitment.
 
 ## Public documentation scope
 
@@ -55,6 +58,15 @@ and public execution/tooling container sources for
 and an [operations toolbox](https://github.com/lightning-it/container-ee-wunder-toolbox-ubi9).
 Those repositories document their own artifacts. Their presence does not make
 them mandatory components of every Wunderbox deployment.
+
+## Provenance and lifecycle
+
+This document is bounded by the canonical product authority,
+**LIT-PRD-70-Wunderbox version 14**. That authority approves the
+`https://docs.l-it.io/wunderbox/` route family and the initial
+`https://docs.l-it.io/wunderbox/overview/` route. Review is required annually
+and after any material scope, claim, taxonomy, delivery-boundary, or route
+change.
 
 ## Continue
 
