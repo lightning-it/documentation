@@ -19,6 +19,7 @@ jobs:
     name: preview / required
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    environment: preview
     env:
       BASE_URL: https://develop.lightning-it-documentation.pages.dev/
       PREVIEW_URL: https://develop.lightning-it-documentation.pages.dev/
@@ -49,6 +50,20 @@ jobs:
 
       - name: Install locked dependencies
         run: npm ci
+
+      - name: Build exact reviewed preview candidate
+        run: npm run build
+
+      - name: Deploy exact candidate through the preview environment
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: >-
+          npm exec -- wrangler pages deploy build
+          --project-name lightning-it-documentation
+          --branch develop
+          --commit-hash "${{ github.event.pull_request.head.sha }}"
+          --commit-dirty=false
 
       - name: Install Chromium
         run: npx --no-install playwright install --with-deps chromium
