@@ -114,7 +114,13 @@ jobs:
                 ;;
             esac
           done < <(tar --list --gzip --file documentation-build.tgz)
-          tar --extract --gzip --file documentation-build.tgz
+          if tar --list --verbose --gzip --file documentation-build.tgz |
+            awk 'substr($1, 1, 1) == "l" || substr($1, 1, 1) == "h" { found=1 } END { exit found ? 0 : 1 }'
+          then
+            echo "::error::Release artifact contains a symbolic or hard link."
+            exit 1
+          fi
+          tar --extract --gzip --no-same-owner --no-same-permissions --no-overwrite-dir --file documentation-build.tgz
 
       - name: Deploy retained artifact without rebuilding
         uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
