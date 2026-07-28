@@ -99,6 +99,19 @@ jobs:
             echo "::error::Release artifact digest does not match the retained manifest."
             exit 1
           fi
+          while IFS= read -r entry; do
+            if [[ "$entry" == /* || "$entry" == ".." || "$entry" == ../* || "$entry" == */../* || "$entry" == */.. ]]; then
+              echo "::error::Release artifact contains an unsafe path: $entry"
+              exit 1
+            fi
+            case "$entry" in
+              build | build/ | build/*) ;;
+              *)
+                echo "::error::Release artifact contains content outside build/: $entry"
+                exit 1
+                ;;
+            esac
+          done < <(tar --list --gzip --file documentation-build.tgz)
           tar --extract --gzip --file documentation-build.tgz
 
       - name: Deploy retained artifact without rebuilding
@@ -122,6 +135,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
+      actions: read
       attestations: write
       contents: read
       id-token: write
