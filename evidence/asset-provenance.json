@@ -44,7 +44,7 @@
     },
     {
       "path": "static/img/social-card.svg",
-      "sha256": "a4aa221fa05d3e97119d428a5d7f98d9db3e6e5755dfbffe3120e2c4655f3065",
+      "sha256": "e9de11ce2bb7ba170f9215c004e5de8876f17ad10b52938e2633ec570cdb569d",
       "origin": "Repository-native Lightning IT Documentation social card",
       "transformation": "Authored as maintainable SVG",
       "license": "MIT",
@@ -52,7 +52,7 @@
     },
     {
       "path": "static/img/social-card.png",
-      "sha256": "53916a868351023f47568aa22c743c34b1f8fb2530cf879c63271be46cba258d",
+      "sha256": "8629aee27b11be31e6560a996e3fb3bf3bad85c152b6de6887316ebdaf8e6071",
       "origin": "Raster rendition of the repository-native social card",
       "transformation": "Rendered at 1200 by 630 pixels",
       "license": "MIT",
