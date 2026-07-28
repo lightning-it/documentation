@@ -10,7 +10,7 @@ document:
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
-  approver: Lightning IT Product Owners
+  approver: Lightning IT Security and Compliance Maintainers
   audience:
     - security and compliance reviewers
     - evidence owners
