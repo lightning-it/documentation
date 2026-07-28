@@ -64,9 +64,10 @@ Continue with the [product boundary](./product-boundary.md), the
 
 ## Provenance and lifecycle
 
-This review candidate was independently re-authored in English from the
-approved public AIO summary and claim boundaries in the canonical product
-authority. That authority currently approves the source claims for the
-Lightning IT website but does not yet confirm an AIO URL under `docs.l-it.io`.
-The document therefore remains pending and cannot be represented as approved
-production documentation until the exact revision and route are authorized.
+This review candidate was independently re-authored in English from
+[LIT-PRD-60-AIO version 14](https://lit.atlassian.net/wiki/spaces/LIT/pages/2875588609/LIT-PRD-60-AIO).
+That canonical authority approves the generation-neutral claims and the
+`https://docs.l-it.io/aio/` route family, initially
+`https://docs.l-it.io/aio/overview/`. The document remains pending until its
+exact documentation-tree digest receives the repository-required
+role-authorized approval and all production controls pass.

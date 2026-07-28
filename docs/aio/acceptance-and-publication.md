@@ -57,6 +57,9 @@ Publication is a separate decision from delivery acceptance. An AIO page under
 - the protected merge and deployment complete; and
 - the public route is verified against the accepted commit.
 
-The current canonical authority does not yet confirm an AIO-specific
-`docs.l-it.io` URL. Until that authorization exists, these pages remain review
-candidates and must not be described as approved production documentation.
+[LIT-PRD-60-AIO version 14](https://lit.atlassian.net/wiki/spaces/LIT/pages/2875588609/LIT-PRD-60-AIO)
+authorizes the `https://docs.l-it.io/aio/` route family and the initial
+`https://docs.l-it.io/aio/overview/` route. This source authorization does not
+replace exact-document approval: these pages remain review candidates until
+their exact documentation-tree digest receives the repository-required
+role-authorized approval and all production controls pass.
