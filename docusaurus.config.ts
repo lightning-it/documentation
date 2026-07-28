@@ -158,12 +158,20 @@ const config: Config = {
           label: "Products",
           position: "left",
           items: [
-            { label: "ModuLix — Build", to: "/modulix/" },
-            { label: "IO — Run", to: "/io/" },
+            { label: "AIO — Run", to: "/aio/" },
             { label: "Wunderbox — Host", to: "/wunderbox/" },
+            {
+              label: "Workbench — Develop & Validate",
+              to: "/workbench/",
+            },
             { label: "Atlas — Observe", to: "/atlas/" },
+            {
+              label: "Platform Governance & Evidence — Verify",
+              to: "/platform-governance-evidence/",
+            },
           ],
         },
+        { label: "Foundation", to: "/modulix/", position: "left" },
         { label: "Architecture", to: "/architecture/", position: "left" },
         {
           label: "Trust",
@@ -201,10 +209,21 @@ const config: Config = {
         {
           title: "Products",
           items: [
-            { label: "ModuLix", to: "/modulix/" },
-            { label: "IO", to: "/io/" },
+            { label: "AIO", to: "/aio/" },
             { label: "Wunderbox", to: "/wunderbox/" },
+            { label: "Workbench", to: "/workbench/" },
             { label: "Atlas", to: "/atlas/" },
+            {
+              label: "Platform Governance & Evidence",
+              to: "/platform-governance-evidence/",
+            },
+          ],
+        },
+        {
+          title: "Foundation",
+          items: [
+            { label: "ModuLix", to: "/modulix/" },
+            { label: "Transitional IO documentation", to: "/io/" },
           ],
         },
         {
