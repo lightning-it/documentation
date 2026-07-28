@@ -210,8 +210,8 @@ test("global navigation exposes the governed portfolio and foundation", async ({
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Products" }).click();
-  const navbar = page.getByRole("navigation", { name: "Main" });
+  await page.getByRole("button", { name: "Products", exact: true }).click();
+  const navbar = page.locator(".navbar");
   for (const destination of [
     "AIO — Run",
     "Wunderbox — Host",
