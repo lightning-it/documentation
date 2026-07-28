@@ -15,7 +15,7 @@ document:
     - documentation architects
     - maintainers
     - reviewers
-  last_reviewed: "2026-07-25"
+  last_reviewed: "2026-07-28"
   review_cadence: annual
 ---
 
@@ -83,7 +83,8 @@ approval, certification, control effectiveness, or private-source facts.
 
 - `AGENTS.md` and `docs/architecture/index.md` describe four peer products,
   while the accepted #28 target proposes five sellable products and ModuLix as
-  a foundation. The current model remains effective until #38 decides.
+  a foundation. This dated finding was resolved by the superseding taxonomy
+  decision in #147; #135 owns implementation of that decision.
 - Goal #15 uses both AIO and older product terminology. Naming changes require
   a governed target decision and later implementation, not silent rewriting.
 - `RELEASE.md` says release evidence is disabled for packaged artifacts, while

@@ -16,7 +16,7 @@ document:
     - repository maintainers
     - security reviewers
     - delivery engineers
-  last_reviewed: "2026-07-25"
+  last_reviewed: "2026-07-28"
   review_cadence: annual
 ---
 
@@ -205,14 +205,15 @@ Constraints:
 - #15 remains the authoritative goal.
 - `AGENTS.md` controls classification and public safety.
 - #24 controls governance, release, approval, and licensing interpretation.
-- Product terminology stays unchanged until #38 approves an integrated target.
+- Product terminology follows the superseding taxonomy decision in #147;
+  implementation and route migration remain governed by #135.
 - Planning records do not authorize implementation or production changes.
 
 Open decisions:
 
 | Decision                                            | Owner                     | Gate or proposed ADR scope          |
 | --------------------------------------------------- | ------------------------- | ----------------------------------- |
-| Final product/foundation taxonomy and route mapping | Product Owner             | #38; taxonomy and compatibility ADR |
+| Product/foundation route mapping                    | Product Owner             | #135 migration and compatibility    |
 | Locale URL and fallback policy                      | Documentation Maintainers | #33; localization ADR               |
 | Evidence retention periods and external storage     | Evidence Owner            | #30; evidence retention ADR         |
 | Compliance authority and framework publication rule | Compliance Owner          | #31; compliance mapping ADR         |

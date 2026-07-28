@@ -16,15 +16,17 @@ document:
     - product owners
     - content designers
     - accessibility reviewers
-  last_reviewed: "2026-07-25"
+  last_reviewed: "2026-07-28"
   review_cadence: annual
 ---
 
 # Information architecture and navigation model
 
 This planning record defines the target public information architecture. It
-does not rename existing products, create routes, or authorize implementation.
-Product and foundation labels remain governed by the integrated #38 decision.
+does not create routes or authorize implementation. Product and foundation
+labels follow the
+[product taxonomy decision](./product-taxonomy-decision.md); Issue #135 owns
+their route and navigation migration.
 
 ## Audience and findability model
 
@@ -105,8 +107,8 @@ page may cite only an approved public extract or safe authority reference.
 | Contributing             | `/contributing/`             | `docs/contributing/`                          | Repository Maintainers    |
 
 Current product routes remain canonical during transition. Moving them beneath
-`/products/` is a target option, not an implicit redirect decision. #38 must
-approve the taxonomy and route mapping before implementation.
+`/products/` is a target option, not an implicit redirect decision. Issue #135
+must approve and verify the route mapping and redirects before migration.
 
 Each planned page has exactly one canonical source and owner. A sidebar entry,
 card, search result, tag, translation, version, or framework view points to that
