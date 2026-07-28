@@ -69,27 +69,11 @@ jobs:
     concurrency:
       group: cloudflare-pages-production
       cancel-in-progress: false
-    env:
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-
     steps:
-      - name: Checkout deployment client definition
+      - name: Checkout deployment definition
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version-file: .node-version
-          cache: npm
-
-      - name: Activate the pinned npm release
-        run: npm install --global --no-audit --no-fund npm@11.18.0 && test "$(npm --version)" = "11.18.0"
-
-      - name: Install locked deployment client
-        run: npm ci
 
       - name: Download validated release artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
@@ -104,12 +88,18 @@ jobs:
           tar --extract --gzip --file documentation-build.tgz
 
       - name: Deploy retained artifact without rebuilding
-        run: >-
-          npm exec -- wrangler pages deploy build
-          --project-name lightning-it-documentation
-          --branch main
-          --commit-hash "${{ github.sha }}"
-          --commit-dirty=false
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: npm
+          wranglerVersion: 4.114.0
+          command: >-
+            pages deploy build
+            --project-name lightning-it-documentation
+            --branch main
+            --commit-hash "${{ github.sha }}"
+            --commit-dirty=false
 
   attest:
     name: Attest immutable release artifact
