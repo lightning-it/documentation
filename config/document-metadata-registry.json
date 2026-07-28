@@ -1,0 +1,82 @@
+{
+  "schema_version": 2,
+  "owners": ["Lightning IT Documentation Maintainers"],
+  "approvers": [
+    "Lightning IT Product Owners",
+    "Lightning IT Security and Compliance Maintainers"
+  ],
+  "products": [
+    {
+      "id": "aio",
+      "kind": "product"
+    },
+    {
+      "id": "wunderbox",
+      "kind": "product"
+    },
+    {
+      "id": "workbench",
+      "kind": "product"
+    },
+    {
+      "id": "atlas",
+      "kind": "product"
+    },
+    {
+      "id": "platform-governance-evidence",
+      "kind": "product"
+    },
+    {
+      "id": "modulix",
+      "kind": "foundation"
+    },
+    {
+      "id": "io",
+      "kind": "transitional"
+    }
+  ],
+  "content_types": [
+    "overview",
+    "concept",
+    "architecture",
+    "procedure",
+    "operations",
+    "security",
+    "troubleshooting",
+    "reference",
+    "evidence",
+    "policy",
+    "mapping",
+    "release"
+  ],
+  "audiences": [
+    "evaluator",
+    "practitioner",
+    "architect",
+    "security",
+    "compliance",
+    "contributor",
+    "support"
+  ],
+  "review_triggers": [
+    "product-major-release",
+    "security-boundary-change",
+    "public-authority-change",
+    "control-mapping-change",
+    "workflow-change",
+    "owner-change",
+    "route-change",
+    "dependency-change",
+    "source-change"
+  ],
+  "relationship_fields": [
+    "issues",
+    "pull_requests",
+    "architecture_decisions",
+    "releases",
+    "evidence",
+    "standards",
+    "source_repositories",
+    "related_documents"
+  ]
+}
