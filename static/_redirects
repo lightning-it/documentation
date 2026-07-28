@@ -1,1 +1,8 @@
-# Add redirects only after the legacy source path and destination are confirmed.
+# IO was previously published as a product but is now governed as AIO.
+/io/ /aio/ 301
+/io/overview/ /aio/overview/ 301
+/io/concepts/ /aio/concepts/ 301
+/io/architecture/ /aio/architecture/ 301
+/io/operations/ /aio/operations/ 301
+/io/security/ /aio/security/ 301
+/io/troubleshooting/ /aio/troubleshooting/ 301

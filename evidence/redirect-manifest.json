@@ -1,7 +1,43 @@
 {
   "schema_version": 1,
-  "review_date": "2026-07-14",
-  "redirects": [],
-  "status": "NO_CONFIRMED_PUBLIC_LEGACY_ENDPOINTS",
-  "reason": "No previously published public documentation URL was verified. Repository-local private paths are not exposed as redirects."
+  "review_date": "2026-07-28",
+  "redirects": [
+    { "source": "/io/", "destination": "/aio/", "status": 301 },
+    {
+      "source": "/io/overview/",
+      "destination": "/aio/overview/",
+      "status": 301
+    },
+    {
+      "source": "/io/concepts/",
+      "destination": "/aio/concepts/",
+      "status": 301
+    },
+    {
+      "source": "/io/architecture/",
+      "destination": "/aio/architecture/",
+      "status": 301
+    },
+    {
+      "source": "/io/operations/",
+      "destination": "/aio/operations/",
+      "status": 301
+    },
+    {
+      "source": "/io/security/",
+      "destination": "/aio/security/",
+      "status": 301
+    },
+    {
+      "source": "/io/troubleshooting/",
+      "destination": "/aio/troubleshooting/",
+      "status": 301
+    }
+  ],
+  "status": "REVIEWED_ONE_HOP_MIGRATION",
+  "reason": "The public IO route family represented the runtime responsibility now governed by AIO. Each verified published path redirects directly to its canonical AIO successor.",
+  "owner": "Lightning IT Documentation Maintainers",
+  "introduced": "2026-07-28",
+  "review_trigger": "AIO route retirement or taxonomy change",
+  "removal_decision": "Retain while previously published IO URLs may be referenced."
 }

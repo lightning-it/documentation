@@ -9,3 +9,6 @@ history remains traceable through Git and pull requests.
 - Add the peer product information architecture and public safety baseline.
 - Add static Pagefind search, accessible navigation, and Cloudflare Pages
   deployment controls.
+- Replace IO with AIO as the canonical controlled-runtime product, preserve the
+  published IO route family through direct redirects, and present ModuLix as
+  the shared foundation for the five-product portfolio.

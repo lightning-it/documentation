@@ -2,6 +2,16 @@
 
 This repository follows the Lightning IT shared OpenSSF readiness model generated from `lightning-it/shared-assets-lit`.
 
+## Governing Decisions And Standards
+
+The public implementation of repository topology, protected branching, review,
+release integrity, CI assurance, test ownership, secure SDLC controls, and
+software-supply-chain assurance is defined by [AGENTS.md](./AGENTS.md),
+[CODEX_EXECUTION_GUIDE.md](./CODEX_EXECUTION_GUIDE.md), and the
+[governance, release, and licensing baseline](./docs/architecture/governance-release-licensing-baseline.md).
+Internal decision records are intentionally not linked from this public
+repository.
+
 ## Repository
 
 - Repository: `documentation`

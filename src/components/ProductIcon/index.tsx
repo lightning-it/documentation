@@ -7,13 +7,7 @@ interface ProductIconProps {
 }
 
 const iconPaths: Record<ProductId, ReactNode> = {
-  modulix: (
-    <>
-      <path d="M14 3 6 14h6l-1 7 8-12h-6l1-6Z" />
-      <path d="M4 4h4M16 20h4" />
-    </>
-  ),
-  io: (
+  aio: (
     <>
       <path d="m8 5 7 7-7 7" />
       <path d="M16 19h4M4 5h4" />
@@ -26,10 +20,22 @@ const iconPaths: Record<ProductId, ReactNode> = {
       <path d="M12 11v10" />
     </>
   ),
+  workbench: (
+    <>
+      <path d="M4 7h16v12H4z" />
+      <path d="M8 7V4h8v3M8 13h8" />
+    </>
+  ),
   atlas: (
     <>
       <path d="M3 12h4l2-6 4 12 2-6h6" />
       <circle cx="19" cy="6" r="2" />
+    </>
+  ),
+  "platform-governance-evidence": (
+    <>
+      <path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6l-7-3Z" />
+      <path d="m9 12 2 2 4-5" />
     </>
   ),
 };

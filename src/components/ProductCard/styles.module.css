@@ -30,12 +30,7 @@
   transform: translateY(-2px);
 }
 
-.modulix {
-  --product-accent: var(--lit-modulix);
-  --product-tint: var(--lit-modulix-tint);
-}
-
-.io {
+.aio {
   --product-accent: var(--lit-io);
   --product-tint: var(--lit-io-tint);
 }
@@ -48,6 +43,16 @@
 .atlas {
   --product-accent: var(--lit-atlas);
   --product-tint: var(--lit-atlas-tint);
+}
+
+.workbench {
+  --product-accent: var(--lit-modulix);
+  --product-tint: var(--lit-modulix-tint);
+}
+
+.platform-governance-evidence {
+  --product-accent: var(--ifm-color-primary);
+  --product-tint: var(--lit-surface-accent);
 }
 
 .topline {

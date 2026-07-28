@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "metadata_contract": "2.0",
+  "compatibility_reader": {
+    "missing_schema_version_means": "1.0",
+    "semantic_broadening": false,
+    "supported_versions": ["1.0", "2.0"]
+  },
+  "inventory": {
+    "source": "evidence/document-approval.json",
+    "document_count": 102,
+    "version_1_compatible": 102,
+    "version_2_native": 0,
+    "unresolved": 0
+  },
+  "migration_decision": "COMPATIBILITY_WINDOW_ACTIVE",
+  "attribution": {
+    "owner": "Lightning IT Documentation Maintainers",
+    "review_date": "2026-07-28",
+    "issue": "https://github.com/lightning-it/documentation/issues/133"
+  },
+  "rollback": "Remove the version-2 branch and registry validation while retaining the unchanged version-1 interpretation and document front matter."
+}

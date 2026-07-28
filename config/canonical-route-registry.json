@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "canonical_origin": "https://docs.l-it.io",
+  "route_convention": "lower-case absolute paths with a trailing slash",
+  "areas": [
+    {
+      "path_prefix": "/aio/",
+      "kind": "product",
+      "owner": "Lightning IT Documentation Maintainers"
+    },
+    {
+      "path_prefix": "/wunderbox/",
+      "kind": "product",
+      "owner": "Lightning IT Documentation Maintainers"
+    },
+    {
+      "path_prefix": "/workbench/",
+      "kind": "product",
+      "owner": "Lightning IT Documentation Maintainers"
+    },
+    {
+      "path_prefix": "/atlas/",
+      "kind": "product",
+      "owner": "Lightning IT Documentation Maintainers"
+    },
+    {
+      "path_prefix": "/platform-governance-evidence/",
+      "kind": "product",
+      "owner": "Lightning IT Documentation Maintainers"
+    },
+    {
+      "path_prefix": "/modulix/",
+      "kind": "foundation",
+      "owner": "Lightning IT Documentation Maintainers"
+    },
+    {
+      "path_prefix": "/",
+      "kind": "shared",
+      "owner": "Lightning IT Documentation Maintainers"
+    }
+  ]
+}

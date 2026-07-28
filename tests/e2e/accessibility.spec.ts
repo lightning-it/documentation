@@ -4,6 +4,9 @@ import { expect, test } from "@playwright/test";
 const representativeRoutes = [
   "/",
   "/getting-started/",
+  "/aio/",
+  "/workbench/",
+  "/platform-governance-evidence/",
   "/modulix/overview/",
   "/architecture/",
   "/security/",

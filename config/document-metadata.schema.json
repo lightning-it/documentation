@@ -35,12 +35,18 @@
         "review_cadence"
       ],
       "properties": {
+        "schema_version": {
+          "const": "2.0"
+        },
         "status": {
           "enum": [
+            "draft",
             "review-candidate",
             "maintained",
             "experimental",
-            "deprecated"
+            "deprecated",
+            "archived",
+            "retired"
           ]
         },
         "version": {
@@ -75,10 +81,179 @@
           "format": "date"
         },
         "review_cadence": {
-          "enum": ["quarterly", "semiannual", "annual"]
+          "enum": ["quarterly", "semiannual", "annual", "event-driven"]
+        },
+        "publication_status": {
+          "enum": [
+            "unpublished",
+            "preview",
+            "published",
+            "withdrawn",
+            "archived"
+          ]
+        },
+        "content_type": {
+          "type": "string",
+          "pattern": "^[a-z][a-z-]*$"
+        },
+        "product": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "components": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
+        "product_versions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "approval_evidence": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
+        "review_triggers": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z-]*$"
+          }
+        },
+        "relationships": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "required": ["created_from", "created_at", "verified_at"],
+          "properties": {
+            "created_from": {
+              "enum": [
+                "repository-native",
+                "public-source",
+                "sanitized-public-source"
+              ]
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date"
+            },
+            "verified_at": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "additionalProperties": false
+        },
+        "exception": {
+          "type": "object",
+          "required": [
+            "scope",
+            "rationale",
+            "owner",
+            "approver",
+            "risk",
+            "compensating_validation",
+            "created_on",
+            "expires_on",
+            "remediation_issue"
+          ],
+          "properties": {
+            "scope": { "type": "string", "minLength": 3 },
+            "rationale": { "type": "string", "minLength": 3 },
+            "owner": { "type": "string", "minLength": 3 },
+            "approver": { "type": "string", "minLength": 3 },
+            "risk": { "type": "string", "minLength": 3 },
+            "compensating_validation": {
+              "type": "string",
+              "minLength": 3
+            },
+            "created_on": { "type": "string", "format": "date" },
+            "expires_on": { "type": "string", "format": "date" },
+            "remediation_issue": {
+              "type": "string",
+              "pattern": "^#[1-9][0-9]*$"
+            }
+          },
+          "additionalProperties": false
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "schema_version": {
+                "const": "2.0"
+              }
+            },
+            "required": ["schema_version"]
+          },
+          "then": {
+            "required": [
+              "publication_status",
+              "content_type",
+              "approval_evidence",
+              "review_triggers",
+              "relationships",
+              "provenance"
+            ],
+            "properties": {
+              "publication_status": {},
+              "content_type": {},
+              "approval_evidence": {},
+              "review_triggers": {},
+              "relationships": {},
+              "provenance": {},
+              "status": {
+                "enum": [
+                  "draft",
+                  "review-candidate",
+                  "maintained",
+                  "deprecated",
+                  "archived",
+                  "retired"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "review-candidate",
+                  "maintained",
+                  "experimental",
+                  "deprecated"
+                ]
+              },
+              "review_cadence": {
+                "enum": ["quarterly", "semiannual", "annual"]
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "additionalProperties": true

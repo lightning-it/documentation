@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "decision_date": "2026-07-28",
+  "issue": "https://github.com/lightning-it/documentation/issues/135",
+  "classification": "PUBLIC",
+  "authority": {
+    "taxonomy": "docs/architecture/product-taxonomy-decision.md",
+    "aio_product": "LIT-PRD-60-AIO version 14"
+  },
+  "source_family": {
+    "name": "IO",
+    "disposition": "RETIRED_AS_INDEPENDENT_PRODUCT",
+    "reason": "The controlled automation runtime responsibility belongs to AIO."
+  },
+  "mappings": [
+    {
+      "source": "/io/",
+      "target": "/aio/",
+      "content": "CONSOLIDATED_INTO_CANONICAL_AIO_LANDING"
+    },
+    {
+      "source": "/io/overview/",
+      "target": "/aio/overview/",
+      "content": "DUPLICATE_OVERVIEW_CONSOLIDATED"
+    },
+    {
+      "source": "/io/concepts/",
+      "target": "/aio/concepts/",
+      "content": "PUBLIC_CONTENT_RENAMED_AND_RETAINED"
+    },
+    {
+      "source": "/io/architecture/",
+      "target": "/aio/architecture/",
+      "content": "PUBLIC_CONTENT_RENAMED_AND_RETAINED"
+    },
+    {
+      "source": "/io/operations/",
+      "target": "/aio/operations/",
+      "content": "PUBLIC_CONTENT_RENAMED_AND_RETAINED"
+    },
+    {
+      "source": "/io/security/",
+      "target": "/aio/security/",
+      "content": "PUBLIC_CONTENT_RENAMED_AND_RETAINED"
+    },
+    {
+      "source": "/io/troubleshooting/",
+      "target": "/aio/troubleshooting/",
+      "content": "PUBLIC_CONTENT_RENAMED_AND_RETAINED"
+    }
+  ],
+  "claim_review": {
+    "new_capability_claims": false,
+    "private_source_import": false,
+    "customer_data": false,
+    "credentials_or_secrets": false,
+    "result": "PUBLIC_SAFE"
+  },
+  "rollback": {
+    "action": "Revert the migration merge commit.",
+    "route_behavior": "Restore the IO sources and empty the seven migration redirect rules together.",
+    "content_behavior": "Restore the prior 103-document approval inventory and exact digest."
+  }
+}

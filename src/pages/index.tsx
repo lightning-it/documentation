@@ -19,7 +19,7 @@ const audiencePaths = [
     label: "Platform operators",
     title: "Run and host platforms",
     description:
-      "Understand the responsibilities and boundaries of IO and Wunderbox.",
+      "Understand the responsibilities and boundaries of AIO and Wunderbox.",
     href: "/architecture/",
   },
   {
@@ -60,7 +60,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title="Public technical documentation"
-      description="Technical documentation for ModuLix, IO, Wunderbox, and Atlas in the Lightning IT product portfolio."
+      description="Technical documentation for the five Lightning IT products and the ModuLix engineering foundation."
     >
       <main data-pagefind-body>
         <header className={styles.hero}>
@@ -70,8 +70,9 @@ export default function Home(): ReactNode {
               <p className={styles.eyebrow}>Public technical documentation</p>
               <h1>Build, run, host, and observe with Lightning IT</h1>
               <p className={styles.intro}>
-                Find technical guidance for the four peer products in the
-                Lightning IT portfolio: ModuLix, IO, Wunderbox, and Atlas.
+                Find technical guidance for AIO, Wunderbox, Workbench, Atlas,
+                and Platform Governance & Evidence. ModuLix is their shared
+                engineering foundation.
               </p>
               <div className={styles.heroSearch}>
                 <SearchTrigger
@@ -99,8 +100,8 @@ export default function Home(): ReactNode {
                 <h2 id="products-heading">Choose a product</h2>
               </div>
               <p>
-                Build, run, host, and observe describe functional interaction.
-                All four products remain peers.
+                The five products remain peers. Their functional relationships
+                do not make one product a child of another.
               </p>
             </div>
             <div className={styles.productGrid}>

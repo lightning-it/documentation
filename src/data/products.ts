@@ -1,4 +1,5 @@
-export type ProductId = "modulix" | "io" | "wunderbox" | "atlas";
+export type ProductId =
+  "aio" | "wunderbox" | "workbench" | "atlas" | "platform-governance-evidence";
 
 export interface ProductSummary {
   id: ProductId;
@@ -11,22 +12,22 @@ export interface ProductSummary {
 
 export const products: readonly ProductSummary[] = [
   {
-    id: "modulix",
-    name: "ModuLix",
-    action: "Build",
-    position: "Automation Content",
+    id: "aio",
+    name: "AIO",
+    action: "Run",
+    position: "Automation and Operations Platform",
     description:
-      "Explore the collections, roles, building blocks, and blueprints used to create automation content.",
-    href: "/modulix/",
+      "Understand controlled execution and orchestration of defined operational automation.",
+    href: "/aio/",
   },
   {
-    id: "io",
-    name: "IO",
-    action: "Run",
-    position: "Automation Runtime",
+    id: "workbench",
+    name: "Workbench",
+    action: "Develop & Validate",
+    position: "Engineering, Development & Validation Platform",
     description:
-      "Understand the runtime layer, its portfolio boundaries, and its relationship to automation content.",
-    href: "/io/",
+      "Review the public engineering and validation boundary for governed delivery work.",
+    href: "/workbench/",
   },
   {
     id: "wunderbox",
@@ -45,5 +46,14 @@ export const products: readonly ProductSummary[] = [
     description:
       "Understand the observability platform and its place in the shared product architecture.",
     href: "/atlas/",
+  },
+  {
+    id: "platform-governance-evidence",
+    name: "Platform Governance & Evidence",
+    action: "Verify",
+    position: "Governance and Evidence Platform",
+    description:
+      "Understand bounded governance, evidence lifecycle, assessment, and publication controls.",
+    href: "/platform-governance-evidence/",
   },
 ];
