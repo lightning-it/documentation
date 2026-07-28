@@ -71,7 +71,7 @@ sanitized reproduction. Never paste raw logs by default. Inspect output for
 tokens, customer data, real hosts and addresses, internal paths, topology,
 security findings, and recovery details before sharing.
 
-Product flows: [ModuLix usage](../modulix/usage.md),
+Foundation and product flows: [ModuLix usage](../modulix/usage.md),
 [AIO troubleshooting](../aio/troubleshooting.md),
 [Wunderbox troubleshooting](../wunderbox/troubleshooting.md), and
 [Atlas troubleshooting](../atlas/troubleshooting.md).

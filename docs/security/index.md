@@ -69,6 +69,6 @@ decisions, and verification evidence in their protected registers.
 - [Publication boundary](./publication-boundary.md)
 - [Backup and recovery](./backup-and-recovery.md)
 - [BSI mapping approach](../compliance/bsi-mapping.md)
-- Product-specific security: [ModuLix](../modulix/security.md),
-  [AIO](../aio/security.md), [Wunderbox](../wunderbox/security.md), and
-  [Atlas](../atlas/security.md)
+- Foundation security: [ModuLix](../modulix/security.md)
+- Product-specific security: [AIO](../aio/security.md),
+  [Wunderbox](../wunderbox/security.md), and [Atlas](../atlas/security.md)

@@ -1,7 +1,7 @@
 ---
 id: modulix-overview
 title: ModuLix overview
-description: Understand ModuLix as the Automation Content product in the Lightning IT portfolio.
+description: Understand ModuLix as the shared automation-content foundation for the Lightning IT product portfolio.
 slug: /modulix/overview/
 sidebar_position: 1
 document:
@@ -20,13 +20,16 @@ document:
 
 # ModuLix overview
 
-ModuLix is the **Automation Content** product in the Lightning IT portfolio. Its
-conceptual verb is **Build**: it organizes reusable automation content so teams
-can review, version, test, and compose infrastructure changes.
+ModuLix is the shared **automation-content foundation** for the Lightning IT
+product portfolio. It is not a sixth sellable product. Its conceptual verb is
+**Build**: it organizes reusable automation content so teams can review,
+version, test, and compose infrastructure changes.
 
-ModuLix is a peer of [AIO](../aio/index.md),
-[Wunderbox](../wunderbox/index.md), and [Atlas](../atlas/index.md). The products
-can interact, but none is a child of another.
+The five products—[AIO](../aio/index.md),
+[Wunderbox](../wunderbox/index.md), [Workbench](../workbench/index.md),
+[Atlas](../atlas/index.md), and
+[Platform Governance & Evidence](../platform-governance-evidence/index.md)—may
+consume ModuLix content within their approved boundaries.
 
 ## What belongs to ModuLix
 

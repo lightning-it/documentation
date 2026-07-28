@@ -85,7 +85,7 @@ test("03 — open ModuLix documentation", async ({ page }) => {
   await page.getByRole("link", { name: /Build reusable automation/i }).click();
   await expect(page).toHaveURL(/\/modulix\/$/);
   await expect(
-    page.getByRole("heading", { level: 1, name: /ModuLix documentation/i }),
+    page.getByRole("heading", { level: 1, name: /ModuLix overview/i }),
   ).toBeVisible();
 });
 
