@@ -80,8 +80,8 @@ This approved public documentation explains:
 - [public/private and assurance boundaries](./security-and-publication-boundary.md).
 
 It does not publish customer records, original protected evidence, internal
-infrastructure, private source locations, commercial terms, service levels,
-technology commitments, or a product-specific production URL.
+infrastructure, private source locations, commercial terms, service levels, or
+technology commitments.
 
 ## Historical terminology
 
@@ -90,9 +90,11 @@ products and do not define separate public product promises.
 
 ## Provenance and lifecycle
 
-This content was independently re-authored in English from an approved public
-product authority on 2026-07-28 and reviewed against the repository publication
-boundary. Exact-digest, role-authorized approval is recorded for this revision.
-Git is the change-history source. Review is required annually and whenever the
-product authority, taxonomy, claim
-boundary, or public route changes.
+This content was independently re-authored in English from the canonical
+product authority, **LIT-PRD-100-Platform-Governance-Evidence version 14**. That
+authority approves the `https://docs.l-it.io/platform-governance-evidence/`
+route family and the initial
+`https://docs.l-it.io/platform-governance-evidence/overview/` route.
+Exact-digest, role-authorized approval is recorded for this revision. Git is
+the change-history source. Review is required annually and whenever the product
+authority, taxonomy, claim boundary, or public route changes.

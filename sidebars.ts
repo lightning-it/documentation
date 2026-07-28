@@ -11,6 +11,23 @@ const sidebars: SidebarsConfig = {
       items: [
         {
           type: "category",
+          label: "AIO — Run",
+          link: {
+            type: "generated-index",
+            slug: "/aio/",
+            title: "AIO documentation",
+            description:
+              "Automation and Operations Platform: public purpose, boundaries, generations, and acceptance.",
+          },
+          items: [
+            "aio/aio-overview",
+            "aio/aio-product-boundary",
+            "aio/aio-generation-model",
+            "aio/aio-acceptance-publication",
+          ],
+        },
+        {
+          type: "category",
           label: "ModuLix — Build",
           link: {
             type: "generated-index",
@@ -130,6 +147,23 @@ const sidebars: SidebarsConfig = {
             },
             "wunderbox/wunderbox-security",
             "wunderbox/wunderbox-troubleshooting",
+          ],
+        },
+        {
+          type: "category",
+          label: "Workbench — Develop & Validate",
+          link: {
+            type: "generated-index",
+            slug: "/workbench/",
+            title: "Workbench documentation",
+            description:
+              "Engineering, Development & Validation Platform: boundaries, validation model, acceptance, and publication.",
+          },
+          items: [
+            "workbench/workbench-overview",
+            "workbench/workbench-product-boundary",
+            "workbench/workbench-validation-model",
+            "workbench/workbench-acceptance-publication",
           ],
         },
         {
