@@ -58,6 +58,6 @@ index, sitemap, build artifacts, and change history. Uncertainty is private.
 Sanitization removes protected details but does not turn an unsupported claim
 into an approved one.
 
-No production documentation URL is claimed by this review candidate. The route
+No production documentation URL is claimed before deployment. The approved route
 becomes publicly accepted only after exact-document approval, protected merge,
 deployment, and route-level production verification.

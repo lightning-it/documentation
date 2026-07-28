@@ -72,7 +72,7 @@ only to the agreed scope, artifacts, controls, checks, and evidence.
 
 ## Public documentation scope
 
-This review candidate explains:
+This approved public documentation explains:
 
 - [assessment targets, scope, and responsibility](./assessment-model.md);
 - [controls, documentation, evidence, findings, review, and improvement](./governance-evidence-lifecycle.md);
@@ -92,7 +92,7 @@ products and do not define separate public product promises.
 
 This content was independently re-authored in English from an approved public
 product authority on 2026-07-28 and reviewed against the repository publication
-boundary. It remains `review-candidate` and `pending` until exact-digest,
-role-authorized approval is recorded. Git is the change-history source. Review
-is required annually and whenever the product authority, taxonomy, claim
+boundary. Exact-digest, role-authorized approval is recorded for this revision.
+Git is the change-history source. Review is required annually and whenever the
+product authority, taxonomy, claim
 boundary, or public route changes.

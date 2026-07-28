@@ -24,7 +24,7 @@ document:
 
 # Integrated documentation architecture package
 
-This review candidate integrates the planning outputs for Goal
+This approved architecture package integrates the planning outputs for Goal
 [Issue #15](https://github.com/lightning-it/documentation/issues/15). It does
 not authorize implementation, production configuration, deployment, Domain
 Name System (DNS) changes, credential creation, migration, or publication.
@@ -48,7 +48,7 @@ source set; it does not bind or approve this later amendment.
 | implementation issues   | #132–#142, existing #40, and existing #115                                                               |
 | manifest algorithm      | SHA-256 of each file; complete digest/path lines sorted in byte order; complete text hashed with SHA-256 |
 | package manifest digest | `30f44a7e31ce6ddf34a6a4361fc6f160b5d81c18bd031393b17224bedf9aee1c`                                       |
-| package status          | review candidate; human decision pending                                                                 |
+| package status          | maintained; exact-digest approval recorded                                                               |
 
 The manifest digest covers the 18 authoritative files listed below at the
 source commit. This integration page and its pull request provide the review
@@ -187,7 +187,7 @@ consequential decision to architecture review.
 | ID   | Risk or assumption                                                                              | Status and control                                                                                 |
 | ---- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | R-01 | restricted information could enter public content, evidence, cache, search, or logs             | blocking; #32 boundary, classification, sentinels, review, and fail-closed generation              |
-| R-02 | architecture documents could be mistaken for implemented or production behavior                 | controlled; review-candidate metadata and explicit implementation verification                     |
+| R-02 | architecture documents could be mistaken for implemented or production behavior                 | controlled; approved-document metadata and explicit implementation verification                    |
 | R-03 | mutable metadata or stale evidence could support a misleading claim                             | controlled; immutable IDs, observation times, lifecycle states, review, and digest binding         |
 | R-04 | route/schema changes could break published references or approvals                              | controlled; compatibility, one-hop redirects, inventories, and migration fixtures                  |
 | R-05 | deployment rebuild, drift, or credential scope could break artifact identity or least privilege | blocking at delivery; #35 preflight, protected environments, Direct Upload, evidence, and rollback |
