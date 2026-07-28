@@ -20,13 +20,19 @@ function yamlEngine(value) {
 }
 
 function sidebarId(filePath, documentId) {
-  const directory = path.posix.dirname(
-    repositoryPath(filePath).replace(/^docs\//, ""),
-  );
+  const relativeDocumentPath = repositoryPath(filePath).replace(/^docs\//, "");
+  const directory = path.posix.dirname(relativeDocumentPath);
+  const inferredId = relativeDocumentPath.replace(/\.mdx?$/, "");
+  if (typeof documentId !== "string" || documentId.length === 0) {
+    return inferredId;
+  }
   return directory === "." ? documentId : `${directory}/${documentId}`;
 }
 
 function quotedOccurrences(source, value) {
+  if (typeof value !== "string" || value.length === 0) {
+    return 0;
+  }
   const escaped = value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return [...source.matchAll(new RegExp(`["']${escaped}["']`, "g"))].length;
 }
@@ -42,6 +48,7 @@ async function main() {
   const registry = JSON.parse(registrySource);
   const areas = registry.areas ?? [];
   const documents = [];
+  const routeSources = new Map();
 
   for (const filePath of await walkFiles(docsDirectory, (candidate) =>
     /\.mdx?$/.test(candidate),
@@ -54,6 +61,12 @@ async function main() {
     const canonicalRoute = typeof slug === "string" ? slug : "";
     if (!canonicalRoute) {
       errors.push(`${relativePath}: canonical slug must be a non-empty string`);
+    } else if (routeSources.has(canonicalRoute)) {
+      errors.push(
+        `${relativePath}: duplicate canonical route ${canonicalRoute} (also ${routeSources.get(canonicalRoute)})`,
+      );
+    } else {
+      routeSources.set(canonicalRoute, relativePath);
     }
     const matches = areas.filter(({ path_prefix: prefix }) =>
       prefix === "/" ? true : canonicalRoute.startsWith(prefix),
