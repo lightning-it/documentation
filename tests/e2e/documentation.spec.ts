@@ -45,6 +45,10 @@ test("search covers every required product, task, and migrated public role term"
   const requiredQueries = [
     { query: "Wunderbox", expectedPath: "/wunderbox/" },
     { query: "Atlas", expectedPath: "/atlas/" },
+    {
+      query: "Platform Governance & Evidence",
+      expectedPath: "/platform-governance-evidence/",
+    },
     { query: "installation", expectedPath: "/modulix/installation/" },
     { query: "architecture", expectedPath: "/architecture/" },
     { query: "BSI", expectedPath: "/compliance/bsi-mapping/" },
@@ -111,11 +115,32 @@ test("06 — navigate to Atlas", async ({ page }) => {
   await expect(page).toHaveURL(/\/atlas\/overview\/$/);
 });
 
-test("07 — open architecture documentation", async ({ page }) => {
+test("07 — navigate to Platform Governance & Evidence", async ({ page }) => {
+  await expectPage(
+    page,
+    "/platform-governance-evidence/",
+    /Platform Governance & Evidence documentation/i,
+  );
+  await page
+    .getByRole("link", {
+      name: /Platform Governance & Evidence overview/i,
+    })
+    .first()
+    .click();
+  await expect(page).toHaveURL(/\/platform-governance-evidence\/overview\/$/);
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: /Platform Governance & Evidence overview/i,
+    }),
+  ).toBeVisible();
+});
+
+test("08 — open architecture documentation", async ({ page }) => {
   await expectPage(page, "/architecture/", /Portfolio architecture/i);
 });
 
-test("08 — open security documentation", async ({ page }) => {
+test("09 — open security documentation", async ({ page }) => {
   await expectPage(page, "/security/", /Security overview/i);
   const metadata = page.getByRole("region", { name: "Document metadata" });
   await expect(metadata).toBeVisible();
@@ -127,11 +152,11 @@ test("08 — open security documentation", async ({ page }) => {
   await expect(metadata.locator("time")).toHaveCount(2);
 });
 
-test("09 — open compliance documentation", async ({ page }) => {
+test("10 — open compliance documentation", async ({ page }) => {
   await expectPage(page, "/compliance/", /Compliance documentation/i);
 });
 
-test("render accessible audience tabs and peer-product diagram", async ({
+test("render accessible audience tabs and approved product taxonomy", async ({
   page,
 }) => {
   await expectPage(page, "/getting-started/", /Get started/i);
@@ -145,16 +170,17 @@ test("render accessible audience tabs and peer-product diagram", async ({
   );
 
   await expectPage(page, "/architecture/", /Portfolio architecture/i);
-  const diagram = page.locator(".docusaurus-mermaid-container svg").first();
-  await expect(diagram).toBeVisible();
-  await expect(diagram.locator("title")).toContainText(
-    "Optional interactions between peer products",
-  );
-  await expect(diagram).toContainText("ModuLix — Build");
-  await expect(diagram).toContainText("Atlas — Observe");
+  const main = page.getByRole("main");
+  await expect(main).toContainText("five sellable products");
+  await expect(main).toContainText("AIO");
+  await expect(main).toContainText("Wunderbox");
+  await expect(main).toContainText("Workbench");
+  await expect(main).toContainText("Atlas");
+  await expect(main).toContainText("Platform Governance & Evidence");
+  await expect(main).toContainText("not a sixth sellable product");
 });
 
-test("10 — switch between light and dark modes", async ({ page }) => {
+test("11 — switch between light and dark modes", async ({ page }) => {
   await page.addInitScript(() => window.localStorage.setItem("theme", "light"));
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto("/");
@@ -171,7 +197,7 @@ test("10 — switch between light and dark modes", async ({ page }) => {
   await expect(root).toHaveAttribute("data-theme", "light");
 });
 
-test("11 — @mobile use navigation at a mobile viewport", async ({ page }) => {
+test("12 — @mobile use navigation at a mobile viewport", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: /Toggle navigation bar/i }).click();
   const navigation = page.locator(".navbar-sidebar");
@@ -180,7 +206,7 @@ test("11 — @mobile use navigation at a mobile viewport", async ({ page }) => {
   await expect(page).toHaveURL(/\/architecture\/$/);
 });
 
-test("12 — emit no browser console errors", async ({ page }) => {
+test("13 — emit no browser console errors", async ({ page }) => {
   const errors: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error") {
@@ -199,7 +225,7 @@ test("12 — emit no browser console errors", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test("13 — make no failed first-party requests", async ({ page, baseURL }) => {
+test("14 — make no failed first-party requests", async ({ page, baseURL }) => {
   const failures: string[] = [];
   const origin = new URL(baseURL ?? "http://127.0.0.1:3000").origin;
   page.on("requestfailed", (request) => {
@@ -222,7 +248,7 @@ test("13 — make no failed first-party requests", async ({ page, baseURL }) => 
   expect(failures).toEqual([]);
 });
 
-test("14 — TYPO3 links return to l-it.io", async ({ page }) => {
+test("15 — TYPO3 links return to l-it.io", async ({ page }) => {
   await page.goto("/");
   const links = page.locator('a[href^="https://l-it.io"]');
   expect(await links.count()).toBeGreaterThan(0);
@@ -233,7 +259,7 @@ test("14 — TYPO3 links return to l-it.io", async ({ page }) => {
   }
 });
 
-test("15 — GitHub links target public repository URLs", async ({ page }) => {
+test("16 — GitHub links target public repository URLs", async ({ page }) => {
   await page.goto("/reference/public-sources/");
   const links = page.locator('a[href^="https://github.com/lightning-it/"]');
   expect(await links.count()).toBeGreaterThan(5);
@@ -245,7 +271,7 @@ test("15 — GitHub links target public repository URLs", async ({ page }) => {
   }
 });
 
-test("16 — unknown paths return the custom 404 page and are absent from search", async ({
+test("17 — unknown paths return the custom 404 page and are absent from search", async ({
   page,
 }) => {
   const response = await page.goto("/not-a-real-public-documentation-path/");

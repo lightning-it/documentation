@@ -241,7 +241,7 @@ const config: Config = {
         },
       ],
       copyright:
-        "Copyright © 2026 Lightning IT. Documentation source licensed under Apache-2.0.",
+        "Copyright © 2026 Lightning IT. Documentation source licensed under MIT.",
     },
     prism: {
       theme: accessibleGithubTheme,

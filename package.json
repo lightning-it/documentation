@@ -23,7 +23,7 @@
     "format:check": "prettier --check .",
     "test:content": "node scripts/validate-content.mjs && npm run test:migration-index",
     "test:migration-index": "node scripts/check-migration-target-index.mjs",
-    "test:licenses": "node scripts/check-licenses.mjs",
+    "test:licenses": "node scripts/check-repository-license.mjs && node scripts/check-licenses.mjs",
     "test:site": "html-validate --config config/html-validate.json \"build/**/*.html\" && node scripts/validate-site.mjs",
     "test:unit": "vitest run && npm run test:validation && npm run test:ihr",
     "test:ihr": "node scripts/validate-ihr.mjs templates/installation-and-handover-record.md",
@@ -49,7 +49,7 @@
     "validate:release": "npm run validate && npm run test:approval && npm run test:reproducible && npm run sbom && npm run sbom:production",
     "check": "npm run validate"
   },
-  "license": "Apache-2.0",
+  "license": "MIT",
   "homepage": "https://docs.l-it.io",
   "repository": {
     "type": "git",
@@ -101,8 +101,8 @@
     "gray-matter": "4.0.3",
     "html-validate": "11.5.6",
     "jsdom": "29.1.1",
-    "lighthouse": "13.4.0",
-    "markdownlint-cli2": "0.23.0",
+    "lighthouse": "13.4.1",
+    "markdownlint-cli2": "0.23.1",
     "pagefind": "1.5.2",
     "parse5": "8.0.1",
     "prettier": "3.9.5",
@@ -112,6 +112,11 @@
     "yaml": "2.9.0"
   },
   "overrides": {
+    "brace-expansion": "5.0.8",
+    "markdownlint-cli2": {
+      "js-yaml": "5.2.2"
+    },
+    "minimatch": "10.2.5",
     "serialize-javascript": "7.0.7",
     "sockjs": {
       "uuid": "11.1.1"

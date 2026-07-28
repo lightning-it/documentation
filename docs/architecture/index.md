@@ -1,7 +1,7 @@
 ---
 id: portfolio-architecture
 title: Portfolio architecture
-description: Understand the peer-product model and the contracts that govern optional interactions.
+description: Understand the five-product model, the ModuLix foundation, and governed interaction contracts.
 slug: /architecture/
 sidebar_position: 1
 document:
@@ -14,47 +14,39 @@ document:
   audience:
     - solution architects
     - platform engineers
-  last_reviewed: "2026-07-14"
+  last_reviewed: "2026-07-28"
   review_cadence: annual
 ---
 
 # Portfolio architecture
 
-The Lightning IT technical product portfolio contains four peer products:
+The Lightning IT technical portfolio contains five sellable products:
 
-| Product                            | Position                | Conceptual verb |
-| ---------------------------------- | ----------------------- | --------------- |
-| [ModuLix](../modulix/index.md)     | Automation Content      | Build           |
-| [IO](../io/index.md)               | Automation Runtime      | Run             |
-| [Wunderbox](../wunderbox/index.md) | Infrastructure Platform | Host            |
-| [Atlas](../atlas/index.md)         | Observability Platform  | Observe         |
+1. AIO;
+2. Wunderbox;
+3. Workbench;
+4. Atlas; and
+5. Platform Governance & Evidence.
 
-None of these products is a child of another. The verbs describe functional
-interaction, not ownership or a mandatory deployment pipeline.
+ModuLix is their shared technical engineering and automation foundation, not a
+sixth sellable product. None of the five products is a child of another. The
+[product taxonomy decision](./product-taxonomy-decision.md) defines the
+migration boundary. Product roles and interaction claims remain subject to
+their own approved public authorities.
 
 ## Optional interaction model
 
-A solution can select ModuLix content, execute approved automation through IO,
-apply change to infrastructure associated with Wunderbox, and observe outcomes
-through Atlas. It can also use any product independently or integrate it with a
-different peer system when the supported release contract allows that.
+A solution may use one or more products and shared ModuLix foundation
+capabilities when a supported release contract explicitly permits it. No
+interaction is implied merely by the portfolio taxonomy.
 
 This public architecture does not claim a specific protocol, shared database,
 control plane, product dependency, or supported topology. Each concrete
 integration needs its own verified version contract.
 
-```mermaid
-flowchart LR
-  accTitle: Optional interactions between peer products
-  accDescr: ModuLix can provide approved content to IO. IO can request an approved infrastructure change from Wunderbox. IO and Wunderbox can provide operational signals to Atlas. Every interaction is optional and the four products remain peers.
-  M["ModuLix — Build"] -. "approved content" .-> I["IO — Run"]
-  I -. "approved change" .-> W["Wunderbox — Host"]
-  I -. "operational signals" .-> A["Atlas — Observe"]
-  W -. "platform signals" .-> A
-```
-
-Dashed arrows show example information or request flows, not containment,
-ownership, or mandatory dependencies.
+The architecture intentionally does not assign unverified product-to-product
+arrows. Each concrete interaction must be supported by a separately reviewed
+contract.
 
 ## Cross-product contract
 

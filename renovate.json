@@ -42,6 +42,14 @@
       "description": "Keep every component of the GitHub Actions toolchain on one version",
       "matchManagers": ["github-actions"],
       "groupName": "github-actions"
+    },
+    {
+      "description": "Keep repository checks aligned with their lockfile",
+      "matchManagers": ["github-actions"],
+      "matchFileNames": [".github/workflows/repository-quality.yml"],
+      "matchDepNames": ["python"],
+      "allowedVersions": "/^3\\.14(?:\\.\\d+)?$/",
+      "groupName": "python 3.14 lockfile runtimes"
     }
   ]
 }

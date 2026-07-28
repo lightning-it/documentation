@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "evidence_classification": "PUBLIC",
+  "entries": [
+    {
+      "public_inventory_id": "platform-governance-evidence-public-product-page",
+      "source_classification": "PUBLIC_AFTER_SANITIZATION",
+      "target_owner": "Lightning IT Documentation Maintainers",
+      "canonical_target_route": "/platform-governance-evidence/overview/",
+      "transformation": "INDEPENDENT_REAUTHORING_AND_SANITIZATION",
+      "metadata_normalization": "REPOSITORY_PRODUCT_STANDARD",
+      "duplicate_disposition": "CONSOLIDATE_IN_CANONICAL_TARGET",
+      "obsolete_disposition": "EXCLUDE_OBSOLETE_TAXONOMY_AND_UNSUPPORTED_CLAIMS",
+      "redirect_decision": "NONE_NO_VERIFIED_PRIOR_PUBLIC_ROUTE",
+      "status": "CONTENT_APPROVED_PRODUCTION_MIGRATION_PENDING",
+      "source_deletion_authorized": false,
+      "public_evidence_boundary": "AGGREGATE_PROVENANCE_AND_PUBLIC_WORKFLOW_EVIDENCE_ONLY",
+      "protected_evidence_boundary": "SOURCE_MAPPING_CLASSIFICATION_FINDINGS_RISKS_AND_RETENTION"
+    }
+  ]
+}
