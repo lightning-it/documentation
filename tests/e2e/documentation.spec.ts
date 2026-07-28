@@ -206,6 +206,26 @@ test("12 — @mobile use navigation at a mobile viewport", async ({ page }) => {
   await expect(page).toHaveURL(/\/architecture\/$/);
 });
 
+test("global navigation exposes the governed portfolio and foundation", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Products", exact: true }).click();
+  const navbar = page.locator(".navbar");
+  for (const destination of [
+    "AIO — Run",
+    "Wunderbox — Host",
+    "Workbench — Develop & Validate",
+    "Atlas — Observe",
+    "Platform Governance & Evidence — Verify",
+  ]) {
+    await expect(navbar.getByRole("link", { name: destination })).toBeVisible();
+  }
+  await expect(
+    navbar.getByRole("link", { name: "Foundation", exact: true }),
+  ).toHaveAttribute("href", "/modulix/");
+});
+
 test("13 — emit no browser console errors", async ({ page }) => {
   const errors: string[] = [];
   page.on("console", (message) => {
