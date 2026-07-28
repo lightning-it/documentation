@@ -15,7 +15,7 @@ document:
     - documentation contributors
     - security and privacy reviewers
     - product owners
-  last_reviewed: "2026-07-25"
+  last_reviewed: "2026-07-28"
   review_cadence: semiannual
 ---
 

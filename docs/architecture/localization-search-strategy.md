@@ -16,7 +16,7 @@ document:
     - translators
     - product owners
     - accessibility reviewers
-  last_reviewed: "2026-07-25"
+  last_reviewed: "2026-07-28"
   review_cadence: annual
 ---
 
