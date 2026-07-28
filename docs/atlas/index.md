@@ -14,7 +14,7 @@ document:
   audience:
     - platform engineers
     - service owners
-  last_reviewed: "2026-07-14"
+  last_reviewed: "2026-07-28"
   review_cadence: annual
 ---
 
@@ -24,10 +24,14 @@ Atlas is the **Observability Platform** product in the Lightning IT portfolio.
 Its conceptual verb is **Observe**: Atlas is the product boundary for turning
 approved operational signals into service and platform insight.
 
-Atlas is a peer of [ModuLix](../modulix/index.md), [IO](../io/index.md), and
-[Wunderbox](../wunderbox/index.md). Those products may emit or consume
-operational context, but Atlas is not their parent and they are not Atlas
-subcomponents.
+Atlas is one of the
+[five sellable products](../architecture/product-taxonomy-decision.md).
+[ModuLix](../modulix/index.md) is the reusable engineering and automation
+content foundation, not a sixth product. AIO and
+[Wunderbox](../wunderbox/index.md) may emit operational signals, Workbench may
+validate observation changes, and Platform Governance & Evidence may evaluate
+evidence derived from authorized observations. These boundaries do not imply a
+bundle, supported integration, or commercial commitment.
 
 ## Public documentation scope
 
@@ -50,6 +54,14 @@ An observation is evidence from a defined source, time window, and processing
 path. It can support a decision only when its provenance, freshness,
 completeness, and interpretation are understood. A dashboard status does not by
 itself prove service health, security-control effectiveness, or compliance.
+
+## Provenance and lifecycle
+
+This document is bounded by the canonical product authority,
+**LIT-PRD-90-Atlas version 12**. That authority approves the
+`https://docs.l-it.io/atlas/` route family and the initial
+`https://docs.l-it.io/atlas/overview/` route. Review is required annually and
+after any material scope, claim, taxonomy, delivery-boundary, or route change.
 
 ## Continue
 

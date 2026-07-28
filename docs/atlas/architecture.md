@@ -52,7 +52,7 @@ release may combine or distribute the boundaries differently.
 
 ## Portfolio interactions
 
-[ModuLix](../modulix/index.md), [IO](../io/index.md), and
+[ModuLix](../modulix/index.md), AIO, and
 [Wunderbox](../wunderbox/index.md) may be observation sources or consumers of
 operational context. The portfolio model does not require any specific signal
 protocol, shared backend, or product dependency.
