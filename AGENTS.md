@@ -20,18 +20,24 @@ authority in this file.
 ## Scope and product model
 
 This public repository owns conceptual, cross-product, and public technical
-documentation for four peer products:
+documentation for five sellable products:
 
-| Product   | Position                | Conceptual verb |
-| --------- | ----------------------- | --------------- |
-| ModuLix   | Automation Content      | Build           |
-| IO        | Automation Runtime      | Run             |
-| Wunderbox | Infrastructure Platform | Host            |
-| Atlas     | Observability Platform  | Observe         |
+1. AIO;
+2. Wunderbox;
+3. Workbench;
+4. Atlas; and
+5. Platform Governance & Evidence.
 
-Never describe one of these products as a child of another. Product marketing
-belongs on `l-it.io`; customer workflows belong in the customer portal; private
-operations remain in approved private repositories.
+ModuLix is the shared technical engineering and automation foundation. It is
+not a sixth sellable product. IO is not an independent sellable product;
+existing IO routes remain transitional until the governed migration in Issue
+[#135](https://github.com/lightning-it/documentation/issues/135) assigns their
+content and redirects without silently breaking published links.
+
+Never describe ModuLix as a sellable peer product or one sellable product as a
+child of another. Product marketing belongs on `l-it.io`; customer workflows
+belong in the customer portal; private operations remain in approved private
+repositories.
 
 ## Non-negotiable publication boundary
 
@@ -163,8 +169,9 @@ evidence, risk registers, customer controls, or audit records.
 
 - Cross-product concepts live below `docs/architecture`, `docs/security`,
   `docs/compliance`, `docs/reference`, `docs/releases`, and `docs/support`.
-- Product pages live below `docs/modulix`, `docs/io`, `docs/wunderbox`, and
-  `docs/atlas` with only meaningful sections.
+- Product pages use the canonical namespaces approved through Issue #135.
+  Existing `docs/modulix` and `docs/io` content is transitional: retain it
+  until that issue records canonical ownership, migration, and redirects.
 - Code-specific setup and contributor instructions remain in the component
   repository and are linked rather than duplicated.
 - Generated references record a public source repository and immutable commit.

@@ -16,7 +16,7 @@ document:
     - implementation owners
     - reviewers
     - delivery engineers
-  last_reviewed: "2026-07-25"
+  last_reviewed: "2026-07-28"
   review_cadence: annual
 ---
 
@@ -85,7 +85,7 @@ flowchart TD
 | governance/license text inconsistencies          | #132 reconcile                                            |
 | incomplete metadata/lifecycle schema             | #133 replace current schema compatibly                    |
 | target routes/navigation absent                  | #134 reconcile and extend                                 |
-| product/foundation taxonomy and page contract    | #135 migrate after approved taxonomy                      |
+| product/foundation taxonomy and page contract    | #135 migrates the taxonomy approved through #147          |
 | Trust Center absent                              | #136 extend existing canonical pages                      |
 | unified Evidence Center absent                   | #137 reconcile existing evidence and extend               |
 | framework-neutral compliance model absent        | #138 extend current BSI page                              |
@@ -93,7 +93,7 @@ flowchart TD
 | end-to-end GitHub traceability absent            | #140 extend existing issue/workflow links                 |
 | migration inventory not executed                 | #141 execute approved classifications                     |
 | immutable Pages promotion incomplete             | existing #40 implements                                   |
-| Platform Governance & Evidence page absent       | existing #115 implements after shared foundations         |
+| Platform Governance & Evidence page absent       | existing #115 implements the fifth product after #147     |
 | final cross-workstream acceptance absent         | #142 validate/integrate                                   |
 | current Docusaurus/build/search baseline         | retain and validate; no rewrite                           |
 | current public/private boundary                  | retain; extend validators only through listed issues      |
@@ -170,7 +170,8 @@ sub-issues of #15 and remain blocked by #38.
 ### [Issue #135](https://github.com/lightning-it/documentation/issues/135) — reconcile portfolio taxonomy and adopt product documentation standard
 
 - Milestone/type/labels: M2; Task; `phase:implement`, `products`, `migration`.
-- Owner/dependencies: Product Owner; #28, #133/#134, #36, #38 taxonomy decision.
+- Owner/dependencies: Product Owner; #28, #133/#134, #36, #38, and the
+  superseding taxonomy decision in #147.
 - Scope/deliverables: approved product/foundation namespaces, landing pages,
   metadata/template adoption, route redirects, shared-content links.
 - Exclusions: new product capabilities or claims, marketing copy, and private

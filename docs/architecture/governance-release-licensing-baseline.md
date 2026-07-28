@@ -15,7 +15,7 @@ document:
     - documentation architects
     - repository maintainers
     - release reviewers
-  last_reviewed: "2026-07-25"
+  last_reviewed: "2026-07-28"
   review_cadence: annual
 ---
 
@@ -40,19 +40,19 @@ created.
 
 ## Reconciled decisions
 
-| Topic                       | Verified current state                                                                                      | Target decision                                                                                                                                       | Owner and follow-up                                           |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Repository classification   | public `generic_managed`; release and artifact type `none`                                                  | retain until an implementation issue changes central inventory                                                                                        | Repository Maintainer                                         |
-| Publishing target           | `.lit/repository.yml` lists no packaged publishing target; workflows and architecture publish a static site | treat `docs.l-it.io` as documentation deployment, not a package registry artifact                                                                     | Documentation Maintainer; #35/#40                             |
-| Branch model                | GitHub default and integration branch `develop`; stable production branch `main`                            | feature PRs target `develop`; promotion `develop` → `main` remains a manual protected gate; backmerge restores parity                                 | Repository Maintainer                                         |
-| Production promotion        | Cloudflare production is associated with protected stable state                                             | build one immutable candidate and promote only after validation, approval, and environment protection                                                 | Production Approver; #35/#40                                  |
-| Release evidence            | disabled for packaged release artifacts                                                                     | retain `release_evidence: false`; require separate documentation deployment and production-acceptance evidence                                        | Evidence Owner; #30/#35/#40                                   |
-| Document approval           | exact-digest mechanism and single-maintainer exception exist                                                | reuse #2; existing evidence never approves changed document sets                                                                                      | Authorized reviewer; #2                                       |
-| License file                | `LICENSE` and GitHub metadata identify MIT                                                                  | MIT is the target repository license unless an authorized legal owner decides otherwise                                                               | Repository Maintainer; implementation reconciliation required |
-| Package metadata            | At planning approval, `package.json` declared a license inconsistent with MIT                               | normalize to MIT through reviewed implementation issue #132                                                                                           | Repository Maintainer                                         |
-| Contributor and README text | At planning approval, contributor and README text conflicted with the MIT badge and file                    | normalize to the accepted MIT target through reviewed implementation issue #132                                                                       | Repository Maintainer                                         |
-| Third-party material        | license checker and generated notices exist                                                                 | preserve each dependency or asset license and attribution independently of repository license                                                         | Documentation Maintainer                                      |
-| Product terminology         | current files describe ModuLix, IO, Wunderbox, and Atlas; #28 proposes a target of five sellable products   | current terminology stays effective until #38 explicitly approves an integrated target; implementation then reconciles all public surfaces atomically | Product Owner; #38 and implementation issues                  |
+| Topic                       | Verified current state                                                                                      | Target decision                                                                                                                           | Owner and follow-up                                           |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Repository classification   | public `generic_managed`; release and artifact type `none`                                                  | retain until an implementation issue changes central inventory                                                                            | Repository Maintainer                                         |
+| Publishing target           | `.lit/repository.yml` lists no packaged publishing target; workflows and architecture publish a static site | treat `docs.l-it.io` as documentation deployment, not a package registry artifact                                                         | Documentation Maintainer; #35/#40                             |
+| Branch model                | GitHub default and integration branch `develop`; stable production branch `main`                            | feature PRs target `develop`; promotion `develop` → `main` remains a manual protected gate; backmerge restores parity                     | Repository Maintainer                                         |
+| Production promotion        | Cloudflare production is associated with protected stable state                                             | build one immutable candidate and promote only after validation, approval, and environment protection                                     | Production Approver; #35/#40                                  |
+| Release evidence            | disabled for packaged release artifacts                                                                     | retain `release_evidence: false`; require separate documentation deployment and production-acceptance evidence                            | Evidence Owner; #30/#35/#40                                   |
+| Document approval           | exact-digest mechanism and single-maintainer exception exist                                                | reuse #2; existing evidence never approves changed document sets                                                                          | Authorized reviewer; #2                                       |
+| License file                | `LICENSE` and GitHub metadata identify MIT                                                                  | MIT is the target repository license unless an authorized legal owner decides otherwise                                                   | Repository Maintainer; implementation reconciliation required |
+| Package metadata            | At planning approval, `package.json` declared a license inconsistent with MIT                               | normalize to MIT through reviewed implementation issue #132                                                                               | Repository Maintainer                                         |
+| Contributor and README text | At planning approval, contributor and README text conflicted with the MIT badge and file                    | normalize to the accepted MIT target through reviewed implementation issue #132                                                           | Repository Maintainer                                         |
+| Third-party material        | license checker and generated notices exist                                                                 | preserve each dependency or asset license and attribution independently of repository license                                             | Documentation Maintainer                                      |
+| Product terminology         | the package approved through #38 retained a conflicting four-peer-product model                             | #147 supersedes that model with five sellable products and ModuLix as the separate foundation; #135 reconciles public surfaces atomically | Product Owner; #147 and #135                                  |
 
 ## Publication and release boundary
 
@@ -91,7 +91,7 @@ This architecture PR does not perform those changes.
 | ----------------------------------------------------- | ----------------------------------------------------- |
 | Static Docusaurus and local Pagefind architecture     | existing `ARCHITECTURE.md`; formalized by #25         |
 | Public/private trust boundary                         | accepted #32 architecture                             |
-| Product taxonomy and ModuLix role                     | maintainer decision in integrated #38 package         |
+| Product taxonomy and ModuLix role                     | superseding decision in #147                          |
 | Immutable promotion and Cloudflare authentication     | #35 architecture and ADR proposal where consequential |
 | Exact-digest approval and single-maintainer exception | `AGENTS.md`, authority evidence, and issue #2         |
 | Repository-license normalization                      | this target decision plus later implementation PR     |
@@ -106,8 +106,9 @@ This architecture PR does not perform those changes.
   acceptance proves production.
 - Existing approval evidence is digest-bound and cannot cover newly added
   architecture or product pages.
-- The target product taxonomy is not implemented or effective until #38 records
-  the authorized decision.
+- The product taxonomy is decided through #147 but is not implemented until
+  #135 reconciles the public surfaces with reviewed migration evidence.
 
-No unresolved decision in this record authorizes implementation. Consequential
-target decisions flow into #38 for explicit maintainer approval.
+The #147 taxonomy decision authorizes only its bounded architecture
+reconciliation. Consequential implementation remains within its named issue and
+review gates.

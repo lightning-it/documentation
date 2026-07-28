@@ -16,7 +16,7 @@ document:
     - architecture reviewers
     - implementation owners
     - security and compliance reviewers
-  last_reviewed: "2026-07-26"
+  last_reviewed: "2026-07-28"
   review_cadence: annual
 ---
 
@@ -31,6 +31,12 @@ Name System (DNS) changes, credential creation, migration, or publication.
 Implementation remains blocked until an authorized human records the exact
 decision required by
 [Issue #38](https://github.com/lightning-it/documentation/issues/38).
+
+The product taxonomy statements in the original package are superseded by the
+[product taxonomy decision](./product-taxonomy-decision.md) recorded through
+[Issue #147](https://github.com/lightning-it/documentation/issues/147). The
+original package identity below remains a historical record of the reviewed
+source set; it does not bind or approve this later amendment.
 
 ## Package identity
 
@@ -99,21 +105,21 @@ architecture is complete.
 
 ## Consistency review
 
-| Concern               | Package-wide invariant                                                                                       | Result |
-| --------------------- | ------------------------------------------------------------------------------------------------------------ | ------ |
-| product model         | ModuLix, IO, Wunderbox, and Atlas are peer products; foundation topics are cross-product                     | pass   |
-| publication boundary  | only `PUBLIC` or independently reviewed `PUBLIC_AFTER_SANITIZATION` may publish; uncertainty remains private | pass   |
-| document identity     | stable IDs and canonical routes are unique; aliases use one-hop redirects                                    | pass   |
-| lifecycle terminology | status, approval status, version, owner, approver, review, supersession, and retirement retain one meaning   | pass   |
-| approval              | technical checks and AI review never substitute for role-authorized, exact-digest human approval             | pass   |
-| evidence              | missing, failed, withheld, expired, revoked, and superseded evidence never becomes implicit success          | pass   |
-| compliance claims     | mappings explain relationships and never assert certification, conformity, audit success, or risk acceptance | pass   |
-| localization          | English is the operational source/fallback; translated publication requires owned human review               | pass   |
-| search                | draft, restricted, stale, and unsupported content is partitioned or excluded according to explicit policy    | pass   |
-| traceability          | mutable GitHub metadata is an observed snapshot; claims bind to immutable identities                         | pass   |
-| delivery              | one validated artifact is promoted unchanged; preview and production remain separated and protected          | pass   |
-| migration             | every source receives an explicit public-safe disposition; private content never enters this repository      | pass   |
-| phase gate            | architecture approval in #38 precedes implementation; production has additional independent gates            | pass   |
+| Concern               | Package-wide invariant                                                                                                | Result          |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------- |
+| product model         | AIO, Wunderbox, Workbench, Atlas, and Platform Governance & Evidence are sellable products; ModuLix is the foundation | amended by #147 |
+| publication boundary  | only `PUBLIC` or independently reviewed `PUBLIC_AFTER_SANITIZATION` may publish; uncertainty remains private          | pass            |
+| document identity     | stable IDs and canonical routes are unique; aliases use one-hop redirects                                             | pass            |
+| lifecycle terminology | status, approval status, version, owner, approver, review, supersession, and retirement retain one meaning            | pass            |
+| approval              | technical checks and AI review never substitute for role-authorized, exact-digest human approval                      | pass            |
+| evidence              | missing, failed, withheld, expired, revoked, and superseded evidence never becomes implicit success                   | pass            |
+| compliance claims     | mappings explain relationships and never assert certification, conformity, audit success, or risk acceptance          | pass            |
+| localization          | English is the operational source/fallback; translated publication requires owned human review                        | pass            |
+| search                | draft, restricted, stale, and unsupported content is partitioned or excluded according to explicit policy             | pass            |
+| traceability          | mutable GitHub metadata is an observed snapshot; claims bind to immutable identities                                  | pass            |
+| delivery              | one validated artifact is promoted unchanged; preview and production remain separated and protected                   | pass            |
+| migration             | every source receives an explicit public-safe disposition; private content never enters this repository               | pass            |
+| phase gate            | architecture approval in #38 precedes implementation; production has additional independent gates                     | pass            |
 
 The review found no unresolved contradiction between the authoritative
 artifacts. Implementation must preserve these invariants and return any new
@@ -125,8 +131,8 @@ consequential decision to architecture review.
 
 - Keep Docusaurus and the existing public repository rather than redesigning
   the platform from scratch.
-- Preserve the four-peer-product model and use cross-product foundation
-  sections for shared engineering, trust, evidence, compliance, and support.
+- Use the five-product model established by #147 and present ModuLix as the
+  shared technical engineering and automation foundation.
 - Use explicit canonical ownership, stable routes, controlled metadata, and
   independent approval bound to deterministic document digests.
 - Separate public summaries and indexes from protected evidence and private
