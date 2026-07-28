@@ -6,22 +6,108 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      candidate_commit:
+        description: Full lowercase develop commit to deploy and verify
+        required: true
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: promotion-preview-${{ github.event.pull_request.number }}
+  group: promotion-preview-${{ github.event.pull_request.number || inputs.candidate_commit }}
   cancel-in-progress: true
 
 jobs:
-  preview:
-    name: preview / required
+  deploy:
+    name: deploy / preview
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment:
-      name: preview
-      deployment: false
+    environment: preview
+    env:
+      BASE_URL: https://develop.lightning-it-documentation.pages.dev/
+      PREVIEW_URL: https://develop.lightning-it-documentation.pages.dev/
+      EXPECTED_PREVIEW_COMMIT: ${{ inputs.candidate_commit }}
+
+    steps:
+      - name: Validate exact develop candidate
+        env:
+          CANDIDATE_COMMIT: ${{ inputs.candidate_commit }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$CANDIDATE_COMMIT" =~ ^[0-9a-f]{40}$ ]] || {
+            echo "::error::candidate_commit must be a full lowercase commit ID."
+            exit 1
+          }
+          develop_commit="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/develop" --jq '.object.sha')"
+          [[ "$CANDIDATE_COMMIT" == "$develop_commit" ]] || {
+            echo "::error::candidate_commit is not the current develop tip."
+            exit 1
+          }
+
+      - name: Checkout exact develop candidate
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ inputs.candidate_commit }}
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Activate the pinned npm release
+        run: npm install --global --no-audit --no-fund npm@11.18.0 && test "$(npm --version)" = "11.18.0"
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Build exact reviewed preview candidate
+        run: npm run build
+
+      - name: Deploy exact candidate through the preview environment
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: npm
+          wranglerVersion: 4.114.0
+          command: >-
+            pages deploy build
+            --project-name lightning-it-documentation
+            --branch develop
+            --commit-hash "${{ inputs.candidate_commit }}"
+            --commit-dirty=false
+
+      - name: Install Chromium
+        run: npx --no-install playwright install --with-deps chromium
+
+      - name: Validate exact-commit preview, search, headers, and accessibility
+        run: npm run test:preview
+
+      - name: Upload immutable preview deployment evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: promotion-preview-deploy-${{ inputs.candidate_commit }}
+          path: |
+            evidence/generated/preview-validation.json
+            evidence/generated/preview-playwright.json
+            playwright-report/
+            test-results/
+          if-no-files-found: warn
+          retention-days: 90
+
+  preview:
+    name: preview / required
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     env:
       BASE_URL: https://develop.lightning-it-documentation.pages.dev/
       PREVIEW_URL: https://develop.lightning-it-documentation.pages.dev/
@@ -57,24 +143,10 @@ jobs:
       - name: Build exact reviewed preview candidate
         run: npm run build
 
-      - name: Deploy exact candidate through the preview environment
-        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          packageManager: npm
-          wranglerVersion: 4.114.0
-          command: >-
-            pages deploy build
-            --project-name lightning-it-documentation
-            --branch develop
-            --commit-hash "${{ github.event.pull_request.head.sha }}"
-            --commit-dirty=false
-
       - name: Install Chromium
         run: npx --no-install playwright install --with-deps chromium
 
-      - name: Validate exact-commit preview, search, headers, and accessibility
+      - name: Wait for and validate exact-commit preview
         run: npm run test:preview
 
       - name: Upload immutable preview acceptance evidence
