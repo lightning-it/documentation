@@ -131,7 +131,7 @@ test("09 — open compliance documentation", async ({ page }) => {
   await expectPage(page, "/compliance/", /Compliance documentation/i);
 });
 
-test("render accessible audience tabs and peer-product diagram", async ({
+test("render accessible audience tabs and approved product taxonomy", async ({
   page,
 }) => {
   await expectPage(page, "/getting-started/", /Get started/i);
@@ -145,13 +145,14 @@ test("render accessible audience tabs and peer-product diagram", async ({
   );
 
   await expectPage(page, "/architecture/", /Portfolio architecture/i);
-  const diagram = page.locator(".docusaurus-mermaid-container svg").first();
-  await expect(diagram).toBeVisible();
-  await expect(diagram.locator("title")).toContainText(
-    "Optional interactions between peer products",
-  );
-  await expect(diagram).toContainText("ModuLix — Build");
-  await expect(diagram).toContainText("Atlas — Observe");
+  const main = page.getByRole("main");
+  await expect(main).toContainText("five sellable products");
+  await expect(main).toContainText("AIO");
+  await expect(main).toContainText("Wunderbox");
+  await expect(main).toContainText("Workbench");
+  await expect(main).toContainText("Atlas");
+  await expect(main).toContainText("Platform Governance & Evidence");
+  await expect(main).toContainText("not a sixth sellable product");
 });
 
 test("10 — switch between light and dark modes", async ({ page }) => {
