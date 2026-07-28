@@ -1,4 +1,7 @@
-import { isVerifiedOwnedCloudflareChallenge } from "./external-links.mjs";
+import {
+  isKnownPublisherAccessBlock,
+  isVerifiedOwnedCloudflareChallenge,
+} from "./external-links.mjs";
 
 export const productionOrigin = "https://docs.l-it.io";
 // The custom domain is protected by Cloudflare's public WAF.  The Pages host
@@ -150,11 +153,17 @@ function validateExternalLinkEvidence(record, expectedCommit) {
             server: result.challengeEvidence?.server ?? "",
           }),
         });
+      const publisherAccessBlocked =
+        result?.verification === "publisher-access-blocked" &&
+        isKnownPublisherAccessBlock(result.url, {
+          status: result.status,
+          url: result.finalUrl,
+        });
       if (
         result?.ok !== true ||
         !Number.isInteger(result.status) ||
         result.status < 200 ||
-        (result.status >= 400 && !verifiedChallenge)
+        (result.status >= 400 && !verifiedChallenge && !publisherAccessBlocked)
       ) {
         return false;
       }

@@ -166,6 +166,19 @@ describe("validateProductionAcceptanceArtifacts", () => {
       validateProductionAcceptanceArtifacts(challengedLinks),
       expectedCommit,
     );
+
+    const publisherBlockedLinks = passingArtifacts();
+    publisherBlockedLinks.externalLinks.results[0] = {
+      url: "https://www.iso.org/standard/78974.html",
+      ok: true,
+      status: 403,
+      finalUrl: "https://www.iso.org/standard/78974.html",
+      verification: "publisher-access-blocked",
+    };
+    assert.equal(
+      validateProductionAcceptanceArtifacts(publisherBlockedLinks),
+      expectedCommit,
+    );
   });
 
   it("rejects unverified or non-owned external-link challenges", () => {
@@ -181,6 +194,18 @@ describe("validateProductionAcceptanceArtifacts", () => {
         server: "cloudflare",
         ray: "test-ray",
       },
+    };
+    assert.throws(
+      () => validateProductionAcceptanceArtifacts(artifacts),
+      /external-link evidence is stale/,
+    );
+
+    artifacts.externalLinks.results[0] = {
+      url: "https://www.iso.org/standard/missing.html",
+      ok: true,
+      status: 403,
+      finalUrl: "https://www.iso.org/standard/missing.html",
+      verification: "publisher-access-blocked",
     };
     assert.throws(
       () => validateProductionAcceptanceArtifacts(artifacts),

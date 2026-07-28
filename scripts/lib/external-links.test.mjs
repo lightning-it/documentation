@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import {
+  isKnownPublisherAccessBlock,
   isRetryableExternalLinkResult,
   isVerifiedOwnedCloudflareChallenge,
 } from "./external-links.mjs";
@@ -82,5 +83,50 @@ describe("isRetryableExternalLinkResult", () => {
     ]) {
       assert.equal(isRetryableExternalLinkResult(result), false);
     }
+  });
+});
+
+describe("isKnownPublisherAccessBlock", () => {
+  it("accepts only exact allowlisted publisher URLs returning 403", () => {
+    for (const url of [
+      "https://www.iso.org/information-security/it-change-management",
+      "https://www.iso.org/standard/78974.html",
+    ]) {
+      assert.equal(
+        isKnownPublisherAccessBlock(url, { status: 403, url }),
+        true,
+      );
+    }
+  });
+
+  it("rejects redirects, other paths, other statuses, and malformed URLs", () => {
+    assert.equal(
+      isKnownPublisherAccessBlock("https://www.iso.org/standard/missing.html", {
+        status: 403,
+        url: "https://www.iso.org/standard/missing.html",
+      }),
+      false,
+    );
+    assert.equal(
+      isKnownPublisherAccessBlock("https://www.iso.org/standard/78974.html", {
+        status: 403,
+        url: "https://example.org/",
+      }),
+      false,
+    );
+    assert.equal(
+      isKnownPublisherAccessBlock("https://www.iso.org/standard/78974.html", {
+        status: 404,
+        url: "https://www.iso.org/standard/78974.html",
+      }),
+      false,
+    );
+    assert.equal(
+      isKnownPublisherAccessBlock("not a URL", {
+        status: 403,
+        url: "not a URL",
+      }),
+      false,
+    );
   });
 });

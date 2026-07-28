@@ -9,6 +9,7 @@ import {
   writeEvidence,
 } from "./lib/validation.mjs";
 import {
+  isKnownPublisherAccessBlock,
   isRetryableExternalLinkResult,
   isVerifiedOwnedCloudflareChallenge,
 } from "./lib/external-links.mjs";
@@ -109,13 +110,21 @@ async function checkUrl(url) {
     };
   }
   const verifiedChallenge = isVerifiedOwnedCloudflareChallenge(url, response);
+  const publisherAccessBlocked = isKnownPublisherAccessBlock(url, response);
   const finalUrl = parsed.hostname === "github.com" ? url : response.url || url;
   return {
     url,
-    ok: (response.status >= 200 && response.status < 400) || verifiedChallenge,
+    ok:
+      (response.status >= 200 && response.status < 400) ||
+      verifiedChallenge ||
+      publisherAccessBlocked,
     status: response.status,
     finalUrl,
-    verification: verifiedChallenge ? "owned-cloudflare-challenge" : "http",
+    verification: verifiedChallenge
+      ? "owned-cloudflare-challenge"
+      : publisherAccessBlocked
+        ? "publisher-access-blocked"
+        : "http",
     challengeEvidence: verifiedChallenge
       ? {
           mitigation: response.headers.get("cf-mitigated"),
