@@ -20,15 +20,15 @@ document:
 
 # ModuLix reference
 
-## Product identity
+## Foundation identity
 
-| Field                               | Value                 |
-| ----------------------------------- | --------------------- |
-| Portfolio position                  | Automation Content    |
-| Conceptual verb                     | Build                 |
-| Peer products                       | AIO, Wunderbox, Atlas |
-| Public-safe role example            | `lit.rhel.baseline`   |
-| Public documentation classification | `PUBLIC`              |
+| Field                               | Value                                                             |
+| ----------------------------------- | ----------------------------------------------------------------- |
+| Portfolio position                  | Shared automation-content foundation; not a sellable peer product |
+| Conceptual verb                     | Build                                                             |
+| Products that may consume it        | AIO, Wunderbox, Workbench, Atlas, Platform Governance & Evidence  |
+| Public-safe role example            | `lit.rhel.baseline`                                               |
+| Public documentation classification | `PUBLIC`                                                          |
 
 ## Canonical public sources
 
