@@ -11,6 +11,23 @@ const sidebars: SidebarsConfig = {
       items: [
         {
           type: "category",
+          label: "AIO — Run",
+          link: {
+            type: "generated-index",
+            slug: "/aio/",
+            title: "AIO documentation",
+            description:
+              "Automation and Operations Platform: public purpose, boundaries, generations, and acceptance.",
+          },
+          items: [
+            "aio/aio-overview",
+            "aio/aio-product-boundary",
+            "aio/aio-generation-model",
+            "aio/aio-acceptance-publication",
+          ],
+        },
+        {
+          type: "category",
           label: "ModuLix — Build",
           link: {
             type: "generated-index",
