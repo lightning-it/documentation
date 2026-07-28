@@ -62,7 +62,7 @@ jobs:
   deploy:
     name: Deploy immutable artifact to Cloudflare Pages
     needs: evidence
-    if: github.repository == 'lightning-it/documentation'
+    if: github.repository == 'lightning-it/documentation' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: production
