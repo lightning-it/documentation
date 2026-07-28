@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { readFileSync } from "node:fs";
 
 async function expectPage(page: Page, path: string, heading: RegExp) {
   const response = await page.goto(path);
@@ -81,20 +82,36 @@ test("search covers every required product, task, and migrated public role term"
 
 test("03 — open ModuLix documentation", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: /Open ModuLix docs/i }).click();
+  await page.getByRole("link", { name: /Build reusable automation/i }).click();
   await expect(page).toHaveURL(/\/modulix\/$/);
   await expect(
-    page.getByRole("heading", { level: 1, name: /ModuLix documentation/i }),
+    page.getByRole("heading", {
+      level: 1,
+      name: /ModuLix foundation documentation/i,
+    }),
   ).toBeVisible();
 });
 
-test("04 — navigate to IO", async ({ page }) => {
-  await expectPage(page, "/io/", /IO documentation/i);
-  await page
-    .getByRole("link", { name: /IO overview/i })
-    .first()
-    .click();
-  await expect(page).toHaveURL(/\/io\/overview\/$/);
+test("04 — redirect retired IO routes directly to AIO", async ({ page }) => {
+  const redirects = readFileSync("static/_redirects", "utf8");
+  const expectedMappings = [
+    "/io/ /aio/ 301",
+    "/io/overview/ /aio/overview/ 301",
+    "/io/concepts/ /aio/concepts/ 301",
+    "/io/architecture/ /aio/architecture/ 301",
+    "/io/operations/ /aio/operations/ 301",
+    "/io/security/ /aio/security/ 301",
+    "/io/troubleshooting/ /aio/troubleshooting/ 301",
+  ];
+
+  for (const mapping of expectedMappings) {
+    expect(redirects).toContain(mapping);
+  }
+
+  await expectPage(page, "/aio/security/", /AIO security/i);
+  await expect(
+    page.getByRole("heading", { level: 1, name: /AIO security/i }),
+  ).toBeVisible();
 });
 
 test("05 — navigate to Wunderbox", async ({ page }) => {

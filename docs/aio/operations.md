@@ -1,8 +1,8 @@
 ---
-id: io-operations
-title: IO operations
+id: aio-operations
+title: AIO operations
 description: Prepare and review controlled automation runs without assuming an implementation-specific interface.
-slug: /io/operations/
+slug: /aio/operations/
 sidebar_position: 4
 document:
   status: maintained
@@ -18,10 +18,10 @@ document:
   review_cadence: annual
 ---
 
-# IO operations
+# AIO operations
 
 This run-control checklist is interface-neutral. Apply it through the procedures
-documented by the selected IO release and environment.
+documented by the selected AIO release and environment.
 
 ## Authorization and preflight
 

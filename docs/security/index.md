@@ -21,7 +21,7 @@ document:
 # Security overview
 
 Security spans the complete product interaction: the integrity of ModuLix
-content, the authorization of IO execution, the management and consumer
+content, the authorization of AIO execution, the management and consumer
 boundaries of Wunderbox, and the confidentiality and integrity of Atlas
 observations.
 
@@ -49,7 +49,7 @@ acceptance, customer requirements, or audit evidence.
 | Product   | Primary public security lens                                                                |
 | --------- | ------------------------------------------------------------------------------------------- |
 | ModuLix   | Content provenance, dependencies, input safety, privilege, and convergence                  |
-| IO        | Request authorization, runtime identity, secret exposure, execution isolation, and evidence |
+| AIO       | Request authorization, runtime identity, secret exposure, execution isolation, and evidence |
 | Wunderbox | Management access, consumer isolation, artifact integrity, data lifecycle, and recovery     |
 | Atlas     | Source trust, data minimization, observation integrity, access scope, export, and retention |
 
@@ -69,6 +69,6 @@ decisions, and verification evidence in their protected registers.
 - [Publication boundary](./publication-boundary.md)
 - [Backup and recovery](./backup-and-recovery.md)
 - [BSI mapping approach](../compliance/bsi-mapping.md)
-- Product-specific security: [ModuLix](../modulix/security.md),
-  [IO](../io/security.md), [Wunderbox](../wunderbox/security.md), and
-  [Atlas](../atlas/security.md)
+- Foundation security: [ModuLix](../modulix/security.md)
+- Product-specific security: [AIO](../aio/security.md),
+  [Wunderbox](../wunderbox/security.md), and [Atlas](../atlas/security.md)

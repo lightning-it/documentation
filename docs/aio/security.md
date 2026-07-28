@@ -1,8 +1,8 @@
 ---
-id: io-security
-title: IO security
+id: aio-security
+title: AIO security
 description: Protect automation runtime identities, secrets, targets, and execution evidence.
-slug: /io/security/
+slug: /aio/security/
 sidebar_position: 5
 document:
   status: maintained
@@ -18,7 +18,7 @@ document:
   review_cadence: semiannual
 ---
 
-# IO security
+# AIO security
 
 An automation runtime bridges source, identity, secrets, networks, and managed
 targets. Its security review must cover the complete run path rather than only
@@ -58,6 +58,6 @@ execution according to the incident procedure, preserve authorized evidence,
 and rotate or revoke affected credentials. Do not publish raw diagnostics or
 internal endpoints while seeking support.
 
-This page is a review model, not an assurance statement about a particular IO
+This page is a review model, not an assurance statement about a particular AIO
 release. See the site-wide [security overview](../security/index.md) and
 [compliance mapping](../compliance/bsi-mapping.md).

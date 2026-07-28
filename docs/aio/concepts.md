@@ -1,8 +1,8 @@
 ---
-id: io-concepts
-title: IO concepts
+id: aio-concepts
+title: AIO concepts
 description: Learn the deployment-neutral vocabulary for controlled automation execution.
-slug: /io/concepts/
+slug: /aio/concepts/
 sidebar_position: 2
 document:
   status: maintained
@@ -18,10 +18,10 @@ document:
   review_cadence: annual
 ---
 
-# IO concepts
+# AIO concepts
 
 The terms on this page form a conceptual model. They make architecture and
-operations discussions precise without claiming that IO implements a named API,
+operations discussions precise without claiming that AIO implements a named API,
 protocol, or data model.
 
 ## Execution vocabulary

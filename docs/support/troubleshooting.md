@@ -46,7 +46,7 @@ protected information.
 
 - **ModuLix:** Did the immutable content and validated inputs express the
   intended bounded change?
-- **IO:** Was the request authorized and executed with the expected identity,
+- **AIO:** Was the request authorized and executed with the expected identity,
   scope, dependencies, and termination state?
 - **Wunderbox:** Did resource, platform-service, management, or consumer health
   diverge within a known failure domain?
@@ -71,7 +71,7 @@ sanitized reproduction. Never paste raw logs by default. Inspect output for
 tokens, customer data, real hosts and addresses, internal paths, topology,
 security findings, and recovery details before sharing.
 
-Product flows: [ModuLix usage](../modulix/usage.md),
-[IO troubleshooting](../io/troubleshooting.md),
+Foundation and product flows: [ModuLix usage](../modulix/usage.md),
+[AIO troubleshooting](../aio/troubleshooting.md),
 [Wunderbox troubleshooting](../wunderbox/troubleshooting.md), and
 [Atlas troubleshooting](../atlas/troubleshooting.md).

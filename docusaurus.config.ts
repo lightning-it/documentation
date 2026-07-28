@@ -128,7 +128,7 @@ const config: Config = {
       {
         name: "keywords",
         content:
-          "Lightning IT, ModuLix, IO, Wunderbox, Atlas, automation, infrastructure, observability",
+          "Lightning IT, AIO, ModuLix, Wunderbox, Workbench, Atlas, governance, automation, infrastructure, observability",
       },
       {
         name: "application-name",
@@ -221,10 +221,7 @@ const config: Config = {
         },
         {
           title: "Foundation",
-          items: [
-            { label: "ModuLix", to: "/modulix/" },
-            { label: "Transitional IO documentation", to: "/io/" },
-          ],
+          items: [{ label: "ModuLix", to: "/modulix/" }],
         },
         {
           title: "Documentation",

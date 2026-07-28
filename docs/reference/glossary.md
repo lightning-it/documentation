@@ -60,13 +60,13 @@ action.
 : An Ansible identifier containing namespace, collection, and content name,
 such as the verified public role name `lit.rhel.baseline`.
 
-**IO**
-: The peer Lightning IT product positioned as Automation Runtime; its
-conceptual verb is Run.
+**AIO**
+: Automated Intelligent Operator, the peer Lightning IT automation and
+operations product responsible for controlled execution and orchestration.
 
 **ModuLix**
-: The peer Lightning IT product positioned as Automation Content; its
-conceptual verb is Build.
+: The shared engineering and automation-content foundation. It is not a
+sellable peer product.
 
 **Recovery point objective (RPO)**
 : The approved maximum data-loss interval used to design recovery. Real values
