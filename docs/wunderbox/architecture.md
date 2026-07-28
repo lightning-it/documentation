@@ -56,7 +56,7 @@ visible.
 ## Portfolio relationships
 
 [ModuLix](../modulix/index.md) may supply reusable automation content,
-AIO may provide a controlled execution boundary, and
+[AIO](../aio/index.md) may provide a controlled execution boundary, and
 [Atlas](../atlas/index.md) may provide an observability boundary. This model
 does not require those integrations and does not specify their protocols.
 
