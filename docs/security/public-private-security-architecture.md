@@ -5,8 +5,8 @@ description: Govern classification, publication, declassification, privacy revie
 slug: /security/public-private-security-architecture/
 sidebar_position: 3
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
@@ -15,7 +15,7 @@ document:
     - documentation contributors
     - security and privacy reviewers
     - product owners
-  last_reviewed: "2026-07-25"
+  last_reviewed: "2026-07-28"
   review_cadence: semiannual
 ---
 

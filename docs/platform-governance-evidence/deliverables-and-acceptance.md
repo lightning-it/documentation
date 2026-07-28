@@ -5,8 +5,8 @@ description: Define bounded deliverables, verification, review, and acceptance c
 slug: /platform-governance-evidence/deliverables-and-acceptance/
 sidebar_position: 4
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

@@ -5,8 +5,8 @@ description: Define the target site map, taxonomy, canonical routes, cross-links
 slug: /architecture/information-architecture/
 sidebar_position: 8
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

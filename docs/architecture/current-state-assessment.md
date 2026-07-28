@@ -5,8 +5,8 @@ description: Record the evidence-backed baseline and prioritized gaps against do
 slug: /architecture/current-state-assessment/
 sidebar_position: 4
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers

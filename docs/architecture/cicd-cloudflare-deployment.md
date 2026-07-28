@@ -5,8 +5,8 @@ description: Define the implementation-ready immutable build, preview, promotion
 slug: /architecture/cicd-cloudflare-deployment/
 sidebar_position: 15
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
@@ -16,7 +16,7 @@ document:
     - repository maintainers
     - production approvers
     - security reviewers
-  last_reviewed: "2026-07-25"
+  last_reviewed: "2026-07-28"
   review_cadence: semiannual
 ---
 

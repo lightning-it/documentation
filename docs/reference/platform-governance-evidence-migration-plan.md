@@ -5,8 +5,8 @@ description: Define the reversible and publication-safe migration contract for t
 slug: /reference/platform-governance-evidence-migration-plan/
 sidebar_position: 5
 document:
-  status: review-candidate
-  approval_status: pending
+  status: maintained
+  approval_status: approved
   version: "1.0"
   classification: PUBLIC
   owner: Lightning IT Documentation Maintainers
@@ -29,18 +29,18 @@ original evidence.
 
 ## Inventory decision
 
-| Field                 | Decision                                                        |
-| --------------------- | --------------------------------------------------------------- |
-| Public inventory ID   | `platform-governance-evidence-public-product-page`              |
-| Source class          | `PUBLIC_AFTER_SANITIZATION`                                     |
-| Target owner          | Lightning IT Documentation Maintainers                          |
-| Canonical target      | `/platform-governance-evidence/`                                |
-| Target status         | in review through issue #115                                    |
-| Method                | independent re-authoring and sanitization                       |
-| Duplicate disposition | consolidate public product definition into the canonical target |
-| Obsolete disposition  | do not migrate obsolete taxonomy or unsupported claims          |
-| Redirect              | none; no verified prior public stable route                     |
-| Source deletion       | not authorized                                                  |
+| Field                 | Decision                                                          |
+| --------------------- | ----------------------------------------------------------------- |
+| Public inventory ID   | `platform-governance-evidence-public-product-page`                |
+| Source class          | `PUBLIC_AFTER_SANITIZATION`                                       |
+| Target owner          | Lightning IT Documentation Maintainers                            |
+| Canonical target      | `/platform-governance-evidence/overview/`                         |
+| Target status         | content approved; production migration pending through issue #115 |
+| Method                | independent re-authoring and sanitization                         |
+| Duplicate disposition | consolidate public product definition into the canonical target   |
+| Obsolete disposition  | do not migrate obsolete taxonomy or unsupported claims            |
+| Redirect              | none; no verified prior public stable route                       |
+| Source deletion       | not authorized                                                    |
 
 The associated machine-readable public inventory is stored at
 `evidence/platform-governance-evidence-migration-inventory.json` in the same
@@ -79,10 +79,11 @@ product authority and reviewed for information protection.
 
 The canonical page uses a stable identifier and slug, owner and accountable
 approver role, named audience, `classification: PUBLIC`, version, review date,
-and cadence. It begins as `status: review-candidate` and
-`approval_status: pending`. Creation provenance, implementation state,
-retention, review trigger, and change history remain traceable without naming
-the protected source.
+and cadence. It began as `status: review-candidate` and
+`approval_status: pending`; the exact reviewed revision is now
+`status: maintained` and `approval_status: approved`. Creation provenance,
+implementation state, retention, review trigger, and change history remain
+traceable without naming the protected source.
 
 ## Migration gates
 
@@ -117,4 +118,5 @@ Migration is complete only when the canonical page is merged, its exact digest
 is approved, the concrete route and deployed revision are production-verified,
 the information-protection review is recorded, and the private product
 authority is updated with the verified public URL. Until then, the inventory
-status remains planned or in review.
+records the content as approved for publication and the production migration as
+pending.
