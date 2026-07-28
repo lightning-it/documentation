@@ -57,7 +57,8 @@ atomic portfolio migration:
   and
 - validate navigation, search, links, accessibility, claims, and metadata.
 
-Until #135 is merged, existing ModuLix and IO pages are transitional
+Until #135 is merged, existing ModuLix and IO pages, product data, home-page and
+getting-started copy, navigation, and related public surfaces are transitional
 implementation state and must not be treated as the approved portfolio model.
 
 Issue [#115](https://github.com/lightning-it/documentation/issues/115) owns the
