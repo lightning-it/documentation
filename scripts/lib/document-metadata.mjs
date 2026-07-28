@@ -78,15 +78,15 @@ export function validateDocumentMetadata(
   }
   if (
     document.approval_status === "pending" &&
-    document.status !== "review-candidate"
+    !["draft", "review-candidate"].includes(document.status)
   ) {
-    errors.push("pending approval requires review-candidate status");
+    errors.push("pending approval requires draft or review-candidate status");
   }
   if (
     document.approval_status === "approved" &&
-    document.status === "review-candidate"
+    ["draft", "review-candidate"].includes(document.status)
   ) {
-    errors.push("approved content cannot remain review-candidate");
+    errors.push("approved content cannot remain draft or review-candidate");
   }
 
   if (version === "1.0") {
@@ -104,14 +104,22 @@ export function validateDocumentMetadata(
   if (!stringSet(registry?.content_types).has(document.content_type)) {
     errors.push(`unknown content type ${String(document.content_type)}`);
   }
-  for (const audience of document.audience ?? []) {
-    if (!stringSet(registry?.audiences).has(audience)) {
-      errors.push(`unknown audience ${String(audience)}`);
+  if (!Array.isArray(document.audience)) {
+    errors.push("audience must be an array");
+  } else {
+    for (const audience of document.audience) {
+      if (!stringSet(registry?.audiences).has(audience)) {
+        errors.push(`unknown audience ${String(audience)}`);
+      }
     }
   }
-  for (const trigger of document.review_triggers ?? []) {
-    if (!stringSet(registry?.review_triggers).has(trigger)) {
-      errors.push(`unknown review trigger ${String(trigger)}`);
+  if (!Array.isArray(document.review_triggers)) {
+    errors.push("review triggers must be an array");
+  } else {
+    for (const trigger of document.review_triggers) {
+      if (!stringSet(registry?.review_triggers).has(trigger)) {
+        errors.push(`unknown review trigger ${String(trigger)}`);
+      }
     }
   }
 
@@ -153,7 +161,9 @@ export function effectiveApproval({
   const document = metadata?.document ?? {};
   if (
     document.approval_status !== "approved" ||
-    document.status !== "maintained"
+    !["maintained", "deprecated", "archived", "retired"].includes(
+      document.status,
+    )
   ) {
     return "pending";
   }

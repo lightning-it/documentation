@@ -77,6 +77,29 @@ test("invalid approval and expired exceptions fail closed", () => {
   assert.ok(errors.some((error) => error.includes("expired")));
 });
 
+test("drafts may remain pending and malformed arrays fail deterministically", () => {
+  const draft = structuredClone(v2Metadata);
+  draft.document.status = "draft";
+  draft.document.approval_status = "pending";
+  assert.deepEqual(
+    validateDocumentMetadata(draft, registry, {
+      documentIds: new Set(["aio-overview", "aio-boundary"]),
+    }),
+    [],
+  );
+  draft.document.audience = "practitioner";
+  draft.document.review_triggers = "source-change";
+  const errors = validateDocumentMetadata(draft, registry, {
+    documentIds: new Set(["aio-overview", "aio-boundary"]),
+  });
+  assert.ok(errors.includes("audience must be an array"));
+  assert.ok(errors.includes("review triggers must be an array"));
+  assert.equal(
+    errors.some((error) => error.includes("unknown audience p")),
+    false,
+  );
+});
+
 test("effective approval requires exact digest, role, reviewer, and document", () => {
   const approvalEvidence = {
     content_tree_sha256: "digest",
@@ -103,6 +126,20 @@ test("effective approval requires exact digest, role, reviewer, and document", (
     }),
     "approved",
   );
+  for (const status of ["deprecated", "archived", "retired"]) {
+    const lifecycleMetadata = structuredClone(v2Metadata);
+    lifecycleMetadata.document.status = status;
+    assert.equal(
+      effectiveApproval({
+        metadata: lifecycleMetadata,
+        documentId: "aio-overview",
+        contentTreeSha256: "digest",
+        approvalEvidence,
+        authorizedReviewers,
+      }),
+      "approved",
+    );
+  }
   assert.equal(
     effectiveApproval({
       metadata: v2Metadata,

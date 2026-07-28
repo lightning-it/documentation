@@ -39,17 +39,23 @@ async function main() {
     (filePath) => filePath.endsWith(".md") || filePath.endsWith(".mdx"),
   );
   const records = [];
+  const errors = [];
   for (const filePath of files) {
     const source = await readFile(filePath, "utf8");
     const { data } = matter(source, { engines: { yaml: yamlEngine } });
-    records.push({
-      id: data.id,
-      schemaVersion: metadataSchemaVersion(data),
-    });
+    if (typeof data.id !== "string" || data.id.length === 0) {
+      errors.push(
+        "metadata migration inventory contains an invalid document ID",
+      );
+    } else {
+      records.push({
+        id: data.id,
+        schemaVersion: metadataSchemaVersion(data),
+      });
+    }
   }
   records.sort((left, right) => left.id.localeCompare(right.id));
 
-  const errors = [];
   const v1Count = records.filter(
     ({ schemaVersion }) => schemaVersion === "1.0",
   ).length;
