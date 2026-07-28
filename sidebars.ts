@@ -151,6 +151,23 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
+          label: "Workbench — Develop & Validate",
+          link: {
+            type: "generated-index",
+            slug: "/workbench/",
+            title: "Workbench documentation",
+            description:
+              "Engineering, Development & Validation Platform: boundaries, validation model, acceptance, and publication.",
+          },
+          items: [
+            "workbench/workbench-overview",
+            "workbench/workbench-product-boundary",
+            "workbench/workbench-validation-model",
+            "workbench/workbench-acceptance-publication",
+          ],
+        },
+        {
+          type: "category",
           label: "Atlas — Observe",
           link: {
             type: "generated-index",
