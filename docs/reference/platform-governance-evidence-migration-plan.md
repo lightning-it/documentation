@@ -34,7 +34,7 @@ original evidence.
 | Public inventory ID   | `platform-governance-evidence-public-product-page`                |
 | Source class          | `PUBLIC_AFTER_SANITIZATION`                                       |
 | Target owner          | Lightning IT Documentation Maintainers                            |
-| Canonical target      | `/platform-governance-evidence/`                                  |
+| Canonical target      | `/platform-governance-evidence/overview/`                         |
 | Target status         | content approved; production migration pending through issue #115 |
 | Method                | independent re-authoring and sanitization                         |
 | Duplicate disposition | consolidate public product definition into the canonical target   |
