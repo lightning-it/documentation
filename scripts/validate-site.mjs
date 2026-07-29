@@ -103,12 +103,16 @@ async function main() {
     const elementsNamed = (name) =>
       elements.filter((element) => element.tagName === name);
     const pageUrl = generatedPageUrl(relativePath, expectedOrigin);
-    const is404 =
-      relativePath === "build/404.html" ||
-      relativePath === "build/404/index.html";
+    const is404 = /\/404(?:\.html)?\/?$/.test(pageUrl.pathname);
+    const isLocaleFallback = pageUrl.pathname === "/de/";
     const htmlTag = elementsNamed("html")[0];
-    if (!htmlTag || htmlAttribute(htmlTag, "lang") !== "en") {
-      errors.push(`${relativePath}: missing English document language`);
+    const expectedLanguage = pageUrl.pathname.startsWith("/de/")
+      ? "de-DE"
+      : "en-GB";
+    if (!htmlTag || htmlAttribute(htmlTag, "lang") !== expectedLanguage) {
+      errors.push(
+        `${relativePath}: expected document language ${expectedLanguage}`,
+      );
     }
     if (
       !elementsNamed("title").some((title) => htmlText(title).trim().length > 0)
@@ -172,6 +176,17 @@ async function main() {
         errors.push(
           `${relativePath}: error content must be excluded from Pagefind`,
         );
+      }
+    } else if (isLocaleFallback) {
+      if (canonicalTags.length !== 0) {
+        errors.push(`${relativePath}: locale fallback must not be canonical`);
+      }
+      if (
+        !/(?:^|,)\s*noindex\b/i.test(
+          htmlAttribute(robots ?? {}, "content") ?? "",
+        )
+      ) {
+        errors.push(`${relativePath}: locale fallback must be noindex`);
       }
     } else if (canonicalTags.length !== 1) {
       errors.push(`${relativePath}: expected exactly one canonical URL`);
@@ -285,8 +300,14 @@ async function main() {
     }
   }
 
-  const sitemapPath = path.join(buildDirectory, "sitemap.xml");
-  const sitemap = await readFile(sitemapPath, "utf8");
+  const sitemapPaths = [
+    path.join(buildDirectory, "sitemap.xml"),
+    path.join(buildDirectory, "de", "sitemap.xml"),
+  ];
+  const sitemapDocuments = await Promise.all(
+    sitemapPaths.map((sitemapPath) => readFile(sitemapPath, "utf8")),
+  );
+  const sitemap = sitemapDocuments.join("\n");
   const sitemapLocations = new Set(
     [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]),
   );
@@ -500,9 +521,25 @@ async function main() {
     (total, language) => total + (language.page_count ?? 0),
     0,
   );
-  if (indexedPages !== canonicalRoutes.size) {
+  const localeRegistry = JSON.parse(
+    await readFile(
+      path.join(repositoryRoot, "config", "locale-search-registry.json"),
+      "utf8",
+    ),
+  );
+  const canonicalEnglishPages = [...canonicalRoutes].filter(
+    (route) => !new URL(route).pathname.startsWith("/de/"),
+  ).length;
+  const currentTranslatedPages = (localeRegistry.translations ?? []).filter(
+    (translation) => translation.translation_status === "current",
+  ).length;
+  const expectedIndexedPages = canonicalEnglishPages + currentTranslatedPages;
+  const allowedVisibleFallbacks =
+    localeRegistry.search?.visible_fallback_navigation_pages ?? 0;
+  const expectedEligiblePages = expectedIndexedPages + allowedVisibleFallbacks;
+  if (indexedPages !== expectedEligiblePages) {
     errors.push(
-      `build/pagefind: expected exactly ${canonicalRoutes.size} canonical pages, indexed ${indexedPages}`,
+      `build/pagefind: expected exactly ${expectedEligiblePages} eligible locale pages, indexed ${indexedPages}`,
     );
   }
 

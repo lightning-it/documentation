@@ -1,4 +1,5 @@
 import Link from "@docusaurus/Link";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import type { ReactNode } from "react";
 
@@ -57,12 +58,17 @@ const foundationLinks = [
 ];
 
 export default function Home(): ReactNode {
+  const { i18n } = useDocusaurusContext();
   return (
     <Layout
       title="Public technical documentation"
       description="Technical documentation for the five Lightning IT products and the ModuLix engineering foundation."
     >
-      <main data-pagefind-body>
+      <main
+        {...(i18n.currentLocale === "de"
+          ? { "data-pagefind-ignore": "all" }
+          : { "data-pagefind-body": true })}
+      >
         <header className={styles.hero}>
           <div className={styles.heroGlow} aria-hidden="true" />
           <div className="container">

@@ -1,0 +1,8 @@
+.localeFallback {
+  margin: 1rem auto;
+  max-width: min(90rem, calc(100% - 2rem));
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--ifm-color-warning-dark);
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-color-warning-contrast-background);
+}

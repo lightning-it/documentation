@@ -40,6 +40,28 @@ test("02 — search for ModuLix with safe same-origin results", async ({
   await expect(page).toHaveURL(/\/modulix\//);
 });
 
+test("German locale exposes reviewed content and labels English fallback", async ({
+  page,
+}) => {
+  await page.goto("/de/getting-started/");
+  await expect(page.locator("html")).toHaveAttribute("lang", "de-DE");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Erste Schritte" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Deutsche Übersetzung nicht verfügbar."),
+  ).toHaveCount(0);
+
+  await page.goto("/de/aio/");
+  const fallback = page.getByRole("status");
+  await expect(fallback).toContainText(
+    "Diese Seite zeigt ausdrücklich die englische kanonische Fassung.",
+  );
+  await expect(
+    fallback.getByRole("link", { name: "Englische Originalseite öffnen" }),
+  ).toHaveAttribute("href", "/aio/");
+});
+
 test("search covers every required product, task, and migrated public role term", async ({
   page,
 }) => {

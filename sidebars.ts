@@ -47,6 +47,7 @@ const sidebars: SidebarsConfig = {
             {
               type: "category",
               label: "Architecture",
+              key: "wunderbox-architecture",
               link: { type: "doc", id: "wunderbox/wunderbox-architecture" },
               items: [
                 "wunderbox/architecture/wunderbox-incus-runtime",
@@ -56,6 +57,7 @@ const sidebars: SidebarsConfig = {
             {
               type: "category",
               label: "Installation",
+              key: "wunderbox-installation",
               link: {
                 type: "generated-index",
                 slug: "/wunderbox/installation/",
@@ -180,6 +182,7 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Installation",
+          key: "modulix-installation",
           link: { type: "doc", id: "modulix/modulix-installation" },
           items: ["modulix/installation/modulix-disconnected-runtime"],
         },
@@ -194,6 +197,7 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "Architecture",
+      key: "platform-architecture",
       link: { type: "doc", id: "architecture/portfolio-architecture" },
       items: [
         "architecture/integration-decisions",

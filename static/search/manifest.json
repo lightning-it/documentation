@@ -1,0 +1,81 @@
+{
+  "canonical_locale": "en",
+  "engine": "pagefind@1.5.2",
+  "generator": "locale-search-generator@1.0",
+  "locales": [
+    {
+      "html_language": "en-GB",
+      "id": "en",
+      "route_prefix": "/"
+    },
+    {
+      "html_language": "de-DE",
+      "id": "de",
+      "route_prefix": "/de/"
+    }
+  ],
+  "manifest_sha256": "ad11b6d08fb8aa1b3313b98854ff72eae4f5c1ec6710995324e38d7df4d4c96a",
+  "partitions": [
+    {
+      "engine_partition": "language:en",
+      "index_prefix": "/pagefind/",
+      "lifecycle": "current",
+      "locale": "en",
+      "status": "required",
+      "version": "current"
+    },
+    {
+      "engine_partition": "language:de",
+      "index_prefix": "/pagefind/",
+      "lifecycle": "current",
+      "locale": "de",
+      "status": "required",
+      "version": "current"
+    }
+  ],
+  "query_telemetry": false,
+  "schema_version": 1,
+  "search_policy": {
+    "compressed_budget_bytes_per_locale_version": 1500000,
+    "default_states": [
+      "current"
+    ],
+    "engine": "pagefind",
+    "max_results": 10,
+    "never_index": [
+      "draft",
+      "restricted",
+      "retired"
+    ],
+    "optional_states": [
+      "historical",
+      "deprecated",
+      "unsupported"
+    ],
+    "query_processing": "browser-only",
+    "ranking": [
+      "exact-title",
+      "active-locale",
+      "current-version",
+      "maintained",
+      "context",
+      "body"
+    ],
+    "version": "1.5.2",
+    "visible_fallback_navigation_pages": 7
+  },
+  "silent_fallback": false,
+  "translations": [
+    {
+      "document_id": "getting-started",
+      "locale": "de",
+      "review_at": "2027-01-29",
+      "reviewed_at": "2026-07-29",
+      "route": "/de/getting-started/",
+      "source_sha256": "894addefabdc22a770ddecaca9dba317dcb4f575e640b65b0a69b4543ea76d41",
+      "state": "current",
+      "translation_sha256": "27369ea757fd8fca1455e4e01bf92c1a03a3576f24d05c216ac314e256fb6b10",
+      "version": "1.0"
+    }
+  ]
+}

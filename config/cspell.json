@@ -45,6 +45,8 @@
     "frontmatter",
     "hostname",
     "hostnames",
+    "hosten",
+    "Infrastrukturplattform",
     "lifecycle",
     "modulix",
     "noindex",
@@ -56,8 +58,10 @@
     "rhel",
     "toolbox",
     "traceability",
+    "Umgebungstopologien",
     "vSphere",
     "wunder",
-    "wunderbox"
+    "wunderbox",
+    "verkaufbares"
   ]
 }
