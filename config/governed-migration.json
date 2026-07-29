@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/lightning-it/documentation/issues/141",
+  "tracked_item_total": 140,
+  "public_target_paths": [
+    "docs/compliance/bsi-mapping.md",
+    "docs/contributing/index.md",
+    "docs/modulix/blueprints/aap-ansible-vault.md",
+    "docs/modulix/blueprints/aap-disconnected-runtime.md",
+    "docs/modulix/blueprints/aap-hashicorp-vault.md",
+    "docs/modulix/blueprints/aap-rhel10-host-preparation.md",
+    "docs/modulix/blueprints/ubuntu-container-aio.md",
+    "docs/modulix/blueprints/vsphere-template-lifecycle.md",
+    "docs/modulix/building-blocks/coredns.md",
+    "docs/modulix/building-blocks/dhcp.md",
+    "docs/modulix/building-blocks/forgejo.md",
+    "docs/modulix/building-blocks/keycloak.md",
+    "docs/modulix/building-blocks/nexus.md",
+    "docs/modulix/installation/disconnected-runtime.md",
+    "docs/wunderbox/architecture/incus-runtime.md",
+    "docs/wunderbox/architecture/service-stack.md",
+    "docs/wunderbox/installation/incus-host.md",
+    "docs/wunderbox/installation/openshift-agent-on-incus.md",
+    "docs/wunderbox/operations/incus-image-deployment.md",
+    "docs/wunderbox/operations/incus-rhel-images.md"
+  ],
+  "protected_external_dependency": {
+    "count": 120,
+    "owner": "Protected Migration Authority",
+    "status": "OWNED_EXTERNAL_DEPENDENCY_RETAINED",
+    "details_public": false,
+    "source_deletion_authorized": false
+  },
+  "review_requirements": [
+    "Lightning IT Product Owners",
+    "Lightning IT Security and Compliance Maintainers"
+  ],
+  "rollback": {
+    "public_targets": "Revert the migration execution merge commit and restore the preceding accepted generated manifest; canonical source documents are retained in Git history.",
+    "protected_dependency": "No public rollback mutation applies; the protected source inventory remains retained under its accountable owner."
+  }
+}
