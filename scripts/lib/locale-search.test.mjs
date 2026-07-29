@@ -53,7 +53,7 @@ test("unreviewed machine output cannot be current", () => {
   );
 });
 
-test("current translations require a bounded parseable review expiry", () => {
+test("current translations require a parseable review expiry", () => {
   const set = registry();
   delete set.translations[0].review_at;
   const inputs = new Map([
@@ -62,7 +62,7 @@ test("current translations require a bounded parseable review expiry", () => {
   ]);
   assert.match(
     validateLocaleSearch(set, inputs).join("\n"),
-    /lacks human review/,
+    /review dates are missing or invalid/,
   );
 });
 

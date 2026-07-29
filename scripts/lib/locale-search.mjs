@@ -57,15 +57,16 @@ export function validateLocaleSearch(registry, inputs) {
     if (record.translation_status === "current") {
       const reviewedAt = Date.parse(`${record.reviewed_at}T00:00:00Z`);
       const reviewAt = Date.parse(`${record.review_at}T00:00:00Z`);
+      if (!record.reviewer || !record.reviewer_role) {
+        errors.push(`${id}: current translation lacks human review`);
+      }
       if (
-        !record.reviewer ||
-        !record.reviewer_role ||
         !/^\d{4}-\d{2}-\d{2}$/.test(record.reviewed_at ?? "") ||
         !/^\d{4}-\d{2}-\d{2}$/.test(record.review_at ?? "") ||
         !Number.isFinite(reviewedAt) ||
         !Number.isFinite(reviewAt)
       ) {
-        errors.push(`${id}: current translation lacks human review`);
+        errors.push(`${id}: translation review dates are missing or invalid`);
       }
       if (
         Number.isFinite(reviewedAt) &&
