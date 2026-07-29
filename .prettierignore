@@ -1,3 +1,6 @@
 # Deterministic machine output; validated byte-for-byte by test:evidence-center.
 static/evidence/catalog.json
 static/evidence/manifest.json
+# Deterministic machine output; validated byte-for-byte by test:compliance-mappings.
+static/compliance/catalog.json
+static/compliance/manifest.json

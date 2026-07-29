@@ -1,0 +1,256 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.l-it.io/schemas/compliance-mapping-set-1.0.json",
+  "title": "Public compliance mapping set",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "mapping_set",
+    "frameworks",
+    "requirements",
+    "mappings"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "mapping_set": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "owner",
+        "approved_by",
+        "assessed_at",
+        "review_at",
+        "source_revision"
+      ],
+      "properties": {
+        "id": { "const": "lightning-it-public-compliance" },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+        "owner": { "type": "string", "minLength": 3 },
+        "approved_by": { "type": "string", "minLength": 3 },
+        "assessed_at": { "type": "string", "format": "date" },
+        "review_at": { "type": "string", "format": "date" },
+        "source_revision": { "type": "string", "pattern": "^[a-f0-9]{40}$" }
+      }
+    },
+    "frameworks": {
+      "type": "array",
+      "minItems": 11,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "publisher",
+          "authority_url",
+          "type",
+          "version",
+          "publication_constraints",
+          "assessment_state"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "name": { "type": "string", "minLength": 3 },
+          "publisher": { "type": "string", "minLength": 2 },
+          "authority_url": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://"
+          },
+          "type": {
+            "enum": [
+              "standard",
+              "benchmark",
+              "program",
+              "maturity-model",
+              "format",
+              "attestation",
+              "signing"
+            ]
+          },
+          "version": { "type": "string", "minLength": 1 },
+          "publication_constraints": { "type": "string", "minLength": 8 },
+          "assessment_state": { "enum": ["assessed", "not-assessed"] }
+        }
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "framework",
+          "framework_version",
+          "authority_reference",
+          "title",
+          "requirement_digest"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^req-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "framework": { "type": "string" },
+          "framework_version": { "type": "string" },
+          "authority_reference": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 8 },
+          "requirement_digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "version",
+          "requirement_id",
+          "scope",
+          "applicability",
+          "applicability_rationale",
+          "implementation_status",
+          "assurance_types",
+          "implementation_statement",
+          "owner",
+          "approved_by",
+          "evidence",
+          "exceptions",
+          "limitations",
+          "assessed_at",
+          "review_at",
+          "review_triggers"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^map-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+          "requirement_id": { "type": "string" },
+          "scope": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "organization",
+              "products",
+              "components",
+              "product_versions"
+            ],
+            "properties": {
+              "organization": { "const": "lightning-it" },
+              "products": {
+                "type": "array",
+                "items": { "type": "string" },
+                "uniqueItems": true
+              },
+              "components": {
+                "type": "array",
+                "items": { "type": "string" },
+                "uniqueItems": true
+              },
+              "product_versions": {
+                "type": "array",
+                "items": { "type": "string" },
+                "uniqueItems": true
+              }
+            }
+          },
+          "applicability": {
+            "enum": [
+              "applicable",
+              "conditionally-applicable",
+              "not-applicable",
+              "applicability-unknown"
+            ]
+          },
+          "applicability_rationale": { "type": "string", "minLength": 12 },
+          "implementation_status": {
+            "enum": [
+              "implemented",
+              "partially-implemented",
+              "planned",
+              "not-applicable",
+              "not-assessed"
+            ]
+          },
+          "assurance_types": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "internal-alignment",
+                "self-assessment",
+                "automated-validation",
+                "independent-assessment",
+                "certification",
+                "regulatory-obligation"
+              ]
+            },
+            "uniqueItems": true
+          },
+          "implementation_statement": { "type": "string", "minLength": 12 },
+          "owner": { "type": "string", "minLength": 3 },
+          "approved_by": { "type": "string", "minLength": 3 },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "reference",
+                "relation",
+                "scope_overlap",
+                "review_at"
+              ],
+              "properties": {
+                "reference": {
+                  "type": "string",
+                  "pattern": "^ev-[a-z0-9-]+@[0-9]+\\.[0-9]+$"
+                },
+                "relation": {
+                  "enum": [
+                    "supports",
+                    "verifies",
+                    "limits",
+                    "contradicts",
+                    "supersedes"
+                  ]
+                },
+                "scope_overlap": { "type": "string", "minLength": 8 },
+                "review_at": { "type": "string", "format": "date" }
+              }
+            }
+          },
+          "exceptions": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          },
+          "limitations": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 8 }
+          },
+          "assessed_at": { "type": "string", "format": "date" },
+          "review_at": { "type": "string", "format": "date" },
+          "review_triggers": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 5 }
+          }
+        }
+      }
+    }
+  }
+}

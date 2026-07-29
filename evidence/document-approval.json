@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "content_tree_sha256": "8a373a543aa767d8683893a1ccc141b13894f6d72039d228e01dcca0ce23686a",
+  "content_tree_sha256": "25c4f62b26268dd5f25566ca1ccfb8e3bf14cd3a52723b2bc8b5166dd72535b3",
   "document_ids": [
     "aio-acceptance-publication",
     "aio-architecture",
@@ -31,6 +31,7 @@
     "evidence-center-governance",
     "evidence-center-model",
     "evidence-center-overview",
+    "framework-mappings",
     "getting-started",
     "github-automation-trust",
     "github-lifecycle-traceability",
@@ -237,6 +238,7 @@
         "evidence-center-catalog",
         "evidence-center-governance",
         "evidence-center-overview",
+        "framework-mappings",
         "modulix-blueprint-aap-ansible-vault",
         "modulix-blueprint-aap-hashicorp-vault",
         "modulix-security",

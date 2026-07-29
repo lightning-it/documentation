@@ -1,0 +1,206 @@
+{
+  "frameworks": [
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/BSI-Standards/bsi-standards_node.html",
+      "id": "bsi-200-1",
+      "name": "BSI Standard 200-1",
+      "publication_constraints": "Authority text is linked, not reproduced.",
+      "publisher": "BSI",
+      "type": "standard",
+      "version": "current publication"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/BSI-Standards/bsi-standards_node.html",
+      "id": "bsi-200-2",
+      "name": "BSI Standard 200-2",
+      "publication_constraints": "Authority text is linked, not reproduced.",
+      "publisher": "BSI",
+      "type": "standard",
+      "version": "current publication"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/BSI-Standards/bsi-standards_node.html",
+      "id": "bsi-200-3",
+      "name": "BSI Standard 200-3",
+      "publication_constraints": "Authority text is linked, not reproduced.",
+      "publisher": "BSI",
+      "type": "standard",
+      "version": "current publication"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/BSI-Standards/bsi-standards_node.html",
+      "id": "bsi-200-4",
+      "name": "BSI Standard 200-4",
+      "publication_constraints": "Authority text is linked, not reproduced.",
+      "publisher": "BSI",
+      "type": "standard",
+      "version": "current publication"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/it-grundschutz_node.html",
+      "id": "bsi-it-grundschutz",
+      "name": "BSI IT-Grundschutz Compendium",
+      "publication_constraints": "Authority text is linked, not reproduced.",
+      "publisher": "BSI",
+      "type": "standard",
+      "version": "current publication"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://www.cisecurity.org/cis-benchmarks",
+      "id": "cis-benchmarks",
+      "name": "CIS Benchmarks",
+      "publication_constraints": "Licensed benchmark content is not reproduced.",
+      "publisher": "Center for Internet Security",
+      "type": "benchmark",
+      "version": "product-specific current editions"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://cyclonedx.org/",
+      "id": "cyclonedx",
+      "name": "CycloneDX",
+      "publication_constraints": "Specification text is linked, not reproduced.",
+      "publisher": "OWASP Foundation",
+      "type": "format",
+      "version": "1.6"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://in-toto.io/",
+      "id": "in-toto",
+      "name": "in-toto Attestation Framework",
+      "publication_constraints": "Specification text is linked, not reproduced.",
+      "publisher": "in-toto project",
+      "type": "attestation",
+      "version": "current specification"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://csrc.nist.gov/Projects/ssdf",
+      "id": "nist-ssdf",
+      "name": "NIST Secure Software Development Framework",
+      "publication_constraints": "Authority text is linked, not reproduced.",
+      "publisher": "NIST",
+      "type": "standard",
+      "version": "1.1"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://www.bestpractices.dev/en",
+      "id": "openssf-best-practices",
+      "name": "OpenSSF Best Practices Badge",
+      "publication_constraints": "Criteria are referenced from the public authority.",
+      "publisher": "OpenSSF",
+      "type": "program",
+      "version": "current criteria"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://scorecard.dev/",
+      "id": "openssf-scorecard",
+      "name": "OpenSSF Scorecard",
+      "publication_constraints": "Results require revision-bound evidence.",
+      "publisher": "OpenSSF",
+      "type": "benchmark",
+      "version": "current checks"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://www.sigstore.dev/",
+      "id": "sigstore",
+      "name": "Sigstore",
+      "publication_constraints": "Specification text is linked, not reproduced.",
+      "publisher": "OpenSSF",
+      "type": "signing",
+      "version": "current specification"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://slsa.dev/",
+      "id": "slsa",
+      "name": "Supply-chain Levels for Software Artifacts",
+      "publication_constraints": "Specification text is linked, not reproduced.",
+      "publisher": "OpenSSF",
+      "type": "maturity-model",
+      "version": "1.2"
+    },
+    {
+      "assessment_state": "not-assessed",
+      "authority_url": "https://spdx.dev/",
+      "id": "spdx",
+      "name": "Software Package Data Exchange",
+      "publication_constraints": "Specification text is linked, not reproduced.",
+      "publisher": "Linux Foundation",
+      "type": "format",
+      "version": "current specification"
+    }
+  ],
+  "mapping_set": {
+    "approved_by": "Lightning IT Security and Compliance Maintainers",
+    "assessed_at": "2026-07-29",
+    "id": "lightning-it-public-compliance",
+    "owner": "Lightning IT Security and Compliance Maintainers",
+    "review_at": "2027-01-29",
+    "source_revision": "e1959dc5384562e764e65b66aeff0222d0957164",
+    "version": "1.0"
+  },
+  "mappings": [
+    {
+      "applicability": "applicability-unknown",
+      "applicability_rationale": "The public page provides navigation context; applicability belongs to an authorized protected assessment.",
+      "approved_by": "Lightning IT Security and Compliance Maintainers",
+      "assessed_at": "2026-07-29",
+      "assurance_types": [
+        "internal-alignment"
+      ],
+      "evidence": [
+        {
+          "reference": "ev-external-assurance-unavailable@1.0",
+          "relation": "limits",
+          "review_at": "2027-01-29",
+          "scope_overlap": "Portfolio public assurance availability only."
+        }
+      ],
+      "exceptions": [],
+      "id": "map-bsi-public-documentation-context",
+      "implementation_statement": "No implementation, conformity, certification, or control-effectiveness claim is made.",
+      "implementation_status": "not-assessed",
+      "limitations": [
+        "This record migrates navigation context only and is not a Statement of Applicability."
+      ],
+      "owner": "Lightning IT Security and Compliance Maintainers",
+      "requirement_id": "req-bsi-public-documentation-context",
+      "review_at": "2027-01-29",
+      "review_triggers": [
+        "framework edition change",
+        "documentation scope change",
+        "new admissible evidence"
+      ],
+      "scope": {
+        "components": [
+          "docs.l-it.io"
+        ],
+        "organization": "lightning-it",
+        "product_versions": [],
+        "products": []
+      },
+      "version": "1.0"
+    }
+  ],
+  "requirements": [
+    {
+      "authority_reference": "public-documentation-context",
+      "framework": "bsi-200-1",
+      "framework_version": "current publication",
+      "id": "req-bsi-public-documentation-context",
+      "requirement_digest": "sha256:04b2f36ee892c35f2ddac94fb38e2e40d214409a471c46b09ec322b8d9a32cf7",
+      "title": "Public documentation relationship context"
+    }
+  ]
+}

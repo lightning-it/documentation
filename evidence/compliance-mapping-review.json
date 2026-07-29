@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/lightning-it/documentation/issues/138",
+  "reviewed_at": "2026-07-29T07:15:00Z",
+  "reviewer": "@litroc",
+  "reviewer_role": "Lightning IT Security and Compliance Maintainers",
+  "decision": "approved",
+  "approval_basis": "single-maintainer-exception",
+  "scope": [
+    "config/compliance-mapping.schema.json",
+    "config/compliance-mapping-set.json",
+    "static/compliance/catalog.json",
+    "static/compliance/manifest.json"
+  ],
+  "catalog_sha256": "49a5151323f55b3f279986282d11274329790470dc342f4f4eac117691b45faf",
+  "manifest_sha256": "7d242cbcbdb47f0bde67970c4ff5032519fbd8c64ec28fab907b465701219107",
+  "classification_result": "PUBLIC_SAFE",
+  "certification_claimed": false,
+  "limitations": [
+    "Approval covers only the exact public mapping set and digests listed here.",
+    "The mapping set records navigation context and assessment state; it is not certification or a Statement of Applicability."
+  ]
+}
