@@ -72,10 +72,18 @@ export async function evaluateMigration(
       continue;
     }
     const { id, slug, document } = parsed.data;
-    if (!id || !slug || routes.has(slug))
+    if (
+      typeof id !== "string" ||
+      id.length === 0 ||
+      typeof slug !== "string" ||
+      !/^\/[a-z0-9/_-]+\/$/.test(slug) ||
+      routes.has(slug)
+    ) {
       errors.push(
         `${targetPath}: stable ID or unique canonical route is missing`,
       );
+      continue;
+    }
     routes.add(slug);
     if (
       document?.classification !== "PUBLIC" ||
