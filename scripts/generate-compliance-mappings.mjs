@@ -36,8 +36,9 @@ async function main() {
         (entry) => `${entry.instancePath}: ${entry.message}`,
       ),
     );
+  } else {
+    errors.push(...validateComplianceMappings(set, evidence));
   }
-  errors.push(...validateComplianceMappings(set, evidence));
   failIfErrors("Compliance mapping validation", errors);
 
   const outputs = createComplianceOutputs(set);
@@ -85,8 +86,9 @@ async function main() {
     }
   }
   failIfErrors("Compliance mapping deterministic output", errors);
+  const mappingLabel = set.mappings.length === 1 ? "mapping" : "mappings";
   console.log(
-    `${checkOnly ? "Verified" : "Generated"} ${set.frameworks.length} frameworks and ${set.mappings.length} mapping.`,
+    `${checkOnly ? "Verified" : "Generated"} ${set.frameworks.length} frameworks and ${set.mappings.length} ${mappingLabel}.`,
   );
 }
 
