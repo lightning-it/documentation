@@ -4,3 +4,5 @@ static/evidence/manifest.json
 # Deterministic machine output; validated byte-for-byte by test:compliance-mappings.
 static/compliance/catalog.json
 static/compliance/manifest.json
+# Deterministic locale/search governance manifest.
+static/search/manifest.json

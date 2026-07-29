@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "canonical_locale": "en",
+  "locales": [
+    {
+      "id": "en",
+      "label": "English",
+      "html_language": "en-GB",
+      "route_prefix": "/",
+      "publication_state": "current",
+      "owner": "Lightning IT Documentation Maintainers"
+    },
+    {
+      "id": "de",
+      "label": "Deutsch",
+      "html_language": "de-DE",
+      "route_prefix": "/de/",
+      "publication_state": "current",
+      "owner": "Lightning IT Documentation Maintainers"
+    }
+  ],
+  "versions": [
+    {
+      "id": "current",
+      "label": "Current",
+      "lifecycle": "current",
+      "search_default": true
+    }
+  ],
+  "translations": [
+    {
+      "document_id": "getting-started",
+      "locale": "de",
+      "source_locale": "en",
+      "source_version": "1.0",
+      "route": "/de/getting-started/",
+      "source_path": "docs/getting-started.mdx",
+      "source_sha256": "894addefabdc22a770ddecaca9dba317dcb4f575e640b65b0a69b4543ea76d41",
+      "translation_path": "i18n/de/docusaurus-plugin-content-docs/current/getting-started.mdx",
+      "translation_status": "current",
+      "translation_method": "human-reviewed-machine-assisted",
+      "translation_owner": "Lightning IT Documentation Maintainers",
+      "reviewer": "@litroc",
+      "reviewer_role": "Lightning IT Product Owners",
+      "translated_at": "2026-07-29",
+      "reviewed_at": "2026-07-29",
+      "review_at": "2027-01-29",
+      "risk": "low"
+    }
+  ],
+  "search": {
+    "engine": "pagefind",
+    "version": "1.5.2",
+    "query_processing": "browser-only",
+    "default_states": ["current"],
+    "never_index": ["draft", "restricted", "retired"],
+    "optional_states": ["historical", "deprecated", "unsupported"],
+    "ranking": [
+      "exact-title",
+      "active-locale",
+      "current-version",
+      "maintained",
+      "context",
+      "body"
+    ],
+    "max_results": 10,
+    "visible_fallback_navigation_pages": 7,
+    "compressed_budget_bytes_per_locale_version": 1500000
+  }
+}
