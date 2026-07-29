@@ -87,11 +87,15 @@ export async function evaluateMigration(
     routes.add(slug);
     if (
       document?.classification !== "PUBLIC" ||
-      document?.approval_status !== "approved"
-    )
+      document?.approval_status !== "approved" ||
+      typeof document?.owner !== "string" ||
+      document.owner.trim().length === 0
+    ) {
       errors.push(
-        `${targetPath}: public classification or approval metadata is incomplete`,
+        `${targetPath}: public classification, approval, or owner metadata is incomplete`,
       );
+      continue;
+    }
     const roles = approvedById.get(id) ?? new Set();
     if (![...roles].some((role) => config.review_requirements.includes(role)))
       errors.push(`${targetPath}: exact document approval is missing`);

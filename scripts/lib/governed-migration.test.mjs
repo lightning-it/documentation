@@ -112,3 +112,39 @@ test("invalid routes never produce migration entries", async () => {
   assert.match(result.errors.join("\n"), /canonical route is missing/);
   assert.equal(result.inventory.public_targets.length, 0);
 });
+
+test("unowned public targets never produce migration entries", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "migration-"));
+  await mkdir(path.join(root, "docs"));
+  await writeFile(
+    path.join(root, "docs", "one.md"),
+    "---\nid: one\nslug: /one/\ndocument:\n  classification: PUBLIC\n  approval_status: approved\n---\n",
+  );
+  const result = await evaluateMigration(
+    {
+      tracked_item_total: 1,
+      public_target_paths: ["docs/one.md"],
+      protected_external_dependency: {
+        count: 0,
+        owner: "protected owner",
+        details_public: false,
+        source_deletion_authorized: false,
+      },
+      review_requirements: ["reviewer"],
+    },
+    { tracked_item_total: 1 },
+    { entries: [{ target_path: "docs/one.md" }] },
+    {
+      approvals: [
+        {
+          decision: "approved",
+          approver_role: "reviewer",
+          document_ids: ["one"],
+        },
+      ],
+    },
+    root,
+  );
+  assert.match(result.errors.join("\n"), /owner metadata is incomplete/);
+  assert.equal(result.inventory.public_targets.length, 0);
+});
