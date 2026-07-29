@@ -217,6 +217,24 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Trust Center",
+      link: { type: "doc", id: "trust/trust-overview" },
+      items: [
+        "trust/trust-principles",
+        "trust/trust-development",
+        "trust/trust-ai-assisted-engineering",
+        "trust/trust-quality",
+        "trust/trust-releases",
+        "trust/trust-security",
+        "trust/trust-supply-chain",
+        "trust/trust-assurance",
+        "trust/trust-build-integrity",
+        "trust/trust-compliance-positioning",
+        "trust/trust-governance",
+      ],
+    },
+    {
+      type: "category",
       label: "Security",
       link: { type: "doc", id: "security/security-overview" },
       items: [
