@@ -4,7 +4,11 @@ import { defineConfig, devices } from "@playwright/test";
 
 const externalBaseUrl = process.env.BASE_URL;
 const externalTestMode = process.env.EXTERNAL_TEST_MODE ?? "production";
-const localBaseUrl = "http://127.0.0.1:3000";
+const localPort = process.env.PLAYWRIGHT_PORT ?? "3000";
+if (!/^[1-9][0-9]{0,4}$/.test(localPort) || Number(localPort) > 65_535) {
+  throw new Error("PLAYWRIGHT_PORT must be an integer from 1 through 65535.");
+}
+const localBaseUrl = `http://127.0.0.1:${localPort}`;
 const externalModes = new Set(["preview", "production"]);
 if (externalBaseUrl && !externalModes.has(externalTestMode)) {
   throw new Error("EXTERNAL_TEST_MODE must be preview or production.");
@@ -84,7 +88,7 @@ export default defineConfig({
   webServer: externalBaseUrl
     ? undefined
     : {
-        command: "npm run serve -- --port 3000",
+        command: `npm run serve -- --port ${localPort}`,
         url: localBaseUrl,
         reuseExistingServer: !process.env.CI,
         timeout: 120_000,

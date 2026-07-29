@@ -256,7 +256,7 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Compliance",
       link: { type: "doc", id: "compliance/compliance-overview" },
-      items: ["compliance/bsi-mapping"],
+      items: ["compliance/framework-mappings", "compliance/bsi-mapping"],
     },
     {
       type: "category",

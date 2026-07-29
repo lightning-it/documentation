@@ -1,0 +1,25 @@
+{
+  "applicability_counts": {
+    "applicability-unknown": 1,
+    "applicable": 0,
+    "conditionally-applicable": 0,
+    "not-applicable": 0
+  },
+  "catalog_sha256": "49a5151323f55b3f279986282d11274329790470dc342f4f4eac117691b45faf",
+  "framework_count": 14,
+  "generator": "compliance-mapping-generator@1.0",
+  "implementation_status_counts": {
+    "implemented": 0,
+    "not-applicable": 0,
+    "not-assessed": 1,
+    "partially-implemented": 0,
+    "planned": 0
+  },
+  "mapping_denominator": 1,
+  "mapping_set_id": "lightning-it-public-compliance",
+  "mapping_set_version": "1.0",
+  "requirement_denominator": 1,
+  "schema_version": 1,
+  "success_percentage": null,
+  "success_percentage_reason": "Not calculated: not-applicable and not-assessed records are never successes."
+}
