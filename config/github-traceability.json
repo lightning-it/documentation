@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "query_contract_version": "1.0",
+  "api_version": "2022-11-28",
+  "page_size": 50,
+  "maximum_pages": 20,
+  "minimum_remaining_rate_limit": 100,
+  "maximum_snapshot_age_days": 30,
+  "permissions": {
+    "contents": "read",
+    "issues": "read",
+    "pull_requests": "read",
+    "actions": "read"
+  },
+  "repositories": [
+    {
+      "node_id": "R_kgDOTYvZNw",
+      "name_with_owner": "lightning-it/documentation",
+      "visibility": "PUBLIC",
+      "url": "https://github.com/lightning-it/documentation",
+      "owner": "Lightning IT Documentation Maintainers",
+      "fields": [
+        "issues",
+        "pullRequests",
+        "reviews",
+        "commits",
+        "checks",
+        "releases"
+      ]
+    }
+  ],
+  "sort": ["repository_node_id", "type", "immutable_id", "version"]
+}
