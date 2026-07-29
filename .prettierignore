@@ -1,0 +1,3 @@
+# Deterministic machine output; validated byte-for-byte by test:evidence-center.
+static/evidence/catalog.json
+static/evidence/manifest.json

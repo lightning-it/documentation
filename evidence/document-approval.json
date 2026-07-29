@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "content_tree_sha256": "6a472441f9cbd3a73f49173fc27959febec3df755d1c6bfe391e7ac8cfed99c8",
+  "content_tree_sha256": "8a373a543aa767d8683893a1ccc141b13894f6d72039d228e01dcca0ce23686a",
   "document_ids": [
     "aio-acceptance-publication",
     "aio-architecture",
@@ -27,7 +27,10 @@
     "documentation-current-state-assessment",
     "documentation-governance-principles",
     "documentation-quality-standard",
+    "evidence-center-catalog",
+    "evidence-center-governance",
     "evidence-center-model",
+    "evidence-center-overview",
     "getting-started",
     "github-automation-trust",
     "github-lifecycle-traceability",
@@ -219,7 +222,7 @@
       ],
       "decision": "approved",
       "reviewer": "@litroc",
-      "review_date": "2026-07-28",
+      "review_date": "2026-07-29",
       "approval_basis": "single-maintainer-exception"
     },
     {
@@ -231,6 +234,9 @@
         "bsi-mapping",
         "compliance-overview",
         "contributing-github-issues",
+        "evidence-center-catalog",
+        "evidence-center-governance",
+        "evidence-center-overview",
         "modulix-blueprint-aap-ansible-vault",
         "modulix-blueprint-aap-hashicorp-vault",
         "modulix-security",
@@ -247,7 +253,7 @@
       ],
       "decision": "approved",
       "reviewer": "@litroc",
-      "review_date": "2026-07-28",
+      "review_date": "2026-07-29",
       "approval_basis": "single-maintainer-exception"
     }
   ]
