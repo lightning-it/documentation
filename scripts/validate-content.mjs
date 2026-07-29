@@ -62,6 +62,7 @@ const scanRoots = [
   "config",
   "docs",
   "evidence",
+  "i18n",
   "rules",
   "schemas",
   "scripts",

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/lightning-it/documentation/issues/139",
+  "reviewed_at": "2026-07-29T07:30:00Z",
+  "reviewer": "@litroc",
+  "reviewer_role": "Lightning IT Product Owners",
+  "decision": "approved",
+  "approval_basis": "single-maintainer-exception",
+  "scope": [
+    "config/locale-search-registry.json",
+    "i18n/de/docusaurus-plugin-content-docs/current/getting-started.mdx",
+    "static/search/manifest.json"
+  ],
+  "manifest_sha256": "ca00459a1d33427d32a57bc0e4407d615b7e4389debb9c50f39cd0cbe6f25877",
+  "translation_method": "human-reviewed-machine-assisted",
+  "linguistic_review": "approved",
+  "technical_review": "approved",
+  "classification_result": "PUBLIC_SAFE",
+  "machine_output_published_without_human_review": false,
+  "query_telemetry_enabled": false,
+  "limitations": [
+    "German publication begins with one reviewed representative document.",
+    "Documents without a current German representation remain canonical in English and must be visibly identified as fallback."
+  ]
+}

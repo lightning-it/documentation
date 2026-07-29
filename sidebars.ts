@@ -47,6 +47,7 @@ const sidebars: SidebarsConfig = {
             {
               type: "category",
               label: "Architecture",
+              key: "wunderbox-architecture",
               link: { type: "doc", id: "wunderbox/wunderbox-architecture" },
               items: [
                 "wunderbox/architecture/wunderbox-incus-runtime",
@@ -56,6 +57,7 @@ const sidebars: SidebarsConfig = {
             {
               type: "category",
               label: "Installation",
+              key: "wunderbox-installation",
               link: {
                 type: "generated-index",
                 slug: "/wunderbox/installation/",
@@ -180,6 +182,7 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Installation",
+          key: "modulix-installation",
           link: { type: "doc", id: "modulix/modulix-installation" },
           items: ["modulix/installation/modulix-disconnected-runtime"],
         },
@@ -194,6 +197,7 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "Architecture",
+      key: "platform-architecture",
       link: { type: "doc", id: "architecture/portfolio-architecture" },
       items: [
         "architecture/integration-decisions",
@@ -217,6 +221,33 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Trust Center",
+      link: { type: "doc", id: "trust/trust-overview" },
+      items: [
+        "trust/trust-principles",
+        "trust/trust-development",
+        "trust/trust-ai-assisted-engineering",
+        "trust/trust-quality",
+        "trust/trust-releases",
+        "trust/trust-security",
+        "trust/trust-supply-chain",
+        "trust/trust-assurance",
+        "trust/trust-build-integrity",
+        "trust/trust-compliance-positioning",
+        "trust/trust-governance",
+      ],
+    },
+    {
+      type: "category",
+      label: "Evidence Center",
+      link: { type: "doc", id: "evidence-center/evidence-center-overview" },
+      items: [
+        "evidence-center/evidence-center-catalog",
+        "evidence-center/evidence-center-governance",
+      ],
+    },
+    {
+      type: "category",
       label: "Security",
       link: { type: "doc", id: "security/security-overview" },
       items: [
@@ -229,7 +260,7 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Compliance",
       link: { type: "doc", id: "compliance/compliance-overview" },
-      items: ["compliance/bsi-mapping"],
+      items: ["compliance/framework-mappings", "compliance/bsi-mapping"],
     },
     {
       type: "category",

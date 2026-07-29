@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "evidence_id": "ev-external-assurance-unavailable",
+  "record_version": "1.0",
+  "category": "security",
+  "status": "unavailable",
+  "title": "Portfolio external assurance evidence unavailable",
+  "subject": {
+    "type": "portfolio",
+    "identifier": "lightning-it-public-portfolio"
+  },
+  "scope": {
+    "products": [
+      "aio",
+      "wunderbox",
+      "workbench",
+      "atlas",
+      "platform-governance-evidence"
+    ],
+    "components": [],
+    "product_versions": [],
+    "environment": "not-applicable"
+  },
+  "source": {
+    "repository": "lightning-it/documentation",
+    "commit": "029c520d4da6a532f23c2dd025e56c1c2621bc22"
+  },
+  "method": {
+    "identifier": "public-evidence-inventory",
+    "version": "1.0",
+    "acceptance_rule": {
+      "identifier": "current-public-authority-required",
+      "version": "1.0"
+    }
+  },
+  "observed_at": "2026-07-29T01:40:32Z",
+  "result": {
+    "summary": "No current portfolio-wide external assurance record is available for affirmative publication.",
+    "measurements": {},
+    "reason_category": "not-publicly-available"
+  },
+  "relationships": {
+    "supports_claims": ["claim-external-assurance-unverified"],
+    "issues": ["https://github.com/lightning-it/documentation/issues/137"],
+    "pull_requests": [],
+    "supersedes": []
+  },
+  "limitations": [
+    "This availability state does not disclose whether protected assessments exist."
+  ],
+  "owner": "Lightning IT Security and Compliance Maintainers",
+  "review": {
+    "status": "approved",
+    "reviewed_at": "2026-07-29T01:40:32Z",
+    "reviewer_role": "Lightning IT Security and Compliance Maintainers"
+  },
+  "retention": {
+    "class": "current-operational",
+    "review_at": "2027-01-29",
+    "tombstone": false
+  }
+}

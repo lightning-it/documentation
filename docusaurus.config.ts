@@ -53,7 +53,11 @@ const config: Config = {
 
   i18n: {
     defaultLocale: "en",
-    locales: ["en"],
+    locales: ["en", "de"],
+    localeConfigs: {
+      en: { label: "English", htmlLang: "en-GB" },
+      de: { label: "Deutsch", htmlLang: "de-DE" },
+    },
   },
 
   markdown: {
@@ -195,6 +199,11 @@ const config: Config = {
           className: "navbar__external-link",
           "aria-label": "Lightning IT Documentation on GitHub",
         },
+        {
+          type: "localeDropdown",
+          position: "right",
+          "aria-label": "Language",
+        },
       ],
     },
     docs: {
@@ -248,10 +257,7 @@ const config: Config = {
               href: "https://github.com/lightning-it/documentation",
             },
             {
-              label: "Third-party notices",
-              href: "pathname:///THIRD_PARTY_NOTICES.txt",
-              target: "_blank",
-              rel: "noopener noreferrer",
+              html: '<a class="footer__link-item" href="/THIRD_PARTY_NOTICES.txt" target="_blank" rel="noopener noreferrer">Third-party notices</a>',
             },
           ],
         },

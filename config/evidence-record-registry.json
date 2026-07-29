@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "categories": [
+    "governance",
+    "change-traceability",
+    "static-quality",
+    "tests",
+    "security",
+    "supply-chain",
+    "build",
+    "release",
+    "production-acceptance",
+    "documentation",
+    "compliance-support"
+  ],
+  "statuses": [
+    "passed",
+    "failed",
+    "warning",
+    "not-applicable",
+    "unavailable",
+    "withheld",
+    "expired",
+    "superseded",
+    "revoked"
+  ],
+  "retention_classes": [
+    "current-operational",
+    "release-lifetime",
+    "public-governance",
+    "transient-validation",
+    "incident-audit"
+  ],
+  "environments": ["not-applicable", "development", "preview", "production"],
+  "owners": [
+    "Lightning IT Documentation Maintainers",
+    "Lightning IT Security and Compliance Maintainers"
+  ],
+  "protected_field_names": [
+    "customer",
+    "customer_id",
+    "hostname",
+    "private_url",
+    "raw_log",
+    "secret",
+    "token",
+    "topology"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "evidence_id": "ev-documentation-content-validation",
+  "record_version": "1.0",
+  "category": "documentation",
+  "status": "passed",
+  "title": "Public documentation content validation",
+  "subject": {
+    "type": "site-candidate",
+    "identifier": "documentation-develop-029c520"
+  },
+  "scope": {
+    "products": [],
+    "components": ["docs.l-it.io"],
+    "product_versions": [],
+    "environment": "development"
+  },
+  "source": {
+    "repository": "lightning-it/documentation",
+    "commit": "029c520d4da6a532f23c2dd025e56c1c2621bc22"
+  },
+  "method": {
+    "identifier": "content-validation",
+    "version": "1.0",
+    "acceptance_rule": {
+      "identifier": "all-content-gates-pass",
+      "version": "1.0"
+    }
+  },
+  "observed_at": "2026-07-29T01:40:32Z",
+  "result": {
+    "summary": "The bounded public documentation candidate passed its required repository checks.",
+    "measurements": { "documents": 114, "canonical_routes": 114 }
+  },
+  "relationships": {
+    "supports_claims": ["claim-documentation-quality-gates"],
+    "issues": ["https://github.com/lightning-it/documentation/issues/136"],
+    "pull_requests": ["https://github.com/lightning-it/documentation/pull/190"],
+    "supersedes": []
+  },
+  "limitations": [
+    "The result applies only to the named commit and does not establish customer-environment behavior."
+  ],
+  "owner": "Lightning IT Documentation Maintainers",
+  "review": {
+    "status": "approved",
+    "reviewed_at": "2026-07-29T01:40:32Z",
+    "reviewer_role": "Lightning IT Product Owners"
+  },
+  "retention": {
+    "class": "public-governance",
+    "review_at": "2027-07-29",
+    "tombstone": false
+  }
+}

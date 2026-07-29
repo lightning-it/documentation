@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/lightning-it/documentation/issues/138",
+  "source": "docs/compliance/bsi-mapping.md",
+  "target_mapping_set": "lightning-it-public-compliance@1.0",
+  "decision": "completed-with-bounded-context",
+  "migrated_context_records": 1,
+  "implementation_claims_migrated": 0,
+  "certification_claims_migrated": 0,
+  "module_applicability_records_migrated": 0,
+  "reason": "The source page is navigation guidance, not an assessment. Frameworks are registered and remain explicitly not assessed.",
+  "source_remains_canonical": true,
+  "reviewed_at": "2026-07-29T07:15:00Z",
+  "reviewer_role": "Lightning IT Security and Compliance Maintainers"
+}

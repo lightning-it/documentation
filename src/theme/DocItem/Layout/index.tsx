@@ -37,6 +37,8 @@ function useDocTOC() {
 export default function DocItemLayout({ children }: Props): ReactNode {
   const docTOC = useDocTOC();
   const { metadata, frontMatter } = useDoc();
+  const isEnglishFallback =
+    metadata.permalink.startsWith("/de/") && metadata.id !== "getting-started";
   const document = (
     frontMatter as typeof frontMatter & {
       document?: PublicDocumentMetadata;
@@ -54,7 +56,11 @@ export default function DocItemLayout({ children }: Props): ReactNode {
             <DocVersionBadge />
             {docTOC.mobile}
             {document && <DocumentMetadataPanel document={document} />}
-            <DocItemContent>{children}</DocItemContent>
+            <div
+              {...(isEnglishFallback ? { "data-pagefind-ignore": true } : {})}
+            >
+              <DocItemContent>{children}</DocItemContent>
+            </div>
             <DocItemFooter />
           </article>
           <DocItemPaginator />

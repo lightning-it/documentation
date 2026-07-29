@@ -1,0 +1,208 @@
+{
+  "approval_content_tree_sha256": "8c5dc8b9f3fac3af0ac1c6039c8bbd5438c1966db877ed4d3e894989e9c98abf",
+  "disposition_counts": {
+    "owned_protected_external_dependencies": 120,
+    "reconciled_public_targets": 20
+  },
+  "duplicate_canonical_content": 0,
+  "generator": "governed-migration-generator@1.0",
+  "inventory_sha256": "82a668b13669321fd9c505aa130398c5925e742072f70d07943a76211f971d52",
+  "issue": "https://github.com/lightning-it/documentation/issues/141",
+  "protected_external_dependency": {
+    "count": 120,
+    "details_public": false,
+    "owner": "Protected Migration Authority",
+    "source_deletion_authorized": false,
+    "status": "OWNED_EXTERNAL_DEPENDENCY_RETAINED"
+  },
+  "public_targets": [
+    {
+      "canonical_route": "/compliance/bsi-mapping/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "bsi-mapping",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:1cc98ba05309898df52cdbe01699100da0354f67bf83abb351bcdb0f75b9a52d",
+      "target_path": "docs/compliance/bsi-mapping.md"
+    },
+    {
+      "canonical_route": "/contributing/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "contributing-documentation",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:f56f77ed3d26bf182d8f6ffcd44ac12a1a9135d0310a9fd2b541d178987f4509",
+      "target_path": "docs/contributing/index.md"
+    },
+    {
+      "canonical_route": "/modulix/blueprints/aap-ansible-vault/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-blueprint-aap-ansible-vault",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:72c7160543a15ad18da9523aa40a9e8811db733a06d3efe2d18112179cda7715",
+      "target_path": "docs/modulix/blueprints/aap-ansible-vault.md"
+    },
+    {
+      "canonical_route": "/modulix/blueprints/aap-disconnected-runtime/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-blueprint-aap-disconnected-runtime",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:b39f2ace0b5f6464eb931c91993f7bd16a66ff80f35777b15096d1fc673475a6",
+      "target_path": "docs/modulix/blueprints/aap-disconnected-runtime.md"
+    },
+    {
+      "canonical_route": "/modulix/blueprints/aap-hashicorp-vault/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-blueprint-aap-hashicorp-vault",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:d8c4286ab367269b5a3a3ca3c9bec4b8554643ea6f264fbd94dacaa65619b5ba",
+      "target_path": "docs/modulix/blueprints/aap-hashicorp-vault.md"
+    },
+    {
+      "canonical_route": "/modulix/blueprints/aap-rhel10-host-preparation/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-blueprint-aap-rhel10-host-preparation",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:981cf3d065bf3e7ecebeb60272c52698a4ed45ec7a89f3ff2547842699102a0e",
+      "target_path": "docs/modulix/blueprints/aap-rhel10-host-preparation.md"
+    },
+    {
+      "canonical_route": "/modulix/blueprints/ubuntu-container-aio/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-blueprint-ubuntu-container-aio",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:f91a34442f7727859c1c0ef6b33c256f7555ca8703c7abe34b2c725824b45fde",
+      "target_path": "docs/modulix/blueprints/ubuntu-container-aio.md"
+    },
+    {
+      "canonical_route": "/modulix/blueprints/vsphere-template-lifecycle/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-blueprint-vsphere-template-lifecycle",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:9d92dccb2a9bb7ba2ba16d471c6b80a44031757f9366d68acce8452827c68743",
+      "target_path": "docs/modulix/blueprints/vsphere-template-lifecycle.md"
+    },
+    {
+      "canonical_route": "/modulix/building-blocks/coredns/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-building-block-coredns",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:ac1b25c94a60b5cb1288e090048549c2266e109e9dc4052ef41ff229ec4c3094",
+      "target_path": "docs/modulix/building-blocks/coredns.md"
+    },
+    {
+      "canonical_route": "/modulix/building-blocks/dhcp/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-building-block-dhcp",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:f0bd9baa4b93c3aa213dfc016c31bd25080db69ee5927f8e784f51d6772fe398",
+      "target_path": "docs/modulix/building-blocks/dhcp.md"
+    },
+    {
+      "canonical_route": "/modulix/building-blocks/forgejo/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-building-block-forgejo",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:89777475d42098b0a9d6e2af31734ad8196c9dee8deea64a1488a670f25909ff",
+      "target_path": "docs/modulix/building-blocks/forgejo.md"
+    },
+    {
+      "canonical_route": "/modulix/building-blocks/keycloak/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-building-block-keycloak",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:51015b296fa1e462e990c5630f980ad17ac4ab4cd7c9a0ab721287e62c0a49f9",
+      "target_path": "docs/modulix/building-blocks/keycloak.md"
+    },
+    {
+      "canonical_route": "/modulix/building-blocks/nexus/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-building-block-nexus",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:b4c9209127dc82a0e65d410eeabe3d6635caeb0393675f7108e386fab7ad8345",
+      "target_path": "docs/modulix/building-blocks/nexus.md"
+    },
+    {
+      "canonical_route": "/modulix/installation/disconnected-runtime/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "modulix-disconnected-runtime",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:cf80e4e8359225ca570451e78a97a27c8e697694d2e2762dd9cc4e2474d6d698",
+      "target_path": "docs/modulix/installation/disconnected-runtime.md"
+    },
+    {
+      "canonical_route": "/wunderbox/architecture/incus-runtime/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "wunderbox-incus-runtime",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:3c33fc25e2c5f4984144ea703cbbbaeb1b1e2964145c8dc4d23f0a1ec9cc8bf0",
+      "target_path": "docs/wunderbox/architecture/incus-runtime.md"
+    },
+    {
+      "canonical_route": "/wunderbox/architecture/service-stack/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "wunderbox-service-stack",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:c70d4d383701716548200d2160e70100d6e1e0512cb5e3d21fcd6f72f19cf45e",
+      "target_path": "docs/wunderbox/architecture/service-stack.md"
+    },
+    {
+      "canonical_route": "/wunderbox/installation/incus-host/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "wunderbox-incus-host",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:978940bbfbf9a655f5a3a16a485cc147e89cbc4a05f4bc16dada71b19c54d5be",
+      "target_path": "docs/wunderbox/installation/incus-host.md"
+    },
+    {
+      "canonical_route": "/wunderbox/installation/openshift-agent-on-incus/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "wunderbox-openshift-agent-incus",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:a59dce444d62b1ee7b8f57dd3df90a797818abdcde773ad6d6e6d0c71ff4fa95",
+      "target_path": "docs/wunderbox/installation/openshift-agent-on-incus.md"
+    },
+    {
+      "canonical_route": "/wunderbox/operations/incus-image-deployment/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "wunderbox-incus-image-deployment",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:1a0e14935b2fac0c7caa19199e5ae6d60f648e2e18e4d58869a5bcb3c0a968a4",
+      "target_path": "docs/wunderbox/operations/incus-image-deployment.md"
+    },
+    {
+      "canonical_route": "/wunderbox/operations/incus-rhel-images/",
+      "classification": "PUBLIC",
+      "disposition": "RECONCILED_AND_APPROVED",
+      "document_id": "wunderbox-incus-rhel-images",
+      "owner": "Lightning IT Documentation Maintainers",
+      "sha256": "sha256:82c61ab34d6dcf9f521a718d61c5a783fb02e918b65700dcff38d9ce19bee1c6",
+      "target_path": "docs/wunderbox/operations/incus-rhel-images.md"
+    }
+  ],
+  "rollback": {
+    "protected_dependency": "No public rollback mutation applies; the protected source inventory remains retained under its accountable owner.",
+    "public_targets": "Revert the migration execution merge commit and restore the preceding accepted generated manifest; canonical source documents are retained in Git history."
+  },
+  "schema_version": 1,
+  "source_deletion_authorized": false,
+  "tracked_item_total": 140,
+  "unclassified_sources": 0
+}
