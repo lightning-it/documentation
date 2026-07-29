@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "query_contract_version": "1.0",
+  "repository": {
+    "node_id": "R_kgDOTYvZNw",
+    "name_with_owner": "lightning-it/documentation",
+    "visibility": "PUBLIC",
+    "observed_at": "2026-07-29T07:34:19Z"
+  },
+  "complete": true,
+  "pagination": { "pages": 1, "has_next_page": false },
+  "rate_limit": { "remaining": 4999, "reset_at": "2026-07-29T08:00:00Z" },
+  "objects": [
+    {
+      "type": "goal",
+      "immutable_id": "issue-node-15",
+      "number": 15,
+      "url": "https://github.com/lightning-it/documentation/issues/15"
+    },
+    {
+      "type": "task",
+      "immutable_id": "issue-node-140",
+      "number": 140,
+      "url": "https://github.com/lightning-it/documentation/issues/140"
+    },
+    {
+      "type": "adr",
+      "immutable_id": "commit-adr-34",
+      "version": "1.0",
+      "url": "https://github.com/lightning-it/documentation/blob/928170207ab82bc23b3ed8a2b6a553b625ec30e5/docs/architecture/github-lifecycle-traceability.md"
+    },
+    {
+      "type": "pull_request",
+      "immutable_id": "pr-node-194",
+      "number": 194,
+      "url": "https://github.com/lightning-it/documentation/pull/194"
+    },
+    {
+      "type": "review",
+      "immutable_id": "review-4805148590",
+      "version": "14f5bac",
+      "url": "https://github.com/lightning-it/documentation/pull/194"
+    },
+    {
+      "type": "commit",
+      "immutable_id": "928170207ab82bc23b3ed8a2b6a553b625ec30e5",
+      "url": "https://github.com/lightning-it/documentation/commit/928170207ab82bc23b3ed8a2b6a553b625ec30e5"
+    },
+    {
+      "type": "test",
+      "immutable_id": "actions-run-30431746304",
+      "version": "9281702",
+      "url": "https://github.com/lightning-it/documentation/actions/runs/30431746304"
+    },
+    {
+      "type": "evidence",
+      "immutable_id": "locale-search-review-ca00459a",
+      "version": "1",
+      "url": "https://github.com/lightning-it/documentation/blob/928170207ab82bc23b3ed8a2b6a553b625ec30e5/evidence/locale-search-review.json"
+    },
+    {
+      "type": "release",
+      "immutable_id": "develop-9281702",
+      "version": "develop",
+      "url": "https://github.com/lightning-it/documentation/tree/928170207ab82bc23b3ed8a2b6a553b625ec30e5"
+    },
+    {
+      "type": "version",
+      "immutable_id": "docs-foundation-v1",
+      "version": "1.0",
+      "url": "https://github.com/lightning-it/documentation/milestone/3"
+    }
+  ],
+  "edges": [
+    {
+      "from": "issue-node-15",
+      "to": "issue-node-140",
+      "type": "parent_of",
+      "source": "issue-node-140"
+    },
+    {
+      "from": "commit-adr-34",
+      "to": "issue-node-140",
+      "type": "decides",
+      "source": "commit-adr-34"
+    },
+    {
+      "from": "pr-node-194",
+      "to": "928170207ab82bc23b3ed8a2b6a553b625ec30e5",
+      "type": "implements",
+      "source": "pr-node-194"
+    },
+    {
+      "from": "pr-node-194",
+      "to": "review-4805148590",
+      "type": "reviewed_by",
+      "source": "review-4805148590"
+    },
+    {
+      "from": "928170207ab82bc23b3ed8a2b6a553b625ec30e5",
+      "to": "actions-run-30431746304",
+      "type": "verified_by",
+      "source": "actions-run-30431746304"
+    },
+    {
+      "from": "actions-run-30431746304",
+      "to": "locale-search-review-ca00459a",
+      "type": "produces",
+      "source": "actions-run-30431746304"
+    },
+    {
+      "from": "928170207ab82bc23b3ed8a2b6a553b625ec30e5",
+      "to": "develop-9281702",
+      "type": "releases",
+      "source": "develop-9281702"
+    },
+    {
+      "from": "develop-9281702",
+      "to": "docs-foundation-v1",
+      "type": "supports_version",
+      "source": "docs-foundation-v1"
+    }
+  ]
+}
