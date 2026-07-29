@@ -33,6 +33,7 @@
       "locale": "de",
       "source_locale": "en",
       "source_version": "1.0",
+      "route": "/de/getting-started/",
       "source_path": "docs/getting-started.mdx",
       "source_sha256": "894addefabdc22a770ddecaca9dba317dcb4f575e640b65b0a69b4543ea76d41",
       "translation_path": "i18n/de/docusaurus-plugin-content-docs/current/getting-started.mdx",

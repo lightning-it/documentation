@@ -11,7 +11,10 @@ export default function Layout(props: Props): ReactNode {
     location.pathname.startsWith("/de/") &&
     location.pathname !== "/de/getting-started/" &&
     !/\/404(?:\.html)?\/?$/.test(location.pathname);
-  const canonicalEnglishPath = location.pathname.replace(/^\/de(?=\/)/, "");
+  const canonicalEnglishPath = `${location.pathname.replace(
+    /^\/de(?=\/)/,
+    "",
+  )}${location.search}${location.hash}`;
 
   return (
     <OriginalLayout {...props}>

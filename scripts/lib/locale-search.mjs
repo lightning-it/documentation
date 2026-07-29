@@ -38,6 +38,13 @@ export function validateLocaleSearch(registry, inputs) {
     if (!allowedTranslationStates.has(record.translation_status)) {
       errors.push(`${id}: invalid translation status`);
     }
+    if (
+      typeof record.route !== "string" ||
+      !record.route.startsWith(`/${record.locale}/`) ||
+      !record.route.endsWith("/")
+    ) {
+      errors.push(`${id}: translation route is missing or invalid`);
+    }
     const source = inputs.get(record.source_path);
     const translation = inputs.get(record.translation_path);
     if (!source) errors.push(`${id}: source is missing`);
@@ -71,7 +78,7 @@ export function validateLocaleSearch(registry, inputs) {
 }
 
 export function createLocaleSearchManifest(registry, inputs) {
-  const translations = [...registry.translations]
+  const translations = [...(registry.translations ?? [])]
     .sort((a, b) =>
       `${a.document_id}:${a.locale}`.localeCompare(
         `${b.document_id}:${b.locale}`,
@@ -85,7 +92,7 @@ export function createLocaleSearchManifest(registry, inputs) {
       state: record.translation_status,
       source_sha256: record.source_sha256,
       translation_sha256: digest(inputs.get(record.translation_path) ?? ""),
-      route: `/${record.locale}/getting-started/`,
+      route: record.route,
       reviewed_at: record.reviewed_at,
       review_at: record.review_at,
     }));

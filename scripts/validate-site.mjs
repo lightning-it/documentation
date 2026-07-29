@@ -530,10 +530,11 @@ async function main() {
   const canonicalEnglishPages = [...canonicalRoutes].filter(
     (route) => !new URL(route).pathname.startsWith("/de/"),
   ).length;
-  const currentTranslatedPages = (localeRegistry.translations ?? []).filter(
-    (translation) => translation.translation_status === "current",
+  const publicTranslatedPages = (localeRegistry.translations ?? []).filter(
+    (translation) =>
+      ["current", "deprecated"].includes(translation.translation_status),
   ).length;
-  const expectedIndexedPages = canonicalEnglishPages + currentTranslatedPages;
+  const expectedIndexedPages = canonicalEnglishPages + publicTranslatedPages;
   const allowedVisibleFallbacks =
     localeRegistry.search?.visible_fallback_navigation_pages ?? 0;
   const expectedEligiblePages = expectedIndexedPages + allowedVisibleFallbacks;

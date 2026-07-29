@@ -15,7 +15,7 @@ const registryPath = path.join(
 );
 const registry = JSON.parse(await readFile(registryPath, "utf8"));
 const inputs = new Map();
-for (const record of registry.translations) {
+for (const record of registry.translations ?? []) {
   for (const relativePath of [record.source_path, record.translation_path]) {
     try {
       inputs.set(
