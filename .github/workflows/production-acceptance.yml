@@ -3,7 +3,9 @@
 name: Production Acceptance
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Release Evidence"]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -17,13 +19,17 @@ concurrency:
 jobs:
   accept:
     name: production / acceptance
-    if: github.ref == 'refs/heads/main'
+    if: >-
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success') ||
+      (github.event_name == 'workflow_dispatch' &&
+       github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     timeout-minutes: 50
     env:
       BASE_URL: https://docs.l-it.io
       PRODUCTION_CONTENT_BASE_URL: https://lightning-it-documentation.pages.dev
-      EXPECTED_COMMIT: ${{ github.sha }}
+      EXPECTED_COMMIT: ${{ github.event.workflow_run.head_sha || github.sha }}
       # Poll Cloudflare Pages up to 90 times. Each request can take 5 seconds,
       # followed by the default 10-second interval after an unsuccessful
       # attempt.
@@ -33,6 +39,7 @@ jobs:
       - name: Checkout expected production source
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
+          ref: ${{ env.EXPECTED_COMMIT }}
           persist-credentials: false
 
       - name: Setup Node.js
@@ -74,7 +81,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: production-acceptance-${{ github.sha }}
+          name: production-acceptance-${{ env.EXPECTED_COMMIT }}
           path: |
             evidence/generated/
             playwright-report/

@@ -23,6 +23,7 @@ on:
 
 permissions:
   actions: read
+  attestations: read
   contents: read
 
 concurrency:
@@ -47,6 +48,7 @@ jobs:
         env:
           RELEASE_RUN_ID: ${{ inputs.release_run_id }}
           RELEASE_COMMIT: ${{ inputs.release_commit }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           [[ "$RELEASE_RUN_ID" =~ ^[0-9]+$ ]] || {
@@ -57,6 +59,17 @@ jobs:
             echo "::error::release_commit must be a full lowercase commit ID."
             exit 1
           }
+          run_json="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RELEASE_RUN_ID}")"
+          jq -e \
+            --arg commit "$RELEASE_COMMIT" \
+            '(.path == ".github/workflows/release-evidence.yml")
+             and (.conclusion == "success")
+             and (.head_branch == "main")
+             and (.head_sha == $commit)' \
+            <<<"$run_json" >/dev/null || {
+              echo "::error::Run ID is not a successful main Release Evidence run for release_commit."
+              exit 1
+            }
 
       - name: Checkout acceptance code from retained release
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -88,6 +101,7 @@ jobs:
       - name: Verify and extract immutable release artifact
         env:
           RELEASE_COMMIT: ${{ inputs.release_commit }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           manifest="retained-release/evidence/generated/release-manifest.json"
@@ -102,6 +116,11 @@ jobs:
             echo "::error::Release artifact digest does not match the retained manifest."
             exit 1
           }
+          gh attestation verify retained-release/documentation-build.tgz \
+            --repo lightning-it/documentation \
+            --signer-workflow lightning-it/documentation/.github/workflows/release-evidence.yml \
+            --source-digest "$RELEASE_COMMIT" \
+            --source-ref refs/heads/main
           while IFS= read -r entry; do
             if [[ "$entry" == /* || "$entry" == ".." || "$entry" == ../* || "$entry" == */../* || "$entry" == */.. ]]; then
               echo "::error::Release artifact contains an unsafe path: $entry"
