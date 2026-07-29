@@ -1,0 +1,46 @@
+[
+  {
+    "category": "documentation",
+    "limitations": [
+      "The result applies only to the named commit and does not establish customer-environment behavior."
+    ],
+    "observed_at": "2026-07-29T01:40:32Z",
+    "owner": "Lightning IT Documentation Maintainers",
+    "reference": "ev-documentation-content-validation@1.0",
+    "retention_review_at": "2027-07-29",
+    "review": "approved",
+    "reviewed_at": "2026-07-29T01:40:32Z",
+    "status": "passed",
+    "subject": {
+      "identifier": "documentation-develop-029c520",
+      "type": "site-candidate"
+    },
+    "supports_claims": [
+      "claim-documentation-quality-gates"
+    ],
+    "title": "Public documentation content validation",
+    "tombstone": false
+  },
+  {
+    "category": "security",
+    "limitations": [
+      "This availability state does not disclose whether protected assessments exist."
+    ],
+    "observed_at": "2026-07-29T01:40:32Z",
+    "owner": "Lightning IT Security and Compliance Maintainers",
+    "reference": "ev-external-assurance-unavailable@1.0",
+    "retention_review_at": "2027-01-29",
+    "review": "approved",
+    "reviewed_at": "2026-07-29T01:40:32Z",
+    "status": "unavailable",
+    "subject": {
+      "identifier": "lightning-it-public-portfolio",
+      "type": "portfolio"
+    },
+    "supports_claims": [
+      "claim-external-assurance-unverified"
+    ],
+    "title": "Portfolio external assurance evidence unavailable",
+    "tombstone": false
+  }
+]

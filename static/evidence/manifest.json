@@ -1,0 +1,26 @@
+{
+  "catalog_sha256": "e195e99ff2c9e7eaacfdfa8a54ae4f361585f9728601e385c34e1d51840b9a4c",
+  "generator": "evidence-center-generator@1.0",
+  "records": [
+    {
+      "reference": "ev-documentation-content-validation@1.0",
+      "sha256": "52a865f8483d10cf57268770ee5730e3865c6012c987075acfb4923ed4ce3261"
+    },
+    {
+      "reference": "ev-external-assurance-unavailable@1.0",
+      "sha256": "e2aed80464cccadacd1246670fcf2ee520a8a6d002147abcf0fb43c90bd6124a"
+    }
+  ],
+  "schema_version": 1,
+  "status_counts": {
+    "expired": 0,
+    "failed": 0,
+    "not-applicable": 0,
+    "passed": 1,
+    "revoked": 0,
+    "superseded": 0,
+    "unavailable": 1,
+    "warning": 0,
+    "withheld": 0
+  }
+}

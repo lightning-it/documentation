@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/lightning-it/documentation/issues/137",
+  "reviewed_at": "2026-07-29T03:15:00Z",
+  "reviewer": "@litroc",
+  "reviewer_role": "Lightning IT Security and Compliance Maintainers",
+  "decision": "approved",
+  "approval_basis": "single-maintainer-exception",
+  "scope": [
+    "config/evidence-record.schema.json",
+    "config/evidence-record-registry.json",
+    "evidence/records/*.json",
+    "static/evidence/catalog.json",
+    "static/evidence/manifest.json"
+  ],
+  "manifest_sha256": "af62196a3a01a34983c6bad5c82ef37f40cb7835630e3692ad169d71310ff9aa",
+  "catalog_sha256": "e195e99ff2c9e7eaacfdfa8a54ae4f361585f9728601e385c34e1d51840b9a4c",
+  "classification_result": "PUBLIC_SAFE",
+  "protected_source_locations_published": false,
+  "raw_restricted_artifacts_published": false,
+  "limitations": [
+    "Approval covers only the exact public files and digests listed here.",
+    "Approval does not attest to the existence or state of protected evidence."
+  ]
+}

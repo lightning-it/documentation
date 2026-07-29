@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/lightning-it/documentation/issues/137",
+  "reviewed_at": "2026-07-29T01:45:00Z",
+  "owner": "Lightning IT Documentation Maintainers",
+  "dispositions": [
+    {
+      "source": "evidence/records/*.json",
+      "disposition": "canonical-public-record-input",
+      "reason": "Allowlisted versioned records validated and rendered by the Evidence Center generator."
+    },
+    {
+      "source": "static/evidence/catalog.json",
+      "disposition": "generated-public-view",
+      "reason": "Deterministic catalog generated from canonical public record inputs."
+    },
+    {
+      "source": "static/evidence/manifest.json",
+      "disposition": "generated-public-manifest",
+      "reason": "Deterministic record and catalog digest inventory."
+    },
+    {
+      "source": "evidence/document-approval.json",
+      "disposition": "existing-canonical-governance-evidence",
+      "reason": "Retains its existing schema and meaning; future normalized records may reference it without relabeling."
+    },
+    {
+      "source": "evidence/generated/*",
+      "disposition": "generated-validation-output",
+      "reason": "Retains generator-specific meaning and is not automatically promoted into the public record set."
+    },
+    {
+      "source": "evidence/*-migration*.json",
+      "disposition": "existing-migration-governance",
+      "reason": "Retains its approved migration meaning and is not silently rewritten."
+    },
+    {
+      "source": "raw findings, scanner logs, customer evidence, audit work papers, risk records, private infrastructure evidence",
+      "disposition": "protected-only-excluded",
+      "reason": "Must remain in an authorized protected system and may enter the public model only through independently reviewed allowlisted summaries."
+    }
+  ],
+  "unclassified_public_sources": 0,
+  "source_deletion_authorized": false
+}

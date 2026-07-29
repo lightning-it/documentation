@@ -235,6 +235,15 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Evidence Center",
+      link: { type: "doc", id: "evidence-center/evidence-center-overview" },
+      items: [
+        "evidence-center/evidence-center-catalog",
+        "evidence-center/evidence-center-governance",
+      ],
+    },
+    {
+      type: "category",
       label: "Security",
       link: { type: "doc", id: "security/security-overview" },
       items: [
