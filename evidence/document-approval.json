@@ -198,7 +198,6 @@
         "trust-center-model",
         "trust-development",
         "trust-governance",
-        "trust-overview",
         "trust-principles",
         "trust-quality",
         "trust-releases",
@@ -221,7 +220,7 @@
       "decision": "approved",
       "reviewer": "@litroc",
       "review_date": "2026-07-28",
-      "approval_basis": "explicit-user-authorization-and-single-maintainer-exception"
+      "approval_basis": "single-maintainer-exception"
     },
     {
       "approver_role": "Lightning IT Security and Compliance Maintainers",
@@ -241,6 +240,7 @@
         "security-overview",
         "trust-assurance",
         "trust-compliance-positioning",
+        "trust-overview",
         "trust-security",
         "trust-supply-chain",
         "wunderbox-security"
@@ -248,7 +248,7 @@
       "decision": "approved",
       "reviewer": "@litroc",
       "review_date": "2026-07-28",
-      "approval_basis": "explicit-user-authorization-and-single-maintainer-exception"
+      "approval_basis": "single-maintainer-exception"
     }
   ]
 }
