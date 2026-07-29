@@ -13,6 +13,7 @@ const read = async (name) =>
 const config = await read("config/github-traceability.json");
 const snapshot = await read("evidence/github-traceability-snapshot.json");
 const errors = validateTraceability(config, snapshot);
+failIfErrors("GitHub lifecycle traceability input", errors);
 const output = createTraceabilityOutput(config, snapshot);
 const expected = canonicalJson(output);
 const target = path.join(

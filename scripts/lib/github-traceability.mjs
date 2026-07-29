@@ -29,11 +29,7 @@ const edgeTypes = new Set([
   "maintains",
 ]);
 
-export function validateTraceability(
-  config,
-  snapshot,
-  now = new Date("2026-07-29T08:00:00Z"),
-) {
+export function validateTraceability(config, snapshot, now = new Date()) {
   const errors = [];
   const allowed = new Map(
     (config.repositories ?? []).map((entry) => [entry.node_id, entry]),
@@ -49,16 +45,22 @@ export function validateTraceability(
     errors.push("query contract version mismatch");
   if (!snapshot.complete || snapshot.pagination?.has_next_page)
     errors.push("snapshot is partial or pagination is incomplete");
-  if ((snapshot.pagination?.pages ?? Infinity) > config.maximum_pages)
+  const pages = snapshot.pagination?.pages;
+  if (!Number.isInteger(pages) || pages < 1)
+    errors.push("pagination page count is invalid");
+  else if (pages > config.maximum_pages)
     errors.push("pagination exceeds bounded contract");
-  if (
-    (snapshot.rate_limit?.remaining ?? -1) < config.minimum_remaining_rate_limit
-  )
+  const remaining = snapshot.rate_limit?.remaining;
+  if (!Number.isFinite(remaining) || remaining < 0)
+    errors.push("rate limit value is invalid");
+  else if (remaining < config.minimum_remaining_rate_limit)
     errors.push("rate limit is below the safe threshold");
   const observed = Date.parse(snapshot.repository?.observed_at ?? "");
+  const age = now.getTime() - observed;
   if (
     !Number.isFinite(observed) ||
-    now.getTime() - observed > config.maximum_snapshot_age_days * 86400000
+    age < 0 ||
+    age > config.maximum_snapshot_age_days * 86400000
   )
     errors.push("snapshot is stale or has an invalid observation time");
   const objects = new Map();
@@ -68,7 +70,10 @@ export function validateTraceability(
       errors.push("object has missing or duplicate immutable identity");
     if (!requiredTypes.has(object.type))
       errors.push(`${object.type}: unsupported object type`);
-    if (!object.url?.startsWith(`${repository?.url}/`))
+    if (
+      typeof object.url !== "string" ||
+      !object.url.startsWith(`${repository?.url}/`)
+    )
       errors.push(
         `${object.immutable_id}: URL is outside the public repository`,
       );
