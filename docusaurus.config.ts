@@ -258,7 +258,7 @@ const config: Config = {
             },
             {
               label: "Third-party notices",
-              href: "https://docs.l-it.io/THIRD_PARTY_NOTICES.txt",
+              href: "/THIRD_PARTY_NOTICES.txt",
               target: "_blank",
               rel: "noopener noreferrer",
             },

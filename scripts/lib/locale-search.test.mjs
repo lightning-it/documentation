@@ -53,6 +53,19 @@ test("unreviewed machine output cannot be current", () => {
   );
 });
 
+test("current translations require a bounded parseable review expiry", () => {
+  const set = registry();
+  delete set.translations[0].review_at;
+  const inputs = new Map([
+    ["source", "source"],
+    ["translation", "translated"],
+  ]);
+  assert.match(
+    validateLocaleSearch(set, inputs).join("\n"),
+    /lacks human review/,
+  );
+});
+
 test("manifest partitions locale and version and disables silent fallback", () => {
   const inputs = new Map([
     ["source", "source"],

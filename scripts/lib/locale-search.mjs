@@ -55,10 +55,23 @@ export function validateLocaleSearch(registry, inputs) {
       );
     }
     if (record.translation_status === "current") {
-      if (!record.reviewer || !record.reviewer_role || !record.reviewed_at) {
+      const reviewedAt = Date.parse(`${record.reviewed_at}T00:00:00Z`);
+      const reviewAt = Date.parse(`${record.review_at}T00:00:00Z`);
+      if (
+        !record.reviewer ||
+        !record.reviewer_role ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(record.reviewed_at ?? "") ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(record.review_at ?? "") ||
+        !Number.isFinite(reviewedAt) ||
+        !Number.isFinite(reviewAt)
+      ) {
         errors.push(`${id}: current translation lacks human review`);
       }
-      if (record.reviewed_at >= record.review_at)
+      if (
+        Number.isFinite(reviewedAt) &&
+        Number.isFinite(reviewAt) &&
+        reviewedAt >= reviewAt
+      )
         errors.push(`${id}: review expiry is invalid`);
     }
     if (!publicStates.has(record.translation_status) && translation) {

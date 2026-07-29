@@ -11,7 +11,7 @@ document:
   owner: Lightning IT Documentation Maintainers
   approver: Lightning IT Product Owners
   audience: [customers, compliance reviewers, engineering contributors]
-  last_reviewed: "2026-07-28"
+  last_reviewed: "2026-07-29"
   review_cadence: annual
 ---
 
@@ -27,8 +27,9 @@ approval, immutable release identity, and production acceptance remain
 separate evidence layers. See the
 [documentation pipeline](../documentation-governance/documentation-pipeline.md).
 
-**Target state.** Issue
-[#137](https://github.com/lightning-it/documentation/issues/137) will provide
-the public Evidence Center, including retention, supersession, tombstone, and
-withheld states. Until then, missing evidence must remain visible as
-unverified; it must never default to success.
+**Implemented public state.** The [Evidence Center](../evidence-center/index.md)
+publishes allowlisted, deterministic records with retention, supersession,
+tombstone, and withheld states. Missing, protected, stale, or unavailable
+evidence remains explicit and never defaults to success. Issue
+[#137](https://github.com/lightning-it/documentation/issues/137) records the
+bounded implementation and its exact review evidence.
