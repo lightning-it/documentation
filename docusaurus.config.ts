@@ -257,10 +257,7 @@ const config: Config = {
               href: "https://github.com/lightning-it/documentation",
             },
             {
-              label: "Third-party notices",
-              href: "/THIRD_PARTY_NOTICES.txt",
-              target: "_blank",
-              rel: "noopener noreferrer",
+              html: '<a class="footer__link-item" href="/THIRD_PARTY_NOTICES.txt" target="_blank" rel="noopener noreferrer">Third-party notices</a>',
             },
           ],
         },
