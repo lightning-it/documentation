@@ -1,20 +1,2 @@
-# Independent repository-wide review fallback
-* @litroc @litdeg
-
-# Repository governance and deployment
-/.github/ @litroc @litdeg
-/AGENTS.md @litroc @litdeg
-/SECURITY.md @litroc @litdeg
-/evidence/document-approval.json @litroc @litdeg
-/evidence/document-approval-authorities.json @litroc @litdeg
-/scripts/ @litroc @litdeg
-/src/ @litroc @litdeg
-/static/ @litroc @litdeg
-
-# Product documentation
-/docs/modulix/ @litroc @litdeg
-/docs/io/ @litroc @litdeg
-/docs/wunderbox/ @litroc @litdeg
-/docs/atlas/ @litroc @litdeg
-/docs/security/ @litroc @litdeg
-/docs/compliance/ @litroc @litdeg
+# Managed by lightning-it/shared-assets-lit; change the canonical owner there.
+* @lightning-it/lightning-it-security-and-compliance-maintainers
