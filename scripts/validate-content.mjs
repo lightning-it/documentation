@@ -162,16 +162,21 @@ function secretFindings(filePath, content, { scanContactData = true } = {}) {
     ["bearer credential", /\bBearer\s+[A-Za-z0-9._~+/-]{20,}={0,2}\b/i],
     ["credential in URL", /https?:\/\/[^\s/@:]+:[^\s/@]+@/i],
     ["Ansible Vault payload", new RegExp("\\$" + "ANSIBLE_VAULT;")],
-    [
-      "private DNS suffix",
-      /\b(?!host\.docker\.internal\b)[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:internal|intranet|lan|local)\b/i,
-    ],
   ];
 
   for (const [label, pattern] of patterns) {
     if (pattern.test(content)) {
       findings.push(`${repositoryPath(filePath)}: possible ${label}`);
     }
+  }
+
+  for (const match of content.matchAll(
+    /\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:internal|intranet|lan|local)\b/gi,
+  )) {
+    if (match[0].toLocaleLowerCase("en-US") === "host.docker.internal") {
+      continue;
+    }
+    findings.push(`${repositoryPath(filePath)}: possible private DNS suffix`);
   }
 
   for (const match of content.matchAll(
