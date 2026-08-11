@@ -75,7 +75,7 @@ Sanitize SVG as active content, not as a harmless image format.
 
 Substantial pages use proportionate front matter:
 
-```yaml
+```text
 ---
 id: stable-document-id
 title: Human-readable title

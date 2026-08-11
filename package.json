@@ -37,9 +37,10 @@
     "test:canonical-routes": "node scripts/check-canonical-routes.mjs",
     "test:licenses": "node scripts/check-repository-license.mjs && node scripts/check-licenses.mjs",
     "test:site": "html-validate --config config/html-validate.json \"build/**/*.html\" && node scripts/validate-site.mjs",
-    "test:unit": "vitest run && npm run test:validation && npm run test:ihr",
+    "test:unit": "vitest run && npm run test:validation && npm run test:ihr && npm run test:vendored-image-size",
     "test:ihr": "node scripts/validate-ihr.mjs templates/installation-and-handover-record.md",
     "test:validation": "node --test scripts/lib/*.test.mjs",
+    "test:vendored-image-size": "node --test scripts/test-vendored-image-size.mjs",
     "test:unit:watch": "vitest",
     "test:e2e": "playwright test",
     "test:a11y": "playwright test tests/e2e/accessibility.spec.ts",
@@ -83,6 +84,7 @@
     "@mdx-js/react": "3.1.1",
     "@mermaid-js/layout-elk": "0.1.9",
     "clsx": "2.1.1",
+    "image-size": "file:vendor/image-size",
     "prism-react-renderer": "2.4.1",
     "react": "19.2.7",
     "react-dom": "19.2.7"
@@ -119,19 +121,24 @@
     "parse5": "8.0.1",
     "prettier": "3.9.5",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.64.0",
+    "typescript-eslint": "8.67.0",
     "vitest": "4.1.10",
     "yaml": "2.9.0"
   },
   "overrides": {
-    "brace-expansion": "5.0.8",
+    "brace-expansion": "5.0.9",
+    "js-yaml": "4.3.1",
     "markdownlint-cli2": {
       "js-yaml": "5.2.2"
     },
+    "mermaid": "11.16.1",
     "minimatch": "10.2.5",
+    "nanoid": "3.3.17",
+    "postcss": "8.5.23",
     "serialize-javascript": "7.0.7",
     "sockjs": {
       "uuid": "11.1.1"
-    }
+    },
+    "undici": "7.29.0"
   }
 }

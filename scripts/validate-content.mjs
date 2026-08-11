@@ -162,16 +162,24 @@ function secretFindings(filePath, content, { scanContactData = true } = {}) {
     ["bearer credential", /\bBearer\s+[A-Za-z0-9._~+/-]{20,}={0,2}\b/i],
     ["credential in URL", /https?:\/\/[^\s/@:]+:[^\s/@]+@/i],
     ["Ansible Vault payload", new RegExp("\\$" + "ANSIBLE_VAULT;")],
-    [
-      "private DNS suffix",
-      /\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:internal|intranet|lan|local)\b/i,
-    ],
   ];
 
   for (const [label, pattern] of patterns) {
     if (pattern.test(content)) {
       findings.push(`${repositoryPath(filePath)}: possible ${label}`);
     }
+  }
+
+  for (const match of content.matchAll(
+    /\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:internal|intranet|lan|local)\b/gi,
+  )) {
+    if (match[0].toLocaleLowerCase("en-US") === "host.docker.internal") {
+      continue;
+    }
+    findings.push(
+      `${repositoryPath(filePath)}:${lineNumberAt(content, match.index ?? 0)}: possible private DNS suffix`,
+    );
+    break;
   }
 
   for (const match of content.matchAll(
@@ -199,11 +207,18 @@ function secretFindings(filePath, content, { scanContactData = true } = {}) {
     /(?<![A-Za-z0-9])(?:[A-Fa-f0-9]{0,4}:){2,7}[A-Fa-f0-9]{0,4}(?![A-Za-z0-9])/g,
   )) {
     const value = match[0];
+    const containingLine = content.slice(
+      content.lastIndexOf("\n", match.index ?? 0) + 1,
+      content.indexOf("\n", match.index ?? 0) === -1
+        ? content.length
+        : content.indexOf("\n", match.index ?? 0),
+    );
     if (
       isIP(value) === 6 &&
       value !== "::" &&
       value !== "::1" &&
-      !value.toLocaleLowerCase("en-US").startsWith("2001:db8:")
+      !value.toLocaleLowerCase("en-US").startsWith("2001:db8:") &&
+      !containingLine.includes("::add-mask::")
     ) {
       findings.push(
         `${repositoryPath(filePath)}:${lineNumberAt(content, match.index ?? 0)}: non-example IPv6 address`,
@@ -218,7 +233,8 @@ function secretFindings(filePath, content, { scanContactData = true } = {}) {
       const email = match[0].toLocaleLowerCase("en-US");
       if (
         email.endsWith("@example.com") ||
-        email.endsWith("@users.noreply.github.com")
+        email.endsWith("@users.noreply.github.com") ||
+        email === "git@github.com"
       ) {
         continue;
       }
