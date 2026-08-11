@@ -6,3 +6,6 @@ static/compliance/catalog.json
 static/compliance/manifest.json
 # Deterministic locale/search governance manifest.
 static/search/manifest.json
+
+# Reviewed third-party runtime bundle; preserve upstream formatting.
+vendor/image-size/**

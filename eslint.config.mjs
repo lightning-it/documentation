@@ -15,6 +15,7 @@ export default tseslint.config(
       "static/pagefind/**",
       "test-results/**",
       "blob-report/**",
+      "vendor/image-size/**",
     ],
   },
   js.configs.recommended,

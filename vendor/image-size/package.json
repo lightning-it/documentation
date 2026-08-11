@@ -1,0 +1,19 @@
+{
+  "name": "image-size",
+  "version": "2.0.3",
+  "private": true,
+  "description": "Security-patched image-size runtime used by the documentation build",
+  "main": "./dist/fromFile.cjs",
+  "types": "./dist/fromFile.d.ts",
+  "exports": {
+    "./fromFile": {
+      "types": "./dist/fromFile.d.ts",
+      "import": "./dist/fromFile.cjs",
+      "require": "./dist/fromFile.cjs"
+    }
+  },
+  "engines": {
+    "node": ">=16.x"
+  },
+  "license": "MIT"
+}
