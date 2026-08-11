@@ -176,7 +176,10 @@ function secretFindings(filePath, content, { scanContactData = true } = {}) {
     if (match[0].toLocaleLowerCase("en-US") === "host.docker.internal") {
       continue;
     }
-    findings.push(`${repositoryPath(filePath)}: possible private DNS suffix`);
+    findings.push(
+      `${repositoryPath(filePath)}:${lineNumberAt(content, match.index ?? 0)}: possible private DNS suffix`,
+    );
+    break;
   }
 
   for (const match of content.matchAll(
