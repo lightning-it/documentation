@@ -7,8 +7,10 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 
@@ -124,6 +126,17 @@ def check_generated_docs(meta: dict[str, str]) -> None:
         raise AssertionError("RELEASE.md does not include the repository type")
     if "Release Evidence" not in release:
         raise AssertionError("RELEASE.md does not describe release evidence")
+    if meta.get("repository_type", "") == "container_image":
+        for asset in [
+            "release-evidence.json",
+            "release-evidence.md",
+            "release-provenance.intoto.jsonl",
+            "sbom.cdx.json",
+            "SHA256SUMS",
+            "SHA256SUMS.sigstore.json",
+        ]:
+            if f"`{asset}`" not in release:
+                raise AssertionError(f"RELEASE.md does not list required release asset {asset}")
     if "Test Profiles" not in testing:
         raise AssertionError("TESTING.md does not describe test profiles")
     for term in ["OpenSSF Readiness", "Scorecard", "Best Practices Badge", "Security Policy"]:
@@ -177,13 +190,140 @@ def check_secret_safe_generated_docs() -> None:
 def check_terraform(repo_type: str) -> None:
     if repo_type not in {"terraform_module", "terraform_policy"}:
         return
-    tf_files = sorted(ROOT.glob("*.tf"))
+    tf_files = sorted(
+        path
+        for path in ROOT.glob("**/*.tf")
+        if ".terraform" not in path.relative_to(ROOT).parts
+    )
     if not tf_files:
-        raise AssertionError("Terraform repository has no root *.tf files")
+        raise AssertionError(
+            "Terraform repository has no *.tf files outside .terraform directories"
+        )
+    if repo_type == "terraform_module" and not any(path.parent == ROOT for path in tf_files):
+        raise AssertionError("Terraform module repository has no root *.tf files")
     if shutil_which("terraform"):
-        run(["terraform", "fmt", "-check", "-recursive"])
-        run(["terraform", "init", "-backend=false", "-input=false"])
-        run(["terraform", "validate", "-no-color"])
+        if repo_type == "terraform_module":
+            validation_roots = [ROOT]
+        else:
+            validation_roots = sorted(
+                {
+                    path.parent
+                    for path in tf_files
+                    if (path.parent / ".terraform.lock.hcl").is_file()
+                    or (path.parent / "versions.tf").is_file()
+                    or (path.parent / "backend.tf").is_file()
+                }
+            )
+            if not validation_roots:
+                raise AssertionError(
+                    "Terraform policy repository has no explicit validation root; "
+                    "add .terraform.lock.hcl, versions.tf, or backend.tf"
+                )
+        # The canonical profile runs inside a read-only source checkout.
+        # Terraform writes both .terraform data and dependency lock-file
+        # updates below each validation root, so validate one temporary copy
+        # instead of allowing writes to the repository. The managed Devtool
+        # mounts HOME as a fresh executable tmpfs because downloaded provider
+        # binaries must be executable during validate.
+        terraform_home = os.environ.get("HOME", "")
+        terraform_temp_parent = Path(terraform_home)
+        resolved_temp_parent = (
+            terraform_temp_parent.resolve()
+            if terraform_home and terraform_temp_parent.is_absolute()
+            else terraform_temp_parent
+        )
+        resolved_root = ROOT.resolve()
+        if (
+            not terraform_home
+            or not terraform_temp_parent.is_absolute()
+            or not terraform_temp_parent.is_dir()
+            or terraform_temp_parent.is_symlink()
+            or resolved_temp_parent == resolved_root
+            or resolved_root in resolved_temp_parent.parents
+        ):
+            raise AssertionError(
+                "Terraform validation requires an absolute, existing, "
+                "non-symlink HOME outside the repository for executable "
+                "temporary data"
+            )
+        with tempfile.TemporaryDirectory(
+            prefix="lit-terraform-",
+            dir=resolved_temp_parent,
+        ) as temporary_directory:
+            temporary_root = Path(temporary_directory)
+            workspace = temporary_root / "workspace"
+            data_root = temporary_root / "data"
+            shutil.copytree(
+                ROOT,
+                workspace,
+                symlinks=True,
+                ignore=shutil.ignore_patterns(".git", ".terraform"),
+            )
+            for current_root, directory_names, file_names in os.walk(
+                workspace,
+                followlinks=False,
+            ):
+                current_path = Path(current_root)
+                for name in (*directory_names, *file_names):
+                    candidate = current_path / name
+                    if candidate.is_symlink():
+                        raise AssertionError(
+                            "Terraform validation workspace may not contain "
+                            f"symlinks: {candidate.relative_to(workspace)}"
+                        )
+            run(
+                [
+                    "terraform",
+                    f"-chdir={workspace}",
+                    "fmt",
+                    "-check",
+                    "-recursive",
+                ]
+            )
+            data_root.mkdir()
+            previous_data_dir = os.environ.get("TF_DATA_DIR")
+            try:
+                for root_index, validation_root in enumerate(validation_roots):
+                    relative_root = validation_root.relative_to(ROOT)
+                    data_dir = data_root / f"{root_index:04d}"
+                    data_dir.mkdir()
+                    validation_copy = workspace / relative_root
+                    resolved_workspace = workspace.resolve()
+                    resolved_validation_copy = validation_copy.resolve()
+                    lock_file = validation_copy / ".terraform.lock.hcl"
+                    if (
+                        resolved_validation_copy != resolved_workspace
+                        and resolved_workspace not in resolved_validation_copy.parents
+                    ) or validation_copy.is_symlink() or not validation_copy.is_dir() or (
+                        lock_file.exists() and not lock_file.is_file()
+                    ):
+                        raise AssertionError(
+                            "Terraform validation copy must resolve inside its temporary "
+                            "workspace and use a regular dependency lock file"
+                        )
+                    os.environ["TF_DATA_DIR"] = str(data_dir)
+                    run(
+                        [
+                            "terraform",
+                            f"-chdir={validation_copy}",
+                            "init",
+                            "-backend=false",
+                            "-input=false",
+                        ]
+                    )
+                    run(
+                        [
+                            "terraform",
+                            f"-chdir={validation_copy}",
+                            "validate",
+                            "-no-color",
+                        ]
+                    )
+            finally:
+                if previous_data_dir is None:
+                    os.environ.pop("TF_DATA_DIR", None)
+                else:
+                    os.environ["TF_DATA_DIR"] = previous_data_dir
     else:
         print("Terraform CLI not installed; checked Terraform file presence only")
 
@@ -224,6 +364,50 @@ def check_markdown() -> None:
             raise AssertionError(f"{path.name} contains tab characters")
         if not text.endswith("\n"):
             raise AssertionError(f"{path.name} must end with a newline")
+
+
+def check_embedded_code() -> None:
+    result = subprocess.run(
+        ["git", "-c", f"safe.directory={ROOT}", "ls-files", "-z"],
+        cwd=ROOT,
+        text=True,
+        encoding="utf-8",
+        errors="surrogateescape",
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode:
+        details = result.stderr.strip()
+        raise AssertionError(
+            "cannot enumerate tracked Markdown files with git ls-files"
+            + (f": {details}" if details else "")
+        )
+    markdown_paths = sorted(
+        path
+        for path in result.stdout.split("\0")
+        if path and Path(path).suffix.lower() == ".md"
+    )
+    if markdown_paths:
+        validator = ROOT / "scripts" / "validate-embedded-code.py"
+        shared_validator = ROOT / "default" / "scripts" / "validate-embedded-code.py"
+        if not validator.is_file() and shared_validator.is_file():
+            validator = shared_validator
+        command_prefix = [
+            sys.executable,
+            validator.relative_to(ROOT).as_posix(),
+        ]
+        batch: list[str] = []
+        batch_bytes = 0
+        for path in markdown_paths:
+            path_bytes = len(os.fsencode(path)) + 1
+            if batch and (len(batch) >= 100 or batch_bytes + path_bytes > 60_000):
+                run([*command_prefix, *batch])
+                batch = []
+                batch_bytes = 0
+            batch.append(path)
+            batch_bytes += path_bytes
+        if batch:
+            run([*command_prefix, *batch])
 
 
 def check_managed_assets() -> None:
@@ -341,6 +525,7 @@ def main() -> int:
         check_generated_docs(meta)
         check_secret_safe_generated_docs()
         check_markdown()
+        check_embedded_code()
         check_managed_assets()
         repo_type = meta.get("repository_type", "")
         check_terraform(repo_type)
