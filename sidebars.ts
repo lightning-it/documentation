@@ -217,6 +217,7 @@ const sidebars: SidebarsConfig = {
         "architecture/cicd-cloudflare-deployment",
         "architecture/implementation-plan",
         "architecture/integrated-architecture-package",
+        "adr/adr-renovate-guarded-automerge",
       ],
     },
     {
