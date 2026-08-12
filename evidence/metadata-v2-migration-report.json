@@ -8,8 +8,8 @@
   },
   "inventory": {
     "source": "evidence/document-approval.json",
-    "document_count": 118,
-    "version_1_compatible": 118,
+    "document_count": 119,
+    "version_1_compatible": 119,
     "version_2_native": 0,
     "unresolved": 0
   },

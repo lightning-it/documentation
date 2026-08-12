@@ -1,12 +1,12 @@
 {
-  "approval_content_tree_sha256": "8c5dc8b9f3fac3af0ac1c6039c8bbd5438c1966db877ed4d3e894989e9c98abf",
+  "approval_content_tree_sha256": "90d69287eb03e81180a203a30391ad1e03ccdb81dbfabc525775dd2459c85d7f",
   "disposition_counts": {
     "owned_protected_external_dependencies": 120,
     "reconciled_public_targets": 20
   },
   "duplicate_canonical_content": 0,
   "generator": "governed-migration-generator@1.0",
-  "inventory_sha256": "82a668b13669321fd9c505aa130398c5925e742072f70d07943a76211f971d52",
+  "inventory_sha256": "d40b870f9968ca1c7491aca269718e07fdd0de4bb25bba3ceb080cfc04bc7701",
   "issue": "https://github.com/lightning-it/documentation/issues/141",
   "protected_external_dependency": {
     "count": 120,

@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "issue": "https://github.com/lightning-it/documentation/issues/141",
-  "reviewed_at": "2026-07-29T08:15:00Z",
+  "reviewed_at": "2026-08-12T06:56:58Z",
   "reviewer": "@litroc",
   "reviewer_role": "Migration Owner",
   "decision": "approved",
   "approval_basis": "single-maintainer-exception",
   "classification_result": "PUBLIC_SAFE",
-  "inventory_sha256": "be2f66eb3cb86c7a9b6d27cbf79d0df21cdfb57d29f72302aaeb9aca620704af",
+  "inventory_sha256": "96d05e241b0253617afc3079d1653c403b7f20f2d556310d1d36c0fd8c157837",
   "source_deletion_authorized": false,
   "limitations": [
     "Protected source identities and item-level dispositions remain in the authorized protected system.",
