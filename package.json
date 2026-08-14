@@ -133,7 +133,7 @@
     },
     "mermaid": "11.16.1",
     "minimatch": "10.2.5",
-    "nanoid": "3.3.17",
+    "nanoid": "3.3.18",
     "postcss": "8.5.23",
     "serialize-javascript": "7.0.7",
     "sockjs": {
