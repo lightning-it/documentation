@@ -51,6 +51,61 @@ jobs:
       - name: Validate content, links, images, metadata, and secrets
         run: npm run test:content
 
+      - name: Require fresh GitHub traceability when its contract changes
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_BEFORE: ${{ github.event.before }}
+          EVENT_AFTER: ${{ github.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          traceability_paths=(
+            .github/workflows/documentation-ci.yml
+            .github/workflows/scheduled-validation.yml
+            config/github-traceability.json
+            evidence/github-traceability-review.json
+            evidence/github-traceability-snapshot.json
+            package.json
+            scripts/generate-github-traceability.mjs
+            scripts/lib/github-traceability.mjs
+            scripts/lib/github-traceability.test.mjs
+            static/traceability/index.json
+          )
+          case "${EVENT_NAME}" in
+            pull_request)
+              base="${PR_BASE_SHA}"
+              head="${PR_HEAD_SHA}"
+              comparison="${base}...${head}"
+              ;;
+            push)
+              base="${EVENT_BEFORE}"
+              head="${EVENT_AFTER}"
+              if [ "${base}" = 0000000000000000000000000000000000000000 ]; then
+                npm run test:github-traceability:fresh
+                exit 0
+              fi
+              comparison="${base}..${head}"
+              ;;
+            workflow_dispatch)
+              npm run test:github-traceability:fresh
+              exit 0
+              ;;
+            *)
+              echo "Unsupported event for traceability freshness policy." >&2
+              exit 1
+              ;;
+          esac
+          [[ "${base}" =~ ^[0-9a-f]{40}$ ]]
+          [[ "${head}" =~ ^[0-9a-f]{40}$ ]]
+          git cat-file -e "${base}^{commit}"
+          git cat-file -e "${head}^{commit}"
+          if git diff --quiet "${comparison}" -- "${traceability_paths[@]}"; then
+            echo "Traceability inputs are unchanged; weekly freshness monitoring remains authoritative."
+          else
+            npm run test:github-traceability:fresh
+          fi
+
       - name: Validate documentation review dates
         run: npm run test:review-dates
 

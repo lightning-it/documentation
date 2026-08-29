@@ -107,18 +107,18 @@
     {
       "immutable_id": "docs-foundation-v1",
       "type": "version",
-      "url": "https://github.com/lightning-it/documentation/milestone/3",
+      "url": "https://github.com/lightning-it/documentation/milestone/1",
       "version": "1.0"
     }
   ],
-  "output_sha256": "51cd58ba7bfcf5b04146450b3b19e6999037995930a90933f941bd146e5c85ff",
+  "output_sha256": "16b2f1a245edda57e403a4bc6a039dc9657c8133c7c2796be7ea323c3c2efeab",
   "query_contract_version": "1.0",
   "repository": {
     "name_with_owner": "lightning-it/documentation",
     "node_id": "R_kgDOTYvZNw",
-    "observed_at": "2026-07-29T07:34:19Z",
+    "observed_at": "2026-08-28T19:02:16Z",
     "visibility": "PUBLIC"
   },
   "schema_version": 1,
-  "snapshot_sha256": "d5183d103c3717ee23ab75c6fc2ac3cb7fa2fb66537eb0a682985a1a61be2822"
+  "snapshot_sha256": "18dad12fe592877f77a3e7e8e64db294fc3899b2ac7d2ad78dcc676a194d010d"
 }
