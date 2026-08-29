@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "issue": "https://github.com/lightning-it/documentation/issues/140",
-  "reviewed_at": "2026-07-29T08:00:00Z",
+  "issue": "https://github.com/lightning-it/documentation/issues/277",
+  "reviewed_at": "2026-08-29T12:12:31Z",
   "reviewer": "@litroc",
   "reviewer_role": "Repository Maintainer",
   "decision": "approved",
@@ -13,6 +13,6 @@
     "pull_requests:read",
     "actions:read"
   ],
-  "output_sha256": "4ef6b7cdb0bdc1f1dfc5860db24ad9d792e56cb6c6af8bfa88987f7ca3b18a28",
+  "output_sha256": "f330d6ec62eef6e071d174784ce6813f6e8ce4fb22ed5edab8a629552ddfdcc4",
   "rollback": "Revert the merge commit to restore the previous site; generated output is non-canonical and can be removed without changing source evidence."
 }

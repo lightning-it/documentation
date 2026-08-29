@@ -5,11 +5,11 @@
     "node_id": "R_kgDOTYvZNw",
     "name_with_owner": "lightning-it/documentation",
     "visibility": "PUBLIC",
-    "observed_at": "2026-07-29T07:34:19Z"
+    "observed_at": "2026-08-28T19:02:16Z"
   },
   "complete": true,
   "pagination": { "pages": 1, "has_next_page": false },
-  "rate_limit": { "remaining": 4999, "reset_at": "2026-07-29T08:00:00Z" },
+  "rate_limit": { "remaining": 4156, "reset_at": "2026-08-28T19:11:39Z" },
   "objects": [
     {
       "type": "goal",
@@ -68,7 +68,7 @@
       "type": "version",
       "immutable_id": "docs-foundation-v1",
       "version": "1.0",
-      "url": "https://github.com/lightning-it/documentation/milestone/3"
+      "url": "https://github.com/lightning-it/documentation/milestone/1"
     }
   ],
   "edges": [

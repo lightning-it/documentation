@@ -67,6 +67,9 @@ jobs:
       - name: Check review metadata freshness
         run: npm run test:review-dates
 
+      - name: Check public GitHub traceability snapshot freshness
+        run: npm run test:github-traceability:fresh
+
       - name: Confirm production documentation approval
         run: npm run test:approval
 
