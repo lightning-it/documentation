@@ -47,6 +47,9 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
+      - name: Check public GitHub traceability snapshot freshness
+        run: npm run test:github-traceability:fresh
+
       - name: Check the full executable dependency graph
         run: npm run audit
 

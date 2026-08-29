@@ -29,7 +29,12 @@ const edgeTypes = new Set([
   "maintains",
 ]);
 
-export function validateTraceability(config, snapshot, now = new Date()) {
+export function validateTraceability(
+  config,
+  snapshot,
+  now = new Date(),
+  { allowStaleExisting = false } = {},
+) {
   const errors = [];
   const allowed = new Map(
     (config.repositories ?? []).map((entry) => [entry.node_id, entry]),
@@ -57,10 +62,11 @@ export function validateTraceability(config, snapshot, now = new Date()) {
     errors.push("rate limit is below the safe threshold");
   const observed = Date.parse(snapshot.repository?.observed_at ?? "");
   const age = now.getTime() - observed;
-  if (
-    !Number.isFinite(observed) ||
-    age < 0 ||
-    age > config.maximum_snapshot_age_days * 86400000
+  if (!Number.isFinite(observed) || age < 0)
+    errors.push("snapshot is stale or has an invalid observation time");
+  else if (
+    age > config.maximum_snapshot_age_days * 86400000 &&
+    !allowStaleExisting
   )
     errors.push("snapshot is stale or has an invalid observation time");
   const objects = new Map();

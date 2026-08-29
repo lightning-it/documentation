@@ -8,11 +8,14 @@ import {
 import { failIfErrors, repositoryRoot } from "./lib/validation.mjs";
 
 const checkOnly = process.argv.includes("--check");
+const allowStaleExisting = process.argv.includes("--allow-stale-existing");
 const read = async (name) =>
   JSON.parse(await readFile(path.join(repositoryRoot, name), "utf8"));
 const config = await read("config/github-traceability.json");
 const snapshot = await read("evidence/github-traceability-snapshot.json");
-const errors = validateTraceability(config, snapshot);
+const errors = validateTraceability(config, snapshot, new Date(), {
+  allowStaleExisting,
+});
 failIfErrors("GitHub lifecycle traceability input", errors);
 const output = createTraceabilityOutput(config, snapshot);
 const expected = canonicalJson(output);
