@@ -10,7 +10,7 @@ on:
       base_url:
         description: Public site URL to validate
         required: true
-        default: https://docs.ltn-it.de
+        default: https://docs.l-it.io
 
 permissions:
   contents: read
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
-      BASE_URL: ${{ inputs.base_url || 'https://docs.ltn-it.de' }}
+      BASE_URL: ${{ inputs.base_url || 'https://docs.l-it.io' }}
 
     steps:
       - name: Checkout
