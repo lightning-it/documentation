@@ -57,5 +57,5 @@ cannot disappear from summaries.
 
 - [Public catalog](./catalog.md)
 - [Schema, retention, and publication governance](./governance.md)
-- Machine-readable [catalog](https://docs.l-it.io/evidence/catalog.json)
-- Machine-readable [manifest](https://docs.l-it.io/evidence/manifest.json)
+- Machine-readable [catalog](https://docs.ltn-it.de/evidence/catalog.json)
+- Machine-readable [manifest](https://docs.ltn-it.de/evidence/manifest.json)
