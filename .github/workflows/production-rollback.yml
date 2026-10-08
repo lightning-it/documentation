@@ -38,7 +38,7 @@ jobs:
     timeout-minutes: 60
     environment: production
     env:
-      BASE_URL: https://docs.l-it.io
+      BASE_URL: https://docs.ltn-it.de
       PRODUCTION_CONTENT_BASE_URL: https://lightning-it-documentation.pages.dev
       EXPECTED_COMMIT: ${{ inputs.release_commit }}
       PRODUCTION_POLL_MAX_ATTEMPTS: 90
@@ -116,6 +116,16 @@ jobs:
             echo "::error::Release artifact digest does not match the retained manifest."
             exit 1
           }
+          recorded_origin="$(node -p "require('./${manifest}').publicUrl")"
+          case "$recorded_origin" in
+            https://docs.l-it.io | https://docs.ltn-it.de) ;;
+            *)
+              echo "::error::Release manifest contains an unsupported public origin."
+              exit 1
+              ;;
+          esac
+          echo "BASE_URL=$recorded_origin" >> "$GITHUB_ENV"
+          echo "RETAINED_PUBLIC_ORIGIN=$recorded_origin" >> "$GITHUB_ENV"
           gh attestation verify retained-release/documentation-build.tgz \
             --repo lightning-it/documentation \
             --signer-workflow lightning-it/documentation/.github/workflows/release-evidence.yml \
@@ -164,6 +174,28 @@ jobs:
 
       - name: Validate production after deployment
         run: npm run test:production
+
+      - name: Validate the new public edge after rollback
+        run: |
+          node --input-type=module <<'NODE'
+          const response = await fetch('https://docs.ltn-it.de/', {
+            signal: AbortSignal.timeout(15000),
+          });
+          const servedByCloudflare = response.headers.get('server')?.toLowerCase() === 'cloudflare'
+            && Boolean(response.headers.get('cf-ray'));
+          const challenged = response.status === 403
+            && response.headers.get('cf-mitigated') === 'challenge';
+          if (!servedByCloudflare || (response.status !== 200 && !challenged)) {
+            throw new Error('The new public documentation edge is unavailable.');
+          }
+          if (challenged) process.exit(0);
+          const html = await response.text();
+          const expected = `${process.env.RETAINED_PUBLIC_ORIGIN}/`;
+          const canonical = html.match(/<link[^>]+rel="canonical"[^>]+href="([^"]+)"/i)?.[1];
+          if (canonical !== expected) {
+            throw new Error(`The new public edge does not serve the retained canonical origin ${expected}.`);
+          }
+          NODE
 
       - name: Validate public external links
         env:

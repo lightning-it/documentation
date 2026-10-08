@@ -23,7 +23,7 @@ test("protected develop preview passes the public browser journey", async ({
   expect(response?.headers()["x-robots-tag"]).toMatch(/noindex/i);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    "https://docs.l-it.io/",
+    "https://docs.ltn-it.de/",
   );
   await page.getByRole("button", { name: /Search products/i }).click();
   await page.getByRole("searchbox").fill("ModuLix");

@@ -3,7 +3,7 @@ import {
   isVerifiedOwnedCloudflareChallenge,
 } from "./external-links.mjs";
 
-export const productionOrigin = "https://docs.l-it.io";
+export const productionOrigin = "https://docs.ltn-it.de";
 // The custom domain is protected by Cloudflare's public WAF.  The Pages host
 // is the same deployment and supplies an immutable marker without weakening
 // that protection for GitHub-hosted production acceptance runners.

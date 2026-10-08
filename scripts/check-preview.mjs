@@ -181,7 +181,7 @@ async function main() {
     errors.push("preview HTML is not compressed");
   }
   if (
-    !hasExactCanonicalUrl(homeHtml, "https://docs.l-it.io/") ||
+    !hasExactCanonicalUrl(homeHtml, "https://docs.ltn-it.de/") ||
     !homeHtml.includes('aria-keyshortcuts="Control+K Meta+K"')
   ) {
     errors.push("preview home lacks canonical or search markup");

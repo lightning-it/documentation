@@ -29,7 +29,7 @@ import {
   writeEvidence,
 } from "./lib/validation.mjs";
 
-const expectedOrigin = "https://docs.l-it.io";
+const expectedOrigin = "https://docs.ltn-it.de";
 
 function inlineScriptHashes(html) {
   return inlineScriptBodies(html).map(

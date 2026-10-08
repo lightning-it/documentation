@@ -15,7 +15,7 @@ import {
 } from "./lib/external-links.mjs";
 
 const timeoutMilliseconds = 15_000;
-const productionOrigin = "https://docs.l-it.io";
+const productionOrigin = "https://docs.ltn-it.de";
 const retryDelaysMilliseconds = [500, 1_500];
 
 function normalizedExternalUrls(content) {
@@ -38,7 +38,7 @@ function normalizedExternalUrls(content) {
           }
         }
         if (
-          url.hostname !== "docs.l-it.io" &&
+          url.hostname !== "docs.ltn-it.de" &&
           !url.hostname.endsWith(".example.com") &&
           url.hostname !== "example.com"
         ) {

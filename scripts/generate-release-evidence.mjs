@@ -29,7 +29,7 @@ async function main() {
   await writeEvidence("release-manifest.json", {
     schemaVersion: 1,
     productionCommit: commit,
-    publicUrl: "https://docs.l-it.io",
+    publicUrl: "https://docs.ltn-it.de",
     artifact: {
       path: "documentation-build.tgz",
       sha256: sha256(artifact),
@@ -48,7 +48,7 @@ async function main() {
     rollback: {
       method:
         "restore the previous accepted immutable Cloudflare Pages deployment",
-      verificationUrl: "https://docs.l-it.io",
+      verificationUrl: "https://docs.ltn-it.de",
     },
   });
   console.log(`Generated release evidence for commit ${commit}.`);

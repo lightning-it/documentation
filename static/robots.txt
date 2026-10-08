@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://docs.l-it.io/sitemap.xml
+Sitemap: https://docs.ltn-it.de/sitemap.xml
