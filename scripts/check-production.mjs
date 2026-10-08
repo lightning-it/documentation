@@ -101,7 +101,7 @@ async function main() {
   }
 
   const { response: insecureHome } = await fetchWithoutBody(
-    "http://docs.l-it.io/",
+    "http://docs.ltn-it.de/",
   );
   const insecureLocation = insecureHome.headers.get("location");
   if (

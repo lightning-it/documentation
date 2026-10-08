@@ -71,7 +71,7 @@ flowchart LR
     C -->|No| D["Stop and record the blocker"]
     C -->|Yes| E["Authorized implementation issues"]
     E --> F["Deployment issue #40"]
-    F --> G["Public acceptance at docs.l-it.io"]
+    F --> G["Public acceptance at docs.ltn-it.de"]
 ```
 
 During issues #23 through #38, Codex may create or update planning documents,

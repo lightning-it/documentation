@@ -37,7 +37,7 @@ test("17 — immutable production content passes the public browser journey", as
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    "https://docs.l-it.io/",
+    "https://docs.ltn-it.de/",
   );
   await page.getByRole("button", { name: /Search products/i }).click();
   await page.getByRole("searchbox").fill("ModuLix");

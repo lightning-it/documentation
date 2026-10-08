@@ -19,7 +19,7 @@ import {
 } from "./validation.mjs";
 
 test("canonical URL matching is independent of HTML attribute order", () => {
-  const canonicalUrl = "https://docs.l-it.io/guide/";
+  const canonicalUrl = "https://docs.ltn-it.de/guide/";
 
   assert.equal(
     hasExactCanonicalUrl(
@@ -45,7 +45,7 @@ test("canonical URL matching is independent of HTML attribute order", () => {
   );
   assert.equal(
     hasExactCanonicalUrl(
-      '<link rel="canonical" href="https://docs.l-it.io/other/">',
+      '<link rel="canonical" href="https://docs.ltn-it.de/other/">',
       canonicalUrl,
     ),
     false,
@@ -101,15 +101,15 @@ test("no-script fallback elements are scanned once for local and mixed-content r
   assert.equal(
     isMixedContentReference(
       htmlAttribute(images[1], "src"),
-      "https://docs.l-it.io/guide/",
+      "https://docs.ltn-it.de/guide/",
     ),
     true,
   );
   assert.equal(
     sameOriginPathname(
       htmlAttribute(fallbackLink, "href"),
-      "https://docs.l-it.io/guide/nested/",
-      "https://docs.l-it.io",
+      "https://docs.ltn-it.de/guide/nested/",
+      "https://docs.ltn-it.de",
     ),
     "/guide/nested/fallback/",
   );
@@ -125,8 +125,8 @@ test("heading normalization removes nested HTML through a standards parser", () 
 });
 
 test("first-party paths require exact URL origin equality", () => {
-  const origin = "https://docs.l-it.io";
-  const pageUrl = "https://docs.l-it.io/guides/nested/";
+  const origin = "https://docs.ltn-it.de";
+  const pageUrl = "https://docs.ltn-it.de/guides/nested/";
 
   assert.equal(
     sameOriginPathname("child/", pageUrl, origin),
@@ -137,12 +137,12 @@ test("first-party paths require exact URL origin equality", () => {
     "/guides/sibling/",
   );
   assert.equal(
-    sameOriginPathname("https://docs.l-it.io/reference/", pageUrl, origin),
+    sameOriginPathname("https://docs.ltn-it.de/reference/", pageUrl, origin),
     "/reference/",
   );
   assert.equal(
     sameOriginPathname(
-      "https://docs.l-it.io.evil.example/reference/",
+      "https://docs.ltn-it.de.evil.example/reference/",
       pageUrl,
       origin,
     ),
@@ -150,7 +150,7 @@ test("first-party paths require exact URL origin equality", () => {
   );
   assert.equal(
     sameOriginPathname(
-      "https://docs.l-it.io@example.com/reference/",
+      "https://docs.ltn-it.de@example.com/reference/",
       pageUrl,
       origin,
     ),
@@ -159,13 +159,13 @@ test("first-party paths require exact URL origin equality", () => {
 });
 
 test("canonical metadata cannot redirect relative-reference validation", () => {
-  const origin = "https://docs.l-it.io";
+  const origin = "https://docs.ltn-it.de";
   const pageUrl = generatedPageUrl("build/guides/generated/index.html", origin);
-  const mismatchedCanonical = "https://docs.l-it.io/guides/elsewhere/";
+  const mismatchedCanonical = "https://docs.ltn-it.de/guides/elsewhere/";
 
   assert.equal(
     canonicalMatchesGeneratedRoute(
-      "https://docs.l-it.io/guides/generated/",
+      "https://docs.ltn-it.de/guides/generated/",
       pageUrl,
     ),
     true,
@@ -181,7 +181,7 @@ test("canonical metadata cannot redirect relative-reference validation", () => {
 });
 
 test("generated routes recognize only an index.html path segment", () => {
-  const origin = "https://docs.l-it.io";
+  const origin = "https://docs.ltn-it.de";
 
   assert.equal(generatedPageUrl("build/index.html", origin).pathname, "/");
   assert.equal(
@@ -202,7 +202,7 @@ test("error-page references are independent of the requested missing route", () 
   for (const reference of [
     "/assets/application.js",
     "//cdn.example.com/application.js",
-    "https://docs.l-it.io/assets/application.js",
+    "https://docs.ltn-it.de/assets/application.js",
     "mailto:security@example.com",
     "#content",
   ]) {

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "canonical_origin": "https://docs.l-it.io",
+  "canonical_origin": "https://docs.ltn-it.de",
   "route_convention": "lower-case absolute paths with a trailing slash",
   "areas": [
     {

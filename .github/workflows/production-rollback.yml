@@ -38,7 +38,7 @@ jobs:
     timeout-minutes: 60
     environment: production
     env:
-      BASE_URL: https://docs.l-it.io
+      BASE_URL: https://docs.ltn-it.de
       PRODUCTION_CONTENT_BASE_URL: https://lightning-it-documentation.pages.dev
       EXPECTED_COMMIT: ${{ inputs.release_commit }}
       PRODUCTION_POLL_MAX_ATTEMPTS: 90

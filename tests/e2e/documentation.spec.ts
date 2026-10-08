@@ -415,7 +415,7 @@ test("all canonical routes from the sitemap load successfully", async ({
     expect(response?.ok(), path).toBe(true);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
-      `https://docs.l-it.io${path}`,
+      `https://docs.ltn-it.de${path}`,
     );
   }
 });

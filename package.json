@@ -64,7 +64,7 @@
     "check": "npm run validate"
   },
   "license": "MIT",
-  "homepage": "https://docs.l-it.io",
+  "homepage": "https://docs.ltn-it.de",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lightning-it/documentation.git"

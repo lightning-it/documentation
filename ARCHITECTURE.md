@@ -13,7 +13,7 @@ in their existing systems.
 flowchart LR
     Author[Contributor] -->|pull request| GitHub[lightning-it/documentation]
     GitHub -->|validated main| Pages[Cloudflare Pages]
-    Pages --> Docs[docs.l-it.io]
+    Pages --> Docs[docs.ltn-it.de]
     Docs -->|product links| Website[l-it.io TYPO3]
     Docs -->|public source links| PublicRepos[Public GitHub repositories]
     Portal[portal.l-it.io]:::separate
