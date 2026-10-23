@@ -9,6 +9,8 @@ import {
   writeEvidence,
 } from "./lib/validation.mjs";
 
+import { spellingDictionaryException } from "./lib/license-policy.mjs";
+
 const allowedLicenseIdentifiers = new Set([
   "0BSD",
   "Apache-2.0",
@@ -109,6 +111,10 @@ async function main() {
   const lockfilePath = path.join(repositoryRoot, "package-lock.json");
   const lockfileSource = await readFile(lockfilePath, "utf8");
   const lockfile = JSON.parse(lockfileSource);
+  const rootManifest = JSON.parse(
+    await readFile(path.join(repositoryRoot, "package.json"), "utf8"),
+  );
+  const exceptions = [];
   const errors = [];
   const reviewed = [];
   const uniqueAttributionTexts = new Map();
@@ -147,7 +153,17 @@ async function main() {
       );
       continue;
     }
-    if (prohibitedLicense.test(expression)) {
+    const exception = spellingDictionaryException({
+      packagePath,
+      packageName,
+      packageVersion,
+      expression,
+      lockMetadata,
+      rootManifest,
+      files,
+    });
+    if (exception) exceptions.push(exception);
+    if (prohibitedLicense.test(expression) && !exception) {
       errors.push(
         `${packageName}@${packageVersion}: prohibited license ${expression}`,
       );
@@ -159,7 +175,7 @@ async function main() {
         !allowedLicenseIdentifiers.has(token) &&
         !token.endsWith("-exception-2.0"),
     );
-    if (unknownTokens.length > 0) {
+    if (unknownTokens.length > 0 && !exception) {
       errors.push(
         `${packageName}@${packageVersion}: unreviewed license ${expression}`,
       );
@@ -196,6 +212,7 @@ async function main() {
     uniqueAttributionTexts: uniqueAttributionTexts.size,
     allowedLicenseIdentifiers: [...allowedLicenseIdentifiers].sort(),
     lockfileSha256: sha256(lockfileSource),
+    scopedExceptions: exceptions,
   });
 
   const notices = [

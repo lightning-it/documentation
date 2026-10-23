@@ -11,6 +11,10 @@ const schema = JSON.parse(
   await readFile(path.join(root, "schemas/ihr.schema.json"), "utf8"),
 );
 const template = await readFile(
+  path.join(root, "scripts/fixtures/ihr-readiness.md"),
+  "utf8",
+);
+const currentTemplate = await readFile(
   path.join(root, "templates/installation-and-handover-record.md"),
   "utf8",
 );
@@ -36,6 +40,10 @@ function validate(source) {
     path: "fixture.md",
   });
 }
+
+test("the current German IHR template passes draft validation", () => {
+  assert.deepEqual(validate(currentTemplate), []);
+});
 
 test("supports en-GB readiness drafts with post-install fields pending", () => {
   assert.deepEqual(validate(template), []);
