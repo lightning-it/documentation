@@ -30,11 +30,13 @@ describe("HighlightedExcerpt", () => {
   });
 
   it("replaces out-of-range numeric entities without throwing", () => {
-    render(
-      <HighlightedExcerpt excerpt="Invalid &#x110000; &#9999999999999999999999; &#xD800;" />,
+    const { container } = render(
+      <HighlightedExcerpt
+        excerpt={"Invalid &#x110000; &#9999999999999999999999; &#xD800;"}
+      />,
     );
 
-    expect(screen.getByText(/Invalid � � �/)).toBeInTheDocument();
+    expect(container.textContent).toBe("Invalid \uFFFD \uFFFD \uFFFD");
   });
 
   it("treats malformed tags as escaped text", () => {

@@ -64,5 +64,41 @@
     "wunder",
     "wunderbox",
     "verkaufbares"
-  ]
+  ],
+  "overrides": [
+    {
+      "filename": "**/templates/installation-and-handover-record.md",
+      "dictionaries": ["de-de"],
+      "allowCompoundWords": true,
+      "words": [
+        "Versionierung",
+        "Verfügbarkeitsgrenzen",
+        "Blockierwirkung",
+        "Versionsgebundene",
+        "Plattformkonnektivität",
+        "Realisierungsplanung",
+        "Integrationen",
+        "versioniert",
+        "Plattformbereitstellung",
+        "Hostwerkzeuge",
+        "Repositorys",
+        "anwendungsrelevanten",
+        "konfigurationsändernd",
+        "Abweichungs",
+        "Abweichungsreferenz",
+        "Monitoringpfade",
+        "Firewallpfad",
+        "Artefaktbezug",
+        "Logauswertung",
+        "Logweiterleitung",
+        "Hostüberwachung",
+        "Anwendungsrelevante",
+        "Hostidentität",
+        "versionsgebundener",
+        "Rohlogs",
+        "Reviewauslöser"
+      ]
+    }
+  ],
+  "import": ["@cspell/dict-de-de/cspell-ext.json"]
 }

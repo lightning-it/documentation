@@ -17,7 +17,11 @@ test("the accepted public fixture is complete and deterministic", async () => {
   const snapshot = await read("evidence/github-traceability-snapshot.json");
   const committed = await read("static/traceability/index.json");
   assert.deepEqual(
-    validateTraceability(config, snapshot, new Date("2026-08-29T08:00:00Z")),
+    validateTraceability(
+      config,
+      snapshot,
+      new Date(Date.parse(snapshot.repository.observed_at) + 3_600_000),
+    ),
     [],
   );
   assert.deepEqual(createTraceabilityOutput(config, snapshot), committed);

@@ -9,13 +9,15 @@ document:
   approval_status: pending
   version: "1.0"
   classification: PUBLIC
-  owner: Lightning IT Documentation Maintainers
+  owner: René Cañas
   approver: Lightning IT Product Owners
   audience:
     - named audience
   last_reviewed: "YYYY-MM-DD"
   review_cadence: annual
 ---
+
+<!-- cspell:ignore Cañas -->
 
 # Product name
 
