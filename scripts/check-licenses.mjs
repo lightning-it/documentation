@@ -28,6 +28,7 @@ const allowedLicenseIdentifiers = new Set([
   "MIT",
   "MIT-0",
   "MPL-2.0",
+  "PSF-2.0",
   "Python-2.0",
   "Unicode-3.0",
   "Unicode-DFS-2016",

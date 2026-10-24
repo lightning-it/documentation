@@ -26,3 +26,14 @@ German spelling is enabled for the IHR template. Other documents retain their
 existing language settings. A small set of reviewed technical terms remains in
 the CSpell override; there is no repository-owned German dictionary or generated
 word list.
+
+## Reviewed permissive tooling licenses
+
+The updated Markdown checker uses `argparse@3.0.4`, whose packaged license is
+`PSF-2.0`. Its retained license text matches the
+[SPDX Python Software Foundation License 2.0](https://spdx.org/licenses/PSF-2.0.html).
+This license permits use and distribution with retained notices and requires a
+summary when distributing modifications. The dependency is used unchanged; the
+existing attribution generator retains its license text. The checker recognizes
+this identifier alongside `Python-2.0`; prohibited licenses and the separate
+spelling-dictionary exception remain unchanged.
