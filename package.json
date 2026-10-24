@@ -98,7 +98,7 @@
     "@docusaurus/tsconfig": "3.10.2",
     "@docusaurus/types": "3.10.2",
     "@eslint/js": "9.39.5",
-    "@noble/hashes": "2.2.0",
+    "@noble/hashes": "2.4.0",
     "@playwright/test": "1.61.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
