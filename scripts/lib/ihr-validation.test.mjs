@@ -172,6 +172,76 @@ test("localized headings do not replace stable phase identifiers", () => {
   );
 });
 
+const germanExecutionFields = [
+  ["Working directory", "Arbeitsverzeichnis"],
+  ["Inventory", "Inventar"],
+  ["Check command", "Zielauswahl und Syntax prüfen"],
+  ["Real-run command", "Installationsaufruf"],
+  ["Idempotency command", "Wiederholbarkeit prüfen"],
+  ["Verification commands", "Funktionsprüfung"],
+  ["Safe stop", "Fehler eingrenzen"],
+  ["Restart", "Wiederaufnahme"],
+  ["Rollback / recovery", "Wiederherstellung"],
+  ["Planned evidence", "Prüfergebnisse und Nachweise"],
+];
+
+function germanReadinessPlan() {
+  let source = template.replace(
+    "target_gate: requirements-shared",
+    "target_gate: ready-for-installation",
+  );
+  for (const [english, german] of germanExecutionFields) {
+    source = source.replaceAll(english, german);
+  }
+  return source;
+}
+
+test("recognises German execution fields outside the phase overview", () => {
+  const findings = validate(germanReadinessPlan());
+  assert.equal(
+    findings.some(({ rule_id }) => rule_id === "IHR-PLAN-003"),
+    false,
+  );
+});
+
+test("every execution field remains required in German plans", () => {
+  for (const [english, german] of germanExecutionFields) {
+    const findings = validate(germanReadinessPlan().replaceAll(german, ""));
+    assert.ok(
+      findings.some(
+        ({ rule_id, message }) =>
+          rule_id === "IHR-PLAN-003" && message.includes(english),
+      ),
+      english,
+    );
+  }
+});
+
+test("numeric run identifiers and dates are not abbreviated hashes", () => {
+  const source = `${germanReadinessPlan()}\nhttps://example.com/actions/runs/12345678901\n20261024\n`;
+  assert.equal(
+    validate(source).some(({ rule_id }) => rule_id === "IHR-IMMUTABLE-001"),
+    false,
+  );
+});
+
+test("abbreviated hashes remain errors including explicitly named numeric hashes", () => {
+  for (const reference of [
+    "abcdef1",
+    "commit 1234567",
+    "SHA: `1234567890`",
+    "https://example.com/commit/12345678",
+    `sha256:${"1".repeat(63)}`,
+  ]) {
+    assert.ok(
+      validate(`${germanReadinessPlan()}\n${reference}\n`).some(
+        ({ rule_id }) => rule_id === "IHR-IMMUTABLE-001",
+      ),
+      reference,
+    );
+  }
+});
+
 test("TECHNICALLY_COMPLETED rejects missing actual commands and recaps", () => {
   const source = template.replace(
     "target_gate: requirements-shared",
