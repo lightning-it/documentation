@@ -19,12 +19,8 @@ document:
 
 # [Lösung] – Projektdokumentation [Organisation]
 
-## 0.1 Inhaltsverzeichnis
-
-Das Inhaltsverzeichnis führt zu den Projektangaben und technischen Kapiteln.
-
 <details>
-<summary>Inhaltsverzeichnis anzeigen</summary>
+<summary>Inhaltsverzeichnis</summary>
 
 - [01 Allgemeine Informationen](#01-allgemeine-informationen)
   - [1.1 Zweck und Verwendung](#11-zweck-und-verwendung)
@@ -564,31 +560,76 @@ Die Übersicht ordnet den Bereichen ihre Identitätsquellen und Anmeldeverfahren
 
 ### 7.2 Gruppenübernahme und Zuordnung
 
-Die Zuordnungsmatrix verbindet Quellgruppen mit Zielgruppen und Berechtigungsprofilen.
+Die Gruppenzuordnung verbindet die Mitgliedschaft in der Identitätsquelle mit den vorgesehenen Berechtigungsprofilen. Eine übernommene Gruppe erhält nur die ausdrücklich zugeordneten Rechte.
 
-| **Zuordnung** | **Quellgruppe / Referenz** | **Übertragungsweg** | **Zielgruppe** | **Berechtigungsprofil** | **Geltungsbereich** | **Status** | **Kommentar**    |
-| ------------- | -------------------------- | ------------------- | -------------- | ----------------------- | ------------------- | ---------- | ---------------- |
-| [Zuordnung]   | [Bestätigte Referenz]      | [Verfahren]         | [Ziel]         | [Profil]                | [Bereich]           | Offen      | [Klärungsbedarf] |
+#### 7.2.1 Zuordnungsmatrix
+
+Die Matrix ordnet jeder Zielgruppe ein definiertes Profil und dessen Geltungsbereich zu. Die Musterzuordnungen werden durch die bestätigten Projektwerte ersetzt.
+
+| **Zuordnung**    | **Quellgruppe / Referenz** | **Übertragungsweg** | **Zielgruppe** | **Berechtigungsprofil**                                    | **Geltungsbereich** | **Status** | **Kommentar**    |
+| ---------------- | -------------------------- | ------------------- | -------------- | ---------------------------------------------------------- | ------------------- | ---------- | ---------------- |
+| [Administration] | [Bestätigte Referenz]      | [Verfahren]         | [Zielgruppe]   | [BP-001 Bereichsadministration](#731-berechtigungsprofile) | [Instanz / Bereich] | Offen      | [Klärungsbedarf] |
+| [Lesezugriff]    | [Bestätigte Referenz]      | [Verfahren]         | [Zielgruppe]   | [BP-002 Bereichslesezugriff](#731-berechtigungsprofile)    | [Instanz / Bereich] | Offen      | [Klärungsbedarf] |
+
+Gruppen erhalten die für ihren Geltungsbereich eingerichteten Profile. Einzelrechte werden über die darin enthaltenen technischen Rollen vergeben. Gesamtadministration gehört nicht automatisch zur regulären Administrationsgruppe.
+
+#### 7.2.2 Übernahme und Entzug
+
+Die Übernahmeregeln bestimmen, wie Mitgliedschaften aktualisiert und Berechtigungen entzogen werden.
 
 [Übernahme, Aktualisierung und Entzug von Mitgliedschaften sowie Auswirkungen auf bestehende Sitzungen festlegen. Konkrete Gruppennamen und Verzeichnisstrukturen nur aus bestätigten Angaben übernehmen.]
 
 ### 7.3 Rollen und Berechtigungen
 
-Berechtigungsprofile beschreiben die erlaubten Tätigkeiten und ihre Grenzen.
+Das Berechtigungsmodell trennt die Zuordnung von Personen, die Berechtigungsprofile und die technischen Zugriffsrechte. Ein Profil enthält eine oder mehrere technische Rollen; jede technische Rolle definiert konkrete Rechte innerhalb eines festgelegten Geltungsbereichs.
+
+**Zuordnung:** Benutzer → Gruppe → Berechtigungsprofil → technische Rollen → konkrete Berechtigungen.
 
 #### 7.3.1 Berechtigungsprofile
 
-| **Profil** | **Erlaubter Zugriff** | **Begrenzung**                            | **Zuweisung**    | **Status** | **Kommentar**    |
-| ---------- | --------------------- | ----------------------------------------- | ---------------- | ---------- | ---------------- |
-| [Profil]   | [Tätigkeiten]         | [Verbotene / ausgeschlossene Tätigkeiten] | [Gruppe / Rolle] | Offen      | [Klärungsbedarf] |
+Die Profile beschreiben zusammengehörige Aufgaben und verweisen auf die dafür benötigten technischen Rollen. Die folgenden Zeilen sind ein anpassbares Muster, keine bereits erteilte Berechtigungsfreigabe.
+
+| **ID** | **Berechtigungsprofil** | **Aufgabe**                                                              | **Technische Rollen**                                     |
+| ------ | ----------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------- |
+| BP-001 | Bereichsadministration  | Objekte und Konfiguration im ausdrücklich zugeordneten Bereich verwalten | [TR-001, TR-002, TR-003](#732-technische-rollenzuweisung) |
+| BP-002 | Bereichslesezugriff     | Vereinbarte Informationen im zugeordneten Bereich einsehen               | [TR-001](#732-technische-rollenzuweisung)                 |
+| BP-003 | Gesamtadministration    | Ausdrücklich autorisierte Verwaltung der gesamten Lösung                 | [TR-004](#732-technische-rollenzuweisung)                 |
+
+[Nicht benötigte Profile und Rechtepakete entfernen; zusätzliche Profile aus den tatsächlichen Aufgaben ableiten. Jedes Profil an den bestätigten Instanz- und Bereichsumfang binden. Fachliche Anwendungsprofile getrennt von administrativen Profilen definieren. Bestehende Namenskonzepte übernehmen; die BP- und TR-Kennungen dienen der Dokumentation.]
 
 #### 7.3.2 Technische Rollenzuweisung
 
-[Profile den tatsächlich verfügbaren Produktrollen und Verwaltungsbereichen zuordnen. Globale und auf einzelne Bereiche begrenzte Rechte unterscheiden; Namen und Rechteumfang gegen die eingesetzte Version prüfen.]
+Der Katalog beschreibt die konkreten Rechtepakete, aus denen die Profile bestehen. Die Produktrollen, zulässigen Aktionen und Grenzen werden gegen die tatsächlich eingesetzte Version geprüft.
 
-#### 7.3.3 Berechtigungsprüfung
+| **ID** | **Technische Rolle**          | **Produktrollen / konkrete Berechtigungen**                  | **Geltungsbereich**                             |
+| ------ | ----------------------------- | ------------------------------------------------------------ | ----------------------------------------------- |
+| TR-001 | Lesen                         | [Bestätigte Produktrollen für die benötigten Lesefunktionen] | [Instanz und ausdrücklich zugeordneter Bereich] |
+| TR-002 | Objekte verwalten             | [Bestätigte Produktrollen und zulässige Verwaltungsaktionen] | [Instanz und ausdrücklich zugeordneter Bereich] |
+| TR-003 | Konfiguration verwalten       | [Bestätigte Produktrollen für die vereinbarte Konfiguration] | [Instanz und ausdrücklich zugeordneter Bereich] |
+| TR-004 | Gesamte Lösung administrieren | [Gesondert freigegebene privilegierte Produktrollen]         | [Gesamte Lösung / Instanz]                      |
 
-[Erlaubte und unzulässige Aktionen mit repräsentativen Testidentitäten prüfen, einschließlich Rechteentzug. Prüffälle und Ergebnisse in [Kapitel 11](#11-prüfung-und-qualitätssicherung) verknüpfen.]
+Profile werden über die vom Produkt unterstützte Rollenbündelung umgesetzt, beispielsweise zusammengesetzte Rollen. Je technischer Rolle werden die tatsächlichen Produktrollen einschließlich ihres Verwaltungsbereichs dokumentiert. Unterstützt das Produkt keine Rollenbündelung, wird dieselbe Zuordnung mit dem verfügbaren Verfahren nachvollziehbar abgebildet.
+
+**Beispiel:** Eine Lesegruppe erhält BP-002 für einen benannten Bereich. BP-002 enthält TR-001. Dessen bestätigte Produktrollen erlauben ausschließlich die dokumentierten Lesefunktionen dieses Bereichs.
+
+Breite Produktrollen können zusätzliche Verwaltungs- oder Vergaberechte enthalten. Die wirksamen Berechtigungen einschließlich enthaltener Rollen werden geprüft; eine Rollenbezeichnung allein belegt keine ausreichende Begrenzung.
+
+#### 7.3.3 Zuweisung und Berechtigungsprüfung
+
+Die Prüfung bewertet die wirksamen Rechte aus Gruppen, Profilen und enthaltenen technischen Rollen.
+
+| **Regel**                        | **Umsetzung und Prüfung**                                                                                                                                                                              |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Gruppenbasierte Vergabe          | Gruppen erhalten Profile; direkte Benutzerzuweisungen bleiben begründete und dokumentierte Ausnahmen.                                                                                                  |
+| Begrenzter Geltungsbereich       | Instanz, Bereich, Produktrollen und zulässige Aktionen je Zuordnung festhalten und prüfen.                                                                                                             |
+| Getrennte privilegierte Zugriffe | Gesamtadministration und besonders weitreichende Funktionen gesondert vergeben.                                                                                                                        |
+| Effektive Rechte                 | Verschachtelte Rollen, direkte Zuweisungen und Mehrfachmitgliedschaften gemeinsam prüfen. Eine zusätzliche Leserolle hebt Verwaltungsrechte nicht auf.                                                 |
+| Wirksamer Entzug                 | Gruppenentfernung und Kontosperre einschließlich bestehender Sitzungen und zulässiger Verzögerungen prüfen.                                                                                            |
+| Positive und negative Tests      | Erlaubte Aktionen funktionieren; Änderungen durch Leserollen und Zugriffe außerhalb des zugeordneten Bereichs werden abgewiesen. Ohne passende Zuordnung werden keine administrativen Rechte vergeben. |
+
+Der unabhängige lokale Notfallzugang folgt [Abschnitt 7.5](#75-administrativer-notfallzugang) und wird nicht automatisch über reguläre Gruppenprofile vergeben. Organisatorische Zuständigkeiten und Kontotypen begründen allein keine Produktberechtigung.
+
+[Prüffälle mit repräsentativen Testidentitäten und tatsächlichen Ergebnissen in [Kapitel 11](#11-prüfung-und-qualitätssicherung) verknüpfen. Die Dokumentation des Modells von seiner Freigabe, technischen Einrichtung und Prüfung unterscheiden.]
 
 ### 7.4 Konten und Zuständigkeiten
 
