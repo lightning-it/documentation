@@ -440,44 +440,22 @@ Die Prüfung bestätigt die technische und fachliche Funktion. Ein unveränderte
 
 #### 5.2.12 Phasenbezogener Ausführungsplan
 
-Der Ausführungsplan ordnet die Schritte den stabilen IHR-Phasen zu. Die technischen Phasen-IDs bleiben bei Übersetzungen unverändert. Dieselbe Phase kann mehrere dokumentierte Schritte umfassen; nicht beauftragte Tätigkeiten werden mit Begründung und Zuständigkeit als nicht anwendbar gekennzeichnet.
+Die Übersicht ordnet die Ausführungsphasen den beschriebenen Arbeitsschritten zu. Befehle, Voraussetzungen und Erfolgskriterien stehen ausschließlich in den verlinkten Abschnitten; tatsächliche Ergebnisse werden je Instanz in [Abschnitt 11.3](#113-prüfergebnisse-und-nachweise) dokumentiert.
 
-| **Phase ID**                 | **Zuordnung im Dokument**                                                                          |
-| ---------------------------- | -------------------------------------------------------------------------------------------------- |
-| `initial-preflight`          | Arbeitsumgebung und anfängliche Voraussetzungen, 5.1 und 5.2.4                                     |
-| `artifact-staging`           | Quellen, Konfiguration und Abhängigkeiten, 5.2.3 bis 5.2.6                                         |
-| `host-preparation`           | Vereinbarte Plattformbereitstellung und anwendungsbezogene Vorbereitung, 5.1 und 5.2.2             |
-| `complete-preflight`         | Geheimnis-, Ziel-, Syntax- und Installationsvorprüfung, 5.2.7 bis 5.2.9                            |
-| `tls-certificates`           | Zertifikatsbereitstellung und -prüfung, 5.2.5, 5.2.9 und 6.3                                       |
-| `product-installation`       | Produktinstallation, 5.2.10                                                                        |
-| `completion-verification`    | Funktions- und Abschlussprüfung, 5.2.11 und [Kapitel 11](#11-prüfung-und-qualitätssicherung)       |
-| `idempotency-verification`   | Unveränderte Wiederholung, 5.2.11                                                                  |
-| `evidence-handling`          | Ausführungsnachweise, 5.3 und 15.2                                                                 |
-| `safe-stop-restart-recovery` | Fehlerbehandlung und Wiederaufnahme, 5.5 und [Kapitel 9](#09-datensicherung-und-wiederherstellung) |
+| **Phase**                    | **Zugehöriger Abschnitt**                                                                                                                                                                                        |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `initial-preflight`          | [5.2.4 Arbeitsumgebung vorbereiten](#524-arbeitsumgebung-vorbereiten)                                                                                                                                            |
+| `artifact-staging`           | [5.2.3 Quellen](#523-quellen-bereitstellen), [5.2.5 Konfiguration](#525-installationskonfiguration-bereitstellen) und [5.2.6 Abhängigkeiten](#526-abhängigkeiten-bereitstellen)                                  |
+| `host-preparation`           | [5.1 Systemvorbereitung](#51-systemvorbereitung)                                                                                                                                                                 |
+| `complete-preflight`         | [5.2.7 Zugangsdaten](#527-geschützte-zugangsdaten-prüfen), [5.2.8 Zielauswahl und Syntax](#528-zielauswahl-und-syntax-prüfen) und [5.2.9 Installationsvoraussetzungen](#529-installationsvoraussetzungen-prüfen) |
+| `tls-certificates`           | [6.3 TLS und Zertifikate](#63-tls-und-zertifikate)                                                                                                                                                               |
+| `product-installation`       | [5.2.10 Produktinstallation](#5210-produktinstallation-ausführen)                                                                                                                                                |
+| `completion-verification`    | [5.2.11 Funktionsprüfung](#5211-funktion-und-wiederholbarkeit-prüfen)                                                                                                                                            |
+| `idempotency-verification`   | [5.2.11 Unveränderter Wiederholungslauf](#5211-funktion-und-wiederholbarkeit-prüfen)                                                                                                                             |
+| `evidence-handling`          | [11.3 Prüfergebnisse und Nachweise](#113-prüfergebnisse-und-nachweise)                                                                                                                                           |
+| `safe-stop-restart-recovery` | [5.5 Fehlerbehandlung und Wiederaufnahme](#55-fehlerbehandlung-und-wiederaufnahme) sowie [Kapitel 9 Wiederherstellung](#09-datensicherung-und-wiederherstellung)                                                 |
 
-Für jede anwendbare Phase und betroffene Instanz den folgenden Datensatz mit konkreten Angaben ausfüllen oder eindeutig auf die zugehörigen Angaben verweisen. Gemeinsame Befehlsmuster dürfen referenziert werden; Zielauswahl, Eingaben und Ergebnisse bleiben der jeweiligen Instanz zugeordnet. Die Vorlage enthält keine freigegebenen Befehle oder tatsächlich ausgeführten Ergebnisse. Solange notwendige Angaben fehlen, bleibt der Stand vor `ready-for-installation`.
-
-| **Feld / technischer Bezeichner**                  | **Geplanter Inhalt**                                                                                     |
-| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Phase ID                                           | [ID aus der obigen Tabelle]                                                                              |
-| Instanz / Zielsystem                               | [Stabile Kennung der Instanz, zugehörige REQ-IDs und eindeutiges Ausführungsziel]                        |
-| Zweck                                              | [Beabsichtigtes Ergebnis]                                                                                |
-| Operationstyp                                      | [Lesend / konfigurationsändernd / weiterer begründeter Typ]                                              |
-| Ausführende Rolle                                  | [Rolle gemäß [1.3](#13-ansprechpartner)]                                                                 |
-| Arbeitsverzeichnis (Working directory)             | [Konkreter Pfad]                                                                                         |
-| Quellen und Artefakte                              | [Unveränderliche Referenzen gemäß [5.2.3](#523-quellen-bereitstellen) und 5.2.6]                         |
-| Inventar (Inventory)                               | [Geschützte Referenz und Zielauswahl]                                                                    |
-| Ausführungsumgebung (Execution environment)        | [Version und vollständiger Digest / begründet nicht anwendbar]                                           |
-| Voraussetzungen und Guards                         | [Geprüfte Eingaben, Berechtigungen und Abbruchbedingungen]                                               |
-| Vorschau (Check command)                           | [Getesteter Aufruf / begründet nicht anwendbar]                                                          |
-| Ausführung (Real-run command)                      | [Vollständiger Aufruf / begründet nicht anwendbar]                                                       |
-| Wiederholungsprüfung (Idempotency command)         | [Vollständiger Aufruf / begründet nicht anwendbar]                                                       |
-| Verifikation (Verification commands)               | [Befehle und fachliche Erfolgskriterien]                                                                 |
-| Erwarteter Marker / Recap                          | [Tatsächlich implementierter Marker und erwartete Ergebnisse]                                            |
-| Sicherer Halt (Safe stop)                          | [Vor dem nächsten abhängigen Änderungsschritt anhalten, wenn …]                                          |
-| Wiederaufnahme (Restart)                           | [Korrektur, erneut erforderliche Vorprüfungen und Einstieg]                                              |
-| Rückfall / Wiederherstellung (Rollback / recovery) | [Voraussetzung, Zuständigkeit und Verfahren gemäß [Kapitel 9](#09-datensicherung-und-wiederherstellung)] |
-| Geplante Nachweise (Planned evidence)              | [Geschützter Ablageort, Klassifikation und benötigte Ergebnisse]                                         |
+[Nicht benötigte Phasen kurz begründet als nicht anwendbar kennzeichnen. Gemeinsame Abläufe einmalig beschreiben; abweichende Eingaben und Ergebnisse der jeweiligen Instanz zuordnen.]
 
 ### 5.3 Ausführungsnachweise
 
