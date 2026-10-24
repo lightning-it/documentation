@@ -89,11 +89,17 @@ Die Rollen koordinieren Bereitstellungen und Entscheidungen in ihrem Verantwortu
 
 ### 1.4 Dokumentstatus und Freigabe
 
-Der Dokumentstatus unterscheidet Entwurf, Prüfung und Freigabe. Inhaltliche Bestätigung, technische Ausführungsfreigabe, Betriebsübernahme und Projektabnahme werden getrennt dokumentiert. Eine inhaltlich bestätigte Erstfassung wird mit Version, Datum und Entscheidungsreferenz als abgestimmter initialer Projektentwurf festgehalten.
+Der Dokumentstatus unterscheidet Entwurf, Prüfung und Freigabe. Inhaltliche Bestätigung, technische Ausführungsfreigabe, Betriebsübernahme und Projektabnahme werden getrennt dokumentiert.
 
-| **Aktuelle Version** | **Status** | **Entscheidung / Referenz** |
-| -------------------- | ---------- | --------------------------- |
-| 0.1                  | Entwurf    | Noch keine Freigabe         |
+| **Status**  | **Bedeutung**                                                |
+| ----------- | ------------------------------------------------------------ |
+| Entwurf     | Inhalte werden erstellt und abgestimmt                       |
+| In Prüfung  | Der Dokumentstand liegt zur Prüfung vor                      |
+| Freigegeben | Der Dokumentstand ist für den bezeichneten Zweck freigegeben |
+
+| **Aktuelle Version** | **Status** | **Kommentar**                                                                    |
+| -------------------- | ---------- | -------------------------------------------------------------------------------- |
+| 0.1                  | Entwurf    | Vorläufige Dokumentfassung vor Version 1.0; noch keine formelle Dokumentfreigabe |
 
 ### 1.5 Versionierung
 
@@ -122,6 +128,8 @@ Die Übersicht ordnet den Komponenten ihre Aufgaben und ihren Leistungsumfang zu
 ### 2.3 Zielsysteme
 
 Die Ausstattung wird je benötigtem System beziehungsweise Instanz festgehalten.
+
+Nach der Umsetzung werden die tatsächlich beobachteten Versionen, Ressourcen, Pfade und Einstellungen ergänzt und mit dem Nachweis aus [Kapitel 11.3](#113-prüfergebnisse-und-nachweise) verknüpft. Planwerte sind kein belegter Iststand.
 
 | **Merkmal**              | **[Zielsystem / Instanz]**             |
 | ------------------------ | -------------------------------------- |
@@ -208,11 +216,16 @@ Installation und technische Konfiguration erfolgen über [belegtes Automatisieru
 
 #### 5.2.1 Installationsabläufe und Bausteine
 
-Die Übersicht benennt den Einstiegspunkt und erklärt die Aufgaben eingebundener Abläufe.
+Die Übersicht benennt den Einstiegspunkt und die Reihenfolge eingebundener Abläufe. Automatisch aufgerufene Unterabläufe und separat auszuführende Prüfungen werden unterschieden.
 
-| **Playbook / Installationsablauf** | **Collection / Paket** | **Rolle / Baustein** | **Aufgabe**             |
-| ---------------------------------- | ---------------------- | -------------------- | ----------------------- |
-| [Vollständige Referenz]            | [Name]                 | [Name]               | [Komponenten / Aufgabe] |
+| **Reihenfolge** | **Playbook / Installationsablauf**          | **Collection / Paket**    | **Rolle / Baustein** | **Aufgabe**                         |
+| --------------- | ------------------------------------------- | ------------------------- | -------------------- | ----------------------------------- |
+| Werkzeug        | [Wrapper, falls verwendet]                  | [Paket / nicht anwendbar] | [Baustein]           | [Ausführungsumgebung bereitstellen] |
+| 1               | [Vollständige Referenz des Einstiegspunkts] | [Name]                    | [Name]               | [Aufgerufene Unterabläufe]          |
+| 1.1             | [Eingebundener Ablauf]                      | [Name]                    | [Name]               | [Automatisch ausgeführter Schritt]  |
+| 2               | [Separater Prüfaufruf]                      | [Name]                    | [Name]               | [Nachgelagerte Prüfung]             |
+
+[Nur tatsächlich vorhandene Aufrufe aufführen. Deaktivierte optionale Bausteine mit ihrem ursprünglichen Ablauf und dem Grund der Nichtverwendung benennen; keine eigene Ausführungsnummer vergeben.]
 
 #### 5.2.2 Projektwerte und Ausführungsumgebung
 
@@ -226,8 +239,6 @@ Die Projektwerte und Werkzeuge bilden die Grundlage der Installation. Plattformb
 | Anwendungsabhängigkeiten  | [Collections / Pakete mit Requirements und Versionen]           | [Projektrolle / offen]            |
 | Konten und Datenablage    | [Konten, Berechtigungen und Pfade]                              | [Rolle / offen]                   |
 | Projektkonfiguration      | [Explizite Werte ohne Geheimnisse]                              | [Festgelegt / offen]              |
-
-[Bei Ansible unterscheiden: Collection-Requirements beschreiben Collections; Python-/Systempakete gehören in die passende Host- oder EE-Bereitstellung. Keine zusätzliche Hostinstallation unterstellen, wenn das vereinbarte Modell Container verwendet.]
 
 #### 5.2.3 Quellen bereitstellen
 
@@ -366,35 +377,9 @@ Für jede anwendbare Phase den folgenden Datensatz mit konkreten Angaben ausfül
 | Rückfall / Wiederherstellung (Rollback / recovery) | [Voraussetzung, Zuständigkeit und Verfahren gemäß [Kapitel 9](#09-datensicherung-und-wiederherstellung)] |
 | Geplante Nachweise (Planned evidence)              | [Geschützter Ablageort, Klassifikation und benötigte Ergebnisse]                                         |
 
-### 5.3 Ausführungsprotokoll
+### 5.3 Ausführungsnachweise
 
-Das Ausführungsprotokoll hält tatsächlich durchgeführte Arbeiten und Ergebnisse fest. Je Schritt werden Zeitpunkt, verantwortliche Rolle, betroffenes System und Ergebnis dokumentiert; zugehörige Nachweise werden verlinkt. Abweichungen werden in [Kapitel 12](#12-projektstatus) nachverfolgt.
-
-#### 5.3.1 Tatsächlicher Aufbau
-
-Nach der Installation werden die beobachteten Versionen, Topologie, Ressourcen, Pfade und wesentlichen Einstellungen erfasst. Geplante Werte werden nicht ungeprüft als Iststand übernommen.
-
-| **Bereich**                  | **Geplanter Wert / Referenz** | **Beobachteter Istwert** | **Nachweis / Abweichung**              |
-| ---------------------------- | ----------------------------- | ------------------------ | -------------------------------------- |
-| [Komponente / Konfiguration] | [Referenz]                    | Noch nicht erhoben       | [Nachweis oder stabile Abweichungs-ID] |
-
-#### 5.3.2 Tatsächliche Ausführung
-
-Jeder Lauf wird mit seinen tatsächlich verwendeten Eingaben, Befehlen und Ergebnissen dokumentiert. Unterschiede zum Ausführungsplan erhalten eine stabile Abweichungsreferenz in [Kapitel 12](#12-projektstatus).
-
-| **Feld**                                | **Tatsächlicher Inhalt**                                                       |
-| --------------------------------------- | ------------------------------------------------------------------------------ |
-| Lauf-ID / Phase ID                      | [Bei Ausführung ergänzen]                                                      |
-| Beginn / Ende / Zeitzone                | [Zeitpunkte]                                                                   |
-| Zielsysteme / auszuführende Instanz     | [Referenz]                                                                     |
-| Ausführende Rolle                       | [Rolle gemäß [1.3](#13-ansprechpartner)]                                       |
-| Automation / Collection / Pakete        | [Tatsächliche vollständige Revisionen und Prüfsummen]                          |
-| Execution Environment                   | [Tatsächlich aufgelöster vollständiger Digest / nicht anwendbar]               |
-| Inventar / Konfigurationsstand          | [Geschützte unveränderliche Referenz]                                          |
-| Ausgeführter Befehl                     | [Tatsächlicher Aufruf ohne Geheimniswerte]                                     |
-| Ergebnis / Recap                        | Noch nicht ausgeführt                                                          |
-| Funktionsprüfung / Wiederholungsprüfung | [Ergebnis und Nachweis]                                                        |
-| Nachweisablage / Abweichung             | [Geschützte Referenz / stabile Abweichungs-ID / keine Abweichung festgestellt] |
+Die durchgeführten Installations- und Konfigurationsläufe werden mit Datum, Zielsystem, ausführender Rolle und Ergebnis in [Kapitel 11.3](#113-prüfergebnisse-und-nachweise) nachgewiesen. Zugehörige bereinigte Ausführungsprotokolle werden dort verlinkt. Zugangsdaten und andere Geheimnisse werden nicht übernommen.
 
 ### 5.4 Migration und Übernahme
 
@@ -418,7 +403,7 @@ Nach einem Fehler wird die Ursache eingegrenzt, bevor abhängige Schritte fortge
 
 #### 5.5.1 Fehler eingrenzen
 
-Betroffene Instanzen, Schritt und bereinigtes Fehlerbild werden im Ausführungsprotokoll festgehalten; offene Maßnahmen werden in [Kapitel 12](#12-projektstatus) nachverfolgt.
+Betroffene Instanzen, Schritt und bereinigtes Fehlerbild werden gemäß [Kapitel 11.3](#113-prüfergebnisse-und-nachweise) festgehalten; offene Maßnahmen werden in [Kapitel 12](#12-projektstatus) nachverfolgt.
 
 | **Fehlerbereich**                              | **Korrektur / zuständige Rolle** | **Erneute Prüfung** |
 | ---------------------------------------------- | -------------------------------- | ------------------- |
@@ -460,7 +445,7 @@ Die Grafik zeigt die beteiligten Systeme und ihre Kommunikationsbeziehungen. Det
 
 #### 6.2.2 Kommunikationsablauf
 
-[Besondere Anmelde-, Verwaltungs- oder Integrationsabläufe erläutern. Logische Beziehungen von tatsächlich initiierten Verbindungen unterscheiden. Prüfwege der Überwachung in [Kapitel 08](#08-observability), administrative Zugänge in [Abschnitt 13.2](#132-zugänge-und-administration) pflegen.]
+[Benutzer- und Anwendungszugriff, Identitätsquellen, Datenhaltung, Integrationen und Artefaktbezug entsprechend dem tatsächlichen Umfang erläutern. Quelle, Ziel und Zweck mit der Verbindungsmatrix abgleichen. Logische Beziehungen, Verbindungen des Browsers und direkte Serververbindungen unterscheiden; die Erreichbarkeit eines Servers belegt keine Browser-Erreichbarkeit. Prüfwege der Überwachung in [Kapitel 08](#08-observability), administrative Zugänge in [Abschnitt 13.2](#132-zugänge-und-administration) pflegen.]
 
 ### 6.3 TLS und Zertifikate
 
@@ -758,21 +743,60 @@ Prüfumfang, Zuständigkeit, Testzugänge und Erfolgskriterien werden vor der Au
 
 ### 11.2 Prüfplan
 
-Der Prüfplan trennt technische Funktion, Sicherheit, Betriebsverfahren sowie Anwendungen und Migration.
+Der Prüfplan ordnet die Prüfungen ihrem Zeitpunkt im Umsetzungsablauf zu. Ergebnisse werden je Zielsystem beziehungsweise Anwendung bewertet; bestehende TEST-IDs bleiben erhalten.
 
-| **ID**   | **Prüfbereich** | **Prüfung**             | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
-| -------- | --------------- | ----------------------- | ---------------------------- | ---------- | --------------- | ------------ |
-| TEST-001 | [Bereich]       | [Prüffall / Zielsystem] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+#### 11.2.1 Installationsbereitschaft
 
-[Bei umfangreicherem Plan die Bereiche als 11.2.1 bis 11.2.4 gliedern. Bestehende Test-IDs bei Umstrukturierung erhalten; nicht ausgeführte Prüfungen sind kein Erfolgsnachweis.]
+Vor der Installation werden Plattform, Zugänge, Installationskonfiguration und Artefakte geprüft. Die konkreten Aufrufe aus [Kapitel 5.2](#52-produktinstallation) werden hier referenziert; die Ergebnisse stehen in [Kapitel 11.3](#113-prüfergebnisse-und-nachweise).
+
+#### 11.2.2 Installationsprüfung
+
+Nach der Installation werden die technische Funktion, Persistenz, Zugriffsbeschränkungen und die unveränderte Wiederholung des Aufbaus geprüft.
+
+| **ID**   | **Prüfung**                         | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
+| -------- | ----------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
+| TEST-001 | [Technischer Prüffall / Zielsystem] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+
+#### 11.2.3 Integrationsprüfung
+
+Nach der Konfiguration werden die vorgesehenen Schnittstellen, Identitätsquellen, Berechtigungen und repräsentativen Anwendungsabläufe geprüft.
+
+| **ID**   | **Prüfung**                       | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
+| -------- | --------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
+| TEST-002 | [Integrationsprüfung / Anwendung] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+
+#### 11.2.4 Betriebsbereitschaft
+
+Vor der Betriebsübergabe werden die vereinbarten Betriebsverfahren einschließlich Überwachung, Protokollierung, Alarmierung und Wiederherstellung geprüft.
+
+| **ID**   | **Prüfung**                         | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
+| -------- | ----------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
+| TEST-003 | [Betriebsverfahren / Notfallzugang] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+
+#### 11.2.5 Abschlussprüfung
+
+Vor der Abnahme werden die Ergebnisse für den vollständigen vereinbarten Umfang zusammengeführt. Änderungen seit einer Prüfung erfordern die Wiederholung der betroffenen Prüffälle; bereits gültige Nachweise werden verlinkt.
+
+| **ID**   | **Prüfung**                               | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
+| -------- | ----------------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
+| TEST-004 | [Gesamtumfang / abschließende Umstellung] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+
+[Nicht benötigte Prüffälle begründet entfernen. Die Abschlussprüfung ersetzt keine formelle Abnahme gemäß [Kapitel 14](#14-abschluss-und-abnahme).]
 
 ### 11.3 Prüfergebnisse und Nachweise
 
-Die Ergebnisse werden den tatsächlich ausgeführten Prüfungen und Zielsystemen zugeordnet.
+Ausführungs- und Prüfergebnisse werden einmalig dem tatsächlich verwendeten Stand und Ziel zugeordnet. Die Übersicht beschreibt die benötigten Nachweisangaben; bereinigte Detailprotokolle werden verlinkt.
 
-| **Prüfung / Zielsystem** | **Datum**             | **Ausführende Rolle** | **Ergebnis**             | **Nachweis**          |
-| ------------------------ | --------------------- | --------------------- | ------------------------ | --------------------- |
-| [Test-ID]                | [Tatsächliches Datum] | [Rolle]               | [Beobachtung / Messwert] | [Geschützte Referenz] |
+| **Nachweisangabe**      | **Inhalt**                                                                                                                                                           |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Zuordnung               | [Lauf-ID / Phase ID, Zielsystem, Instanz und gegebenenfalls TEST-ID / Anwendung]                                                                                     |
+| Durchführung            | [Beginn / Ende / Zeitzone und ausführende Rolle gemäß [Kapitel 1.3](#13-ansprechpartner)]                                                                            |
+| Ausführungsstand        | [Vollständige Quellrevisionen, Paketprüfsummen, tatsächlicher EE-Digest und unveränderliche Inventar-/Konfigurationsreferenz; nicht anwendbare Angaben kennzeichnen] |
+| Ausführung              | [Tatsächlicher Befehl oder manuelle Schritte ohne Geheimniswerte]                                                                                                    |
+| Ergebnis                | [Soll-/Ist-Vergleich, Recap, Funktions- und Wiederholungsprüfung]                                                                                                    |
+| Nachweis und Abweichung | [Geschützter Ablageverweis und stabile Abweichungs-ID oder ausdrücklich keine Abweichung]                                                                            |
+
+[Istwerte in den zuständigen Fachkapiteln pflegen. Ein Testlauf aus einer anderen Umgebung belegt keine Ausführung auf dem Zielsystem.]
 
 ### 11.4 Abweichungen und Wiederholungsprüfungen
 
@@ -784,13 +808,13 @@ Der Projektstatus bündelt offene Fragen und getroffene Entscheidungen. Die Übe
 
 ### 12.1 Offene Punkte
 
-Die Liste enthält den Klärungsbedarf; bereits dokumentierte Anforderungen, Meilensteine und Prüfergebnisse werden verlinkt.
+Die Liste bündelt fehlende Angaben, ausstehende Entscheidungen und Aufgaben. Bestätigte Ergebnisse werden in die zugehörigen Fachkapitel übernommen; Anforderungen, Meilensteine und Prüfergebnisse werden verlinkt.
 
 | **ID**   | **Thema**            | **Klärungsbedarf**  | **Verantwortung** | **Status** | **Vorgang**                                      | **Kommentar**                    |
 | -------- | -------------------- | ------------------- | ----------------- | ---------- | ------------------------------------------------ | -------------------------------- |
 | OPEN-001 | [Thema / Abweichung] | [Zu klärende Frage] | [Rolle]           | Offen      | [Jira / gleichwertiger Vorgang, falls vorhanden] | [Auswirkung / benötigter Termin] |
 
-[Konkrete Folgearbeiten im verlinkten Vorgang pflegen, statt eine zweite Aufgabenliste mit nächsten Schritten aufzubauen. Ohne Vorgang die notwendige Behandlung hier knapp dokumentieren. Bestehende IDs erhalten.]
+[Konkrete Folgearbeiten im verlinkten Vorgang pflegen, statt eine zweite Aufgabenliste mit nächsten Schritten aufzubauen. Projektfortschritt und Termine bleiben in den Meilensteinen aus [Kapitel 04](#04-realisierungsplanung); keine zusätzliche Tabelle „Umsetzungsstand“ pflegen. Ohne Vorgang die notwendige Behandlung hier knapp dokumentieren. Bestehende IDs erhalten.]
 
 ### 12.2 Entscheidungen
 
@@ -806,14 +830,14 @@ Die Betriebsübergabe überführt die bereitgestellte Lösung in die vereinbarte
 
 ### 13.1 Übergabeumfang
 
-Die Übersicht ordnet die bereitzustellenden Ergebnisse den übernehmenden Rollen zu.
+Die Übersicht hält fest, welche Ergebnisse tatsächlich übernommen wurden. Der Nachweis nennt Datum, bestätigende Rolle und Referenz.
 
-| **Gegenstand**           | **Übergabeinhalt**                                 | **Übernehmende Rolle** | **Status** | **Kommentar**    | **Referenz**                               |
-| ------------------------ | -------------------------------------------------- | ---------------------- | ---------- | ---------------- | ------------------------------------------ |
-| Technische Dokumentation | [Tatsächlicher Aufbau und Konfiguration]           | [Rolle]                | Offen      | [Offene Angaben] | [Geschützte Ablage / Version / Integrität] |
-| Betriebsverfahren        | [Wartung / Überwachung / Datensicherung / Störung] | [Rolle]                | Offen      | [Umfang]         | [Referenz]                                 |
+| **Übergabegegenstand**   | **Übergabekriterium**                                        | **Übernahmestatus** | **Nachweis**                                                          |
+| ------------------------ | ------------------------------------------------------------ | ------------------- | --------------------------------------------------------------------- |
+| Technische Dokumentation | [Vereinbarter Dokumentstand und Bereitstellungsweg]          | Nicht übernommen    | [Bei Übernahme: Datum, Rolle und Referenz auf die übergebene Fassung] |
+| Betriebsverfahren        | [Vereinbarte Verfahren und Aufgaben erläutert und übergeben] | Nicht übernommen    | [Bei Übernahme: Datum, Rolle und Referenz]                            |
 
-[Eine vor unberechtigtem Zugriff geschützte Offline-Fassung für den Ausfall der zentralen Dokumentationsablage berücksichtigen; Ablage, Aktualisierung und Zugriff benennen.]
+[„Übernommen“ nur bei belegter Bestätigung verwenden. Vorbereitungsaufgaben in [Kapitel 12](#12-projektstatus) führen. Keine zusätzliche Offline-Lieferung oder Pflegeverpflichtung ohne vereinbarten Umfang ableiten.]
 
 ### 13.2 Zugänge und Administration
 
@@ -831,7 +855,19 @@ Die Angaben beschreiben bestätigte Endpunkte und berechtigte Rollen.
 
 #### 13.2.2 Geheimnisbereitstellung
 
-[Geschützte Quelle, Variablenreferenzen, Abrufverfahren und zugriffsberechtigte Rolle dokumentieren. Das vereinbarte geschützte Verfahren verwenden; bei Ansible Vault ausschließlich verschlüsselte Vault-Dateien übernehmen. Passwörter, Vault-Kennwörter, private Schlüssel und abgerufene Werte nicht speichern. Konkrete Zugriffs- und Abrufbefehle nur mit bestätigten Angaben ergänzen; lokale Testzugänge getrennt halten.]
+[Geschützte Quelle, Variablenreferenzen, Abrufverfahren und zugriffsberechtigte Rolle dokumentieren. Bei Ansible Vault ausschließlich verschlüsselte Vault-Dateien übernehmen. Passwörter, private Schlüssel und abgerufene Werte nicht speichern; lokale Testzugänge getrennt halten.]
+
+Prüfung und Übergabe der benötigten Zugänge werden mit Datum, Rolle und Nachweis festgehalten. Geheimnisse werden nicht protokolliert.
+
+#### 13.2.3 Zugänge zu den Bestandsinstanzen
+
+Die Zugänge zu Migrationsquellen werden von denen der Zielsysteme getrennt erfasst. Benötigt werden die für die vereinbarte Übernahme erforderlichen Anwendungszugänge und Berechtigungen.
+
+| **Bestandsinstanz / Bereich** | **Anwendungszugang**               | **Berechtigung / geschützte Kontoreferenz** | **Status** | **Nachweis**     |
+| ----------------------------- | ---------------------------------- | ------------------------------------------- | ---------- | ---------------- |
+| [Migrationsquelle]            | [Bestätigter Endpunkt / Verfahren] | [Benötigter Umfang und geschützte Referenz] | Offen      | [Zugangsprüfung] |
+
+[Nur bei Migration verwenden. Nicht benötigte SSH-, Betriebssystem- oder Datenbankzugriffe als nicht erforderlich kennzeichnen; der Anwendungszugang allein belegt noch keinen erfolgreichen vollständigen Datenexport. Das Übernahmeverfahren in [Kapitel 5.4](#54-migration-und-übernahme) prüfen.]
 
 ### 13.3 Einweisung
 
@@ -879,7 +915,7 @@ Die technischen Festlegungen und Ausführungsstände werden an den jeweiligen St
 
 ### 15.2 Nachweise
 
-Ausgeführte Arbeiten und Prüfungen werden je Zielsystem mit Datum, zuständiger Rolle und Ergebnis in [Kapitel 5.3](#53-ausführungsprotokoll) und [Kapitel 11](#11-prüfung-und-qualitätssicherung) dokumentiert. Zugehörige Protokolle liegen in [geschützte Projektablage / Zugriff durch zuständige Rollen]. Geheimnisse und personenbezogene Rohlogs werden nicht in die Dokumentation übernommen.
+Ausgeführte Arbeiten und Prüfungen werden je Zielsystem mit Datum, zuständiger Rolle und Ergebnis in [Kapitel 11.3](#113-prüfergebnisse-und-nachweise) dokumentiert. Zugehörige Protokolle liegen in [geschützte Projektablage / Zugriff durch zuständige Rollen]. Geheimnisse und personenbezogene Rohlogs werden nicht in die Dokumentation übernommen.
 
 [Den tatsächlichen Prüfstand knapp benennen und Testumgebung von produktiver Ausführung unterscheiden. Für ergänzende technische Nachweise Ablageverweis, Klassifikation, Integrität, zuständige Rolle sowie vereinbarte Aufbewahrung und Löschung angeben oder auf die bestehende Regelung verweisen. Offene Festlegungen kennzeichnen.]
 
