@@ -831,7 +831,7 @@ Die Angaben beschreiben bestätigte Endpunkte und berechtigte Rollen.
 
 #### 13.2.2 Geheimnisbereitstellung
 
-[Geschützte Quelle, Variablenreferenzen, Abrufverfahren und zugriffsberechtigte Rolle dokumentieren. Für Ansible-Verfahren ausschließlich verschlüsselte Vault-Dateien verwenden. Passwörter, Vault-Kennwörter, private Schlüssel und abgerufene Werte nicht speichern. Konkrete Zugriffs- und Abrufbefehle nur mit bestätigten Angaben ergänzen; lokale Testzugänge getrennt halten.]
+[Geschützte Quelle, Variablenreferenzen, Abrufverfahren und zugriffsberechtigte Rolle dokumentieren. Das vereinbarte geschützte Verfahren verwenden; bei Ansible Vault ausschließlich verschlüsselte Vault-Dateien übernehmen. Passwörter, Vault-Kennwörter, private Schlüssel und abgerufene Werte nicht speichern. Konkrete Zugriffs- und Abrufbefehle nur mit bestätigten Angaben ergänzen; lokale Testzugänge getrennt halten.]
 
 ### 13.3 Einweisung
 
