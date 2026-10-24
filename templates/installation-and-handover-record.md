@@ -34,11 +34,14 @@ document:
   - [2.3 Zielsysteme](#23-zielsysteme)
   - [2.4 Verfügbarkeit und Abhängigkeiten](#24-verfügbarkeit-und-abhängigkeiten)
 - [03 Voraussetzungen](#03-voraussetzungen)
-  - [3.1 Bereitstellungen](#31-bereitstellungen)
-  - [3.2 Anforderungsdetails und Startvoraussetzungen](#32-anforderungsdetails-und-startvoraussetzungen)
-  - [3.3 Plattformbaseline](#33-plattformbaseline)
-- [04 Realisierungsplanung](#04-realisierungsplanung)
-  - [4.1 Meilensteine](#41-meilensteine)
+  - [3.1 Betriebliche Voraussetzungen](#31-betriebliche-voraussetzungen)
+  - [3.2 Projektspezifische Voraussetzungen](#32-projektspezifische-voraussetzungen)
+  - [3.3 Leistungsanforderungen](#33-leistungsanforderungen)
+  - [3.4 Anforderungsdetails und Startvoraussetzungen](#34-anforderungsdetails-und-startvoraussetzungen)
+- [04 Implementierungsplan](#04-implementierungsplan)
+  - [4.1 Vorgehen und Reihenfolge](#41-vorgehen-und-reihenfolge)
+  - [4.2 Meilensteine und Termine](#42-meilensteine-und-termine)
+  - [4.3 Umschaltung und Rückfall](#43-umschaltung-und-rückfall)
 - [05 Installation und Konfiguration](#05-installation-und-konfiguration)
   - [5.1 Systemvorbereitung](#51-systemvorbereitung)
   - [5.2 Produktinstallation](#52-produktinstallation)
@@ -127,6 +130,8 @@ Ziel ist [konkretes Projektergebnis]. Der Umfang umfasst [Leistungen und Kompone
 
 Zur Übergabe gehört eine Einweisung der zuständigen Betriebsteams. Bestehende Konzepte werden berücksichtigt. [Abgrenzungen und separate Dokumente, beispielsweise Betriebshandbuch, benennen.]
 
+[Leistungen und Grenzen je Instanz zuordnen und auf die zugehörigen Anforderungen aus [Kapitel 3](#03-voraussetzungen) verlinken. Gemeinsame Projektanforderungen einmalig benennen.]
+
 ### 1.3 Ansprechpartner
 
 Die Rollen koordinieren Bereitstellungen und Entscheidungen in ihrem Verantwortungsbereich. Persönliche Namen und Kontaktdaten werden ausschließlich hier gepflegt.
@@ -199,48 +204,83 @@ Nach der Umsetzung werden die tatsächlich beobachteten Versionen, Ressourcen, P
 
 Die Voraussetzungen benennen die erforderlichen Bereitstellungen und Mitwirkungen. Zuständigkeiten und Prüfkriterien machen nachvollziehbar, wann die jeweiligen Umsetzungsschritte beginnen können.
 
-### 3.1 Bereitstellungen
+### 3.1 Betriebliche Voraussetzungen
 
-Die Anforderungen bilden die Arbeitsliste für die Vorbereitung. Die Standardbereitstellung der Plattform erfolgt durch das zuständige Betriebsteam.
+Die betriebliche Basis wird vom zuständigen Betriebsteam nach bestehendem Standard bereitgestellt und gepflegt. Die Umsetzung setzt eine betriebsbereite Plattform voraus; deren Installation gehört nur bei ausdrücklichem Auftrag zum Projektumfang.
 
-| **ID**  | **Bereitzustellen / Soll**                       | **Zuständigkeit** | **Benötigt bis** | **Status** | **Nachweis** | **Kommentar**    |
-| ------- | ------------------------------------------------ | ----------------- | ---------------- | ---------- | ------------ | ---------------- |
-| REQ-001 | [Anzahl und Ausstattung der Zielsysteme]         | [Rolle]           | [Zeitpunkt]      | Offen      | [Referenz]   | [Klärungsbedarf] |
-| REQ-002 | [Benötigte Zugänge / Dienstkonten]               | [Rolle]           | [Zeitpunkt]      | Offen      | [Referenz]   | [Klärungsbedarf] |
-| REQ-003 | [Dienstnamen, Zertifikate und Netzwerkfreigaben] | [Rolle]           | [Zeitpunkt]      | Offen      | [Referenz]   | [Klärungsbedarf] |
+[Die Kennungen `A` und `B` zeigen das Muster für mehrere Instanzen. Durch die tatsächlichen stabilen Kennungen ersetzen und nur benötigte Zeilen übernehmen. Bei nur einer Instanz keine zweite Beispielinstanz anlegen. Jede instanzbezogene Anforderung erhält einen eigenen Status und Nachweis; bestehende Kennungen und Verweise erhalten. Beim Ausfüllen eindeutige Sprungziele je Anforderungs- und Prüffallkennung im unterstützten Format des verwendeten Renderers erzeugen. Die Confluence-Ausgabe muss Links und native Ziele einschließlich der Zusätze für die Instanzen erhalten.]
 
-[Projektbezogene Anforderungen ergänzen; keine bereits erfüllten Voraussetzungen ohne Bestätigung behaupten.]
+| **ID**    | **Instanz / Geltungsbereich** | **Bereitzustellen / Soll**                                   | **Zuständigkeit** | **Benötigt bis** | **Status** | **Nachweis** | **Kommentar**    |
+| --------- | ----------------------------- | ------------------------------------------------------------ | ----------------- | ---------------- | ---------- | ------------ | ---------------- |
+| REQ-001-A | A                             | [Ausstattung und Bereitstellung des zugehörigen Zielsystems] | [Rolle]           | [Zeitpunkt]      | Offen      | [Referenz]   | [Klärungsbedarf] |
+| REQ-001-B | B                             | [Ausstattung und Bereitstellung des zugehörigen Zielsystems] | [Rolle]           | [Zeitpunkt]      | Offen      | [Referenz]   | [Klärungsbedarf] |
+| REQ-002-A | A                             | [Benötigte Zugänge / Dienstkonten]                           | [Rolle]           | [Zeitpunkt]      | Offen      | [Referenz]   | [Klärungsbedarf] |
+| REQ-002-B | B                             | [Benötigte Zugänge / Dienstkonten]                           | [Rolle]           | [Zeitpunkt]      | Offen      | [Referenz]   | [Klärungsbedarf] |
 
-### 3.2 Anforderungsdetails und Startvoraussetzungen
+Die folgende Übersicht konkretisiert den benötigten Plattformstandard. Projektspezifische Verbindungen stehen in [Kapitel 6](#06-kommunikation-und-verschlüsselung). [Nur für die Anwendung erforderliche Prüfungen der Plattform übernehmen; zugehörige Anforderung und Instanz benennen. Status einmalig in der Anforderungstabelle führen.]
 
-Die Details machen Mindestanforderungen, vereinbarte Ausprägung und bestätigten Iststand vergleichbar. Eine offene Anforderung blockiert nur die davon abhängigen Arbeiten. Ausnahmen benötigen eine zuständige Entscheidung mit nachvollziehbarer Auswirkung.
+| **Bereich**                | **Instanz / Geltungsbereich**                       | **Anforderung**                                                | **Zuständigkeit** | **Prüfung**                     | **Kommentar**                                    |
+| -------------------------- | --------------------------------------------------- | -------------------------------------------------------------- | ----------------- | ------------------------------- | ------------------------------------------------ |
+| Namensauflösung            | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Benötigte Namen]                                              | [Rolle]           | [Auflösungsprüfung]             | [Vorgabe]                                        |
+| Zeitsynchronisation        | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Zulässiger Zeitdienst]                                        | [Rolle]           | [Synchronisierungsstatus]       | [Vorgabe]                                        |
+| Paket- und Artefaktquellen | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Freigegebene Bezugswege]                                      | [Rolle]           | [Erreichbarkeit / Berechtigung] | [Vorgabe]                                        |
+| Proxy                      | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Bei Bedarf gemäß 6.4](#64-internetzugang-und-freischaltungen) | [Rolle]           | [Zielspezifische Prüfung]       | [Bei fehlendem Bedarf begründet nicht anwendbar] |
+| Vertrauenskette            | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Benötigte Zertifizierungsstellen]                             | [Rolle]           | [TLS-Verifikation]              | [Vorgabe]                                        |
+| Basisnetz                  | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Routing und Plattformkonnektivität]                           | [Rolle]           | [Vorprüfung]                    | [Vorgabe]                                        |
 
-| **Anforderung**  | **Kategorie** | **Mindestwert**                           | **Vereinbarter Sollwert** | **Bestätigter Istwert** | **Blockierwirkung**  | **Quelle**                 | **Nachweis / Ausnahme** |
-| ---------------- | ------------- | ----------------------------------------- | ------------------------- | ----------------------- | -------------------- | -------------------------- | ----------------------- |
-| [REQ-ID aus 3.1] | [Bereich]     | [Mindestwert / begründet nicht anwendbar] | Offen                     | Noch nicht geprüft      | [Abhängiger Schritt] | [Versionsgebundene Quelle] | Offen                   |
+### 3.2 Projektspezifische Voraussetzungen
+
+Die projektspezifischen Voraussetzungen benennen die benötigten Dienstnamen, Freischaltungen, Parameter der Anbindungen und fachlichen Angaben. Die zuständigen Stellen stellen diese für die konkrete Lösung bereit.
+
+| **ID**    | **Instanz / Geltungsbereich** | **Bereitzustellen / Soll**                       | **Zuständigkeit** | **Benötigt bis** | **Status** | **Nachweis** | **Kommentar**     |
+| --------- | ----------------------------- | ------------------------------------------------ | ----------------- | ---------------- | ---------- | ------------ | ----------------- |
+| REQ-003-A | A                             | [Dienstnamen, Zertifikate und Netzwerkfreigaben] | [Rolle]           | [Zeitpunkt]      | Offen      | [Referenz]   | [Klärungsbedarf]  |
+| REQ-003-B | B                             | [Dienstnamen, Zertifikate und Netzwerkfreigaben] | [Rolle]           | [Zeitpunkt]      | Offen      | [Referenz]   | [Klärungsbedarf]  |
+| REQ-004   | Projektweit                   | [Tatsächlich gemeinsame Projektvorgabe]          | [Rolle]           | [Zeitpunkt]      | Offen      | [Referenz]   | [Geltungsbereich] |
+
+### 3.3 Leistungsanforderungen
+
+Die Leistungsanforderungen beschreiben die zu liefernden Ergebnisse. Sie verbinden den Projektauftrag mit der technischen Umsetzung, den Prüfungen und der tatsächlichen Übernahme je Instanz.
+
+| **ID**    | **Instanz / Geltungsbereich** | **Zu lieferndes Ergebnis**                                    | **Zuständigkeit** | **Prüfung / Nachweisführung**                                                                                | **Status** | **Nachweis** | **Kommentar** |
+| --------- | ----------------------------- | ------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------ | ---------- | ------------ | ------------- |
+| REQ-005-A | A                             | [Installation und Konfiguration der vereinbarten Komponenten] | [Rolle]           | [Umsetzung](#05-installation-und-konfiguration), [Installationsprüfung](#1122-installationsprüfung)          | Offen      | [Referenz]   | [Umfang]      |
+| REQ-005-B | B                             | [Installation und Konfiguration der vereinbarten Komponenten] | [Rolle]           | [Umsetzung](#05-installation-und-konfiguration), [Installationsprüfung](#1122-installationsprüfung)          | Offen      | [Referenz]   | [Umfang]      |
+| REQ-006-A | A                             | [Vereinbarte Integration und Migration]                       | [Rolle]           | [Migration](#54-migration-und-übernahme), [Integrationsprüfung](#1123-integrationsprüfung)                   | Offen      | [Referenz]   | [Umfang]      |
+| REQ-006-B | B                             | [Vereinbarte Integration und Migration]                       | [Rolle]           | [Migration](#54-migration-und-übernahme), [Integrationsprüfung](#1123-integrationsprüfung)                   | Offen      | [Referenz]   | [Umfang]      |
+| REQ-007-A | A                             | [Vereinbarte Betriebsanbindungen und Übergabe]                | [Rolle]           | [Betriebsbereitschaft](#1124-betriebsbereitschaft), [Betriebsübernahme](#134-betriebsübernahme-und-nachweis) | Offen      | [Referenz]   | [Umfang]      |
+| REQ-007-B | B                             | [Vereinbarte Betriebsanbindungen und Übergabe]                | [Rolle]           | [Betriebsbereitschaft](#1124-betriebsbereitschaft), [Betriebsübernahme](#134-betriebsübernahme-und-nachweis) | Offen      | [Referenz]   | [Umfang]      |
+
+[Ergebnisse aus dem bestätigten Projektauftrag ableiten und bei eigenständigen Prüfkriterien weiter aufteilen. Gemeinsame Projektergebnisse einmalig mit tatsächlichem Geltungsbereich führen. Beispiele begründen keinen zusätzlichen Leistungsumfang.]
+
+### 3.4 Anforderungsdetails und Startvoraussetzungen
+
+Die Details machen Mindestanforderungen, vereinbarte Ausprägung und bestätigten Iststand je Instanz vergleichbar. Eine offene Anforderung blockiert nur die davon abhängigen Arbeiten. Ausnahmen benötigen eine zuständige Entscheidung mit nachvollziehbarer Auswirkung.
+
+| **Anforderung**                       | **Instanz / Geltungsbereich**                       | **Kategorie** | **Mindestwert**                           | **Vereinbarter Sollwert** | **Bestätigter Istwert** | **Blockierwirkung**  | **Quelle**                 | **Nachweis / Ausnahme** |
+| ------------------------------------- | --------------------------------------------------- | ------------- | ----------------------------------------- | ------------------------- | ----------------------- | -------------------- | -------------------------- | ----------------------- |
+| [REQ-ID aus den Anforderungstabellen] | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Bereich]     | [Mindestwert / begründet nicht anwendbar] | Offen                     | Noch nicht geprüft      | [Abhängiger Schritt] | [Versionsgebundene Quelle] | Offen                   |
 
 Vor dem Umsetzungsstart werden die relevanten Voraussetzungen und eine erforderliche Ausführungsfreigabe im Meilenstein M1 mit zuständiger Rolle und Entscheidungsreferenz nachgewiesen. Eine Vorlage oder inhaltliche Dokumentbestätigung erteilt keine technische Ausführungsfreigabe.
 
-### 3.3 Plattformbaseline
+## 04 Implementierungsplan
 
-Die Plattform-Grundanforderungen werden getrennt von den Produkt- und Topologie-Netzwerkflüssen in [Kapitel 6](#06-kommunikation-und-verschlüsselung) geprüft. Die Betriebssystembereitstellung bleibt beim zuständigen Betriebsteam.
+Der Implementierungsplan verbindet Arbeitsschritte, Abhängigkeiten, Zuständigkeiten und Termine zu einem nachvollziehbaren Ablauf. Meilensteine kennzeichnen überprüfbare Ergebnisse; Umschaltung und Rückfall regeln den Übergang zur neuen Lösung.
 
-| **Bereich**                | **Anforderung**                                                | **Zuständigkeit** | **Prüfung**                     | **Status** | **Nachweis** | **Kommentar**                                    |
-| -------------------------- | -------------------------------------------------------------- | ----------------- | ------------------------------- | ---------- | ------------ | ------------------------------------------------ |
-| Namensauflösung            | [Benötigte Namen]                                              | [Rolle]           | [Auflösungsprüfung]             | Offen      | [Referenz]   | [Vorgabe]                                        |
-| Zeitsynchronisation        | [Zulässiger Zeitdienst]                                        | [Rolle]           | [Synchronisierungsstatus]       | Offen      | [Referenz]   | [Vorgabe]                                        |
-| Paket- und Artefaktquellen | [Freigegebene Bezugswege]                                      | [Rolle]           | [Erreichbarkeit / Berechtigung] | Offen      | [Referenz]   | [Vorgabe]                                        |
-| Proxy                      | [Bei Bedarf gemäß 6.4](#64-internetzugang-und-freischaltungen) | [Rolle]           | [Zielspezifische Prüfung]       | Offen      | [Referenz]   | [Bei fehlendem Bedarf begründet nicht anwendbar] |
-| Vertrauenskette            | [Benötigte Zertifizierungsstellen]                             | [Rolle]           | [TLS-Verifikation]              | Offen      | [Referenz]   | [Vorgabe]                                        |
-| Basisnetz                  | [Routing und Plattformkonnektivität]                           | [Rolle]           | [Vorprüfung]                    | Offen      | [Referenz]   | [Vorgabe]                                        |
+### 4.1 Vorgehen und Reihenfolge
 
-## 04 Realisierungsplanung
+Das Vorgehen ordnet die Umsetzungsschritte nach ihren fachlichen und technischen Abhängigkeiten.
 
-Die Realisierungsplanung gliedert die Umsetzung in nachvollziehbare Meilensteine. Ergebnisse, Zuständigkeiten und Termine ermöglichen die Abstimmung von Abhängigkeiten und Fortschritt.
+1. **Vorbereitung:** [Erforderliche Bereitstellungen aus [Kapitel 3](#03-voraussetzungen) und Projektwerte aus [Abschnitt 5.2.2](#522-projektwerte-und-ausführungsumgebung) zusammenführen; Ausführungsplan und Installationsablauf abstimmen.]
+2. **Einrichtung und Integration:** [Aufbau und Anbindung der Komponenten in der projektspezifisch erforderlichen Reihenfolge beschreiben; auf die technischen Abläufe in [Kapitel 5](#05-installation-und-konfiguration) verweisen.]
+3. **Migration und Prüfung:** [Übernahmeumfang und Reihenfolge festhalten; Prüfkriterien aus [Kapitel 11](#11-prüfung-und-qualitätssicherung) zuordnen. Falls keine Migration erforderlich ist, begründet kennzeichnen.]
+4. **Übergabe und Abschluss:** [Voraussetzungen für [Betriebsübergabe](#13-betriebsübergabe) und [Projektabnahme](#14-abschluss-und-abnahme) zuordnen.]
 
-### 4.1 Meilensteine
+[Parallele Arbeiten und Abhängigkeiten zwischen den Instanzen und Umsetzungsschritten projektspezifisch ergänzen. Gesamtmeilensteine anhand der zugehörigen Ergebnisse je Instanz bewerten. Anzahl und Reihenfolge an den tatsächlichen Umfang anpassen; ausführbare Befehle in [Kapitel 5](#05-installation-und-konfiguration) pflegen.]
 
-Jeder Meilenstein beschreibt ein nachprüfbares Ergebnis. Termine und Referenzen werden nach Vereinbarung ergänzt.
+### 4.2 Meilensteine und Termine
+
+Die Meilensteine bündeln die angestrebten Ergebnisse mit Zuständigkeit, Zieltermin und Bearbeitungsstand. Die Referenzspalte verknüpft zugehörige Jira-Vorgänge oder vergleichbare Planungsnachweise.
 
 | **Nr.** | **Meilenstein**        | **Erreicht, wenn**                                                                                                                      | **Zuständigkeit** | **Zieltermin** | **Status** | **Kommentar** | **Referenz**     |
 | ------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | -------------- | ---------- | ------------- | ---------------- |
@@ -248,6 +288,14 @@ Jeder Meilenstein beschreibt ein nachprüfbares Ergebnis. Termine und Referenzen
 | M2      | Lösung eingerichtet    | Vereinbarte Komponenten und Integrationen eingerichtet                                                                                  | [Rolle]           | Offen          | Offen      | —             | [Vorgang / Link] |
 | M3      | Prüfung abgeschlossen  | Vereinbarte Prüfkriterien nachweislich erfüllt                                                                                          | [Rolle]           | Offen          | Offen      | —             | [Vorgang / Link] |
 | M4      | Übergabe und Abschluss | Betriebsaufgaben übernommen und Abschlussentscheidung dokumentiert                                                                      | [Rolle]           | Offen          | Offen      | —             | [Vorgang / Link] |
+
+### 4.3 Umschaltung und Rückfall
+
+Umschaltung und Rückfall beschreiben den kontrollierten Wechsel auf die neue Lösung und die Rückkehr zu einem gesicherten vorherigen Stand bei Erreichen der vereinbarten Rückfallkriterien.
+
+[Umfang, Reihenfolge, Umschaltfenster, fachliche Rückfallkriterien und zuständige Entscheidungsrolle anhand bestätigter Projektvorgaben benennen. Ohne erforderliche Umschaltung diesen Abschnitt begründet als nicht anwendbar kennzeichnen.]
+
+Die technischen Übernahme- und Umschaltverfahren stehen in [Abschnitt 5.4](#54-migration-und-übernahme); die benötigten Sicherungs- und Wiederherstellungsverfahren in [Kapitel 9](#09-datensicherung-und-wiederherstellung). Zwischenzeitliche Datenänderungen und externe Abhängigkeiten werden bei der Rückfallplanung berücksichtigt. Offene Entscheidungen werden in [Kapitel 12](#12-projektstatus) geführt.
 
 ## 05 Installation und Konfiguration
 
@@ -407,11 +455,12 @@ Der Ausführungsplan ordnet die Schritte den stabilen IHR-Phasen zu. Die technis
 | `evidence-handling`          | Ausführungsnachweise, 5.3 und 15.2                                                                 |
 | `safe-stop-restart-recovery` | Fehlerbehandlung und Wiederaufnahme, 5.5 und [Kapitel 9](#09-datensicherung-und-wiederherstellung) |
 
-Für jede anwendbare Phase den folgenden Datensatz mit konkreten Angaben ausfüllen oder eindeutig auf die zugehörigen Angaben verweisen. Die Vorlage enthält keine freigegebenen Befehle oder tatsächlich ausgeführten Ergebnisse. Solange notwendige Angaben fehlen, bleibt der Stand vor `ready-for-installation`.
+Für jede anwendbare Phase und betroffene Instanz den folgenden Datensatz mit konkreten Angaben ausfüllen oder eindeutig auf die zugehörigen Angaben verweisen. Gemeinsame Befehlsmuster dürfen referenziert werden; Zielauswahl, Eingaben und Ergebnisse bleiben der jeweiligen Instanz zugeordnet. Die Vorlage enthält keine freigegebenen Befehle oder tatsächlich ausgeführten Ergebnisse. Solange notwendige Angaben fehlen, bleibt der Stand vor `ready-for-installation`.
 
 | **Feld / technischer Bezeichner**                  | **Geplanter Inhalt**                                                                                     |
 | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | Phase ID                                           | [ID aus der obigen Tabelle]                                                                              |
+| Instanz / Zielsystem                               | [Stabile Kennung der Instanz, zugehörige REQ-IDs und eindeutiges Ausführungsziel]                        |
 | Zweck                                              | [Beabsichtigtes Ergebnis]                                                                                |
 | Operationstyp                                      | [Lesend / konfigurationsändernd / weiterer begründeter Typ]                                              |
 | Ausführende Rolle                                  | [Rolle gemäß [1.3](#13-ansprechpartner)]                                                                 |
@@ -482,9 +531,9 @@ Die Kommunikations- und Verschlüsselungsanforderungen legen fest, welche System
 
 Die Matrix ordnet initiierte Verbindungen nach Quelle, Ziel und Zweck zu. Rückverkehr und interne Verbindungen werden entsprechend der vorhandenen Netzarchitektur behandelt.
 
-| **ID**   | **Quelle** | **Ziel** | **Protokoll / Zielport** | **Zweck** | **Status** | **Nachweis** | **Kommentar**                            |
-| -------- | ---------- | -------- | ------------------------ | --------- | ---------- | ------------ | ---------------------------------------- |
-| FLOW-001 | [Quelle]   | [Ziel]   | [Protokoll / Port]       | [Zweck]   | Offen      | [Referenz]   | [Quellbeschränkung / interne Verbindung] |
+| **ID**   | **Instanz / Geltungsbereich**                       | **Quelle** | **Ziel** | **Protokoll / Zielport** | **Zweck** | **Status** | **Nachweis** | **Kommentar**                            |
+| -------- | --------------------------------------------------- | ---------- | -------- | ------------------------ | --------- | ---------- | ------------ | ---------------------------------------- |
+| FLOW-001 | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Quelle]   | [Ziel]   | [Protokoll / Port]       | [Zweck]   | Offen      | [Referenz]   | [Quellbeschränkung / interne Verbindung] |
 
 ### 6.2 Kommunikationsübersicht
 
@@ -524,7 +573,7 @@ Die Angaben unterscheiden den Netzpfad von der Freigabe konkreter Ziele.
 
 Die Übersicht ordnet den Bereichen ihre freigegebenen Zugangswege zu.
 
-| **Bereich**                | **Zugangsweg**                         | **Referenz** | **Status** | **Kommentar** |
+| **Instanz / Netzbereich**  | **Zugangsweg**                         | **Referenz** | **Status** | **Kommentar** |
 | -------------------------- | -------------------------------------- | ------------ | ---------- | ------------- |
 | [Zielsystem / Netzbereich] | [Direkt / Proxy / kein Internetzugang] | [FLOW-ID]    | Offen      | [Festlegung]  |
 
@@ -532,9 +581,9 @@ Die Übersicht ordnet den Bereichen ihre freigegebenen Zugangswege zu.
 
 Die Liste enthält nur die für den ausgewählten Bezug und Betrieb tatsächlich erforderlichen Ziele.
 
-| **URL / Zieldomain** | **Verwendung** | **Port** | **Status** | **Kommentar**              |
-| -------------------- | -------------- | -------- | ---------- | -------------------------- |
-| [Geprüftes Ziel]     | [Zweck]        | [Port]   | Offen      | [Nachweis / Einschränkung] |
+| **URL / Zieldomain** | **Instanz / Geltungsbereich**                       | **Verwendung** | **Port** | **Status** | **Kommentar**              |
+| -------------------- | --------------------------------------------------- | -------------- | -------- | ---------- | -------------------------- |
+| [Geprüftes Ziel]     | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Zweck]        | [Port]   | Offen      | [Nachweis / Einschränkung] |
 
 #### 6.4.3 Verbindungskonfiguration
 
@@ -552,9 +601,9 @@ Die Identitäts- und Zugriffsregelungen legen fest, wer eine Lösung nutzen, adm
 
 Die Übersicht ordnet den Bereichen ihre Identitätsquellen und Anmeldeverfahren zu.
 
-| **Bereich** | **Identitätsquelle** | **Anbindung**                     | **Status** | **Kommentar**                     |
-| ----------- | -------------------- | --------------------------------- | ---------- | --------------------------------- |
-| [Bereich]   | [Quelle]             | [Verfahren / Vertrauensbeziehung] | Offen      | [Endpunkte und benötigte Angaben] |
+| **Instanz / Bereich** | **Identitätsquelle** | **Anbindung**                     | **Status** | **Kommentar**                     |
+| --------------------- | -------------------- | --------------------------------- | ---------- | --------------------------------- |
+| [Bereich]             | [Quelle]             | [Verfahren / Vertrauensbeziehung] | Offen      | [Endpunkte und benötigte Angaben] |
 
 [Bei föderierter Anmeldung Rollen der beteiligten Systeme, tatsächlich erreichbare Kommunikationswege, Metadaten, Prüfung der Signatur und Abmeldeverhalten festhalten. Keine projektspezifische Protokollentscheidung als allgemeine Vorgabe übernehmen.]
 
@@ -635,9 +684,9 @@ Der unabhängige lokale Notfallzugang folgt [Abschnitt 7.5](#75-administrativer-
 
 Technische Konten werden nach ihrem Zweck und den tatsächlich benötigten Rechten zugeordnet.
 
-| **Konto / Bereich** | **Zweck** | **Verantwortung** | **Status** | **Kommentar**                 |
-| ------------------- | --------- | ----------------- | ---------- | ----------------------------- |
-| [Konto]             | [Aufgabe] | [Rolle]           | Offen      | [Rechte / Verwaltungsbereich] |
+| **Konto / Bereich** | **Instanz / Geltungsbereich**                       | **Zweck** | **Verantwortung** | **Status** | **Kommentar**                 |
+| ------------------- | --------------------------------------------------- | --------- | ----------------- | ---------- | ----------------------------- |
+| [Konto]             | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Aufgabe] | [Rolle]           | Offen      | [Rechte / Verwaltungsbereich] |
 
 [Einrichtung, Änderung und Entzug nach bestehenden IAM-Prozessen behandeln. Zugangsdaten ausschließlich über den vereinbarten geschützten Bereitstellungsweg verwalten.]
 
@@ -653,21 +702,21 @@ Observability macht den Zustand und das Verhalten einer Lösung nachvollziehbar.
 
 Die Übersicht trennt die Bereitstellung von Prüfmöglichkeiten von der tatsächlichen Betriebsanbindung.
 
-| **Bereich** | **Umfang**                                      | **Verantwortung** | **Status** | **Kommentar** |
-| ----------- | ----------------------------------------------- | ----------------- | ---------- | ------------- |
-| Monitoring  | [Prüfmöglichkeiten / vereinbarte Einbindung]    | [Rolle]           | Offen      | [Umfang]      |
-| Logging     | [Lokale Protokolle / vereinbarte Weiterleitung] | [Rolle]           | Offen      | [Umfang]      |
-| Alarmierung | [Empfänger und Bearbeitung]                     | [Rolle]           | Offen      | [Umfang]      |
+| **Bereich** | **Instanz / Geltungsbereich**                       | **Umfang**                                      | **Verantwortung** | **Status** | **Kommentar** |
+| ----------- | --------------------------------------------------- | ----------------------------------------------- | ----------------- | ---------- | ------------- |
+| Monitoring  | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Prüfmöglichkeiten / vereinbarte Einbindung]    | [Rolle]           | Offen      | [Umfang]      |
+| Logging     | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Lokale Protokolle / vereinbarte Weiterleitung] | [Rolle]           | Offen      | [Umfang]      |
+| Alarmierung | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Empfänger und Bearbeitung]                     | [Rolle]           | Offen      | [Umfang]      |
 
 ### 8.2 Überwachungskonzept
 
 Das zuständige Betriebsteam legt Verfahren, Zugriffswege und Bewertung fest.
 
-| **Thema**   | **Vorgabe / Klärungsbedarf**                      | **Status** | **Kommentar** |
-| ----------- | ------------------------------------------------- | ---------- | ------------- |
-| Prüfumfang  | [Komponenten / Abhängigkeiten / Betriebszeiten]   | Offen      | [Referenz]    |
-| Prüfzugriff | [Geschützter Zugangsweg / erforderliche Rechte]   | Offen      | [Referenz]    |
-| Bewertung   | [Intervalle / Grenzwerte / Wartungsunterdrückung] | Offen      | [Referenz]    |
+| **Thema**   | **Instanz / Geltungsbereich**                       | **Vorgabe / Klärungsbedarf**                      | **Status** | **Kommentar** |
+| ----------- | --------------------------------------------------- | ------------------------------------------------- | ---------- | ------------- |
+| Prüfumfang  | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Komponenten / Abhängigkeiten / Betriebszeiten]   | Offen      | [Referenz]    |
+| Prüfzugriff | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Geschützter Zugangsweg / erforderliche Rechte]   | Offen      | [Referenz]    |
+| Bewertung   | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Intervalle / Grenzwerte / Wartungsunterdrückung] | Offen      | [Referenz]    |
 
 [Keine bestimmte Plattform voraussetzen. Hostüberwachung nach bestehendem Standard referenzieren. Unter Monitoring, Logging und Alarmierung jede tatsächlich betriebene Komponente einzeln bewerten; die folgenden Unterkapitel je Komponente entsprechend wiederholen und fortlaufend nummerieren.]
 
@@ -679,9 +728,9 @@ Die Prüfpunkte werden je Komponente mit Verfahren und Erfolgskriterium festgele
 
 Die Übersicht beschreibt die für diese Komponente benötigten Zustandsprüfungen.
 
-| **Prüfpunkt** | **Verfahren / Quelle** | **Bewertung / Grenzwert** | **Status** | **Kommentar**        |
-| ------------- | ---------------------- | ------------------------- | ---------- | -------------------- |
-| [Prüfpunkt]   | [Verfahren]            | [Erfolgskriterium]        | Offen      | [Zugriff / Nachweis] |
+| **Prüfpunkt** | **Instanz / Geltungsbereich**                       | **Verfahren / Quelle** | **Bewertung / Grenzwert** | **Status** | **Kommentar**        |
+| ------------- | --------------------------------------------------- | ---------------------- | ------------------------- | ---------- | -------------------- |
+| [Prüfpunkt]   | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Verfahren]            | [Erfolgskriterium]        | Offen      | [Zugriff / Nachweis] |
 
 ### 8.4 Logging
 
@@ -691,9 +740,9 @@ Die Protokolle unterstützen Fehleranalyse und Nachvollziehbarkeit relevanter Er
 
 Die Übersicht ordnet Ereignisse ihren Quellen, Ablageorten und Schutzvorgaben zu.
 
-| **Protokoll / Ereignis** | **Quelle** | **Ablage / Weiterleitung**              | **Zugriff / Aufbewahrung** | **Status** | **Kommentar** |
-| ------------------------ | ---------- | --------------------------------------- | -------------------------- | ---------- | ------------- |
-| [Ereignis]               | [Quelle]   | [Lokale Ablage / Logziel und Transport] | [Vorgabe]                  | Offen      | [Nachweis]    |
+| **Protokoll / Ereignis** | **Instanz / Geltungsbereich**                       | **Quelle** | **Ablage / Weiterleitung**              | **Zugriff / Aufbewahrung** | **Status** | **Kommentar** |
+| ------------------------ | --------------------------------------------------- | ---------- | --------------------------------------- | -------------------------- | ---------- | ------------- |
+| [Ereignis]               | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Quelle]   | [Lokale Ablage / Logziel und Transport] | [Vorgabe]                  | Offen      | [Nachweis]    |
 
 [Zentrale Weiterleitung nur im vereinbarten Umfang aufnehmen. Kennwörter, Tokens und private Schlüssel nicht protokollieren; personenbezogene Ereignisse nach geltenden Vorgaben behandeln.]
 
@@ -705,17 +754,17 @@ Die Alarmierung verbindet erkannte Störungen mit den zuständigen Betriebsrolle
 
 Die Festlegungen verbinden Alarmzustellung, Bearbeitung und Eskalation.
 
-| **Thema**                  | **Festlegung / Nachweis**                                 | **Verantwortung** | **Status** | **Kommentar** |
-| -------------------------- | --------------------------------------------------------- | ----------------- | ---------- | ------------- |
-| Zustellung und Bearbeitung | [Empfänger / Betriebszeiten / Eskalationsweg / Testalarm] | [Rolle]           | Offen      | [Referenz]    |
+| **Thema**                  | **Instanz / Geltungsbereich**                       | **Festlegung / Nachweis**                                 | **Verantwortung** | **Status** | **Kommentar** |
+| -------------------------- | --------------------------------------------------- | --------------------------------------------------------- | ----------------- | ---------- | ------------- |
+| Zustellung und Bearbeitung | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Empfänger / Betriebszeiten / Eskalationsweg / Testalarm] | [Rolle]           | Offen      | [Referenz]    |
 
 #### 8.5.2 [Komponente]
 
 Die Übersicht beschreibt die für diese Komponente relevanten Alarmauslöser.
 
-| **Auslöser** | **Schweregrad / Schwelle** | **Zuständige Rolle** | **Status** | **Kommentar** |
-| ------------ | -------------------------- | -------------------- | ---------- | ------------- |
-| [Störung]    | [Bewertung]                | [Rolle]              | Offen      | [Nachweis]    |
+| **Auslöser** | **Instanz / Geltungsbereich**                       | **Schweregrad / Schwelle** | **Zuständige Rolle** | **Status** | **Kommentar** |
+| ------------ | --------------------------------------------------- | -------------------------- | -------------------- | ---------- | ------------- |
+| [Störung]    | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Bewertung]                | [Rolle]              | Offen      | [Nachweis]    |
 
 ## 09 Datensicherung und Wiederherstellung
 
@@ -725,18 +774,18 @@ Datensicherung und Wiederherstellung schützen vor Datenverlust und ermöglichen
 
 Die Ziele bestimmen den zulässigen Datenverlust und die erwartete Dauer der Wiederherstellung.
 
-| **Angabe**                    | **Festlegung**                    | **Verantwortung** | **Status** | **Kommentar** |
-| ----------------------------- | --------------------------------- | ----------------- | ---------- | ------------- |
-| Wiederherstellungspunkt (RPO) | [Maximal zulässiger Datenverlust] | [Rolle]           | Offen      | [Bestätigung] |
-| Wiederherstellungsdauer (RTO) | [Maximal zulässige Ausfallzeit]   | [Rolle]           | Offen      | [Bestätigung] |
+| **Angabe**                    | **Instanz / Geltungsbereich**                       | **Festlegung**                    | **Verantwortung** | **Status** | **Kommentar** |
+| ----------------------------- | --------------------------------------------------- | --------------------------------- | ----------------- | ---------- | ------------- |
+| Wiederherstellungspunkt (RPO) | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Maximal zulässiger Datenverlust] | [Rolle]           | Offen      | [Bestätigung] |
+| Wiederherstellungsdauer (RTO) | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Maximal zulässige Ausfallzeit]   | [Rolle]           | Offen      | [Bestätigung] |
 
 ### 9.2 Sicherungsumfang und Abhängigkeiten
 
 Die Übersicht unterscheidet gesicherte Daten von Voraussetzungen für den Wiederaufbau.
 
-| **Gegenstand** | **Verfahren / Umfang**                       | **Verantwortung** | **Grenze / Abhängigkeit**                                   |
-| -------------- | -------------------------------------------- | ----------------- | ----------------------------------------------------------- |
-| [Datenbestand] | [Konsistente Sicherung / Wiederaufbauquelle] | [Rolle]           | [Granularität / benötigte Zugänge / manuelle Konfiguration] |
+| **Gegenstand** | **Instanz / Geltungsbereich**                       | **Verfahren / Umfang**                       | **Verantwortung** | **Grenze / Abhängigkeit**                                   |
+| -------------- | --------------------------------------------------- | -------------------------------------------- | ----------------- | ----------------------------------------------------------- |
+| [Datenbestand] | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Konsistente Sicherung / Wiederaufbauquelle] | [Rolle]           | [Granularität / benötigte Zugänge / manuelle Konfiguration] |
 
 [Grenzen ausdrücklich nennen, etwa vollständiger Datenbestand statt einzelner Mandanten. Konfiguration als Code und geschützte Geheimnisbereitstellung nur bei tatsächlicher Verfügbarkeit als Wiederaufbauquelle nennen; daraus keine pauschale zusätzliche Aufgabe zur Datensicherung ableiten.]
 
@@ -748,9 +797,9 @@ Die Verfahren verbinden konsistente Anwendungssicherungen mit der bestehenden Da
 
 Die Parameter beschreiben das tatsächlich verwendete Sicherungsverfahren.
 
-| **Parameter**                              | **Festlegung** | **Status** | **Kommentar**                |
-| ------------------------------------------ | -------------- | ---------- | ---------------------------- |
-| [Verfahren / Format / Ablage / Konsistenz] | [Projektwert]  | Offen      | [Implementierung / Nachweis] |
+| **Parameter**                              | **Instanz / Geltungsbereich**                       | **Festlegung** | **Status** | **Kommentar**                |
+| ------------------------------------------ | --------------------------------------------------- | -------------- | ---------- | ---------------------------- |
+| [Verfahren / Format / Ablage / Konsistenz] | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Projektwert]  | Offen      | [Implementierung / Nachweis] |
 
 #### 9.3.2 Übernahme in die bestehende Datensicherung
 
@@ -764,9 +813,9 @@ Die Parameter beschreiben das tatsächlich verwendete Sicherungsverfahren.
 
 Die Intervalle werden aus den vereinbarten Zielen und bestehenden Backupvorgaben abgeleitet.
 
-| **Sicherung** | **Intervall / Anlass** | **Zeit / Reihenfolge** | **Aufbewahrung** | **Verantwortung** | **Status** | **Kommentar** |
-| ------------- | ---------------------- | ---------------------- | ---------------- | ----------------- | ---------- | ------------- |
-| [Sicherung]   | [Zu vereinbaren]       | [Reihenfolge]          | [Vorgabe]        | [Rolle]           | Offen      | [Bestätigung] |
+| **Sicherung** | **Instanz / Geltungsbereich**                       | **Intervall / Anlass** | **Zeit / Reihenfolge** | **Aufbewahrung** | **Verantwortung** | **Status** | **Kommentar** |
+| ------------- | --------------------------------------------------- | ---------------------- | ---------------------- | ---------------- | ----------------- | ---------- | ------------- |
+| [Sicherung]   | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Zu vereinbaren]       | [Reihenfolge]          | [Vorgabe]        | [Rolle]           | Offen      | [Bestätigung] |
 
 ### 9.5 Wiederherstellungsverfahren
 
@@ -784,10 +833,10 @@ Die Verfahren beschreiben Wiederherstellungsziel, Abhängigkeiten und anschließ
 
 Die Tests prüfen, ob Sicherungen und Wiederaufbauverfahren die vereinbarten Ziele erfüllen.
 
-| **Testumfang**       | **Intervall / Anlass**                          | **Erfolgskriterium**           | **Verantwortung** | **Status** | **Nachweis** | **Kommentar** |
-| -------------------- | ----------------------------------------------- | ------------------------------ | ----------------- | ---------- | ------------ | ------------- |
-| Erstprüfung          | Vor Betriebsübergabe                            | [Integrität / Funktion / Zeit] | [Rolle]           | Offen      | [Referenz]   | [Testziel]    |
-| Wiederholungsprüfung | [Zu vereinbaren / nach wesentlichen Änderungen] | [Ergebnis und Dauer]           | [Rolle]           | Offen      | [Referenz]   | [Testziel]    |
+| **Testumfang**       | **Instanz / Geltungsbereich**                       | **Intervall / Anlass**                          | **Erfolgskriterium**           | **Verantwortung** | **Status** | **Nachweis** | **Kommentar** |
+| -------------------- | --------------------------------------------------- | ----------------------------------------------- | ------------------------------ | ----------------- | ---------- | ------------ | ------------- |
+| Erstprüfung          | [Kennung der Instanz / gemeinsamer Geltungsbereich] | Vor Betriebsübergabe                            | [Integrität / Funktion / Zeit] | [Rolle]           | Offen      | [Referenz]   | [Testziel]    |
+| Wiederholungsprüfung | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Zu vereinbaren / nach wesentlichen Änderungen] | [Ergebnis und Dauer]           | [Rolle]           | Offen      | [Referenz]   | [Testziel]    |
 
 ## 10 Wartung und Betrieb
 
@@ -797,9 +846,9 @@ Die Betriebsaufgaben beschreiben die regelmäßige Pflege und den Umgang mit Än
 
 Die Übersicht grenzt Plattformaufgaben von anwendungsspezifischen Betriebsaufgaben ab.
 
-| **Bereich** | **Betriebsaufgabe** | **Verantwortung** | **Status** | **Kommentar**                     |
-| ----------- | ------------------- | ----------------- | ---------- | --------------------------------- |
-| [Bereich]   | [Aufgabe / Grenze]  | [Rolle]           | Offen      | [Referenz auf Betriebsunterlagen] |
+| **Bereich** | **Instanz / Geltungsbereich**                       | **Betriebsaufgabe** | **Verantwortung** | **Status** | **Kommentar**                     |
+| ----------- | --------------------------------------------------- | ------------------- | ----------------- | ---------- | --------------------------------- |
+| [Bereich]   | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Aufgabe / Grenze]  | [Rolle]           | Offen      | [Referenz auf Betriebsunterlagen] |
 
 ### 10.2 Dienstverwaltung
 
@@ -841,7 +890,7 @@ Prüfumfang, Zuständigkeit, Testzugänge und Erfolgskriterien werden vor der Au
 
 ### 11.2 Prüfplan
 
-Der Prüfplan ordnet die Prüfungen ihrem Zeitpunkt im Umsetzungsablauf zu. Ergebnisse werden je Zielsystem beziehungsweise Anwendung bewertet; bestehende TEST-IDs bleiben erhalten.
+Der Prüfplan ordnet die Prüfungen ihrem Zeitpunkt im Umsetzungsablauf zu. Jede betroffene Instanz erhält eine eigene Prüffallkennung sowie einen eigenen Status und Nachweis. Bestehende TEST-IDs bleiben nachvollziehbar; bei Anwendungsprüfungen wird zusätzlich der Client zugeordnet. Ein gemeinsamer Schnittstellentest kann denselben Ablauf und Nachweis referenzieren, wenn beide Instanzen darin ausdrücklich bewertet sind.
 
 #### 11.2.1 Installationsbereitschaft
 
@@ -851,33 +900,37 @@ Vor der Installation werden Plattform, Zugänge, Installationskonfiguration und 
 
 Nach der Installation werden die technische Funktion, Persistenz, Zugriffsbeschränkungen und die unveränderte Wiederholung des Aufbaus geprüft.
 
-| **ID**   | **Prüfung**                         | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
-| -------- | ----------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
-| TEST-001 | [Technischer Prüffall / Zielsystem] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+| **ID**     | **Instanz** | **Prüfung**                         | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
+| ---------- | ----------- | ----------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
+| TEST-001-A | A           | [Technischer Prüffall / Zielsystem] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+| TEST-001-B | B           | [Technischer Prüffall / Zielsystem] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
 
 #### 11.2.3 Integrationsprüfung
 
 Nach der Konfiguration werden die vorgesehenen Schnittstellen, Identitätsquellen, Berechtigungen und repräsentativen Anwendungsabläufe geprüft.
 
-| **ID**   | **Prüfung**                       | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
-| -------- | --------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
-| TEST-002 | [Integrationsprüfung / Anwendung] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+| **ID**     | **Instanz** | **Prüfung**                       | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
+| ---------- | ----------- | --------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
+| TEST-002-A | A           | [Integrationsprüfung / Anwendung] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+| TEST-002-B | B           | [Integrationsprüfung / Anwendung] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
 
 #### 11.2.4 Betriebsbereitschaft
 
 Vor der Betriebsübergabe werden die vereinbarten Betriebsverfahren einschließlich Überwachung, Protokollierung, Alarmierung und Wiederherstellung geprüft.
 
-| **ID**   | **Prüfung**                         | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
-| -------- | ----------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
-| TEST-003 | [Betriebsverfahren / Notfallzugang] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+| **ID**     | **Instanz** | **Prüfung**                         | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
+| ---------- | ----------- | ----------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
+| TEST-003-A | A           | [Betriebsverfahren / Notfallzugang] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+| TEST-003-B | B           | [Betriebsverfahren / Notfallzugang] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
 
 #### 11.2.5 Abschlussprüfung
 
 Vor der Abnahme werden die Ergebnisse für den vollständigen vereinbarten Umfang zusammengeführt. Änderungen seit einer Prüfung erfordern die Wiederholung der betroffenen Prüffälle; bereits gültige Nachweise werden verlinkt.
 
-| **ID**   | **Prüfung**                               | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
-| -------- | ----------------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
-| TEST-004 | [Gesamtumfang / abschließende Umstellung] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+| **ID**     | **Instanz** | **Prüfung**                               | **Erwartetes Ergebnis**      | **Status** | **Kommentar**   | **Nachweis** |
+| ---------- | ----------- | ----------------------------------------- | ---------------------------- | ---------- | --------------- | ------------ |
+| TEST-004-A | A           | [Gesamtumfang / abschließende Umstellung] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
+| TEST-004-B | B           | [Gesamtumfang / abschließende Umstellung] | [Messbares Erfolgskriterium] | Offen      | [Voraussetzung] | [Referenz]   |
 
 [Nicht benötigte Prüffälle begründet entfernen. Die Abschlussprüfung ersetzt keine formelle Abnahme gemäß [Kapitel 14](#14-abschluss-und-abnahme).]
 
@@ -887,7 +940,7 @@ Ausführungs- und Prüfergebnisse werden einmalig dem tatsächlich verwendeten S
 
 | **Nachweisangabe**      | **Inhalt**                                                                                                                                                           |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Zuordnung               | [Lauf-ID / Phase ID, Zielsystem, Instanz und gegebenenfalls TEST-ID / Anwendung]                                                                                     |
+| Zuordnung               | [Lauf-ID / Phase ID, Instanz, Zielsystem, instanzbezogene REQ- und TEST-IDs sowie gegebenenfalls Realm / Anwendung / Client]                                         |
 | Durchführung            | [Beginn / Ende / Zeitzone und ausführende Rolle gemäß [Kapitel 1.3](#13-ansprechpartner)]                                                                            |
 | Ausführungsstand        | [Vollständige Quellrevisionen, Paketprüfsummen, tatsächlicher EE-Digest und unveränderliche Inventar-/Konfigurationsreferenz; nicht anwendbare Angaben kennzeichnen] |
 | Ausführung              | [Tatsächlicher Befehl oder manuelle Schritte ohne Geheimniswerte]                                                                                                    |
@@ -908,19 +961,19 @@ Der Projektstatus bündelt offene Fragen und getroffene Entscheidungen. Die Übe
 
 Die Liste bündelt fehlende Angaben, ausstehende Entscheidungen und Aufgaben. Bestätigte Ergebnisse werden in die zugehörigen Fachkapitel übernommen; Anforderungen, Meilensteine und Prüfergebnisse werden verlinkt.
 
-| **ID**   | **Thema**            | **Klärungsbedarf**  | **Verantwortung** | **Status** | **Vorgang**                                      | **Kommentar**                    |
-| -------- | -------------------- | ------------------- | ----------------- | ---------- | ------------------------------------------------ | -------------------------------- |
-| OPEN-001 | [Thema / Abweichung] | [Zu klärende Frage] | [Rolle]           | Offen      | [Jira / gleichwertiger Vorgang, falls vorhanden] | [Auswirkung / benötigter Termin] |
+| **ID**   | **Instanz / Geltungsbereich**                       | **Thema**            | **Klärungsbedarf**  | **Verantwortung** | **Status** | **Vorgang**                                      | **Kommentar**                    |
+| -------- | --------------------------------------------------- | -------------------- | ------------------- | ----------------- | ---------- | ------------------------------------------------ | -------------------------------- |
+| OPEN-001 | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Thema / Abweichung] | [Zu klärende Frage] | [Rolle]           | Offen      | [Jira / gleichwertiger Vorgang, falls vorhanden] | [Auswirkung / benötigter Termin] |
 
-[Konkrete Folgearbeiten im verlinkten Vorgang pflegen, statt eine zweite Aufgabenliste mit nächsten Schritten aufzubauen. Projektfortschritt und Termine bleiben in den Meilensteinen aus [Kapitel 04](#04-realisierungsplanung); keine zusätzliche Tabelle „Umsetzungsstand“ pflegen. Ohne Vorgang die notwendige Behandlung hier knapp dokumentieren. Bestehende IDs erhalten.]
+[Konkrete Folgearbeiten im verlinkten Vorgang pflegen, statt eine zweite Aufgabenliste mit nächsten Schritten aufzubauen. Projektfortschritt und Termine bleiben in den Meilensteinen aus [Abschnitt 4.2](#42-meilensteine-und-termine); keine zusätzliche Tabelle „Umsetzungsstand“ pflegen. Ohne Vorgang die notwendige Behandlung hier knapp dokumentieren. Bestehende IDs erhalten.]
 
 ### 12.2 Entscheidungen
 
 Die Übersicht hält wesentliche Entscheidungen mit ihrer tatsächlichen Referenz fest.
 
-| **ID / Bezug** | **Entscheidung**            | **Datum** | **Zuständige Rolle** | **Vorgang / Nachweis** |
-| -------------- | --------------------------- | --------- | -------------------- | ---------------------- |
-| [Referenz]     | [Tatsächliche Entscheidung] | [Datum]   | [Rolle]              | [Referenz]             |
+| **ID / Bezug** | **Instanz / Geltungsbereich**                       | **Entscheidung**            | **Datum** | **Zuständige Rolle** | **Vorgang / Nachweis** |
+| -------------- | --------------------------------------------------- | --------------------------- | --------- | -------------------- | ---------------------- |
+| [Referenz]     | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Tatsächliche Entscheidung] | [Datum]   | [Rolle]              | [Referenz]             |
 
 ## 13 Betriebsübergabe
 
@@ -928,12 +981,14 @@ Die Betriebsübergabe überführt die bereitgestellte Lösung in die vereinbarte
 
 ### 13.1 Übergabeumfang
 
-Die Übersicht hält fest, welche Ergebnisse tatsächlich übernommen wurden. Der Nachweis nennt Datum, bestätigende Rolle und Referenz.
+Die Übersicht hält je Instanz fest, welche Ergebnisse tatsächlich übernommen wurden. Der Nachweis nennt Datum, bestätigende Rolle und Referenz. Ein gemeinsamer Dokumentstand ersetzt keine getrennte Bestätigung der instanzbezogenen Aufgabenübernahme.
 
-| **Übergabegegenstand**   | **Übergabekriterium**                                        | **Übernahmestatus** | **Nachweis**                                                          |
-| ------------------------ | ------------------------------------------------------------ | ------------------- | --------------------------------------------------------------------- |
-| Technische Dokumentation | [Vereinbarter Dokumentstand und Bereitstellungsweg]          | Nicht übernommen    | [Bei Übernahme: Datum, Rolle und Referenz auf die übergebene Fassung] |
-| Betriebsverfahren        | [Vereinbarte Verfahren und Aufgaben erläutert und übergeben] | Nicht übernommen    | [Bei Übernahme: Datum, Rolle und Referenz]                            |
+| **Übergabegegenstand**   | **Instanz** | **Übergabekriterium**                                        | **Übernahmestatus** | **Nachweis**                                                          |
+| ------------------------ | ----------- | ------------------------------------------------------------ | ------------------- | --------------------------------------------------------------------- |
+| Technische Dokumentation | A           | [Vereinbarter Dokumentstand und Bereitstellungsweg]          | Nicht übernommen    | [Bei Übernahme: Datum, Rolle und Referenz auf die übergebene Fassung] |
+| Technische Dokumentation | B           | [Vereinbarter Dokumentstand und Bereitstellungsweg]          | Nicht übernommen    | [Bei Übernahme: Datum, Rolle und Referenz auf die übergebene Fassung] |
+| Betriebsverfahren        | A           | [Vereinbarte Verfahren und Aufgaben erläutert und übergeben] | Nicht übernommen    | [Bei Übernahme: Datum, Rolle und Referenz]                            |
+| Betriebsverfahren        | B           | [Vereinbarte Verfahren und Aufgaben erläutert und übergeben] | Nicht übernommen    | [Bei Übernahme: Datum, Rolle und Referenz]                            |
 
 [„Übernommen“ nur bei belegter Bestätigung verwenden. Vorbereitungsaufgaben in [Kapitel 12](#12-projektstatus) führen. Keine zusätzliche Offline-Lieferung oder Pflegeverpflichtung ohne vereinbarten Umfang ableiten.]
 
@@ -943,13 +998,13 @@ Die Übersicht bündelt administrative Zugänge und das vereinbarte geschützte 
 
 #### 13.2.1 Administrative Zugänge
 
-Die Angaben beschreiben bestätigte Endpunkte und berechtigte Rollen.
+Die Angaben beschreiben bestätigte Endpunkte, berechtigte Rollen und den Zugangsstatus je Instanz.
 
-| **Angabe**              | **Zielsystem / Bereich**                   | **Status** | **Kommentar**                               |
-| ----------------------- | ------------------------------------------ | ---------- | ------------------------------------------- |
-| Administrationsendpunkt | [Bestätigte Adresse / Port]                | Offen      | [Zugriffsgrenze]                            |
-| Konto / Rolle           | [Referenz]                                 | Offen      | [Anmeldeverfahren / geprüfte Hostidentität] |
-| Betriebsrolle           | [Zuordnung gemäß 1.3](#13-ansprechpartner) | Offen      | [Übernahmestand]                            |
+| **Angabe**              | **Instanz / Geltungsbereich**                       | **Zielsystem / Bereich**                   | **Status** | **Kommentar**                               |
+| ----------------------- | --------------------------------------------------- | ------------------------------------------ | ---------- | ------------------------------------------- |
+| Administrationsendpunkt | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Bestätigte Adresse / Port]                | Offen      | [Zugriffsgrenze]                            |
+| Konto / Rolle           | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Referenz]                                 | Offen      | [Anmeldeverfahren / geprüfte Hostidentität] |
+| Betriebsrolle           | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Zuordnung gemäß 1.3](#13-ansprechpartner) | Offen      | [Übernahmestand]                            |
 
 #### 13.2.2 Geheimnisbereitstellung
 
@@ -959,7 +1014,7 @@ Prüfung und Übergabe der benötigten Zugänge werden mit Datum, Rolle und Nach
 
 #### 13.2.3 Zugänge zu den Bestandsinstanzen
 
-Die Zugänge zu Migrationsquellen werden von denen der Zielsysteme getrennt erfasst. Benötigt werden die für die vereinbarte Übernahme erforderlichen Anwendungszugänge und Berechtigungen.
+Die Zugänge zu Migrationsquellen werden von denen der Zielsysteme getrennt erfasst und der jeweiligen Bestands- und Zielinstanz zugeordnet. Benötigt werden die für die vereinbarte Übernahme erforderlichen Anwendungszugänge und Berechtigungen.
 
 | **Bestandsinstanz / Bereich** | **Anwendungszugang**               | **Berechtigung / geschützte Kontoreferenz** | **Status** | **Nachweis**     |
 | ----------------------------- | ---------------------------------- | ------------------------------------------- | ---------- | ---------------- |
@@ -971,17 +1026,18 @@ Die Zugänge zu Migrationsquellen werden von denen der Zielsysteme getrennt erfa
 
 Die Einweisung vermittelt den zuständigen Betriebsteams die für ihre Aufgaben benötigten Verfahren.
 
-| **Thema** | **Inhalt**                    | **Beteiligte Rollen** | **Status** | **Kommentar / Nachweis** |
-| --------- | ----------------------------- | --------------------- | ---------- | ------------------------ |
-| [Thema]   | [Betriebsaufgabe / Verfahren] | [Rollen]              | Offen      | [Termin / Durchführung]  |
+| **Thema** | **Instanz / Geltungsbereich**                       | **Inhalt**                    | **Beteiligte Rollen** | **Status** | **Kommentar / Nachweis** |
+| --------- | --------------------------------------------------- | ----------------------------- | --------------------- | ---------- | ------------------------ |
+| [Thema]   | [Kennung der Instanz / gemeinsamer Geltungsbereich] | [Betriebsaufgabe / Verfahren] | [Rollen]              | Offen      | [Termin / Durchführung]  |
 
 ### 13.4 Betriebsübernahme und Nachweis
 
-Die Übernahme wird bei der tatsächlichen Übergabe mit Datum, Beteiligten und verbleibenden Aufgaben dokumentiert.
+Die Übernahme wird je Instanz bei der tatsächlichen Übergabe mit Datum, Beteiligten, Status und Nachweis dokumentiert. Eine gemeinsame Einweisung kann beide Instanzen abdecken; die tatsächliche Aufgabenübernahme wird getrennt bestätigt.
 
-| **Datum**                    | **Übernehmende Rolle** | **Übernahmeumfang**   | **Restpunkte / Referenz** |
-| ---------------------------- | ---------------------- | --------------------- | ------------------------- |
-| [Bei tatsächlicher Übergabe] | [Rolle]                | [Bestätigte Aufgaben] | [Nachweis]                |
+| **Instanz** | **Datum**                    | **Übernehmende Rolle** | **Übernahmeumfang**   | **Übernahmestatus** | **Nachweis**             | **Restpunkte / Referenz** |
+| ----------- | ---------------------------- | ---------------------- | --------------------- | ------------------- | ------------------------ | ------------------------- |
+| A           | [Bei tatsächlicher Übergabe] | [Rolle]                | [Bestätigte Aufgaben] | Nicht übernommen    | [Bestätigung / Referenz] | [Restpunkte]              |
+| B           | [Bei tatsächlicher Übergabe] | [Rolle]                | [Bestätigte Aufgaben] | Nicht übernommen    | [Bestätigung / Referenz] | [Restpunkte]              |
 
 [Zugangsprüfung, Einweisung, Aufgabenübernahme und formelle Abnahme unterscheiden. Die bloße Ablage von Unterlagen ist keine Betriebsübernahme.]
 
@@ -991,11 +1047,13 @@ Der Projektabschluss stellt den vereinbarten Umfang den erbrachten Leistungen un
 
 ### 14.1 Abnahmestand
 
-Eine Abschlussentscheidung benennt Datum, zuständige Rolle, Ergebnis und Referenz. Inhaltliche Dokumentbestätigung ist keine technische Projektabnahme.
+Eine Abschlussentscheidung benennt Instanz beziehungsweise gemeinsamen Geltungsbereich, Datum, zuständige Rolle, Ergebnis und Referenz. Inhaltliche Dokumentbestätigung ist keine technische Projektabnahme. Die Abnahme einer Instanz gilt nicht für eine andere; die Projektabnahme führt die Ergebnisse je Instanz und gemeinsamen Projektanforderungen zusammen.
 
-| **Datum**                   | **Rolle** | **Entscheidung**   | **Restpunkte / Referenz** |
-| --------------------------- | --------- | ------------------ | ------------------------- |
-| [Bei Entscheidung ergänzen] | [Rolle]   | Noch keine Abnahme | [Referenz]                |
+| **Instanz / Geltungsbereich** | **Datum**                   | **Rolle** | **Entscheidung** | **Status**       | **Nachweis**                    | **Restpunkte / Referenz** |
+| ----------------------------- | --------------------------- | --------- | ---------------- | ---------------- | ------------------------------- | ------------------------- |
+| A                             | [Bei Entscheidung ergänzen] | [Rolle]   | Ausstehend       | Nicht abgenommen | [Entscheidungsreferenz]         | [Restpunkte]              |
+| B                             | [Bei Entscheidung ergänzen] | [Rolle]   | Ausstehend       | Nicht abgenommen | [Entscheidungsreferenz]         | [Restpunkte]              |
+| Projektweit                   | [Bei Entscheidung ergänzen] | [Rolle]   | Ausstehend       | Nicht abgenommen | [Gesamtentscheidung / Referenz] | [Gemeinsame Restpunkte]   |
 
 ## 15 Referenzen und Änderungshistorie
 
