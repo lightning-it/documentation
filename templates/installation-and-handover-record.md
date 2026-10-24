@@ -659,7 +659,7 @@ Die Übersicht unterscheidet gesicherte Daten von Voraussetzungen für den Wiede
 
 ### 9.3 Sicherungsverfahren
 
-Die Verfahren verbinden konsistente Anwendungssicherungen mit der bestehenden bestehende Datensicherung.
+Die Verfahren verbinden konsistente Anwendungssicherungen mit der bestehenden Datensicherung.
 
 #### 9.3.1 Anwendungssicherung
 
