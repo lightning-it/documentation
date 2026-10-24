@@ -21,7 +21,7 @@ document:
 
 ## 0.1 Inhaltsverzeichnis
 
-Das Inhaltsverzeichnis führt zu den Projektangaben und technischen Kapiteln. Klappe die Übersicht auf und wähle das benötigte Kapitel.
+Das Inhaltsverzeichnis führt zu den Projektangaben und technischen Kapiteln.
 
 <details>
 <summary>Inhaltsverzeichnis anzeigen</summary>
