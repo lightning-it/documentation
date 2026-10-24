@@ -119,19 +119,27 @@ export function validateIhr({ data, markdown, schema, path }) {
         ),
       );
     }
-    for (const label of [
-      "Working directory",
-      "Inventory",
-      "Check command",
-      "Real-run command",
-      "Idempotency command",
-      "Verification commands",
-      "Safe stop",
-      "Restart",
-      "Rollback / recovery",
-      "Planned evidence",
+    for (const [label, ...alternatives] of [
+      ["Working directory", "Arbeitsverzeichnis"],
+      ["Inventory", "Inventar"],
+      ["Check command", "Zielauswahl und Syntax prüfen"],
+      ["Real-run command", "Installationsaufruf"],
+      [
+        "Idempotency command",
+        "Wiederholungsprüfung",
+        "Wiederholbarkeit prüfen",
+      ],
+      ["Verification commands", "Funktionsprüfung"],
+      ["Safe stop", "Sicherer Halt", "Fehler eingrenzen"],
+      ["Restart", "Wiederaufnahme"],
+      ["Rollback / recovery", "Wiederherstellung"],
+      [
+        "Planned evidence",
+        "Geplante Nachweise",
+        "Prüfergebnisse und Nachweise",
+      ],
     ]) {
-      if (!markdown.includes(label))
+      if (![label, ...alternatives].some((value) => markdown.includes(value)))
         findings.push(
           finding(
             "IHR-PLAN-003",
@@ -166,7 +174,14 @@ export function validateIhr({ data, markdown, schema, path }) {
         ),
       );
     }
-    if (/\b(?:[0-9a-f]{7,39}|sha256:[0-9a-f]{8,63})\b/i.test(markdown)) {
+    if (
+      /\b(?:sha256:[0-9a-f]{8,63}|(?=[0-9a-f]{0,38}[a-f])[0-9a-f]{7,39})\b/i.test(
+        markdown,
+      ) ||
+      /\b(?:sha(?:-?1)?|commit|revision|hash)[\s:=`/]+[0-9]{7,39}\b/i.test(
+        markdown,
+      )
+    ) {
       findings.push(
         finding(
           "IHR-IMMUTABLE-001",
