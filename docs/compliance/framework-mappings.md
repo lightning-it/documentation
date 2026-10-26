@@ -41,8 +41,8 @@ conformity, certification, or control-effectiveness evidence.
 | Next review                   | 2027-01-29                           |
 
 The exact generated data is available as the
-[mapping catalog](https://docs.l-it.io/compliance/catalog.json) and
-[mapping manifest](https://docs.l-it.io/compliance/manifest.json). The manifest binds the catalog
+[mapping catalog](https://docs.ltn-it.de/compliance/catalog.json) and
+[mapping manifest](https://docs.ltn-it.de/compliance/manifest.json). The manifest binds the catalog
 digest and keeps every applicability and implementation-status denominator
 visible. Not Applicable and Not Assessed records are never counted as
 successes.

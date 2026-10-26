@@ -3,6 +3,11 @@
 This file is authoritative for human and AI-assisted changes to the public
 Lightning IT documentation platform.
 
+The canonical public documentation host is `docs.ltn-it.de`. Treat
+`docs.l-it.io` as a temporary compatibility alias during the domain cutover;
+new canonical metadata, sitemaps, production checks, and documentation links
+must use `docs.ltn-it.de`.
+
 ## Codex execution policy
 
 Before accepting or executing a GitHub issue, read and follow

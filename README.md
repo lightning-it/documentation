@@ -37,7 +37,7 @@ Publishing targets: `none`.
 
 <!-- END LIT_SHARED_RELEASE_MODEL -->
 
-Source for the public technical documentation at <https://docs.l-it.io>.
+Source for the public technical documentation at <https://docs.ltn-it.de>.
 
 This repository explains the Lightning IT product portfolio: ModuLix
 (automation content), IO (automation runtime), Wunderbox (infrastructure

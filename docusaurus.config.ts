@@ -40,7 +40,7 @@ const config: Config = {
     "Public technical documentation for the Lightning IT product portfolio",
   favicon: "img/brand/favicon.svg",
 
-  url: "https://docs.l-it.io",
+  url: "https://docs.ltn-it.de",
   baseUrl: "/",
   trailingSlash: true,
 
